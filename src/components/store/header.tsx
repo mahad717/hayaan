@@ -1,6 +1,7 @@
 "use client";
 
 import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, Leaf } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -100,13 +101,10 @@ export function Header() {
             </Button>
           )}
           {user?.role === "admin" && (
-            <Button
-              variant={view === "admin" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setView("admin")}
-              className={view === "admin" ? "" : "text-foreground/80 hover:text-brand"}
-            >
-              <LayoutGrid className="mr-1 h-4 w-4" /> Admin
+            <Button asChild variant="ghost" size="sm" className="text-foreground/80 hover:text-brand">
+              <Link href="/admin">
+                <LayoutGrid className="mr-1 h-4 w-4" /> Admin
+              </Link>
             </Button>
           )}
         </nav>
@@ -130,8 +128,10 @@ export function Header() {
                   <Package className="mr-2 h-4 w-4" /> My Orders
                 </DropdownMenuItem>
                 {user.role === "admin" && (
-                  <DropdownMenuItem onClick={() => setView("admin")}>
-                    <LayoutGrid className="mr-2 h-4 w-4" /> Admin Dashboard
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin">
+                      <LayoutGrid className="mr-2 h-4 w-4" /> Admin Dashboard
+                    </Link>
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
@@ -187,12 +187,8 @@ export function Header() {
             </Button>
           )}
           {user?.role === "admin" && (
-            <Button
-              variant={view === "admin" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setView("admin")}
-            >
-              Admin
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/admin">Admin</Link>
             </Button>
           )}
         </div>

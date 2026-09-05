@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { ChevronLeft, Plus, Pencil, Trash2, Package } from "lucide-react";
+import { Plus, Pencil, Trash2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useStore } from "@/hooks/use-store";
 import { fetchProducts } from "@/hooks/use-store";
-import type { Product } from "@/lib/types";
+import type { Product, SafeUser } from "@/lib/types";
 
 function formatPrice(n: number, currency = "USD") {
   try {
@@ -49,8 +49,15 @@ const EMPTY: FormState = {
   isActive: true,
 };
 
-export function AdminPanel() {
-  const { user, categories, setProducts, setView, setCategories, toast } = useStore();
+/**
+ * Admin dashboard content. Rendered by the /admin route after the server
+ * has already verified the session — `user` comes from the server component.
+ * The zustand fallback keeps the panel reusable in client-only contexts.
+ */
+export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
+  const storeUser = useStore((s) => s.user);
+  const user = serverUser ?? storeUser;
+  const { categories, setProducts, setCategories, toast } = useStore();
   const [products, setLocalProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -177,10 +184,6 @@ export function AdminPanel() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
-        <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
-      </Button>
-
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Admin dashboard</h1>

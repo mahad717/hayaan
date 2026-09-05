@@ -9,10 +9,22 @@
 //      in the Prisma `User` table.
 
 import { NextRequest } from "next/server";
-import { db } from "@/lib/db";
+import { cookies } from "next/headers";
+import type { User as SupabaseAuthUser } from "@supabase/supabase-js";
 import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
 import { getUserFromRequest } from "@/lib/auth-session";
 import type { SafeUser } from "@/lib/types";
+
+function mapSupabaseUser(u: SupabaseAuthUser): SafeUser {
+  const name = (u.user_metadata?.name as string | undefined) ?? u.email!.split("@")[0];
+  const role = (u.user_metadata?.role as string | undefined) ?? "customer";
+  return {
+    id: u.id,
+    email: u.email!,
+    name,
+    role: role === "admin" ? "admin" : "customer",
+  };
+}
 
 export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null> {
   if (isSupabaseServerEnabled) {
@@ -20,14 +32,33 @@ export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null>
     if (!supabase) return null;
     const { data } = await supabase.auth.getUser();
     if (!data.user) return null;
-    const name = (data.user.user_metadata?.name as string | undefined) ?? data.user.email!.split("@")[0];
-    const role = (data.user.user_metadata?.role as string | undefined) ?? "customer";
-    return {
-      id: data.user.id,
-      email: data.user.email!,
-      name,
-      role: role === "admin" ? "admin" : "customer",
-    };
+    return mapSupabaseUser(data.user);
   }
   return getUserFromRequest(req);
+}
+
+/**
+ * Resolve the signed-in user from a Server Component / page context
+ * (no `NextRequest` available there — read cookies via `next/headers`).
+ * Mirrors `getCurrentUser()` so both paths stay in sync.
+ */
+export async function getServerUser(): Promise<SafeUser | null> {
+  if (isSupabaseServerEnabled) {
+    const supabase = await createServerClient();
+    if (!supabase) return null;
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) return null;
+    return mapSupabaseUser(data.user);
+  }
+  // Local fallback: `shop_session` cookie holds the user id directly.
+  const cookieStore = await cookies();
+  const userId = cookieStore.get("shop_session")?.value;
+  if (!userId) return null;
+  const { getDb } = await import("@/lib/db");
+  const db = await getDb();
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true, name: true, role: true },
+  });
+  return user ?? null;
 }

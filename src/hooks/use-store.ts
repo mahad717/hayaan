@@ -3,7 +3,8 @@
 import { create } from "zustand";
 import type { Cart, CartItem, Order, Product, SafeUser, Category } from "@/lib/types";
 
-export type View = "home" | "product" | "cart" | "checkout" | "orders" | "admin";
+// "admin" is a dedicated route (/admin) — not a storefront view.
+export type View = "home" | "product" | "cart" | "checkout" | "orders";
 
 interface StoreState {
   // Navigation
