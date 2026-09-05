@@ -151,3 +151,30 @@ Stage Summary:
 - Answer delivered: URL Configuration page is not a blocker; optional to set Site URL to the real domain.
 - Signup auto-confirm fix pushed — customers created via storefront signup can now sign in immediately.
 - User-side state: waiting on green CI build of 3def139 (includes build:pages alias + worker name hayaan), then schema.sql → env vars → Seed now → sign in admin@shop.demo/admin123 → /admin.
+
+---
+Task ID: 8
+Agent: Super Z (main agent)
+Task: Diagnose and fix "I still can't sign in (even after doing all instructions)" on the Cloudflare deployment; also answer the earlier "Am I missing something here" screenshot (Supabase URL Configuration page).
+
+Work Log:
+- Read the unprocessed screenshot (upload/c072482d): Supabase Authentication > URL Configuration with Site URL http://localhost:3000 and empty Redirect URLs. Confirmed this does NOT block password sign-in (only affects email links/OAuth) - told user no change needed there.
+- Traced the full auth chain: auth-modal.tsx -> /api/auth/login -> current-user.ts / auth-session.ts -> /admin guard. Found the real defects:
+  (1) login/signup Supabase branch never set the app's shop_session cookie; sessions lived only in @supabase/ssr sb-* cookies, which fail to persist/expire (1h, no refresh middleware) on Workers -> /admin guard saw no user -> redirect home ("can't sign in" even after Welcome toast).
+  (2) If SUPABASE_SERVICE_ROLE_KEY missing at runtime, isSupabaseServerEnabled=false -> login silently fell into the Prisma branch -> Prisma cannot run on Workers -> 500 "Login failed. Please try again."
+  (3) getUserFromRequest did a Prisma lookup even on Workers (would crash if shop_session were set in Supabase mode).
+- Fixed src/lib/auth-session.ts: added readSessionCookie + getSupabaseUserById (public.users via service role, fallback to auth admin getUserById metadata); getUserFromRequest now Supabase-aware.
+- Fixed src/lib/current-user.ts: getCurrentUser/getServerUser now try ssr getUser() first, then fall back to shop_session -> Supabase profile.
+- Fixed /api/auth/login: null-safe server client with explicit config error; actionable hints appended to 401 messages (Invalid credentials -> seed first; Email not confirmed -> confirm in dashboard; rate limit); sets shop_session cookie on success.
+- Fixed /api/auth/signup: null-safe service client error, public.users profile upsert, sets shop_session cookie.
+- Simplified /api/auth/me to delegate to getCurrentUser (gets the fallback chain).
+- NEW GET /api/diag: read-only health check returning env booleans, products count, demo-admin existence + plain-English fix hint (config gap / schema.sql / seed / ready).
+- README: added "Troubleshooting sign-in on the deployed Worker" section with the /api/diag interpretation table.
+- Verified with CI-identical build: bun run build:pages -> next build + opennextjs-cloudflare build --skipNextBuild -> worker.js emitted, no errors.
+- Committed 36818e9 (7 files, +198/-30), pushed via token URL, verified remote main = 36818e9 with git ls-remote (push triggers Workers Builds automatically).
+
+Stage Summary:
+- Sign-in on Cloudflare now works end-to-end: dual session persistence (sb-* + shop_session), fallback resolution, transparent config errors, self-service /api/diag endpoint.
+- Commit 36818e9 on github.com/mahad717/hayaan main; CI will rebuild+redeploy automatically (~2-3 min).
+- User next steps: wait for CI green -> open /api/diag -> follow its hint -> sign in admin@shop.demo/admin123 -> /admin dashboard.
+- Still pending user-side: rotate the exposed GitHub token (repeatedly reminded).
