@@ -99,6 +99,19 @@ alter table cart_items   enable row level security;
 alter table orders       enable row level security;
 alter table order_items  enable row level security;
 
+-- Policies: drop-then-create so the whole script is safe to re-run.
+drop policy if exists "public read categories" on categories;
+drop policy if exists "public read products"   on products;
+drop policy if exists "owner reads cart"       on carts;
+drop policy if exists "owner writes cart"      on carts;
+drop policy if exists "owner updates cart"     on carts;
+drop policy if exists "owner reads items"      on cart_items;
+drop policy if exists "owner writes items"     on cart_items;
+drop policy if exists "owner deletes items"    on cart_items;
+drop policy if exists "owner reads orders"     on orders;
+drop policy if exists "owner creates order"    on orders;
+drop policy if exists "owner reads order items" on order_items;
+
 -- Public read access for catalog
 create policy "public read categories" on categories for select using (true);
 create policy "public read products"   on products   for select using (is_active = true);
@@ -120,11 +133,19 @@ create policy "owner deletes items" on cart_items for delete using (
 -- Orders visible to owner only
 create policy "owner reads orders"  on orders      for select using (auth.uid() = user_id);
 create policy "owner creates order" on orders      for insert with check (auth.uid() = user_id);
-create policy "owner reads items"   on order_items for select using (
+create policy "owner reads order items" on order_items for select using (
   exists (select 1 from orders where orders.id = order_items.order_id and orders.user_id = auth.uid())
 );
 
 -- ---------- Realtime (optional) ----------
-alter publication supabase_realtime add table products;
-alter publication supabase_realtime add table cart_items;
-alter publication supabase_realtime add table orders;
+-- Wrapped so re-running the script doesn't error when a table is already in
+-- the publication (duplicate_object is raised by `add table`).
+do $$ begin
+  alter publication supabase_realtime add table products;
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table cart_items;
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table orders;
+exception when duplicate_object then null; end $$;

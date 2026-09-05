@@ -97,6 +97,70 @@ See [`src/lib/supabase/README.md`](src/lib/supabase/README.md) for the full
 migration steps, including running `schema.sql` for table creation and RLS
 policies.
 
+## First-time Supabase setup (do this before your first deploy)
+
+Skip these steps and the deployed site shows an **empty storefront**, sign-in
+fails, and `/admin` silently redirects you back to the homepage. That's not a
+bug — the server-side guard works, but no admin account exists in Supabase
+yet, so every visit to `/admin` bounces to `/`.
+
+### 1. Create the tables
+
+Supabase dashboard → **SQL Editor** → paste the full contents of
+[`src/lib/supabase/schema.sql`](src/lib/supabase/schema.sql) → **Run**.
+
+This creates `users`, `categories`, `products`, `carts`, `cart_items`,
+`orders`, `order_items` plus RLS policies and realtime. The script is
+idempotent — safe to run again.
+
+### 2. Seed the catalog and create the admin account
+
+From your machine (keys go in `.env`, which is never committed):
+
+```bash
+cat >> .env <<'EOF'
+NEXT_PUBLIC_SUPABASE_URL=https://mqyhgyakhfhuctnvezby.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your anon key>
+SUPABASE_SERVICE_ROLE_KEY=<your service_role secret>
+EOF
+
+bun install
+bun run seed:supabase
+```
+
+This upserts 4 categories + 12 demo products and creates the admin login:
+
+| Email | Password | Role |
+| --- | --- | --- |
+| `admin@shop.demo` | `admin123` | admin |
+
+> **No terminal handy?** Supabase dashboard → **Authentication → Users →
+> Add user** (email + password, auto-confirm). Then edit that user's
+> `raw_user_meta_data` JSON to `{"name": "Store Admin", "role": "admin"}`.
+>
+> The `/admin` guard reads `user_metadata.role` from the Supabase JWT.
+> Accounts created through the storefront signup form are always
+> `"role": "customer"` — flipping the role in the dashboard is the only way
+> to promote someone.
+
+### 3. Point Cloudflare at Supabase
+
+Set the build-time and runtime variables listed in the deploy section below,
+redeploy, then sign in as `admin@shop.demo` and click **Admin**. You should
+see the dedicated admin chrome (dark topbar, Dashboard badge, product
+manager) instead of the storefront.
+
+### Verify the database is live
+
+```bash
+curl "https://mqyhgyakhfhuctnvezby.supabase.co/rest/v1/products?select=name&limit=3" \
+  -H "apikey: <your anon key>"
+```
+
+- JSON rows → tables exist and public reads work.
+- `{"code":"42P01","message":"relation ... does not exist"}` → step 1 was
+  skipped.
+
 ## Deploy to Cloudflare Workers (Workers Builds)
 
 This project deploys as a **Cloudflare Worker** using the official [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) adapter — the supported way to run Next.js on Workers. Workers Builds is Cloudflare's CI/CD pipeline; it requires both a build command AND a deploy command.
