@@ -1,19 +1,11 @@
+// Session restore — used by the storefront on load. Delegates to the unified
+// resolver which tries the @supabase/ssr cookie session first and falls back
+// to the durable `shop_session` cookie (see src/lib/current-user.ts).
 import { NextRequest, NextResponse } from "next/server";
 
-import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getCurrentUser } from "@/lib/current-user";
 
 export async function GET(req: NextRequest) {
-  if (isSupabaseServerEnabled) {
-    const supabase = await createServerClient();
-    const { data } = await supabase!.auth.getUser();
-    if (!data.user) return NextResponse.json({ user: null });
-    const name = (data.user.user_metadata?.name as string) ?? data.user.email!.split("@")[0];
-    const role = (data.user.user_metadata?.role as string) ?? "customer";
-    return NextResponse.json({
-      user: { id: data.user.id, email: data.user.email!, name, role },
-    });
-  }
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   return NextResponse.json({ user });
 }

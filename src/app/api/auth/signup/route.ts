@@ -22,7 +22,13 @@ export async function POST(req: NextRequest) {
     }
 
     if (isSupabaseServerEnabled) {
-      const supabase = createServiceClient()!;
+      const supabase = createServiceClient();
+      if (!supabase) {
+        return NextResponse.json(
+          { error: "Auth is not configured on the server: SUPABASE_SERVICE_ROLE_KEY is missing at runtime." },
+          { status: 500 },
+        );
+      }
       // email_confirm: true skips the confirmation-email round-trip — the app
       // has no email-link handler, and with Supabase's default "Confirm email"
       // ON, users created without it can never sign in ("Email not confirmed").
@@ -33,7 +39,13 @@ export async function POST(req: NextRequest) {
         user_metadata: { name, role: "customer" },
       });
       if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-      return NextResponse.json({ user: { id: data.user.id, email, name, role: "customer" } });
+      // Keep public.users in sync — the cookie fallback session resolver reads it.
+      await supabase.from("users").upsert(
+        { id: data.user!.id, email, name, role: "customer" },
+        { onConflict: "id" },
+      );
+      const res = NextResponse.json({ user: { id: data.user!.id, email, name, role: "customer" } });
+      return setAuthCookie(res, data.user!.id);
     }
 
     // Local-only fallback path — bcrypt is dynamically imported here so

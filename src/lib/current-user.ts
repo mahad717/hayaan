@@ -12,7 +12,7 @@ import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import type { User as SupabaseAuthUser } from "@supabase/supabase-js";
 import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getUserFromRequest, getSupabaseUserById } from "@/lib/auth-session";
 import type { SafeUser } from "@/lib/types";
 
 function mapSupabaseUser(u: SupabaseAuthUser): SafeUser {
@@ -28,11 +28,15 @@ function mapSupabaseUser(u: SupabaseAuthUser): SafeUser {
 
 export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null> {
   if (isSupabaseServerEnabled) {
+    // 1) Canonical: the @supabase/ssr cookie session.
     const supabase = await createServerClient();
-    if (!supabase) return null;
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) return null;
-    return mapSupabaseUser(data.user);
+    if (supabase) {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) return mapSupabaseUser(data.user);
+    }
+    // 2) Fallback: our durable `shop_session` cookie (survives lost/expired
+    //    sb-* cookies — there is no token-refresh middleware on Workers).
+    return getUserFromRequest(req);
   }
   return getUserFromRequest(req);
 }
@@ -44,11 +48,17 @@ export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null>
  */
 export async function getServerUser(): Promise<SafeUser | null> {
   if (isSupabaseServerEnabled) {
+    // 1) Canonical: the @supabase/ssr cookie session.
     const supabase = await createServerClient();
-    if (!supabase) return null;
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) return null;
-    return mapSupabaseUser(data.user);
+    if (supabase) {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) return mapSupabaseUser(data.user);
+    }
+    // 2) Fallback: `shop_session` cookie → Supabase profile lookup.
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("shop_session")?.value;
+    if (!userId) return null;
+    return getSupabaseUserById(userId);
   }
   // Local fallback: `shop_session` cookie holds the user id directly.
   const cookieStore = await cookies();

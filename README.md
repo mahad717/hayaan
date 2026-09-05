@@ -161,6 +161,26 @@ curl "https://mqyhgyakhfhuctnvezby.supabase.co/rest/v1/products?select=name&limi
 - `{"code":"42P01","message":"relation ... does not exist"}` → step 1 was
   skipped.
 
+### Troubleshooting sign-in on the deployed Worker
+
+Open **`https://<your-worker>.workers.dev/api/diag`** in a browser. It is a
+read-only health check (booleans and counts only — no secrets) that tells you
+exactly what is missing:
+
+| `mode` / field | Meaning | Fix |
+|---|---|---|
+| `local-prisma` | No Supabase env vars visible at runtime | Set all three in Cloudflare, redeploy |
+| `supabase-partial` | `SUPABASE_SERVICE_ROLE_KEY` missing at runtime — login silently falls back to the local engine, which crashes on Workers | Add it as a Runtime **Secret**, redeploy |
+| `catalog.error` set | `schema.sql` was never run | Run it in the Supabase SQL editor |
+| `auth.demoAdminExists: false` | Seeder never ran | Open the site, click **Seed now** |
+| everything ready | Config is fine | Sign in with the demo credentials |
+
+Sign-in errors are also self-explanatory now: "Invalid login credentials"
+means the seeder has not created the admin yet; "Email not confirmed" means
+confirm the user under Supabase → Authentication → Users. Sessions survive
+page reloads via a durable `shop_session` cookie even if the Supabase
+`sb-*` cookies expire (there is no token-refresh middleware on Workers).
+
 ## Deploy to Cloudflare Workers (Workers Builds)
 
 This project deploys as a **Cloudflare Worker** using the official [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) adapter — the supported way to run Next.js on Workers. Workers Builds is Cloudflare's CI/CD pipeline; it requires both a build command AND a deploy command.
