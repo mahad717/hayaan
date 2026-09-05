@@ -32,7 +32,11 @@
 #        NEXT_PUBLIC_SUPABASE_ANON_KEY  (plain text)
 #        SUPABASE_SERVICE_ROLE_KEY      (type: Secret — never ship to the browser)
 
-name = "hayaan-market"
+# Must match the Worker name this repo's Workers Builds pipeline is attached
+# to in the Cloudflare dashboard. If your connected Worker has a different
+# name, either change this line or set the Deploy command to
+#   npx wrangler deploy --name <dashboard-worker-name>
+name = "hayaan"
 compatibility_date = "2026-09-01"
 compatibility_flags = ["nodejs_compat"]
 
