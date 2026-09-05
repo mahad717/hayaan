@@ -135,3 +135,19 @@ Work Log:
 Stage Summary:
 - main gets build:pages alias + worker name hayaan; the failed CI run can be retried (or the push auto-triggers a new build).
 - Still user-side: confirm which Worker name the builds are attached to (hayaan vs hayaan-admin vs hayaan-market); if different from "hayaan", flip one line or use `--name`; set 3 Supabase env vars (build + runtime) on the connected Worker; run schema.sql; Seed now; sign in admin@shop.demo/admin123.
+
+---
+Task ID: 8
+Agent: Super Z (main agent)
+Task: Answer "Am I missing something here?" (Supabase Auth URL Configuration screenshot: Site URL=localhost:3000, no Redirect URLs).
+
+Work Log:
+- Screenshot: Supabase Authentication → URL Configuration with default Site URL http://localhost:3000 and empty Redirect URLs list.
+- Analyzed auth flows vs Supabase URL config: login uses signInWithPassword (no redirects), signup uses auth.admin.createUser via service-role (no email link) → URL Configuration does NOT gate anything in the current app; safe to leave as-is or point at the production domain for correctness/future flows (password reset, OAuth).
+- Found a real adjacent bug: src/app/api/auth/signup/route.ts created customers without email_confirm → with Supabase's default "Confirm email" ON, users stay unconfirmed and can never sign in ("Email not confirmed"). Fixed by adding email_confirm: true (mirrors the seeder). No email-link handler exists in the app, so auto-confirm is the correct production behavior for now.
+- Full build passed; committed 3def139, pushed; ls-remote confirms main = 3def139.
+
+Stage Summary:
+- Answer delivered: URL Configuration page is not a blocker; optional to set Site URL to the real domain.
+- Signup auto-confirm fix pushed — customers created via storefront signup can now sign in immediately.
+- User-side state: waiting on green CI build of 3def139 (includes build:pages alias + worker name hayaan), then schema.sql → env vars → Seed now → sign in admin@shop.demo/admin123 → /admin.
