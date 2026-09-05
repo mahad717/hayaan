@@ -11,7 +11,7 @@ import { useStore } from "@/hooks/use-store";
 const INPUT_CLASS = "bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]";
 
 export function AuthModal() {
-  const { authOpen, setAuthOpen, setUser, setCart, toast } = useStore();
+  const { authOpen, setAuthOpen, setUser, setCart, toast, products } = useStore();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -159,11 +159,22 @@ export function AuthModal() {
           </TabsContent>
         </Tabs>
 
-        <div className="mt-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground">
-          <p className="font-medium text-brand">Demo admin</p>
-          <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
-          <p>Password: <code className="text-foreground">admin123</code></p>
-        </div>
+        {products.length === 0 ? (
+          <div className="mt-2 rounded-md bg-[#fef1de] p-3 text-xs text-[#7a4a14]">
+            <p className="font-medium">First time here?</p>
+            <p>
+              The demo admin account is created by the seeder. Close this dialog,
+              click <strong>“Seed now”</strong> on the orange banner at the top, then
+              sign in with the credentials shown in that box.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground">
+            <p className="font-medium text-brand">Demo admin</p>
+            <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
+            <p>Password: <code className="text-foreground">admin123</code></p>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
