@@ -25,3 +25,23 @@ Stage Summary:
 - Key decision: keep `runtime = "edge"` in committed API routes (Cloudflare/next-on-pages requirement); local Node-runtime flip is a repeatable verification trick via sed, never committed.
 - Local dev note: without Supabase keys in env, API routes 500 locally (Prisma can't run on edge) — production on Cloudflare is unaffected.
 - Supabase URL supplied by user matches wrangler.toml; anon + service_role keys remain user-side secrets (not needed for this change).
+
+---
+Task ID: 2
+Agent: Super Z (main agent)
+Task: Deploy Hayaan Market to Cloudflare Workers (validate + fix the Workers Builds pipeline after the /admin change).
+
+Work Log:
+- Reviewed existing deploy setup: wrangler.toml (Workers Builds config, main = .vercel/output/static/_worker.js/index.js, ASSETS binding), package.json build:pages script, README deploy docs.
+- Ran the exact CI build command (`bun run build:pages`): `next build` passed but `@cloudflare/next-on-pages` REJECTED the bundle — "route /admin not configured to run with the Edge Runtime". The new /admin server component from Task 1 lacked the edge segment config; this would have broken the user's next CI deploy.
+- Fix: added `export const runtime = "edge"` to src/app/admin/page.tsx and src/app/admin/layout.tsx (layout-level config covers future /admin/* sub-routes).
+- Rebuilt: build succeeded — /admin now listed among 13 Edge Function Routes; wasm + 41 static assets emitted.
+- Validated deploy config with `npx wrangler deploy --dry-run` (no auth needed): worker entry, ASSETS binding, NEXT_PUBLIC_SITE_URL var all resolve.
+- Committed b24348e "Declare Edge Runtime on /admin routes for Cloudflare Workers deploy", pushed to origin/main (token remote used transiently, then restored SSH remote).
+- Restarted preview dev server (GET / 200).
+
+Stage Summary:
+- Deliverable: Cloudflare Workers build now passes with the /admin route; fix pushed (commit b24348e). If the user's Workers Builds Git integration is connected, this push auto-deploys.
+- Remaining user-side steps: set NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY as BUILD-time vars (Next inlines NEXT_PUBLIC_* at build) and runtime vars; set SUPABASE_SERVICE_ROLE_KEY as runtime secret only. Then the worker serves at https://hayaan-market.<subdomain>.workers.dev.
+- Alternative path: user can supply a Cloudflare API token + Account ID for a direct `wrangler deploy` from this workspace.
+- Note: GitHub token was shared in chat; recommended rotation.
