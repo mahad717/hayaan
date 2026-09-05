@@ -1,0 +1,28 @@
+# Cloudflare Pages configuration
+#
+# After pushing to GitHub:
+#   1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git
+#   2. Pick this repo, branch = main
+#   3. Cloudflare auto-detects Next.js — set these overrides if prompted:
+#        Framework preset:  Next.js
+#        Build command:      bun run build
+#        Output directory:   .next/standalone
+#   4. Add env vars (Production + Preview):
+#        NEXT_PUBLIC_SUPABASE_URL=...
+#        NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+#        SUPABASE_SERVICE_ROLE_KEY=...
+#        DATABASE_URL=...              # only if you keep using Prisma in prod
+#   5. Deploy. Cloudflare builds & serves via @cloudflare/next-on-pages.
+#
+# Alternative: deploy from CLI
+#   bunx wrangler pages deploy .next/standalone --project-name=mercado
+#
+name = "mercado"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".next/standalone"
+
+# Vars that are safe to expose to the edge runtime. Keep secrets in the
+# Cloudflare dashboard under Settings → Environment variables.
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://mercado.pages.dev"
