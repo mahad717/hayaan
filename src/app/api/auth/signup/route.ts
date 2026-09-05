@@ -23,9 +23,13 @@ export async function POST(req: NextRequest) {
 
     if (isSupabaseServerEnabled) {
       const supabase = createServiceClient()!;
+      // email_confirm: true skips the confirmation-email round-trip — the app
+      // has no email-link handler, and with Supabase's default "Confirm email"
+      // ON, users created without it can never sign in ("Email not confirmed").
       const { data, error } = await supabase.auth.admin.createUser({
         email,
         password,
+        email_confirm: true,
         user_metadata: { name, role: "customer" },
       });
       if (error) return NextResponse.json({ error: error.message }, { status: 400 });
