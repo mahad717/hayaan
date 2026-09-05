@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getCurrentUser } from "@/lib/current-user";
 import type { Cart, Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -76,14 +76,14 @@ async function buildCart(userId: string): Promise<Cart> {
 }
 
 export async function GET(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user) return NextResponse.json({ cart: { id: "", items: [] } });
   const cart = await buildCart(user.id);
   return NextResponse.json({ cart });
 }
 
 export async function POST(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user) return NextResponse.json({ error: "Please sign in to add items to your cart." }, { status: 401 });
   const { productId, quantity = 1, action = "set" } = await req.json();
   if (!productId) return NextResponse.json({ error: "productId is required." }, { status: 400 });
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user) return NextResponse.json({ error: "Please sign in." }, { status: 401 });
   const { searchParams } = new URL(req.url);
   const itemId = searchParams.get("itemId");

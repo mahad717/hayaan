@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getCurrentUser } from "@/lib/current-user";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -48,7 +48,7 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
 
 export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user || user.role !== "admin") {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
@@ -96,7 +96,7 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
 
 export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user || user.role !== "admin") {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }

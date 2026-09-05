@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getCurrentUser } from "@/lib/current-user";
 import type { Order } from "@/lib/types";
 
 export async function GET(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user) return NextResponse.json({ orders: [] });
 
   if (isSupabaseServerEnabled) {
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user) return NextResponse.json({ error: "Please sign in to place an order." }, { status: 401 });
 
   const body = await req.json();

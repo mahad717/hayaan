@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import { getUserFromRequest } from "@/lib/auth-session";
+import { getCurrentUser } from "@/lib/current-user";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const user = await getCurrentUser(req);
   if (!user || user.role !== "admin") {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
