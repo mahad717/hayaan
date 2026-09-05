@@ -1,6 +1,12 @@
+// Email/password login. Uses Supabase Auth when env vars are set; falls back
+// to local Prisma + bcrypt otherwise. bcrypt is dynamically imported so it
+// never gets bundled into the Cloudflare build.
+
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
 import { setAuthCookie } from "@/lib/auth-session";
 
@@ -22,6 +28,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ user: { id: data.user.id, email, name, role } });
     }
 
+    const { default: bcrypt } = await import("bcryptjs");
+    const db = await getDb();
     const user = await db.user.findUnique({ where: { email } });
     if (!user) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
     const ok = await bcrypt.compare(password, user.password);

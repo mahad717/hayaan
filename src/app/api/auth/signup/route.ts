@@ -1,10 +1,15 @@
 // Email/password signup. When Supabase is enabled (env vars set), this should
 // be swapped to `supabase.auth.signUp(...)`. Locally we hash with bcrypt and
 // store in Prisma so the demo flow works without external dependencies.
+//
+// bcryptjs is dynamically imported so it never gets bundled into the
+// Cloudflare build (the Supabase branch always runs in production).
 
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { setAuthCookie } from "@/lib/auth-session";
 
@@ -29,6 +34,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ user: { id: data.user.id, email, name, role: "customer" } });
     }
 
+    // Local-only fallback path — bcrypt is dynamically imported here so
+    // Cloudflare's bundler skips it entirely.
+    const { default: bcrypt } = await import("bcryptjs");
+    const db = await getDb();
     const existing = await db.user.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json({ error: "An account with that email already exists." }, { status: 409 });

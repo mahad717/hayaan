@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import type { Product } from "@/lib/types";
@@ -41,7 +44,7 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
     if (error) return NextResponse.json({ error: "Product not found" }, { status: 404 });
     return NextResponse.json({ product: rowToProduct(data) });
   }
-  const product = await db.product.findUnique({ where: { id }, include: { category: true } });
+  const product = await (await getDb()).product.findUnique({ where: { id }, include: { category: true } });
   if (!product) return NextResponse.json({ error: "Product not found" }, { status: 404 });
   return NextResponse.json({ product: rowToProduct(product) });
 }
@@ -75,7 +78,7 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ product: rowToProduct(data) });
   }
-  const updated = await db.product.update({
+  const updated = await (await getDb()).product.update({
     where: { id },
     data: {
       ...(body.name !== undefined ? { name: body.name } : {}),
@@ -106,6 +109,6 @@ export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: stri
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ ok: true });
   }
-  await db.product.delete({ where: { id } });
+  await (await getDb()).product.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }

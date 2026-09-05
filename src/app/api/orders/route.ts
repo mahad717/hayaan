@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import type { Order } from "@/lib/types";
@@ -25,7 +28,7 @@ export async function GET(req: NextRequest) {
       })),
     });
   }
-  const orders = await db.order.findMany({
+  const orders = await (await getDb()).order.findMany({
     where: { userId: user.id },
     include: { items: true },
     orderBy: { createdAt: "desc" },
@@ -115,7 +118,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ orderId: order!.id, total });
   }
 
-  const cart = await db.cart.findUnique({
+  const cart = await (await getDb()).cart.findUnique({
     where: { userId: user.id },
     include: { items: { include: { product: true } } },
   });
@@ -123,7 +126,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
   }
   const total = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
-  const order = await db.order.create({
+  const order = await (await getDb()).order.create({
     data: {
       userId: user.id,
       status: "paid",
@@ -147,6 +150,6 @@ export async function POST(req: NextRequest) {
       },
     },
   });
-  await db.cartItem.deleteMany({ where: { cartId: cart.id } });
+  await (await getDb()).cartItem.deleteMany({ where: { cartId: cart.id } });
   return NextResponse.json({ orderId: order.id, total });
 }

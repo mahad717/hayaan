@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import type { Cart, Product } from "@/lib/types";
@@ -57,12 +60,12 @@ async function buildCart(userId: string): Promise<Cart> {
     };
   }
 
-  let cart = await db.cart.findUnique({
+  let cart = await (await getDb()).cart.findUnique({
     where: { userId },
     include: { items: { include: { product: { include: { category: true } } } } },
   });
   if (!cart) {
-    cart = await db.cart.create({ data: { userId }, include: { items: { include: { product: { include: { category: true } } } } } });
+    cart = await (await getDb()).cart.create({ data: { userId }, include: { items: { include: { product: { include: { category: true } } } } } });
   }
   return {
     id: cart.id,
@@ -104,9 +107,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ cart: updated });
   }
 
-  let cart = await db.cart.findUnique({ where: { userId: user.id }, include: { items: true } });
+  let cart = await (await getDb()).cart.findUnique({ where: { userId: user.id }, include: { items: true } });
   if (!cart) {
-    cart = await db.cart.create({ data: { userId: user.id }, include: { items: true } });
+    cart = await (await getDb()).cart.create({ data: { userId: user.id }, include: { items: true } });
   }
   const existing = cart.items.find((i) => i.productId === productId);
   if (existing) {
@@ -116,9 +119,9 @@ export async function POST(req: NextRequest) {
         : action === "decrement"
           ? Math.max(1, existing.quantity - quantity)
           : quantity;
-    await db.cartItem.update({ where: { id: existing.id }, data: { quantity: newQty } });
+    await (await getDb()).cartItem.update({ where: { id: existing.id }, data: { quantity: newQty } });
   } else {
-    await db.cartItem.create({ data: { cartId: cart.id, productId, quantity } });
+    await (await getDb()).cartItem.create({ data: { cartId: cart.id, productId, quantity } });
   }
   const updated = await buildCart(user.id);
   return NextResponse.json({ cart: updated });
@@ -144,9 +147,9 @@ export async function DELETE(req: NextRequest) {
   }
 
   if (clearAll) {
-    await db.cartItem.deleteMany({ where: { cart: { userId: user.id } } });
+    await (await getDb()).cartItem.deleteMany({ where: { cart: { userId: user.id } } });
   } else if (itemId) {
-    await db.cartItem.delete({ where: { id: itemId } });
+    await (await getDb()).cartItem.delete({ where: { id: itemId } });
   }
   const updated = await buildCart(user.id);
   return NextResponse.json({ cart: updated });

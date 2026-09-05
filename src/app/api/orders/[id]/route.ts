@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 
@@ -26,7 +29,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
       },
     });
   }
-  const order = await db.order.findFirst({
+  const order = await (await getDb()).order.findFirst({
     where: { id, userId: user.id },
     include: { items: true },
   });

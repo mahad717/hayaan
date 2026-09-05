@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import type { Product } from "@/lib/types";
@@ -51,7 +54,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ products: (data ?? []).map(rowToProduct) });
   }
 
-  const products = await db.product.findMany({
+  const products = await (await getDb()).product.findMany({
     where: {
       isActive: true,
       ...(q ? { OR: [{ name: { contains: q } }, { description: { contains: q } }] } : {}),
@@ -106,7 +109,7 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ product: rowToProduct(data) });
   }
-  const product = await db.product.create({
+  const product = await (await getDb()).product.create({
     data: {
       name,
       slug: name.toLowerCase().replace(/\s+/g, "-"),

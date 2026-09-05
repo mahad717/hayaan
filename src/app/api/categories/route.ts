@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 
 export async function GET() {
@@ -16,7 +19,7 @@ export async function GET() {
       })),
     });
   }
-  const categories = await db.category.findMany({ orderBy: { name: "asc" } });
+  const categories = await (await getDb()).category.findMany({ orderBy: { name: "asc" } });
   return NextResponse.json({
     categories: categories.map((c) => ({
       id: c.id,

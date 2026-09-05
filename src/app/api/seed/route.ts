@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import bcrypt from "bcryptjs";
+
+// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
+export const runtime = "edge";
+import { getDb } from "@/lib/db";
 
 interface SeedBody {
   email?: string;
@@ -31,7 +33,7 @@ export async function POST(req: Request) {
   ];
   const categoryRecords: { id: string; name: string; slug: string; description: string | null }[] = [];
   for (const c of categories) {
-    const rec = await db.category.upsert({
+    const rec = await (await getDb()).category.upsert({
       where: { slug: c.slug },
       update: {},
       create: c,
@@ -237,9 +239,9 @@ export async function POST(req: Request) {
   ];
 
   for (const p of products) {
-    const existing = await db.product.findUnique({ where: { slug: p.slug } });
+    const existing = await (await getDb()).product.findUnique({ where: { slug: p.slug } });
     if (existing) continue;
-    await db.product.create({
+    await (await getDb()).product.create({
       data: {
         ...p,
         images: JSON.stringify(p.images),
@@ -249,6 +251,11 @@ export async function POST(req: Request) {
   }
 
   // --- Admin user ---
+  // bcrypt is dynamically imported — seed route only works under Node.js
+  // (local dev). On Cloudflare, use the dedicated `scripts/seed-supabase.ts`
+  // script which talks to Supabase directly via the service-role key.
+  const { default: bcrypt } = await import("bcryptjs");
+  const db = await getDb();
   const existingUser = await db.user.findUnique({ where: { email } });
   if (!existingUser) {
     const hashed = await bcrypt.hash(password, 10);
@@ -256,7 +263,7 @@ export async function POST(req: Request) {
       data: { email, name, password: hashed, role: "admin" },
     });
   } else if (existingUser.role !== "admin") {
-    await db.user.update({ where: { email }, data: { role: "admin" } });
+    await (await getDb()).user.update({ where: { email }, data: { role: "admin" } });
   }
 
   return NextResponse.json({

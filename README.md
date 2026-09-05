@@ -99,19 +99,49 @@ policies.
 
 ## Deploy to Cloudflare Pages
 
-1. Push the repo to GitHub.
-2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
-3. Select this repo. Cloudflare auto-detects Next.js.
-4. Set build command to `bun run build` and output dir to `.next/standalone`.
-5. Add the three Supabase env vars (and `DATABASE_URL` if keeping Prisma) under
-   **Settings → Environment variables**.
-6. Deploy.
+This project is configured for Cloudflare Pages using [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) — the official adapter that converts a Next.js build into a Cloudflare Workers bundle.
 
-Or from the CLI:
+### Dashboard setup (recommended)
+
+1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**
+2. Select this repo, branch = `main`
+3. Under **Build settings**, set:
+   - **Framework preset:** Next.js
+   - **Build command:** `bun run build:pages`
+   - **Build output directory:** `.vercel/output/static`
+   - **Root directory:** `/`
+   - **Leave "Deploy command" empty** — Cloudflare Pages auto-deploys after build. ⚠️ Setting `wrangler deploy` here will fail with the error you already saw.
+4. Under **Settings → Environment variables**, add:
+   - `NEXT_PUBLIC_SUPABASE_URL` = `https://mqyhgyakhfhuctnvezby.supabase.co`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = your anon key
+   - `SUPABASE_SERVICE_ROLE_KEY` = your service_role secret
+5. **Save and Deploy** — first build takes ~60s. Subsequent pushes to `main` auto-deploy.
+
+### CLI setup (alternative)
 
 ```bash
-bunx wrangler pages deploy .next/standalone --project-name=mercado
+# Build locally
+bun run build:pages
+
+# Deploy
+npx wrangler pages deploy .vercel/output/static --project-name=hayaan-market
 ```
+
+### Why `@cloudflare/next-on-pages`?
+
+Cloudflare Pages runs on the V8 runtime (Workers), not Node.js. A plain `next build` produces a Node.js server bundle that won't run there. The adapter:
+
+1. Runs `next build` to produce the standard Next.js output
+2. Translates each API route + page into an Edge Function (`runtime = "edge"`)
+3. Emits a static asset bundle to `.vercel/output/static/` that Pages can deploy
+
+This is why every API route in `src/app/api/**/route.ts` has `export const runtime = "edge";` at the top — it's a hard requirement of `@cloudflare/next-on-pages`.
+
+### Why lazy Prisma + bcrypt?
+
+`@prisma/client` and `bcryptjs` use Node.js built-ins (`fs`, `crypto`) that don't exist on the Workers runtime. To keep them out of the Cloudflare bundle, they're loaded via dynamic `await import()` inside the local-dev fallback branches. In production, `isSupabaseServerEnabled` is always `true`, so those branches never execute and the bundler tree-shakes the Node-only modules out.
+
+If you ever want to remove the local Prisma fallback entirely, delete `src/lib/db.ts`, `src/lib/auth-session.ts`, `src/app/api/seed/route.ts`, and the `if (!isSupabaseServerEnabled)` branches in every route.
 
 ## Stack summary
 
