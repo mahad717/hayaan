@@ -65,3 +65,22 @@ Stage Summary:
 - Deliverable: `bun run build` now produces a deployable Worker and `npx wrangler deploy` (unchanged dashboard commands) deploys it. Pushed to main; Workers Builds should pass on the next run.
 - User-side requirements: set NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY as BUILD variables, and the same two plus SUPABASE_SERVICE_ROLE_KEY (Secret) as runtime Variables & Secrets.
 - Key lesson recorded: next-on-pages output cannot be deployed to Workers via wrangler; OpenNext is the supported path.
+
+---
+Task ID: 4
+Agent: Super Z (main agent)
+Task: Answer "admin and user facing page look same — am I missing database creation in Supabase?" and get the Cloudflare fix confirmed on origin/main.
+
+Work Log:
+- Read worklog + repo state: package.json build = `next build && opennextjs-cloudflare build --skipNextBuild`; wrangler.toml main = .open-next/worker.js (OpenNext pipeline complete).
+- Diagnosed the "pages look same" report: /admin is server-guarded (`getServerUser()` → role from Supabase JWT `user_metadata.role` via mapSupabaseUser); non-admins/signed-out visitors get redirect("/") → the user always saw the storefront. Root cause: no Supabase setup done — no tables, no admin user with role=admin metadata.
+- Confirmed .env in sandbox has ONLY DATABASE_URL (no Supabase keys) → cannot run scripts/seed-supabase.ts from here; seeding must be user-side (script exists: bun run seed:supabase).
+- False alarm resolved: git rev-list showed main 2 ahead of origin/main, but that tracking ref was stale (Task 3 pushed via ad-hoc token URL, which doesn't update refs/remotes/origin/main). git ls-remote confirmed GitHub main already had 6925a38 (OpenNext).
+- Made src/lib/supabase/schema.sql re-runnable: drop policy if exists for all 11 policies (renamed order_items policy to "owner reads order items" to avoid name ambiguity), realtime publication adds wrapped in DO blocks with duplicate_object exception.
+- Added prominent "First-time Supabase setup" section to README.md: 1) run schema.sql in SQL editor, 2) bun run seed:supabase (or no-terminal dashboard alternative: create user + edit raw_user_meta_data to {"role":"admin"}), 3) Cloudflare build+runtime env vars, plus a verification curl (42P01 = tables missing).
+- Committed 9ec9879, pushed via token URL; ls-remote confirms refs/heads/main = 9ec9879. Fixed stale tracking ref locally.
+
+Stage Summary:
+- GitHub main = 9ec9879: OpenNext pipeline + Supabase first-time setup docs live; this push triggers Workers Builds, which should now pass (build command unchanged: bun run build / npx wrangler deploy).
+- User-side checklist delivered: schema.sql → seed:supabase (admin@shop.demo/admin123, role=admin in user_metadata) → CF env vars (URL+anon build+runtime, service_role runtime secret) → redeploy → sign in → /admin shows dedicated admin chrome.
+- Still outstanding: GitHub token rotation (exposed in chat earlier), optional /admin/orders page.
