@@ -103,3 +103,20 @@ Stage Summary:
 - main = e9ecabb: production "Seed now" now bootstraps Supabase (products + admin@shop.demo/admin123) with one click after schema.sql + env vars are in place.
 - User-side order of operations: 1) run schema.sql in SQL editor, 2) set CF build vars (URL+anon) and runtime vars (URL+anon+service_role Secret), 3) wait for green CI build, 4) open site → Seed now → sign in → /admin shows the dashboard.
 - Outstanding: GitHub token rotation reminder; optional /admin/orders page.
+
+---
+Task ID: 6
+Agent: Super Z (main agent)
+Task: Diagnose "Can't sign in" (screenshot: sign-in modal over storefront, Demo-mode banner still visible).
+
+Work Log:
+- Screenshot analysis: user attempting admin@shop.demo/admin123 in the auth modal while the "Demo mode. No products yet" banner is still displayed → the seed never succeeded → the admin account does not exist in Supabase Auth yet → sign-in necessarily fails ("Invalid login credentials" if env vars are set; "Login failed. Please try again." if the worker is still falling back to Prisma, which can't run on workerd).
+- Tried probing the live worker at https://hayaan-market.workers.dev — DNS does not resolve (000); real URL is hayaan-market.<account-subdomain>.workers.dev, unknown from here.
+- Root UX trap found: AuthModal unconditionally advertised the demo-admin credentials, inviting sign-in before the bootstrap seeder ever ran.
+- Fix (commit afeb941, pushed): auth-modal.tsx now reads products from the store — when the catalog is empty the credentials box is replaced with a "First time here? Click Seed now on the banner first" guide; credentials box reappears once products exist.
+- Full bun run build passed; ls-remote confirms main = afeb941 (CI will redeploy).
+
+Stage Summary:
+- Sign-in failure is expected pre-seed; the ordered recovery path is: schema.sql → CF env vars (build + runtime incl. service_role Secret) → green CI build on afeb941 → Seed now (banner must disappear; popup error = actionable message) → then sign in admin@shop.demo/admin123 → /admin renders dashboard.
+- Diagnostic key for future reports: exact toast text maps to root cause (Invalid credentials = not seeded; Login failed = env vars missing; Network error = stale/failed deployment).
+- Outstanding: GitHub token rotation; optional /admin/orders page.
