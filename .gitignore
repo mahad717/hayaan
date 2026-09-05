@@ -52,3 +52,12 @@ prompt
 server.log
 # Skills directory
 /skills/upload/
+
+# Cloudflare / OpenNext build output + local scratch
+.open-next/
+.wrangler/
+.wrangler-dev*.log
+.opennext-build.log
+.search*.json
+.cf-*.md
+.assetsignore-backup

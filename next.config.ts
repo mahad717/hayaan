@@ -1,13 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Cloudflare Pages uses @cloudflare/next-on-pages to translate Next.js
-  // into a Workers-compatible bundle. The standalone output is NOT used by
-  // Cloudflare — that's only for Node.js deployments.
-  //
-  // We keep `output: "standalone"` so `bun run build` works for Node.js hosts
-  // (Vercel, Railway, etc.). For Cloudflare, use `bun run build:pages` which
-  // runs `@cloudflare/next-on-pages` and emits to `.vercel/output/static`.
+  // Cloudflare Workers deployment uses the official OpenNext adapter
+  // (`bun run build` → `opennextjs-cloudflare build`), which runs
+  // `next build` and converts the output to `.open-next/worker.js` +
+  // `.open-next/assets`. The standalone output below is what makes the
+  // converted server runnable; it also enables `bun run start` on
+  // Node.js hosts (Vercel, Railway, etc.).
   output: "standalone",
 
   typescript: {

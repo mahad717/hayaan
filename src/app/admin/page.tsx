@@ -3,9 +3,6 @@ import { getServerUser } from "@/lib/current-user";
 import { AdminTopbar } from "@/components/store/admin-topbar";
 import { AdminPanel } from "@/components/store/admin-panel";
 
-// Required by @cloudflare/next-on-pages: every dynamic route must run on
-// the Edge Runtime to be deployable to Cloudflare Workers.
-export const runtime = "edge";
 
 // Server-side route guard: the session is checked on the server BEFORE any
 // admin UI is rendered. Non-admins (and signed-out visitors) are redirected

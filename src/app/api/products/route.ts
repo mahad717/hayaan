@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Required by Cloudflare Pages — all API routes must run on the Edge Runtime.
-export const runtime = "edge";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";

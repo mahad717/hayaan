@@ -45,3 +45,23 @@ Stage Summary:
 - Remaining user-side steps: set NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY as BUILD-time vars (Next inlines NEXT_PUBLIC_* at build) and runtime vars; set SUPABASE_SERVICE_ROLE_KEY as runtime secret only. Then the worker serves at https://hayaan-market.<subdomain>.workers.dev.
 - Alternative path: user can supply a Cloudflare API token + Account ID for a direct `wrangler deploy` from this workspace.
 - Note: GitHub token was shared in chat; recommended rotation.
+
+---
+Task ID: 3
+Agent: Super Z (main agent)
+Task: Fix the failing Cloudflare Workers Builds deploy (entry-point not found) and deliver a working production pipeline.
+
+Work Log:
+- Diagnosed CI log: dashboard build command `bun run build` produced standalone Node output; deploy expected `.vercel/output/static/_worker.js/index.js` from next-on-pages, which never ran.
+- First attempt: repointed `build` at next-on-pages + vercel.json buildCommand override to avoid the adapter's internal recursion (next-on-pages runs the package.json `build` script via Vercel CLI). Build passed locally (13 edge routes) and `wrangler deploy --dry-run` passed.
+- Runtime smoke test with `wrangler dev` exposed a FATAL flaw in the whole approach: every SSR/API route 500s with `No such module "__next-on-pages-dist__/functions/<route>.func.js"`. Root cause: next-on-pages emits Pages-shaped output (route modules loaded via runtime dynamic imports + expects the Pages runtime's automatic ASSETS binding). wrangler deploy collects only statically-importable modules; `find_additional_modules`, dropping `main`, assets-only mode (forbids ASSETS binding) all tested — none work. next-on-pages' own README documents no Workers deploy path.
+- Checked Cloudflare docs (Aug 2026): official Workers adapter is @opennextjs/cloudflare (vinext recommended only for new apps, still beta). Decision: migrate the pipeline to OpenNext.
+- Migration steps: removed @cloudflare/next-on-pages (first `bun remove -d` silently failed — invalid flag — leaving esbuild ^0.15.3 hoisted at root, which broke the adapter's esbuild aliases with "Invalid alias name"; proper `bun remove` + explicit `bun add -d esbuild@^0.27.0` fixed resolution: adapter→0.27.7, wrangler→0.28.1 nested); added open-next.config.ts; rewrote wrangler.toml (main=.open-next/worker.js, assets=.open-next/assets, ASSETS binding, observability, compat date 2026-09-01); build script = `next build && opennextjs-cloudflare build --skipNextBuild` (--skipNextBuild avoids adapter re-running the build script recursively); upgraded next 16.1.3→16.3.4 (adapter peer range requires >=16.3.3).
+- Removed `export const runtime = "edge"` from all 14 files + stale Pages comments (Next 16.3 deprecates edge runtime; OpenNext runs everything in the Worker — also the officially documented migration step).
+- Local verification: full `bun run build` passes; `wrangler dev` smoke test: / → 200, /admin → 307 redirect (guard works in worker), /missing → 404, /api/products → 500 only from missing Supabase keys (Prisma fallback can't run in workerd — expected; on CF the Supabase path is used); `wrangler deploy --dry-run` passes (~1.4 MB gzipped, well under the 3 MB free limit, 38 assets, bindings resolve).
+- Housekeeping: eslint ignores for .open-next/.wrangler (lint OOM'd scanning generated bundles), dev server restarted on Next 16.3.4 (GET / 200), README deploy docs rewritten for OpenNext.
+
+Stage Summary:
+- Deliverable: `bun run build` now produces a deployable Worker and `npx wrangler deploy` (unchanged dashboard commands) deploys it. Pushed to main; Workers Builds should pass on the next run.
+- User-side requirements: set NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY as BUILD variables, and the same two plus SUPABASE_SERVICE_ROLE_KEY (Secret) as runtime Variables & Secrets.
+- Key lesson recorded: next-on-pages output cannot be deployed to Workers via wrangler; OpenNext is the supported path.
