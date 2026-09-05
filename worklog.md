@@ -84,3 +84,22 @@ Stage Summary:
 - GitHub main = 9ec9879: OpenNext pipeline + Supabase first-time setup docs live; this push triggers Workers Builds, which should now pass (build command unchanged: bun run build / npx wrangler deploy).
 - User-side checklist delivered: schema.sql → seed:supabase (admin@shop.demo/admin123, role=admin in user_metadata) → CF env vars (URL+anon build+runtime, service_role runtime secret) → redeploy → sign in → /admin shows dedicated admin chrome.
 - Still outstanding: GitHub token rotation (exposed in chat earlier), optional /admin/orders page.
+
+---
+Task ID: 5
+Agent: Super Z (main agent)
+Task: Diagnose the user's /admin screenshot (storefront + "Demo mode" banner) and unblock production bootstrap.
+
+Work Log:
+- Analyzed upload/7ca65dd7-*.png: shows the STOREFRONT with the "Demo mode. No products yet" SeedCallout — not the admin dashboard. Confirms both symptoms share one root cause: no Supabase setup (no tables/admin user), so /admin's server guard redirects to / and the catalog is empty.
+- Corrected the user's mental model: `src/app/admin` is not deployed separately; the whole Next.js app deploys as one Worker, and the admin page is inside it — the redirect IS the admin page's guard working as designed.
+- Found a production trap: the banner's "Seed now" button calls POST /api/seed, which only implemented the local Prisma+SQLite path (impossible on the Workers runtime — the route's own comment said to use scripts/seed-supabase.ts).
+- Created src/lib/seed-data.ts: shared Supabase-shaped seed data (4 categories, 12 products, SEED_ADMIN credentials), consumed by the API route.
+- Rewrote /api/seed with a Supabase branch (seedSupabase()): bootstrap-only guard (409 if products exist — can't overwrite live data), missing-table error message pointing at schema.sql, upserts categories/products via service-role client, creates/updates the admin auth user with user_metadata.role="admin" + syncs public.users row. Local Prisma path untouched.
+- Banner button now surfaces server errors via alert instead of failing silently (e.g. "relation does not exist → run schema.sql").
+- Verified: full bun run build passes (OpenNext bundle emitted). Committed e9ecabb, pushed; ls-remote confirms main = e9ecabb.
+
+Stage Summary:
+- main = e9ecabb: production "Seed now" now bootstraps Supabase (products + admin@shop.demo/admin123) with one click after schema.sql + env vars are in place.
+- User-side order of operations: 1) run schema.sql in SQL editor, 2) set CF build vars (URL+anon) and runtime vars (URL+anon+service_role Secret), 3) wait for green CI build, 4) open site → Seed now → sign in → /admin shows the dashboard.
+- Outstanding: GitHub token rotation reminder; optional /admin/orders page.
