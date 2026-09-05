@@ -29,7 +29,10 @@ function SeedCallout() {
               const res = await fetch("/api/seed", { method: "POST" });
               if (res.ok) {
                 window.location.reload();
+                return;
               }
+              const data = await res.json().catch(() => null);
+              alert(data?.error ?? "Seeding failed — check the deployment logs.");
             }}
           >
             Seed now

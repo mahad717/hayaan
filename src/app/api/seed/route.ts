@@ -1,6 +1,91 @@
 import { NextResponse } from "next/server";
 
 import { getDb } from "@/lib/db";
+import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
+import { SEED_ADMIN, SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed-data";
+
+function jsonError(error: string, status: number) {
+  return NextResponse.json({ ok: false, error }, { status });
+}
+
+// Production (Supabase) bootstrap: seeds categories + demo products and
+// creates the admin account via the service-role client. Only runs while the
+// catalog is empty, so it can't be abused to overwrite live data later.
+async function seedSupabase(email: string, name: string, password: string) {
+  const supabase = createServiceClient();
+  if (!supabase) return jsonError("Supabase is enabled but the service-role key is missing.", 500);
+
+  // Bootstrap-only guard — also doubles as a "did you run schema.sql?" check.
+  const { count, error: countErr } = await supabase
+    .from("products")
+    .select("id", { count: "exact", head: true });
+  if (countErr) {
+    return jsonError(
+      `Cannot read the products table (${countErr.message}). If the error mentions a missing relation, run src/lib/supabase/schema.sql in the Supabase SQL editor first.`,
+      500,
+    );
+  }
+  if ((count ?? 0) > 0) {
+    return jsonError(
+      "The catalog already has products — this bootstrap seeder only runs on an empty database. Manage products from the admin dashboard instead.",
+      409,
+    );
+  }
+
+  const { error: catErr } = await supabase
+    .from("categories")
+    .upsert(SEED_CATEGORIES, { onConflict: "slug" });
+  if (catErr) return jsonError(`Failed to seed categories: ${catErr.message}`, 500);
+
+  const { data: cats, error: catsFetchErr } = await supabase.from("categories").select("id, slug");
+  if (catsFetchErr || !cats) return jsonError(`Failed to load categories: ${catsFetchErr?.message}`, 500);
+  const slugToId = new Map(cats.map((c: { id: string; slug: string }) => [c.slug, c.id]));
+
+  const rows = SEED_PRODUCTS.map(({ category_slug, ...p }) => ({
+    ...p,
+    currency: "USD",
+    is_active: true,
+    category_id: slugToId.get(category_slug) ?? null,
+  }));
+  const { error: prodErr } = await supabase.from("products").upsert(rows, { onConflict: "slug" });
+  if (prodErr) return jsonError(`Failed to seed products: ${prodErr.message}`, 500);
+
+  // Admin account: user_metadata.role is what the /admin guard reads from
+  // the Supabase JWT.
+  const { data: existing } = await supabase.auth.admin.listUsers();
+  const found = existing?.users?.find((u) => u.email === email);
+  const userId = found
+    ? (
+      await supabase.auth.admin.updateUserById(found.id, {
+        password,
+        email_confirm: true,
+        user_metadata: { name, role: "admin" },
+      })
+    ).data?.user?.id
+    : (
+      await supabase.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { name, role: "admin" },
+      })
+    ).data?.user?.id;
+
+  if (!userId) return jsonError(`Failed to create the admin user ${email}.`, 500);
+
+  const { error: profileErr } = await supabase
+    .from("users")
+    .upsert({ id: userId, email, name, role: "admin" }, { onConflict: "id" });
+  if (profileErr) return jsonError(`Admin auth user created, but syncing the public.users profile failed: ${profileErr.message}`, 500);
+
+  return NextResponse.json({
+    ok: true,
+    mode: "supabase",
+    seeded: rows.length,
+    categories: SEED_CATEGORIES.length,
+    admin: { email, password },
+  });
+}
 
 interface SeedBody {
   email?: string;
@@ -18,9 +103,15 @@ export async function POST(req: Request) {
     // Empty body is OK — we use defaults.
   }
 
-  const email = body.email?.trim() || "admin@shop.demo";
-  const name = body.name?.trim() || "Store Admin";
-  const password = body.password || "admin123";
+  const email = body.email?.trim() || SEED_ADMIN.email;
+  const name = body.name?.trim() || SEED_ADMIN.name;
+  const password = body.password || SEED_ADMIN.password;
+
+  // Production path (Cloudflare Workers + Supabase): the Prisma/SQLite engine
+  // below cannot run on the Workers runtime, so bootstrap through Supabase.
+  if (isSupabaseServerEnabled) {
+    return seedSupabase(email, name, password);
+  }
 
   // --- Categories ---
   const categories = [
