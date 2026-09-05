@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStore } from "@/hooks/use-store";
 
+const INPUT_CLASS = "bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]";
+
 export function AuthModal() {
   const { authOpen, setAuthOpen, setUser, setCart, toast } = useStore();
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -42,7 +44,6 @@ export function AuthModal() {
       }
       setUser(data.user);
       toast(`Welcome, ${data.user.name.split(" ")[0]}!`, "success");
-      // Refresh cart now that the user is signed in.
       const cartRes = await fetch("/api/cart", { credentials: "include" });
       if (cartRes.ok) {
         const cartData = await cartRes.json();
@@ -61,7 +62,7 @@ export function AuthModal() {
     <Dialog open={authOpen} onOpenChange={setAuthOpen}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-semibold">
+          <DialogTitle className="text-center text-2xl font-semibold text-brand-dark">
             {mode === "login" ? "Welcome back" : "Create your account"}
           </DialogTitle>
           <DialogDescription className="text-center">
@@ -80,7 +81,7 @@ export function AuthModal() {
           <TabsContent value="login">
             <form onSubmit={submit} className="flex flex-col gap-4 pt-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email-login">Email</Label>
+                <Label htmlFor="email-login" className="text-foreground">Email</Label>
                 <Input
                   id="email-login"
                   type="email"
@@ -89,10 +90,11 @@ export function AuthModal() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   autoComplete="email"
+                  className={INPUT_CLASS}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="pwd-login">Password</Label>
+                <Label htmlFor="pwd-login" className="text-foreground">Password</Label>
                 <Input
                   id="pwd-login"
                   type="password"
@@ -100,9 +102,10 @@ export function AuthModal() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
+                  className={INPUT_CLASS}
                 />
               </div>
-              <Button type="submit" disabled={loading} className="mt-2">
+              <Button type="submit" disabled={loading} className="btn-accent mt-2">
                 {loading ? "Signing in…" : "Sign in"}
               </Button>
             </form>
@@ -111,7 +114,7 @@ export function AuthModal() {
           <TabsContent value="signup">
             <form onSubmit={submit} className="flex flex-col gap-4 pt-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="name-signup">Name</Label>
+                <Label htmlFor="name-signup" className="text-foreground">Name</Label>
                 <Input
                   id="name-signup"
                   required
@@ -119,10 +122,11 @@ export function AuthModal() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Alex Rivera"
                   autoComplete="name"
+                  className={INPUT_CLASS}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email-signup">Email</Label>
+                <Label htmlFor="email-signup" className="text-foreground">Email</Label>
                 <Input
                   id="email-signup"
                   type="email"
@@ -131,10 +135,11 @@ export function AuthModal() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   autoComplete="email"
+                  className={INPUT_CLASS}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="pwd-signup">Password</Label>
+                <Label htmlFor="pwd-signup" className="text-foreground">Password</Label>
                 <Input
                   id="pwd-signup"
                   type="password"
@@ -143,21 +148,21 @@ export function AuthModal() {
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
                   minLength={6}
+                  className={INPUT_CLASS}
                 />
                 <p className="text-xs text-muted-foreground">At least 6 characters.</p>
               </div>
-              <Button type="submit" disabled={loading} className="mt-2">
+              <Button type="submit" disabled={loading} className="btn-accent mt-2">
                 {loading ? "Creating account…" : "Create account"}
               </Button>
             </form>
           </TabsContent>
         </Tabs>
 
-        <div className="mt-2 rounded-md bg-muted/50 p-3 text-xs text-muted-foreground">
-          <p className="font-medium text-foreground">Demo admin</p>
-          <p>Email: <code>admin@shop.demo</code></p>
-          <p>Password: <code>admin123</code></p>
-          <p className="mt-1">Or run <code>POST /api/seed</code> from your own session.</p>
+        <div className="mt-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground">
+          <p className="font-medium text-brand">Demo admin</p>
+          <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
+          <p>Password: <code className="text-foreground">admin123</code></p>
         </div>
       </DialogContent>
     </Dialog>

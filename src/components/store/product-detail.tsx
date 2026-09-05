@@ -82,23 +82,28 @@ export function ProductDetail() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <Button variant="ghost" size="sm" className="mb-6" onClick={() => setView("home")}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="mb-6 text-brand hover:bg-secondary"
+        onClick={() => setView("home")}
+      >
         <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
       </Button>
 
       <div className="grid gap-8 md:grid-cols-2 md:gap-12">
         {/* Gallery */}
         <div className="flex flex-col gap-3">
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted/30">
+          <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#faf8f1] ring-1 ring-[#e6e2d4]">
             <img
               src={product.images[activeImage] ?? "/placeholder.svg"}
               alt={`${product.name} — image ${activeImage + 1}`}
               className="h-full w-full object-cover"
             />
             {discount > 0 && (
-              <Badge className="absolute left-4 top-4 bg-destructive text-destructive-foreground">
+              <span className="absolute left-4 top-4 flex items-center gap-1 rounded-full bg-[#f28c28] px-3 py-1 text-xs font-semibold text-white shadow-sm">
                 -{discount}%
-              </Badge>
+              </span>
             )}
           </div>
           {product.images.length > 1 && (
@@ -108,8 +113,8 @@ export function ProductDetail() {
                   key={i}
                   onClick={() => setActiveImage(i)}
                   className={cn(
-                    "aspect-square overflow-hidden rounded-lg border bg-muted/30 transition",
-                    activeImage === i ? "border-primary ring-2 ring-primary/30" : "hover:border-primary/50",
+                    "aspect-square overflow-hidden rounded-lg border bg-[#faf8f1] transition",
+                    activeImage === i ? "border-brand ring-2 ring-[#f28c28]/30" : "border-[#e6e2d4] hover:border-brand/50",
                   )}
                   aria-label={`View image ${i + 1}`}
                   aria-pressed={activeImage === i}
@@ -125,31 +130,40 @@ export function ProductDetail() {
         <div className="flex flex-col gap-5">
           <div>
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs uppercase tracking-wide text-muted-foreground">
+              <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
                 {product.category?.name ?? "—"}
               </span>
               {product.featured && (
-                <Badge variant="secondary">Featured</Badge>
+                <Badge variant="secondary" className="bg-secondary text-brand">
+                  Featured
+                </Badge>
               )}
             </div>
-            <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{product.name}</h1>
+            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">
+              {product.name}
+            </h1>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-              <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+              <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" />
               <span>{product.rating || "Unrated"}</span>
               {product.reviewCount > 0 && <span>· {product.reviewCount} reviews</span>}
               <span>· SKU {product.sku ?? "—"}</span>
             </div>
           </div>
 
+          {/* Price — Deep Hayaan Green */}
           <div className="flex items-baseline gap-3">
-            <span className="text-3xl font-semibold">{formatPrice(product.price, product.currency)}</span>
+            <span className="text-3xl font-semibold text-brand">
+              {formatPrice(product.price, product.currency)}
+            </span>
             {product.compareAt && product.compareAt > product.price && (
               <span className="text-base text-muted-foreground line-through">
                 {formatPrice(product.compareAt, product.currency)}
               </span>
             )}
             {discount > 0 && (
-              <Badge className="bg-emerald-100 text-emerald-700">Save {discount}%</Badge>
+              <Badge className="bg-[#fef1de] text-[#f28c28] hover:bg-[#fef1de]">
+                Save {discount}%
+              </Badge>
             )}
           </div>
 
@@ -160,7 +174,7 @@ export function ProductDetail() {
           {product.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {product.tags.map((t) => (
-                <Badge key={t} variant="outline" className="font-normal">
+                <Badge key={t} variant="outline" className="border-[#e6e2d4] font-normal text-muted-foreground">
                   #{t}
                 </Badge>
               ))}
@@ -168,19 +182,24 @@ export function ProductDetail() {
           )}
 
           <div className="flex items-center gap-2 text-sm">
-            <span className={cn("h-2 w-2 rounded-full", product.stock > 0 ? "bg-emerald-500" : "bg-destructive")} />
+            <span
+              className={cn(
+                "h-2 w-2 rounded-full",
+                product.stock > 0 ? "bg-[#3f7d4a]" : "bg-destructive",
+              )}
+            />
             <span className="text-muted-foreground">
               {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
             </span>
           </div>
 
-          {/* Quantity + add */}
+          {/* Quantity + actions */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center rounded-lg border">
+            <div className="flex items-center rounded-lg border border-[#e6e2d4] bg-white">
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-10 w-10"
+                className="h-10 w-10 text-brand"
                 onClick={() => setQty(Math.max(1, qty - 1))}
                 aria-label="Decrease quantity"
                 disabled={qty <= 1}
@@ -193,7 +212,7 @@ export function ProductDetail() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-10 w-10"
+                className="h-10 w-10 text-brand"
                 onClick={() => setQty(Math.min(product.stock, qty + 1))}
                 aria-label="Increase quantity"
                 disabled={qty >= product.stock}
@@ -202,26 +221,39 @@ export function ProductDetail() {
               </Button>
             </div>
 
-            <Button size="lg" onClick={handleAdd} disabled={adding || product.stock === 0}>
+            {/* Add to cart — Market Orange (the 10% accent) */}
+            <Button
+              size="lg"
+              className="btn-accent"
+              onClick={handleAdd}
+              disabled={adding || product.stock === 0}
+            >
               <ShoppingBag className="mr-2 h-4 w-4" /> Add to cart
             </Button>
-            <Button size="lg" variant="secondary" onClick={handleBuyNow} disabled={adding || product.stock === 0}>
+
+            {/* Buy now — Deep Hayaan Green */}
+            <Button
+              size="lg"
+              className="bg-brand hover:bg-brand-dark"
+              onClick={handleBuyNow}
+              disabled={adding || product.stock === 0}
+            >
               Buy now
             </Button>
           </div>
 
           {/* Reassurance row */}
-          <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border bg-muted/30 p-4 text-sm sm:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm sm:grid-cols-3">
             <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 text-muted-foreground" />
+              <Truck className="h-4 w-4 text-brand" />
               Free shipping over $75
             </div>
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-muted-foreground" />
+              <Shield className="h-4 w-4 text-brand" />
               Secure checkout
             </div>
             <div className="flex items-center gap-2">
-              <RotateCcw className="h-4 w-4 text-muted-foreground" />
+              <RotateCcw className="h-4 w-4 text-brand" />
               30-day returns
             </div>
           </div>

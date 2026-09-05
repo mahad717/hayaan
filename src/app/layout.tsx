@@ -14,24 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "Hayaan Market — Everything You Need, All in One Market.",
+  description: "Hayaan Market is a modern online marketplace built on Next.js, Supabase, and Cloudflare. Shop curated goods across apparel, electronics, home, and beauty.",
+  keywords: ["Hayaan Market", "online marketplace", "Next.js", "Supabase", "Cloudflare", "ecommerce", "Somalia"],
+  authors: [{ name: "Hayaan Market" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    title: "Hayaan Market",
+    description: "Everything You Need, All in One Market.",
+    url: "https://hayaan.market",
+    siteName: "Hayaan Market",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Hayaan Market",
+    description: "Everything You Need, All in One Market.",
   },
 };
 

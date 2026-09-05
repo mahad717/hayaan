@@ -37,8 +37,6 @@ export function ProductGrid() {
     };
   }, [setProducts, setCategories]);
 
-  // The /api/products endpoint already filters server-side; we re-filter
-  // locally on search/category so the UI feels instant.
   const visible = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     let out = products.filter((p) => {
@@ -60,7 +58,9 @@ export function ProductGrid() {
     <section id="catalog" className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">All products</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">
+            All products
+          </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             {visible.length} item{visible.length === 1 ? "" : "s"}
             {searchQuery && <> · matching “{searchQuery}”</>}
@@ -69,7 +69,7 @@ export function ProductGrid() {
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="w-40" aria-label="Sort by">
+            <SelectTrigger className="w-44 bg-white" aria-label="Sort by">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -88,6 +88,11 @@ export function ProductGrid() {
           size="sm"
           variant={activeCategory === "all" ? "default" : "outline"}
           onClick={() => setActiveCategory("all")}
+          className={
+            activeCategory === "all"
+              ? "bg-brand text-white hover:bg-brand-dark"
+              : "border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
+          }
         >
           All
         </Button>
@@ -97,6 +102,11 @@ export function ProductGrid() {
             size="sm"
             variant={activeCategory === c.id ? "default" : "outline"}
             onClick={() => setActiveCategory(c.id)}
+            className={
+              activeCategory === c.id
+                ? "bg-brand text-white hover:bg-brand-dark"
+                : "border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
+            }
           >
             {c.name}
           </Button>
@@ -116,10 +126,11 @@ export function ProductGrid() {
           ))}
         </div>
       ) : visible.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed py-16 text-center">
+        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#e6e2d4] py-16 text-center">
           <p className="text-muted-foreground">No products match your search.</p>
           <Button
             variant="outline"
+            className="border-brand text-brand hover:bg-brand hover:text-white"
             onClick={() => {
               setActiveCategory("all");
               useStore.getState().setSearchQuery("");
@@ -137,7 +148,11 @@ export function ProductGrid() {
       )}
 
       <div className="mt-10 flex justify-center">
-        <Button variant="ghost" onClick={() => setView("cart")}>
+        <Button
+          variant="ghost"
+          className="text-brand hover:bg-secondary"
+          onClick={() => setView("cart")}
+        >
           View cart →
         </Button>
       </div>

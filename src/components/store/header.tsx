@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -48,37 +48,44 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full border-b bg-background/85 backdrop-blur-md transition-shadow ${
+      className={`sticky top-0 z-40 w-full border-b border-[#e6e2d4] bg-white/90 backdrop-blur-md transition-shadow ${
         scrolled ? "shadow-sm" : ""
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
+        {/* Logo — Deep Hayaan Green */}
         <button
           onClick={() => setView("home")}
           className="flex items-center gap-2 text-base font-semibold tracking-tight"
+          aria-label="Hayaan Market home"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <ShoppingBag className="h-5 w-5" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand text-white">
+            <Leaf className="h-5 w-5" />
           </span>
-          <span className="hidden sm:inline">Mercado</span>
+          <span className="hidden text-brand sm:inline">
+            Hayaan <span className="font-normal text-foreground/70">Market</span>
+          </span>
         </button>
 
+        {/* Search */}
         <div className="relative flex-1 max-w-xl">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search products, brands, categories…"
-            className="pl-9 bg-muted/40 border-muted/60"
+            className="border-[#e6e2d4] bg-[#faf8f1] placeholder:text-muted-foreground/70 focus-visible:ring-[#f28c28]"
             aria-label="Search products"
           />
         </div>
 
+        {/* Nav */}
         <nav className="hidden items-center gap-1 md:flex">
           <Button
             variant={view === "home" ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setView("home")}
+            className={view === "home" ? "" : "text-foreground/80 hover:text-brand"}
           >
             Shop
           </Button>
@@ -87,6 +94,7 @@ export function Header() {
               variant={view === "orders" ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setView("orders")}
+              className={view === "orders" ? "" : "text-foreground/80 hover:text-brand"}
             >
               <Package className="mr-1 h-4 w-4" /> Orders
             </Button>
@@ -96,15 +104,17 @@ export function Header() {
               variant={view === "admin" ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setView("admin")}
+              className={view === "admin" ? "" : "text-foreground/80 hover:text-brand"}
             >
               <LayoutGrid className="mr-1 h-4 w-4" /> Admin
             </Button>
           )}
         </nav>
 
+        {/* Account dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Account menu">
+            <Button variant="ghost" size="icon" aria-label="Account menu" className="text-brand hover:bg-secondary">
               <User className="h-5 w-5" />
             </Button>
           </DropdownMenuTrigger>
@@ -112,7 +122,7 @@ export function Header() {
             {user ? (
               <>
                 <DropdownMenuLabel>
-                  <div className="font-medium">{user.name}</div>
+                  <div className="font-medium text-foreground">{user.name}</div>
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -137,27 +147,28 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {/* Cart — green icon, orange count badge */}
         <Button
           variant="ghost"
           size="icon"
-          className="relative"
+          className="relative text-brand hover:bg-secondary"
           onClick={() => setCartOpen(true)}
           aria-label={`Cart with ${cartCount(cart)} items`}
         >
           <ShoppingBag className="h-5 w-5" />
           {cartCount(cart) > 0 && (
-            <Badge
-              className="absolute -right-1 -top-1 h-5 min-w-5 px-1 text-xs"
-              variant="default"
+            <span
+              className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-white shadow-sm ring-2 ring-white"
+              aria-label={`${cartCount(cart)} items in cart`}
             >
               {cartCount(cart)}
-            </Badge>
+            </span>
           )}
         </Button>
       </div>
 
       {/* Mobile nav row */}
-      <div className="md:hidden border-t bg-background/85 backdrop-blur">
+      <div className="border-t border-[#e6e2d4] bg-white/90 md:hidden">
         <div className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 py-2">
           <Button
             variant={view === "home" ? "secondary" : "ghost"}

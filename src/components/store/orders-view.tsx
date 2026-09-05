@@ -17,11 +17,13 @@ function formatPrice(n: number, currency = "USD") {
   }
 }
 
+// Status badges stay within the Hayaan family — sage green for paid/delivered,
+// soft amber for pending, deep indigo for shipped, red for cancelled.
 const STATUS_COLOR: Record<OrderStatus, string> = {
-  pending: "bg-amber-100 text-amber-700",
-  paid: "bg-blue-100 text-blue-700",
-  shipped: "bg-indigo-100 text-indigo-700",
-  delivered: "bg-emerald-100 text-emerald-700",
+  pending: "bg-[#fef1de] text-[#c87b1f]",
+  paid: "bg-[#eef5ec] text-brand",
+  shipped: "bg-[#e8eff5] text-[#24527a]",
+  delivered: "bg-[#3f7d4a]/15 text-[#3f7d4a]",
   cancelled: "bg-destructive/10 text-destructive",
 };
 
@@ -47,23 +49,23 @@ export function OrdersView() {
   if (!user) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-        <Package className="mx-auto h-12 w-12 text-muted-foreground" />
-        <h1 className="mt-4 text-2xl font-semibold">Sign in to see your orders</h1>
+        <Package className="mx-auto h-12 w-12 text-brand" />
+        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">Sign in to see your orders</h1>
         <p className="mt-2 text-sm text-muted-foreground">Your order history lives in your account.</p>
-        <Button className="mt-4" onClick={() => setAuthOpen(true)}>Sign in</Button>
+        <Button className="mt-4 bg-brand hover:bg-brand-dark" onClick={() => setAuthOpen(true)}>Sign in</Button>
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <Button variant="ghost" size="sm" className="mb-6" onClick={() => setView("home")}>
+      <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
         <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
       </Button>
 
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your orders</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Your orders</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {loading ? "Loading…" : `${orders.length} order${orders.length === 1 ? "" : "s"}`}
           </p>
@@ -79,20 +81,20 @@ export function OrdersView() {
           ))}
         </div>
       ) : orders.length === 0 ? (
-        <Card className="border-dashed">
+        <Card className="border-dashed border-[#e6e2d4]">
           <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-            <Package className="h-10 w-10 text-muted-foreground" />
+            <Package className="h-10 w-10 text-brand" />
             <p className="text-sm text-muted-foreground">You haven’t placed any orders yet.</p>
-            <Button variant="secondary" onClick={() => setView("home")}>Start shopping</Button>
+            <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>Start shopping</Button>
           </CardContent>
         </Card>
       ) : (
         <div className="flex flex-col gap-4">
           {orders.map((o) => (
-            <Card key={o.id}>
+            <Card key={o.id} className="border-[#e6e2d4]">
               <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0 pb-3">
                 <div>
-                  <CardTitle className="text-base">Order {o.id.slice(0, 8).toUpperCase()}</CardTitle>
+                  <CardTitle className="text-base text-brand-dark">Order {o.id.slice(0, 8).toUpperCase()}</CardTitle>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {new Date(o.createdAt).toLocaleDateString(undefined, {
                       year: "numeric",
@@ -137,9 +139,9 @@ export function OrdersView() {
                       <p className="capitalize">{o.paymentMethod}</p>
                       {o.paymentRef && <p className="font-mono text-[10px]">{o.paymentRef}</p>}
                     </div>
-                    <div className="mt-2 flex justify-between border-t pt-2 text-sm">
+                    <div className="mt-2 flex justify-between border-t border-[#e6e2d4] pt-2 text-sm">
                       <span className="font-medium text-foreground">Total</span>
-                      <span className="font-semibold">{formatPrice(o.totalAmount, o.currency)}</span>
+                      <span className="font-semibold text-brand">{formatPrice(o.totalAmount, o.currency)}</span>
                     </div>
                   </div>
                 </div>

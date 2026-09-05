@@ -18,14 +18,14 @@ function SeedCallout() {
   const [hidden, setHidden] = useHiddenState();
   if (hidden || products.length > 0 || user) return null;
   return (
-    <div className="border-b bg-amber-50 text-amber-900">
+    <div className="border-b border-[#e6e2d4] bg-[#fef1de] text-[#7a4a14]">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 text-sm sm:px-6">
         <p>
-          <strong>Demo mode.</strong> No products yet. Run <code className="rounded bg-amber-100 px-1.5 py-0.5">POST /api/seed</code> to load the sample catalog and an admin user.
+          <strong>Demo mode.</strong> No products yet. Click below to seed the catalog with sample data and an admin user.
         </p>
         <div className="flex gap-2">
           <button
-            className="rounded-md bg-amber-900 px-3 py-1 text-xs font-medium text-white hover:opacity-90"
+            className="rounded-md bg-[#f28c28] px-3 py-1 text-xs font-medium text-white hover:opacity-90"
             onClick={async () => {
               const res = await fetch("/api/seed", { method: "POST" });
               if (res.ok) {

@@ -86,7 +86,7 @@ export function AdminPanel() {
   if (!user || user.role !== "admin") {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-        <h1 className="text-2xl font-semibold">Admin access required</h1>
+        <h1 className="text-2xl font-semibold text-brand-dark">Admin access required</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Sign in with an admin account to manage products.
         </p>
@@ -177,40 +177,40 @@ export function AdminPanel() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <Button variant="ghost" size="sm" className="mb-6" onClick={() => setView("home")}>
+      <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
         <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
       </Button>
 
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Admin dashboard</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Admin dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">Manage your catalog, pricing, and inventory.</p>
         </div>
-        <Button onClick={openNew}>
+        <Button onClick={openNew} className="btn-accent">
           <Plus className="mr-1 h-4 w-4" /> New product
         </Button>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
-          { label: "Total products", value: products.length },
-          { label: "Featured", value: products.filter((p) => p.featured).length },
-          { label: "Out of stock", value: products.filter((p) => p.stock === 0).length },
-          { label: "Categories", value: categories.length },
+          { label: "Total products", value: products.length, color: "text-brand" },
+          { label: "Featured", value: products.filter((p) => p.featured).length, color: "text-[#f28c28]" },
+          { label: "Out of stock", value: products.filter((p) => p.stock === 0).length, color: "text-destructive" },
+          { label: "Categories", value: categories.length, color: "text-[#3f7d4a]" },
         ].map((s) => (
-          <Card key={s.label}>
+          <Card key={s.label} className="border-[#e6e2d4]">
             <CardContent className="py-4">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">{s.label}</p>
-              <p className="mt-1 text-2xl font-semibold">{s.value}</p>
+              <p className={`mt-1 text-2xl font-semibold ${s.color}`}>{s.value}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="mt-6">
+      <Card className="mt-6 border-[#e6e2d4]">
         <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Package className="h-4 w-4" /> Catalog ({products.length})
+          <CardTitle className="text-base flex items-center gap-2 text-brand-dark">
+            <Package className="h-4 w-4 text-brand" /> Catalog ({products.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -407,7 +407,7 @@ export function AdminPanel() {
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-              <Button type="submit">{editing ? "Save changes" : "Create product"}</Button>
+              <Button type="submit" className="btn-accent">{editing ? "Save changes" : "Create product"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

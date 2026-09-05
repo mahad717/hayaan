@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Plus } from "lucide-react";
+import { Star, Plus, ShoppingBag } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +17,7 @@ function formatPrice(price: number, currency: string) {
 }
 
 export function ProductCard({ product }: { product: Product }) {
-  const { openProduct, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
+  const { openProduct, setCart, toast, user, setAuthOpen } = useStore();
   const discount =
     product.compareAt && product.compareAt > product.price
       ? Math.round((1 - product.price / product.compareAt) * 100)
@@ -46,51 +46,87 @@ export function ProductCard({ product }: { product: Product }) {
       onKeyDown={(e) => {
         if (e.key === "Enter") openProduct(product);
       }}
-      className="group relative flex cursor-pointer flex-col overflow-hidden p-0 transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="group relative flex cursor-pointer flex-col overflow-hidden p-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f28c28] bg-white border-[#e6e2d4]"
       aria-label={`View ${product.name}`}
     >
-      <div className="relative aspect-square overflow-hidden bg-muted/30">
+      {/* Image */}
+      <div className="relative aspect-square overflow-hidden bg-[#faf8f1]">
         <img
           src={product.images[0] ?? "/placeholder.svg"}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
+
+        {/* Sale badge — Market Orange (the 10% accent) */}
         {discount > 0 && (
-          <Badge className="absolute left-3 top-3 bg-destructive text-destructive-foreground">
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[#f28c28] px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
             -{discount}%
-          </Badge>
+          </span>
         )}
+
+        {/* Featured badge — subtle, green-tinted */}
         {product.featured && (
-          <Badge className="absolute right-3 top-3 bg-background/90 text-foreground">
+          <Badge
+            variant="secondary"
+            className="absolute right-3 top-3 bg-white/95 text-brand hover:bg-white shadow-sm"
+          >
             Featured
           </Badge>
         )}
+
+        {/* Hover add-to-cart overlay button (orange, 10% accent) */}
+        <div className="absolute inset-x-3 bottom-3 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+          <Button
+            size="sm"
+            className="btn-accent w-full shadow-md"
+            onClick={handleAdd}
+            aria-label={`Add ${product.name} to cart`}
+          >
+            <ShoppingBag className="mr-1.5 h-4 w-4" />
+            Add to cart
+          </Button>
+        </div>
       </div>
+
+      {/* Body */}
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">
+          <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
             {product.category?.name ?? "—"}
           </span>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+            <Star className="h-3.5 w-3.5 fill-[#f9c27d] text-[#f9c27d]" />
             {product.rating || "New"}
-            {product.reviewCount > 0 && <span>({product.reviewCount})</span>}
+            {product.reviewCount > 0 && <span className="opacity-70">({product.reviewCount})</span>}
           </div>
         </div>
-        <h3 className="line-clamp-2 text-sm font-medium leading-tight">{product.name}</h3>
+
+        <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground">
+          {product.name}
+        </h3>
+
+        {/* Price row — deep green price, strikethrough compareAt */}
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-base font-semibold">{formatPrice(product.price, product.currency)}</span>
+          <div className="flex flex-col">
+            <span className="text-base font-semibold text-brand">
+              {formatPrice(product.price, product.currency)}
+            </span>
             {product.compareAt && product.compareAt > product.price && (
               <span className="text-xs text-muted-foreground line-through">
                 {formatPrice(product.compareAt, product.currency)}
               </span>
             )}
           </div>
-          <Button size="sm" variant="secondary" className="h-8 px-2" onClick={handleAdd}>
+
+          {/* Mobile add button (always visible) — orange */}
+          <Button
+            size="icon"
+            className="btn-accent h-9 w-9 sm:hidden"
+            onClick={handleAdd}
+            aria-label={`Add ${product.name} to cart`}
+          >
             <Plus className="h-4 w-4" />
-            <span className="sr-only">Add {product.name} to cart</span>
           </Button>
         </div>
       </div>
@@ -100,15 +136,15 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductCardSkeleton() {
   return (
-    <Card className="flex flex-col overflow-hidden p-0">
-      <Skeleton className="aspect-square w-full" />
+    <Card className="flex flex-col overflow-hidden border-[#e6e2d4] p-0">
+      <Skeleton className="aspect-square w-full rounded-none bg-[#faf8f1]" />
       <div className="flex flex-col gap-2 p-4">
         <Skeleton className="h-3 w-16" />
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-2/3" />
         <div className="flex justify-between pt-2">
           <Skeleton className="h-5 w-20" />
-          <Skeleton className="h-8 w-8 rounded" />
+          <Skeleton className="h-9 w-9 rounded-lg" />
         </div>
       </div>
     </Card>
