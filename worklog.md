@@ -120,3 +120,18 @@ Stage Summary:
 - Sign-in failure is expected pre-seed; the ordered recovery path is: schema.sql → CF env vars (build + runtime incl. service_role Secret) → green CI build on afeb941 → Seed now (banner must disappear; popup error = actionable message) → then sign in admin@shop.demo/admin123 → /admin renders dashboard.
 - Diagnostic key for future reports: exact toast text maps to root cause (Invalid credentials = not seeded; Login failed = env vars missing; Network error = stale/failed deployment).
 - Outstanding: GitHub token rotation; optional /admin/orders page.
+
+---
+Task ID: 7
+Agent: Super Z (main agent)
+Task: Fix CI failure "Script not found build:pages" and answer "Should I delete that" (hayaan-admin worker).
+
+Work Log:
+- Screenshot (Cloudflare account home): two project Workers exist — hayaan-admin (circled, user asked about deleting) and hayaan, plus unrelated family-fundraiser; domain tanaad.co visible. Advised: yes, delete hayaan-admin (created under the separate-admin misconception; admin page lives inside the single app at /admin) — but first verify which Worker has the git-connected builds with recent commits (afeb941) and the domain/route attached; deleting removes only deployments/build history, not GitHub or Supabase.
+- CI log analysis: dashboard build command is the legacy `bun run build:pages` (next-on-pages era); that script was removed in the OpenNext migration (6925a38) → instant "Script not found" failure.
+- Fix: re-added `build:pages` as an alias of the OpenNext build in package.json so the stale dashboard config works unmodified; changed wrangler.toml name from "hayaan-market" (matches neither dashboard worker — risk of spawning a third stray Worker on deploy) to "hayaan", with a comment documenting the name-must-match rule and the `wrangler deploy --name` override.
+- Verified locally: `bun run build:pages` (exact CI command) completes and emits .open-next/worker.js. Committed + pushed; ls-remote pending in output.
+
+Stage Summary:
+- main gets build:pages alias + worker name hayaan; the failed CI run can be retried (or the push auto-triggers a new build).
+- Still user-side: confirm which Worker name the builds are attached to (hayaan vs hayaan-admin vs hayaan-market); if different from "hayaan", flip one line or use `--name`; set 3 Supabase env vars (build + runtime) on the connected Worker; run schema.sql; Seed now; sign in admin@shop.demo/admin123.
