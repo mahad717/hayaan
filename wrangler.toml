@@ -54,3 +54,7 @@ enabled = true
 [vars]
 NEXT_PUBLIC_SITE_URL = "https://hayaan.gabeyre80.workers.dev"
 NEXT_PUBLIC_SUPABASE_URL = "https://mqyhgyakhfhuctnvezby.supabase.co"
+# Non-secret Sifalo Pay settings — deployed automatically with every build,
+# so they never need to be added manually in the dashboard.
+SIFALO_RETURN_URL_BASE = "https://hayaan.gabeyre80.workers.dev"
+SIFALO_ENVIRONMENT = "live"
