@@ -383,3 +383,18 @@ Stage Summary:
 - UX dead-end fixed: failed payment attempts self-heal the cart view.
 - BLOCKER for real payments remains: Sifalo rejects the stored credentials ("invalid api key"). User must re-copy API username/password from pay.sifalo.com merchant dashboard into the two Cloudflare secrets (SIFALO_USERNAME / SIFALO_PASSWORD) and Deploy. Asked user for a screenshot of the Sifalo API credentials page to verify field mapping if next attempt still fails.
 - Note: demo customer cart currently holds 1x Lumen Smart LED Strip (re-added for testing); two pending demo orders exist on the account - harmless.
+
+---
+Task ID: 13h
+Agent: Super Z (main agent)
+Task: User still blocked - 502 (invalid api key) then 400->empty-cart page. Build a definitive credential diagnostic.
+
+Work Log:
+- User's report actually confirms two things: cart-resync fix WORKS (second click now lands on the proper empty-cart screen), and the gateway STILL rejects stored creds (502).
+- Re-verified via live curl: POST /api/payments/sifalo -> "invalid api key" again. Sandbox -> api.sifalopay.com is WAF-blocked (Imunify360 JS challenge), so creds can't be tested from the sandbox directly.
+- Built POST /api/payments/sifalo/check (admin-only, eb066ec): body {username,password} -> worker calls Sifalo gateway with PROVIDED creds ($1.00 probe session) -> returns {ok, detail}. In-memory only, never stored/logged/echoed. Helper testSifaloCredentials in src/lib/sifalo.ts (raw-JSON fallback detail).
+- Gotcha: .gitignore line 49 is a bare "test" pattern - silently ignored any dir named test/; renamed route dir to check/.
+- Smoke-tested on live with dummy creds: {"ok":false,"detail":"{\"code\":0,\"response\":null}"} - endpoint live and informative (dummy creds give code:0/response:null; the user's stored creds give response:"invalid api key" - the gateway DOES parse their auth header but rejects the pair).
+
+Stage Summary:
+- Diagnostic endpoint live. Next: user pastes the Sifalo API username/password in chat (private session) -> run checker -> if ok, user copies exact values into Cloudflare secrets; if not ok, the Sifalo account itself lacks valid API credentials -> Sifalo support/dashboard. Recommended rotating the API password after diagnosis.
