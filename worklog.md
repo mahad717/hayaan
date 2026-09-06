@@ -428,3 +428,19 @@ Work Log:
 
 Stage Summary:
 - New Sifalo credentials VERIFIED WORKING live; empty-cart flash fixed via full-screen redirect overlay, deployed and verified in the production bundle. Remaining: user completes one small real payment end-to-end; then rotate the password again (it transited chat) and update the Cloudflare secret; GitHub token rotation still outstanding.
+
+---
+Task ID: 15
+Agent: Super Z (main agent)
+Task: Diagnose user report "website corrupted after changing password AND username in Sifalo dashboard" (screenshot: browser "This page couldn't load" error page).
+
+Work Log:
+- Screenshot triage: generic browser navigation-failure page (Reload/Back), not an app render error.
+- Live health checks: homepage HTTP 200 (40KB); GET /api/payments/sifalo -> {enabled:true, environment:live}; login OK for admin + demo customer; all 4 sifalo routes present (sifalo, check, verify).
+- Full payment handshake with STORED Cloudflare secrets: cart add OK -> POST /api/payments/sifalo (nested {shipping:{...}}) -> HTTP 200 {redirectUrl: pay.sifalo.com/checkout/?key=...&token=..., orderId 8e693b3c, total 76.07}. STORED CREDENTIALS ARE VALID RIGHT NOW — whatever is in Cloudflare matches Sifalo, so the username/password regeneration either was correctly mirrored into Cloudflare secrets or didn't actually change the API username.
+- Fetched the returned pay.sifalo.com checkout URL directly: HTTP 200 but serves Imunify360-style "One moment, please..." browser-integrity interstitial that window.location.reload()s itself every 5 seconds before the real checkout renders.
+- Conclusion: user's "corruption" = browser failing to load a page at the Sifalo edge (WAF JS check looping/failing on their device/network) or a one-off network blip. Nothing broken in hayaan: site, routes, credentials, order creation all verified healthy.
+- Test artifact: 1 more pending $76.07 order (8e693b3c) on customer@shop.demo, cart consumed.
+
+Stage Summary:
+- Site NOT corrupted; stored Sifalo credentials verified working via real gateway session. Failure is client-side at pay.sifalo.com's WAF interstitial. Asked user for the address-bar URL when the error appears and to retry letting the 5s check finish; if it persists it's a Sifalo-side WAF issue for their support.
