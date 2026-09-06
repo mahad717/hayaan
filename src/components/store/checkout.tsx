@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronLeft, CreditCard, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
+import { ChevronLeft, CreditCard, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,6 +35,13 @@ export function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState<"sifalo">("sifalo");
   const [sifaloEnabled, setSifaloEnabled] = useState<boolean | null>(null); // null = probing
   const [placing, setPlacing] = useState(false);
+  // Set to the Sifalo redirect URL once the order + payment session exist.
+  // While set, the whole viewport is replaced by a "Redirecting…" screen —
+  // window.location.assign is async, so the browser can sit on this page for
+  // a few seconds while Sifalo loads and ANY state change in that window
+  // (like clearing the cart) would visibly repaint here first.
+  const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
+  const [stuck, setStuck] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
 
   // Probe whether this deployment has merchant credentials. While unknown the
@@ -56,6 +63,35 @@ export function Checkout() {
   const shipping = subtotal >= 75 ? 0 : 6.95;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+
+  // Full-screen hand-off view: once we have a payment session we replace the
+  // entire page so nothing (not even the cart badge clearing) can flash
+  // before the browser navigates to Sifalo's hosted checkout.
+  if (redirectingTo) {
+    return (
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 bg-[#faf8f1] px-4 text-center">
+        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#eef5ec]">
+          <Wallet className="h-10 w-10 text-brand" />
+        </div>
+        <div>
+          <h1 className="text-xl font-semibold text-brand-dark sm:text-2xl">Redirecting to Sifalo Pay…</h1>
+          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+            Taking you to the secure checkout to approve your payment. Please don&apos;t close or refresh this page.
+          </p>
+        </div>
+        <Loader2 className="h-6 w-6 animate-spin text-brand" />
+        {stuck && (
+          <Button
+            variant="outline"
+            className="border-brand text-brand hover:bg-brand hover:text-white"
+            onClick={() => window.location.assign(redirectingTo)}
+          >
+            Nothing happening? Click to continue
+          </Button>
+        )}
+      </div>
+    );
+  }
 
   if (done) {
     return (
@@ -135,11 +171,16 @@ export function Checkout() {
       // hosted checkout. The order status flips to paid on the return page
       // after server-side verification.
       const payment = await startSifaloPayment(form);
-      // Navigate first, clear the client cart after — otherwise React paints
-      // the empty-cart screen for a split second before the browser leaves.
-      // (The server already cleared the cart when the order was created.)
+      // Swap to the full-screen redirect view BEFORE navigating, and do NOT
+      // touch the client cart here — the server already emptied it when the
+      // order was created, and clearing it now would repaint the empty-cart
+      // screen during the seconds the browser takes to reach Sifalo. The
+      // badge resyncs from the server on the return page / next fetch.
+      setRedirectingTo(payment.redirectUrl);
       window.location.assign(payment.redirectUrl);
-      setCart({ id: "", items: [] });
+      // Safety net: if navigation is blocked (rare), give the customer a
+      // manual retry link instead of an infinite spinner.
+      window.setTimeout(() => setStuck(true), 8000);
       toast("Redirecting to Sifalo Pay…", "success");
     } catch (err) {
       const msg = (err as Error).message;
