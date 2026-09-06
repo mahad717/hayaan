@@ -151,6 +151,8 @@ export async function testSifaloCredentials(
   const detail =
     (typeof data.response === "string" && data.response) ||
     (typeof data.message === "string" && data.message) ||
+    (typeof data.error === "string" && data.error) ||
+    (Object.keys(data).length > 0 ? JSON.stringify(data).slice(0, 250) : "") ||
     `gateway returned HTTP ${status}`;
   return { ok: false, detail };
 }
