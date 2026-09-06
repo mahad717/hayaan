@@ -50,10 +50,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${panton.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
+    // Font variables MUST live on <html>: Tailwind's base layer resolves
+    // --default-font-family (→ --font-panton) at the html/:root level.
+    // On <body> they were invisible to that rule and the whole site fell
+    // back to the system font.
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${panton.variable} ${geistMono.variable}`}
+    >
+      <body className="font-sans antialiased bg-background text-foreground">
         {children}
         <Toaster />
       </body>
