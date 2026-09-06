@@ -68,8 +68,8 @@ export function AuthModal() {
           </DialogTitle>
           <DialogDescription className="text-center">
             {mode === "login"
-              ? "Sign in to sync your cart and check out faster."
-              : "Create a free account to start shopping. No credit card required."}
+              ? "Sign in to track orders, sync your cart, and check out faster."
+              : "Join Hayaan Market — save your details, track your orders, and check out faster next time."}
           </DialogDescription>
         </DialogHeader>
 
@@ -162,11 +162,10 @@ export function AuthModal() {
 
         {products.length === 0 ? (
           <div className="mt-2 rounded-md bg-[#fef1de] p-3 text-xs text-[#7a4a14]">
-            <p className="font-medium">First time here?</p>
+            <p className="font-medium">Setting up for the first time?</p>
             <p>
-              The demo admin account is created by the seeder. Close this dialog,
-              click <strong>“Seed now”</strong> on the orange banner at the top, then
-              sign in with the credentials shown in that box.
+              Close this dialog, tap <strong>“Seed now”</strong> on the orange
+              banner above, then sign in with the credentials shown there.
             </p>
           </div>
         ) : (

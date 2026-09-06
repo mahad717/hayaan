@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     paymentMethod?: string;
   };
   if (!shipping?.name || !shipping?.address || !shipping?.city || !shipping?.zip || !shipping?.country) {
-    return NextResponse.json({ error: "Shipping information is incomplete." }, { status: 400 });
+    return NextResponse.json({ error: "Please complete your shipping details so we know where to deliver." }, { status: 400 });
   }
 
   if (isSupabaseServerEnabled) {
@@ -82,12 +82,12 @@ export async function POST(req: NextRequest) {
       .eq("user_id", user.id)
       .limit(1)
       .single();
-    if (!cart.data) return NextResponse.json({ error: "Cart not found." }, { status: 400 });
+    if (!cart.data) return NextResponse.json({ error: "We couldn't find your cart — please refresh and try again." }, { status: 400 });
     const { data: items } = await supabase
       .from("cart_items")
       .select("id, quantity, product:products(*)")
       .eq("cart_id", cart.data.id);
-    if (!items || items.length === 0) return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
+    if (!items || items.length === 0) return NextResponse.json({ error: "Your cart is empty — add an item before checking out." }, { status: 400 });
     const total = items.reduce((sum, it) => sum + Number(it.product.price) * it.quantity, 0);
     const { data: order, error: orderErr } = await supabase
       .from("orders")
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     include: { items: { include: { product: true } } },
   });
   if (!cart || cart.items.length === 0) {
-    return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
+    return NextResponse.json({ error: "Your cart is empty — add an item before checking out." }, { status: 400 });
   }
   const total = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
   const order = await (await getDb()).order.create({

@@ -59,7 +59,7 @@ export function Header() {
     <Input
       value={q}
       onChange={(e) => setQ(e.target.value)}
-      placeholder="Search products, brands, categories…"
+      placeholder="Search products, categories, and more…"
       className="border-brand/40 bg-[#faf8f1] pl-9 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20 placeholder:text-muted-foreground/70"
       aria-label="Search products"
     />
@@ -144,7 +144,7 @@ export function Header() {
                     <UserRound className="mr-2 h-4 w-4" /> My profile
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setView("orders")}>
-                    <Package className="mr-2 h-4 w-4" /> My Orders
+                    <Package className="mr-2 h-4 w-4" /> My orders
                   </DropdownMenuItem>
                   {user.role === "admin" && (
                     <DropdownMenuItem asChild>

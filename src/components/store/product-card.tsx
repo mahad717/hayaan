@@ -95,7 +95,7 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
             {product.category?.name ?? "—"}
           </span>
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1 text-xs text-muted-foreground" aria-label={product.rating ? `Rated ${product.rating} out of 5` : "New product"}>
             <Star className="h-3.5 w-3.5 fill-[#f9c27d] text-[#f9c27d]" />
             {product.rating || "New"}
             {product.reviewCount > 0 && <span className="opacity-70">({product.reviewCount})</span>}

@@ -143,8 +143,10 @@ export function ProductDetail() {
               {product.name}
             </h1>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-              <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" />
-              <span>{product.rating || "Unrated"}</span>
+              <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
+              <span aria-label={product.rating ? `Rated ${product.rating} out of 5` : "Unrated"}>
+                {product.rating || "Unrated"}
+              </span>
               {product.reviewCount > 0 && <span>· {product.reviewCount} reviews</span>}
               <span>· SKU {product.sku ?? "—"}</span>
             </div>
@@ -189,7 +191,11 @@ export function ProductDetail() {
               )}
             />
             <span className="text-muted-foreground">
-              {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+              {product.stock > 5
+                ? `${product.stock} in stock`
+                : product.stock > 0
+                  ? `Only ${product.stock} left in stock`
+                  : "Out of stock"}
             </span>
           </div>
 
@@ -250,11 +256,11 @@ export function ProductDetail() {
             </div>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-brand" />
-              Secure checkout
+              Secure checkout via Sifalo Pay
             </div>
             <div className="flex items-center gap-2">
               <RotateCcw className="h-4 w-4 text-brand" />
-              30-day returns
+              Track every order
             </div>
           </div>
         </div>

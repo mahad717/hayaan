@@ -61,10 +61,10 @@ interface SeedProduct {
 
 const PRODUCTS: SeedProduct[] = [
   {
-    name: "Aurora Wireless Headphones",
+    name: "Aurora Wireless Headphones — immersive sound, no wires",
     slug: "aurora-wireless-headphones",
     description:
-      "Studio-grade wireless headphones with active noise cancellation, 40-hour battery life, and plush memory-foam earcups. Tuned for warm lows and crystal-clear highs.",
+      "Noise fades out; your music comes forward. Aurora pairs active noise cancellation with a 40-hour battery and plush memory-foam earcups, so long listening sessions stay comfortable. Tuned for warm lows and crystal-clear highs — with no wires to get in the way.",
     price: 199.0,
     compare_at: 249.0,
     sku: "AUR-WH-001",
@@ -80,10 +80,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "electronics",
   },
   {
-    name: "Nimbus Mechanical Keyboard",
+    name: "Nimbus Mechanical Keyboard — satisfying, responsive typing",
     slug: "nimbus-mechanical-keyboard",
     description:
-      "Hot-swappable 75% mechanical keyboard with PBT keycaps, gasket mount, and per-key RGB. Perfect for coders and writers who want that satisfying tactile feedback.",
+      "Typing that feels as good as it sounds. Nimbus is a compact 75% mechanical keyboard with hot-swappable switches, durable PBT keycaps, and per-key RGB — built for coders and writers who live on their keyboards.",
     price: 129.0,
     compare_at: null,
     sku: "NIM-KB-002",
@@ -99,10 +99,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "electronics",
   },
   {
-    name: "Terra Organic Cotton Tee",
+    name: "Terra Organic Cotton Tee — an easy everyday essential",
     slug: "terra-organic-cotton-tee",
     description:
-      "Soft 100% organic cotton T-shirt cut for everyday wear. Pre-shrunk, ethically sourced, and dyed with low-impact pigments. Available in three core colorways.",
+      "The tee you'll reach for again and again. Cut from soft 100% organic cotton that's pre-shrunk and dyed with low-impact pigments, in three easy colorways that pair with everything.",
     price: 32.0,
     compare_at: 40.0,
     sku: "TER-TS-003",
@@ -118,10 +118,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "apparel",
   },
   {
-    name: "Drift Linen Hoodie",
+    name: "Drift Linen Hoodie — easy layering for in-between days",
     slug: "drift-linen-hoodie",
     description:
-      "Lightweight French terry hoodie with a relaxed fit, kangaroo pocket, and brushed metal drawcord tips. Designed for layering from spring to fall.",
+      "Light enough for spring, cozy enough for fall. Drift is a relaxed French terry hoodie with a kangaroo pocket and brushed-metal drawcord tips — your grab-and-go layer for unpredictable days.",
     price: 78.0,
     compare_at: null,
     sku: "DRI-HD-004",
@@ -137,10 +137,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "apparel",
   },
   {
-    name: "Sable Ceramic Vase",
+    name: "Sable Ceramic Vase — an effortless accent for any room",
     slug: "sable-ceramic-vase",
     description:
-      "Hand-thrown matte black ceramic vase. Each piece is unique — slight variations in glaze are intentional. Stands 22cm tall and pairs beautifully with dried botanicals.",
+      "Warm up a shelf, table, or entryway in seconds. Each Sable vase is hand-thrown matte black ceramic — no two glazes alike — standing 22cm tall and pairing beautifully with fresh stems or dried botanicals.",
     price: 54.0,
     compare_at: 68.0,
     sku: "SAB-VS-005",
@@ -156,10 +156,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "home-living",
   },
   {
-    name: "Meadow Soy Candle",
+    name: "Meadow Soy Candle — a softer atmosphere, for hours",
     slug: "meadow-soy-candle",
     description:
-      "12oz soy wax candle with notes of fig, cedar, and white tea. Burns cleanly for 60+ hours. Hand-poured in a reusable glass vessel.",
+      "Fig, cedar, and white tea — a calm, welcoming scent that fills the room without overpowering it. Hand-poured soy wax burns cleanly for 60+ hours in a reusable glass vessel.",
     price: 28.0,
     compare_at: null,
     sku: "MEA-CD-006",
@@ -175,10 +175,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "home-living",
   },
   {
-    name: "Helix Vitamin C Serum",
+    name: "Helix Vitamin C Serum — brighter, more even-looking skin",
     slug: "helix-vitamin-c-serum",
     description:
-      "Brightening 15% vitamin C serum with ferulic acid and vitamin E. Smooths texture and evens out skin tone over 4-6 weeks. Fragrance-free and dermatologist-tested.",
+      "A brighter, more even look, one drop at a time. Helix blends 15% vitamin C with ferulic acid and vitamin E to smooth texture and even out skin tone over 4–6 weeks. Fragrance-free and dermatologist-tested.",
     price: 42.0,
     compare_at: 52.0,
     sku: "HEL-SR-007",
@@ -194,10 +194,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "beauty",
   },
   {
-    name: "Quill Leather Journal",
+    name: "Quill Leather Journal — a timeless home for your ideas",
     slug: "quill-leather-journal",
     description:
-      "A5 hardcover journal with 192 pages of 120gsm cream paper. Full-grain leather cover ages beautifully. Lay-flat binding for comfortable writing.",
+      "Ideas deserve a good place to live. Quill wraps 192 pages of smooth 120gsm cream paper in full-grain leather that ages beautifully, with lay-flat binding for comfortable writing anywhere.",
     price: 38.0,
     compare_at: null,
     sku: "QUI-JN-008",
@@ -213,10 +213,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "home-living",
   },
   {
-    name: "Lumen Smart LED Strip",
+    name: "Lumen Smart LED Strip — set any mood in seconds",
     slug: "lumen-smart-led-strip",
     description:
-      "16ft addressable RGB LED strip with app + voice control. Works with HomeKit, Alexa, and Google Home. Includes mounting clips and a Wi-Fi controller.",
+      "Change the whole feel of a room from your phone or your voice. This 16ft addressable LED strip works with HomeKit, Alexa, and Google Home, and comes with mounting clips and a Wi-Fi controller for a quick setup.",
     price: 46.0,
     compare_at: 59.0,
     sku: "LUM-LS-009",
@@ -232,10 +232,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "electronics",
   },
   {
-    name: "Bloom Botanical Skincare Set",
+    name: "Bloom Botanical Skincare Set — a simple three-step routine",
     slug: "bloom-botanical-skincare-set",
     description:
-      "Three-piece skincare ritual: cleanser, toner, and moisturizer. Plant-derived actives for sensitive skin. Comes in a reusable cotton drawstring bag.",
+      "Cleanse, tone, moisturize — that's the whole routine. Bloom pairs plant-derived actives with gentle formulas made for sensitive skin, all in a reusable cotton drawstring bag that travels well.",
     price: 89.0,
     compare_at: 110.0,
     sku: "BLO-SK-010",
@@ -251,10 +251,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "beauty",
   },
   {
-    name: "Foundry Heavyweight Sweatshirt",
+    name: "Foundry Heavyweight Sweatshirt — substantial comfort for cool days",
     slug: "foundry-heavyweight-sweatshirt",
     description:
-      "500gsm loopback cotton sweatshirt with a boxy fit and ribbed cuffs. Garment-dyed for a vintage hand-feel that softens with every wash.",
+      "Substantial in the best way. Foundry is a 500gsm loopback cotton sweatshirt with a boxy fit and ribbed cuffs, garment-dyed for a vintage hand-feel that only gets softer with every wash.",
     price: 96.0,
     compare_at: null,
     sku: "FOU-SW-011",
@@ -270,10 +270,10 @@ const PRODUCTS: SeedProduct[] = [
     category_slug: "apparel",
   },
   {
-    name: "Carry Canvas Tote",
+    name: "Carry Canvas Tote — built to haul your whole day",
     slug: "carry-canvas-tote",
     description:
-      "16oz waxed canvas tote with leather handles and an interior laptop sleeve. Built for daily commutes and weekend markets alike.",
+      "Commute, gym, market run — Carry handles it all. Waxed 16oz canvas with leather handles and an interior laptop sleeve keeps everything organized and ages into its own character.",
     price: 64.0,
     compare_at: 80.0,
     sku: "CAR-TT-012",

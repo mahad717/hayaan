@@ -189,7 +189,7 @@ export function Checkout() {
       // pending order is kept for later verification). If the customer retries
       // with a stale client cart they'd hit a confusing "Cart is empty" 400 —
       // re-sync from the server so the badge/checkout reflect reality.
-      if (/cart is empty|cart not found/i.test(msg)) {
+      if (/cart is empty|couldn't find your cart|cart not found/i.test(msg)) {
         try {
           setCart(await fetchCart());
         } catch {
@@ -409,7 +409,7 @@ export function Checkout() {
                 {placing ? "Redirecting to Sifalo Pay…" : `Pay ${formatPrice(total)} with Sifalo Pay`}
               </Button>
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-                <Lock className="h-3 w-3" /> Secure checkout · 256-bit TLS
+                <Lock className="h-3 w-3" /> Secure checkout · Powered by Sifalo Pay
               </p>
             </CardContent>
           </Card>

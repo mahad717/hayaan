@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, ArrowRight, Truck, Shield, RotateCcw } from "lucide-react";
+import { Sparkles, ArrowRight, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Hero({ onShop }: { onShop: () => void }) {
@@ -21,27 +21,26 @@ export function Hero({ onShop }: { onShop: () => void }) {
         <div className="flex flex-col gap-5">
           <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-brand shadow-sm ring-1 ring-[#e6e2d4]">
             <Sparkles className="h-3.5 w-3.5 text-[#f28c28]" />
-            New season · Free shipping over $75
+            Free shipping over $75
           </span>
 
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-brand-dark sm:text-5xl md:text-6xl">
-            Everything you need,
+            Find what you need,
             <br />
             <span className="bg-gradient-to-r from-[#14532d] to-[#3f7d4a] bg-clip-text text-transparent">
-              all in one market.
+              discover what you&apos;ll love.
             </span>
           </h1>
 
           <p className="max-w-prose text-base text-muted-foreground sm:text-lg">
-            Hayaan Market brings together curated goods across apparel,
-            electronics, home, and beauty — built on Next.js, Supabase, and
-            Cloudflare. Browse, add to cart, and check out in under a minute.
+            Useful, well-selected finds across fashion, beauty, electronics, and
+            home — all in one place, ready to order in minutes.
           </p>
 
           {/* CTAs — primary green, secondary outlined green */}
           <div className="flex flex-wrap gap-3">
             <Button size="lg" onClick={onShop} className="btn-accent group">
-              Shop Now
+              Start shopping
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
             <Button
@@ -50,20 +49,20 @@ export function Hero({ onShop }: { onShop: () => void }) {
               onClick={onShop}
               className="border-brand text-brand hover:bg-brand hover:text-white"
             >
-              Explore categories
+              Browse categories
             </Button>
           </div>
 
           {/* Reassurance row */}
           <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <Truck className="h-3.5 w-3.5 text-brand" /> Secure checkout
+              <Truck className="h-3.5 w-3.5 text-brand" /> Delivered to your door
             </span>
             <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-brand" /> 30-day returns
+              <Shield className="h-3.5 w-3.5 text-brand" /> Secure payment via Sifalo Pay
             </span>
             <span className="flex items-center gap-1.5">
-              <RotateCcw className="h-3.5 w-3.5 text-brand" /> Carbon-neutral shipping
+              <RotateCcw className="h-3.5 w-3.5 text-brand" /> Track every order
             </span>
           </div>
         </div>
@@ -93,13 +92,13 @@ export function Hero({ onShop }: { onShop: () => void }) {
             />
           </div>
 
-          {/* Floating promo chip */}
+          {/* Floating promo chip — real payment variety, not a fake discount */}
           <div className="absolute -bottom-3 left-4 hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow-md ring-1 ring-[#e6e2d4] sm:flex">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f28c28]/10 text-[#f28c28]">
-              🔥
+              <Wallet className="h-4 w-4" />
             </span>
-            <span className="font-medium text-foreground">20% OFF</span>
-            <span className="text-muted-foreground">first order</span>
+            <span className="font-medium text-foreground">Pay your way</span>
+            <span className="text-muted-foreground">cards, EVC Plus, eDahab &amp; more</span>
           </div>
         </div>
       </div>

@@ -59,11 +59,11 @@ export function ProductGrid() {
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">
-            All products
+            Find your next favorite
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {visible.length} item{visible.length === 1 ? "" : "s"}
-            {searchQuery && <> · matching “{searchQuery}”</>}
+            {visible.length} product{visible.length === 1 ? "" : "s"} to explore
+            {searchQuery && <> · results for “{searchQuery}”</>}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -127,7 +127,8 @@ export function ProductGrid() {
         </div>
       ) : visible.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#e6e2d4] py-16 text-center">
-          <p className="text-muted-foreground">No products match your search.</p>
+          <p className="font-medium text-foreground">No products found</p>
+          <p className="text-sm text-muted-foreground">Try a different search, or browse another category.</p>
           <Button
             variant="outline"
             className="border-brand text-brand hover:bg-brand hover:text-white"
@@ -153,7 +154,7 @@ export function ProductGrid() {
           className="text-brand hover:bg-secondary"
           onClick={() => setView("cart")}
         >
-          View cart →
+          View your cart →
         </Button>
       </div>
     </section>

@@ -66,7 +66,7 @@ export function CartDrawer() {
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
               <ShoppingBag className="h-8 w-8 text-brand" />
             </div>
-            <p className="text-sm text-muted-foreground">Your cart is empty.</p>
+            <p className="text-sm text-muted-foreground">Nothing here yet — find something you&apos;ll love.</p>
             <Button
               className="bg-brand hover:bg-brand-dark"
               onClick={() => {
@@ -74,7 +74,7 @@ export function CartDrawer() {
                 setView("home");
               }}
             >
-              Browse products
+              Start shopping
             </Button>
           </div>
         ) : (
@@ -163,6 +163,11 @@ export function CartDrawer() {
                 <span className="text-foreground">Total</span>
                 <span className="text-brand">{formatPrice(total)}</span>
               </div>
+              {shipping > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  You&apos;re {formatPrice(75 - subtotal)} away from free shipping.
+                </p>
+              )}
             </div>
             {/* Checkout — Market Orange (the 10% accent) */}
             <Button
@@ -177,7 +182,7 @@ export function CartDrawer() {
                 }
               }}
             >
-              {user ? "Proceed to checkout" : "Sign in to checkout"}
+              {user ? "Proceed to checkout" : "Sign in to check out"}
             </Button>
           </SheetFooter>
         )}

@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   }
   const shipping = body.shipping;
   if (!shipping?.name || !shipping?.address || !shipping?.city || !shipping?.zip || !shipping?.country) {
-    return NextResponse.json({ error: "Shipping information is incomplete." }, { status: 400 });
+    return NextResponse.json({ error: "Please complete your shipping details so we know where to deliver." }, { status: 400 });
   }
 
   const created = await createPendingSifaloOrder(user.id, shipping);
