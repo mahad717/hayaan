@@ -23,6 +23,36 @@ function formatPrice(n: number, currency = "USD") {
   }
 }
 
+/**
+ * Field styling for the product form ONLY (scoped here so the rest of the
+ * app is untouched): clearly visible brand-green border at rest, darker on
+ * hover, solid brand border + soft brand halo on focus.
+ */
+const FIELD_CLS =
+  "border-brand/50 hover:border-brand/70 focus-visible:border-brand focus-visible:ring-brand/25";
+
+/** Orange required marker, matching the Market Orange accent. */
+const Req = () => (
+  <span aria-hidden="true" className="text-[#f28c28]">
+    *
+  </span>
+);
+
+/** Muted "(optional)" suffix for non-required labels. */
+const Opt = () => (
+  <span className="text-xs font-normal text-muted-foreground"> (optional)</span>
+);
+
+/** Dollar sign pinned inside a price input. */
+const DollarPrefix = () => (
+  <span
+    aria-hidden="true"
+    className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+  >
+    $
+  </span>
+);
+
 interface FormState {
   name: string;
   description: string;
@@ -303,68 +333,92 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
-          <DialogHeader>
+        {/* Flex column: header stays fixed, form scrolls, footer is ALWAYS
+            visible — Cancel/Create never disappear below the fold. */}
+        <DialogContent className="flex max-h-[90vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl">
+          <DialogHeader className="shrink-0 px-6 pb-3 pt-6">
             <DialogTitle>{editing ? "Edit product" : "Create product"}</DialogTitle>
             <DialogDescription>
               {editing ? `Updating ${editing.name}` : "Fill in the details below to list a new product."}
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={save} className="grid gap-4 py-2">
+          <form id="product-form" onSubmit={save} className="grid min-h-0 flex-1 content-start gap-4 overflow-y-auto px-6 py-3">
             <div className="grid gap-2">
-              <Label htmlFor="p-name">Name *</Label>
+              <Label htmlFor="p-name">Name <Req /></Label>
               <Input
                 id="p-name"
                 required
+                placeholder="e.g. Carry Canvas Tote"
+                className={FIELD_CLS}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="p-desc">Description *</Label>
+              <Label htmlFor="p-desc">Description <Req /></Label>
               <Textarea
                 id="p-desc"
                 required
                 rows={3}
+                placeholder="Tell customers what makes this product special…"
+                className={FIELD_CLS}
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
               />
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="grid gap-2">
-                <Label htmlFor="p-price">Price *</Label>
-                <Input
-                  id="p-price"
-                  required
-                  type="number"
-                  step="0.01"
-                  value={form.price}
-                  onChange={(e) => setForm({ ...form, price: e.target.value })}
-                />
+                <Label htmlFor="p-price" className="whitespace-nowrap">Price <Req /></Label>
+                <div className="relative">
+                  <DollarPrefix />
+                  <Input
+                    id="p-price"
+                    required
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    className={`pl-7 ${FIELD_CLS}`}
+                    value={form.price}
+                    onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  />
+                </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="p-compare">Compare at</Label>
-                <Input
-                  id="p-compare"
-                  type="number"
-                  step="0.01"
-                  value={form.compareAt}
-                  onChange={(e) => setForm({ ...form, compareAt: e.target.value })}
-                />
+                <Label htmlFor="p-compare" className="whitespace-nowrap">Compare at <Opt /></Label>
+                <div className="relative">
+                  <DollarPrefix />
+                  <Input
+                    id="p-compare"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="e.g. 24.99"
+                    className={`pl-7 ${FIELD_CLS}`}
+                    value={form.compareAt}
+                    onChange={(e) => setForm({ ...form, compareAt: e.target.value })}
+                  />
+                </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="p-stock">Stock</Label>
+                <Label htmlFor="p-stock" className="whitespace-nowrap">Stock <Opt /></Label>
                 <Input
                   id="p-stock"
                   type="number"
+                  min="0"
+                  step="1"
+                  placeholder="0"
+                  className={FIELD_CLS}
                   value={form.stock}
                   onChange={(e) => setForm({ ...form, stock: e.target.value })}
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="p-cat">Category *</Label>
+                <Label htmlFor="p-cat" className="whitespace-nowrap">Category <Req /></Label>
                 <Select value={form.categoryId} onValueChange={(v) => setForm({ ...form, categoryId: v })}>
-                  <SelectTrigger id="p-cat"><SelectValue placeholder="Pick…" /></SelectTrigger>
+                  <SelectTrigger id="p-cat" className={`w-full ${FIELD_CLS}`}>
+                    <SelectValue placeholder="Pick a category…" />
+                  </SelectTrigger>
                   <SelectContent>
                     {categories.map((c) => (
                       <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
@@ -374,25 +428,27 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="p-images">Image URLs (one per line)</Label>
+              <Label htmlFor="p-images">Image URLs (one per line) <Opt /></Label>
               <Textarea
                 id="p-images"
                 rows={3}
                 placeholder={"https://...\nhttps://..."}
+                className={FIELD_CLS}
                 value={form.images}
                 onChange={(e) => setForm({ ...form, images: e.target.value })}
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="p-tags">Tags (comma-separated)</Label>
+              <Label htmlFor="p-tags">Tags (comma-separated) <Opt /></Label>
               <Input
                 id="p-tags"
                 placeholder="audio, wireless, sale"
+                className={FIELD_CLS}
                 value={form.tags}
                 onChange={(e) => setForm({ ...form, tags: e.target.value })}
               />
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border border-brand/25 bg-brand/5 px-4 py-3">
               <label className="flex items-center gap-2 text-sm">
                 <Switch
                   checked={form.featured}
@@ -408,11 +464,13 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 Visible in store
               </label>
             </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-              <Button type="submit" className="btn-accent">{editing ? "Save changes" : "Create product"}</Button>
-            </DialogFooter>
           </form>
+          {/* Outside the scrolling form so the action row never scrolls away;
+              the submit button targets the form via form="product-form". */}
+          <DialogFooter className="shrink-0 border-t border-brand/15 bg-background px-6 py-3">
+            <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
+            <Button type="submit" form="product-form" className="btn-accent">{editing ? "Save changes" : "Create product"}</Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

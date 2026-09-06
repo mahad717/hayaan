@@ -198,3 +198,40 @@ Work Log:
 Stage Summary:
 - Header fixed at all widths: logo | centered search | right-pinned actions; Shop scrolls to catalog; mobile gets a dedicated search row.
 - Commit bf5653c on main. Note: product-card images in the user's screenshot were just lazy-loading mid-flight (plain <img>, hero images loaded fine) - no code change needed.
+
+---
+Task ID: 10
+Agent: Super Z (main agent)
+Task: "I can't see the borders of the fields or inputs using brand colors. Improve that" - screenshot showed the admin Create-product dialog with nearly invisible field borders.
+
+Work Log:
+- Root cause found in globals.css: the --input theme token (border color inherited by every Input/Textarea/SelectTrigger via border-input) was literally #ffffff - white borders on the white dialog and cream surfaces.
+- Theme-level fix: --input -> color-mix(in oklab, var(--primary) 34%, #e6e2d4) (sage green, visible on white AND cream); --ring -> var(--hayaan-green-mid) so focus border + halo are brand green (was orange); dark-mode --input strengthened to 22% white, --ring -> #8fc49a.
+- Registered --color-brand/-mid/-dark in @theme inline so border-brand, border-brand/40, focus-visible:border-brand, ring-brand/20 work as real Tailwind utilities with variants + alpha.
+- Updated hardcoded field classes that bypassed the theme via tailwind-merge: auth-modal INPUT_CLASS, 5x checkout inputs, header search input (resting brand/40, hover /60, focus solid brand + brand/20 ring).
+- Verified visually with agent-browser: signed in locally (admin@shop.demo - also re-verified the cookie session fix works), opened /admin > New product dialog: all fields show visible sage borders, focused field shows deep-green border + halo; auth modal + header search also branded. Screenshots in download/fields-*.png.
+- bun run build:pages passed; committed a75cc28 (4 files), pushed, verified remote main = a75cc28. CI rebuilds automatically.
+
+Stage Summary:
+- Every form field app-wide now has visible brand-green borders + green focus ring, themed in one place (--input/--ring) with brand utilities available for future components.
+- Commit a75cc28 on main.
+
+---
+Task ID: 11
+Agent: Super Z (main agent)
+Task: "still only change this form to improve the ux" - screenshot of the admin Create/Edit product dialog. Scope locked to THIS form only (no app-wide changes).
+
+Work Log:
+- Scoped strictly to src/components/store/admin-panel.tsx product dialog; zero changes to ui primitives or globals.css this time.
+- Defined FIELD_CLS in-file: border-brand/50 rest, hover:border-brand/70, focus-visible:border-brand + ring-brand/25 - clearly visible brand-green borders on every field (Input, Textarea, SelectTrigger) via tailwind-merge overrides.
+- Added in-file helpers: Req (orange #f28c28 required asterisk), Opt (muted "(optional)" text-xs suffix), DollarPrefix (pinned $ inside price inputs).
+- UX copy: placeholders on all fields (e.g. Carry Canvas Tote / 0.00 / e.g. 24.99 / 0), min="0" on numeric inputs, step="1" on stock.
+- Category SelectTrigger w-full (was w-fit, shrank in the grid row); row labels whitespace-nowrap with compact optional hints so "Compare at (optional)" no longer wraps.
+- Switch pair grouped into a soft brand-tinted box (border-brand/25 bg-brand/5 rounded-lg).
+- Footer fix: first tried sticky bottom-0 inside the scrolling DialogContent - sticky reserves its flow slot, so at scrollTop=0 the stuck buttons floated mid-form with content visible beneath (verified via geometry: footer 503-564 vs switches 566-612). Replaced with proper restructure: DialogContent flex-col overflow-hidden p-0, DialogHeader shrink-0 fixed, form flex-1 min-h-0 overflow-y-auto (id=product-form), DialogFooter shrink-0 outside the form with border-t - Cancel/Create permanently visible; submit button targets the form via form="product-form".
+- Verified in agent-browser (1280x620): rest borders visible, focused Name = solid brand border + halo, category dropdown opens full-width (Apparel/Beauty/Electronics/Home & Living), edit dialog prefills, external submit works (PUT /api/products/... 200, dialog closes, list reloads), labels single-line. Screenshots in download/product-form-v2-*.png, v3-*.png.
+- bun run build:pages passed (worker.js emitted). Reset stray artifact commit 0581997 (screenshots/worklog only) so the push stays clean; committed source change only.
+
+Stage Summary:
+- Admin product dialog fully restyled in one file: brand-green visible borders, orange required marks, (optional) hints, $ prefixes, full-width select, switch group box, always-visible action bar.
+- Scope respected: no other form, component, or theme file touched.
