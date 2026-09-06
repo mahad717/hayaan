@@ -368,3 +368,18 @@ Work Log:
 
 Stage Summary:
 - Store code + DB verified payment-ready end to end except the final gateway auth: user must re-copy the API username/password from the pay.sifalo.com merchant dashboard (watch for swapped fields / spaces / login-password-vs-API-password confusion), update the two Cloudflare secrets, Deploy; then re-test.
+
+---
+Task ID: 13g
+Agent: Super Z (main agent)
+Task: User's Pay click fails - console showed 502 then 400 on POST /api/payments/sifalo.
+
+Work Log:
+- Root-caused via live curl: (1) first Pay click created the pending order + cleared the server cart, then gateway rejected OLD creds -> 502 "invalid api key"; (2) second click sent a stale client cart -> 400 "Cart is empty". Server cart for customer@shop.demo confirmed 0 items.
+- Re-tested gateway with fresh creds state: STILL "invalid api key" -> user has not fixed the Sifalo credentials yet (unchanged blocker from 13f).
+- Code fix (de7814f): checkout submit catch now re-syncs the client cart from the server (fetchCart) when the error matches cart-empty/not-found, so the badge empties and the checkout shows the proper empty-cart screen instead of an endless confusing 400. tsc clean in touched file; build:pages passed; pushed.
+
+Stage Summary:
+- UX dead-end fixed: failed payment attempts self-heal the cart view.
+- BLOCKER for real payments remains: Sifalo rejects the stored credentials ("invalid api key"). User must re-copy API username/password from pay.sifalo.com merchant dashboard into the two Cloudflare secrets (SIFALO_USERNAME / SIFALO_PASSWORD) and Deploy. Asked user for a screenshot of the Sifalo API credentials page to verify field mapping if next attempt still fails.
+- Note: demo customer cart currently holds 1x Lumen Smart LED Strip (re-added for testing); two pending demo orders exist on the account - harmless.
