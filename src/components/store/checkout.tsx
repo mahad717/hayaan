@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStore, cartTotal, placeOrder, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
+import { useStore, cartTotal, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -30,19 +30,20 @@ export function Checkout() {
     zip: user?.zip ?? "",
     country: user?.country || "Somalia",
   });
-  const [paymentMethod, setPaymentMethod] = useState<"sifalo" | "card" | "paypal" | "cod">("card");
+  // Sifalo Pay is the only payment method — the demo card/PayPal/COD options
+  // were removed so customers can never place an order we can't collect on.
+  const [paymentMethod, setPaymentMethod] = useState<"sifalo">("sifalo");
   const [sifaloEnabled, setSifaloEnabled] = useState<boolean | null>(null); // null = probing
   const [placing, setPlacing] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
 
-  // Offer Sifalo Pay only when the deployment has merchant credentials, and
-  // make it the default method in that case (it's the real payment rail).
+  // Probe whether this deployment has merchant credentials. While unknown the
+  // pay button stays disabled; when false we show an "unavailable" notice.
   useEffect(() => {
     let cancelled = false;
     fetchSifaloStatus().then((s) => {
       if (cancelled) return;
       setSifaloEnabled(s.enabled);
-      if (s.enabled) setPaymentMethod("sifalo");
     }).catch(() => !cancelled && setSifaloEnabled(false));
     return () => {
       cancelled = true;
@@ -82,7 +83,7 @@ export function Checkout() {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Payment method</span>
-              <span className="capitalize text-foreground">{paymentMethod}</span>
+              <span className="text-foreground">Sifalo Pay</span>
             </div>
             <Separator className="my-2" />
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -130,25 +131,19 @@ export function Checkout() {
     e.preventDefault();
     setPlacing(true);
     try {
-      if (paymentMethod === "sifalo") {
-        // Real money: create a pending order, then hand off to Sifalo Pay's
-        // hosted checkout. The order status flips to paid on the return page
-        // after server-side verification.
-        const payment = await startSifaloPayment(form);
-        setCart({ id: "", items: [] }); // server cart was cleared with the order
-        toast("Redirecting to Sifalo Pay…", "success");
-        window.location.assign(payment.redirectUrl);
-        return; // keep `placing` true while the browser navigates away
-      }
-      const result = await placeOrder(form, paymentMethod);
-      setCart({ id: "", items: [] });
-      setDone(result);
-      toast("Order placed successfully!", "success");
+      // Real money: create a pending order, then hand off to Sifalo Pay's
+      // hosted checkout. The order status flips to paid on the return page
+      // after server-side verification.
+      const payment = await startSifaloPayment(form);
+      setCart({ id: "", items: [] }); // server cart was cleared with the order
+      toast("Redirecting to Sifalo Pay…", "success");
+      window.location.assign(payment.redirectUrl);
     } catch (err) {
       toast((err as Error).message, "error");
-    } finally {
       setPlacing(false);
     }
+    // No reset on success: `placing` stays true so the button keeps showing
+    // "Redirecting to Sifalo Pay…" until the browser navigates away.
   };
 
   return (
@@ -275,30 +270,9 @@ export function Checkout() {
                     </div>
                   </label>
                 )}
-                <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-3 transition hover:bg-secondary">
-                  <RadioGroupItem value="card" className="text-brand" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Credit / debit card</p>
-                    <p className="text-xs text-muted-foreground">Visa, Mastercard, Amex — processed securely.</p>
-                  </div>
-                </label>
-                <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-3 transition hover:bg-secondary">
-                  <RadioGroupItem value="paypal" className="text-brand" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">PayPal</p>
-                    <p className="text-xs text-muted-foreground">Redirect to PayPal to complete your payment.</p>
-                  </div>
-                </label>
-                <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-3 transition hover:bg-secondary">
-                  <RadioGroupItem value="cod" className="text-brand" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Cash on delivery</p>
-                    <p className="text-xs text-muted-foreground">Pay when your order arrives.</p>
-                  </div>
-                </label>
               </RadioGroup>
 
-              {paymentMethod === "sifalo" && (
+              {sifaloEnabled !== false ? (
                 <div className="mt-2 grid gap-2 rounded-lg border border-brand/30 bg-[#eef5ec] p-4">
                   <p className="text-xs leading-relaxed text-brand-dark">
                     <strong>How it works:</strong> you&apos;ll be redirected to Sifalo Pay&apos;s secure checkout to choose your
@@ -309,27 +283,9 @@ export function Checkout() {
                     <Lock className="h-3 w-3" /> Processed by Sifalo Pay — your payment details never touch our servers.
                   </p>
                 </div>
-              )}
-
-              {paymentMethod === "card" && (
-                <div className="mt-2 grid gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="card-num" className="text-foreground">Card number</Label>
-                    <Input id="card-num" placeholder="4242 4242 4242 4242" inputMode="numeric" className="bg-white border-[#e6e2d4] focus-visible:ring-[#f28c28]" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-2">
-                      <Label htmlFor="card-exp" className="text-foreground">Expiry</Label>
-                      <Input id="card-exp" placeholder="MM/YY" className="bg-white border-[#e6e2d4] focus-visible:ring-[#f28c28]" />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="card-cvc" className="text-foreground">CVC</Label>
-                      <Input id="card-cvc" placeholder="123" inputMode="numeric" className="bg-white border-[#e6e2d4] focus-visible:ring-[#f28c28]" />
-                    </div>
-                  </div>
-                  <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <Lock className="h-3 w-3" /> This is a demo — no real card is charged.
-                  </p>
+              ) : (
+                <div className="mt-2 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-4 text-xs text-muted-foreground">
+                  Online payment is temporarily unavailable — please check back soon.
                 </div>
               )}
             </CardContent>
@@ -393,14 +349,8 @@ export function Checkout() {
                 </div>
               </div>
               {/* Pay button — Market Orange (the 10% accent) */}
-              <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled === null}>
-                {placing
-                  ? paymentMethod === "sifalo"
-                    ? "Redirecting to Sifalo Pay…"
-                    : "Placing order…"
-                  : paymentMethod === "sifalo"
-                    ? `Pay ${formatPrice(total)} with Sifalo Pay`
-                    : `Pay ${formatPrice(total)}`}
+              <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled !== true}>
+                {placing ? "Redirecting to Sifalo Pay…" : `Pay ${formatPrice(total)} with Sifalo Pay`}
               </Button>
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                 <Lock className="h-3 w-3" /> Secure checkout · 256-bit TLS
