@@ -61,3 +61,6 @@ server.log
 .search*.json
 .cf-*.md
 .assetsignore-backup
+
+# IM-gateway session uploads — never commit user-uploaded artifacts
+upload/

@@ -24,8 +24,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://hayaan.co"),
   title: "Hayaan Market — Everything You Need, All in One Market.",
-  description: "Hayaan Market is a modern online marketplace built on Next.js, Supabase, and Cloudflare. Shop curated goods across apparel, electronics, home, and beauty.",
-  keywords: ["Hayaan Market", "online marketplace", "Next.js", "Supabase", "Cloudflare", "ecommerce", "Somalia"],
+  description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home at Hayaan Market — secure checkout via Sifalo Pay, delivered to your door.",
+  keywords: ["Hayaan Market", "online marketplace", "online shopping", "ecommerce", "Somalia", "apparel", "beauty", "electronics", "home & living"],
   authors: [{ name: "Hayaan Market" }],
   icons: {
     icon: { url: "/hayaan-logo-green.svg", type: "image/svg+xml" },
