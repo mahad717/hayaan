@@ -229,7 +229,7 @@ In your Cloudflare dashboard → **Workers & Pages → hayaan → Settings → B
 | `SUPABASE_SERVICE_ROLE_KEY` | your service_role secret (**type: Secret** — never expose to the browser) |
 | `SIFALO_USERNAME` | Sifalo Pay merchant API username (from the Sifalo Pay dashboard) |
 | `SIFALO_PASSWORD` | Sifalo Pay merchant API password (**type: Secret**) |
-| `SIFALO_RETURN_URL_BASE` | `https://hayaan.gabeyre80.workers.dev` — where Sifalo redirects buyers after payment |
+| `SIFALO_RETURN_URL_BASE` | `https://hayaan.co` — where Sifalo redirects buyers after payment |
 | `SIFALO_ENVIRONMENT` | `live` (or `test`) — informational, shown in `/api/diag` |
 
 Legacy alternates `SIFALOPAY_API_USER` / `SIFALOPAY_API_KEY` are accepted as fallbacks for the username/password pair.

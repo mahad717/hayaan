@@ -18,7 +18,7 @@
 // Required environment variables (Cloudflare Worker → Settings → Variables):
 //   SIFALO_USERNAME          API username           (SIFALOPAY_API_USER also accepted)
 //   SIFALO_PASSWORD          API password           (SIFALOPAY_API_KEY  also accepted)
-//   SIFALO_RETURN_URL_BASE   e.g. https://hayaan.gabeyre80.workers.dev
+//   SIFALO_RETURN_URL_BASE   e.g. https://hayaan.co
 //   SIFALO_ENVIRONMENT       "live" | "test" (informational — logged in /api/diag only)
 
 const GATEWAY_URL = "https://api.sifalopay.com/gateway/";

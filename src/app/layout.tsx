@@ -22,6 +22,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hayaan.co"),
   title: "Hayaan Market — Everything You Need, All in One Market.",
   description: "Hayaan Market is a modern online marketplace built on Next.js, Supabase, and Cloudflare. Shop curated goods across apparel, electronics, home, and beauty.",
   keywords: ["Hayaan Market", "online marketplace", "Next.js", "Supabase", "Cloudflare", "ecommerce", "Somalia"],
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hayaan Market",
     description: "Everything You Need, All in One Market.",
-    url: "https://hayaan.market",
+    url: "https://hayaan.co",
     siteName: "Hayaan Market",
     type: "website",
   },
