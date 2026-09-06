@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Panton — the official Hayaan brand face (self-hosted, no external fetch).
+// Regular carries body text, Bold headings/UI emphasis, Black display moments.
+const panton = localFont({
+  src: [
+    { path: "./fonts/Panton-Regular.otf", weight: "400", style: "normal" },
+    { path: "./fonts/Panton-Bold.otf", weight: "700", style: "normal" },
+    { path: "./fonts/Panton-Black.otf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-panton",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -43,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${panton.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         {children}
         <Toaster />
