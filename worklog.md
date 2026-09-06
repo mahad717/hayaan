@@ -312,3 +312,17 @@ Work Log:
 
 Stage Summary:
 - Code is live and correct; blocker is configuration only. User must add SIFALO_USERNAME, SIFALO_PASSWORD (secret), SIFALO_RETURN_URL_BASE=https://hayaan.gabeyre80.workers.dev, SIFALO_ENVIRONMENT=live to the "hayaan" worker (Settings > Variables and Secrets) and redeploy; then run migration 2026-09-06-sifalo-payments.sql in Supabase (orders.payment_status) before the first real payment; then /api/diag must show sifalo.configured:true.
+
+---
+Task ID: 13c
+Agent: Super Z (main agent)
+Task: User asked "are we not adding SIFALOPAY_API_KEY variables" - clarify variable naming and the wrong-worker misconfiguration.
+
+Work Log:
+- Re-fetched Sifalo docs (getting-started.md + sifalo-pay-checkout.md): auth is Basic [username:password]; merchant gets API username + password from the pay.sifalo.com dashboard. No single "API key" - but code accepts SIFALOPAY_API_KEY as alias for SIFALO_PASSWORD.
+- Live diag re-confirmed: sifalo configured:false, usernameSet:false, passwordSet:false, returnUrlBase:"https://hayaan-market.workers.dev" (the wrangler.toml NEXT_PUBLIC_SITE_URL fallback - a dead/invalid domain, not a valid workers.dev URL).
+- Fixed wrangler.toml: NEXT_PUBLIC_SITE_URL -> https://hayaan.gabeyre80.workers.dev so the payment return URL is correct even if SIFALO_RETURN_URL_BASE is forgotten.
+- Git hygiene: soft-reset artifact commit 72535d2 (screenshots/db binary), committed only wrangler.toml + worklog + docs parser script as 8dff508; pushed; ls-remote confirmed main=8dff508.
+
+Stage Summary:
+- Answer for user: variables ARE supported (SIFALO_USERNAME / SIFALO_PASSWORD or aliases SIFALOPAY_API_USER / SIFALOPAY_API_KEY / SIFALO_RETURN_URL_BASE / SIFALO_ENVIRONMENT) but must be added to the "hayaan" worker - the earlier screenshot showed them on worker "tanaad". Plus one-time Supabase migration 2026-09-06-sifalo-payments.sql before the first real payment.
