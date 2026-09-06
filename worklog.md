@@ -178,3 +178,23 @@ Stage Summary:
 - Commit 36818e9 on github.com/mahad717/hayaan main; CI will rebuild+redeploy automatically (~2-3 min).
 - User next steps: wait for CI green -> open /api/diag -> follow its hint -> sign in admin@shop.demo/admin123 -> /admin dashboard.
 - Still pending user-side: rotate the exposed GitHub token (repeatedly reminded).
+
+---
+Task ID: 9
+Agent: Super Z (main agent)
+Task: "Fix these two things" - screenshot circled (1) the search bar jammed against the logo and (2) the Shop/account/cart cluster floating mid-header with a dead zone on the right, at ~1140px viewport.
+
+Work Log:
+- Read header.tsx / use-store.ts / page.tsx / product-grid.tsx: search WAS wired to grid filtering; the defects were layout + the Shop button's no-op behavior.
+- Root cause: search div was flex-1 capped at max-w-xl - once free space exceeded the cap, the surplus pooled at the container's right edge (justify-start), so nav controls stopped ~280px short of the right edge at ~1140px viewports; logo and search also sat only gap-3 apart.
+- Rewrote header.tsx as 3 zones: logo | centered search in a flex-1 justify-center zone (input max-w-lg inside, absorbs all free space -> right cluster always at true right edge) | right-pinned nav+account+cart cluster.
+- Added pl-9 so placeholder clears the magnifier icon; deduped search into shared searchInput element.
+- Shop button now setView("home") + 60ms-deferred smooth scrollIntoView(#catalog).
+- Phones (<sm): header search hidden, search added as full-width row inside the md:hidden mobile nav strip.
+- Verified with agent-browser at 1140x545 and 390x844: layout clean; Shop scrolls (y=838); search filters (headphones->1 item, cleared->12 items, both inputs stay in sync); account menu opens with Sign in.
+- Automation note: DOM-level clear (Control+a/Delete via CLI) did not fire React onChange - verified state wiring instead via ref fill, which worked both ways.
+- bun run build:pages passed (worker.js emitted); committed bf5653c, pushed, verified remote main = bf5653c. CI rebuilds automatically.
+
+Stage Summary:
+- Header fixed at all widths: logo | centered search | right-pinned actions; Shop scrolls to catalog; mobile gets a dedicated search row.
+- Commit bf5653c on main. Note: product-card images in the user's screenshot were just lazy-loading mid-flight (plain <img>, hero images loaded fine) - no code change needed.
