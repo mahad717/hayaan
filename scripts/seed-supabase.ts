@@ -92,7 +92,7 @@ const PRODUCTS: SeedProduct[] = [
     review_count: 87,
     images: [
       "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1595044426077-d36d4d0c9e3c?w=800&auto=format&fit=crop",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725485555-21878fec-add1-4c8f-a1c1-ca2d376fa768.jpg",
     ],
     tags: ["keyboard", "gaming", "productivity"],
     featured: true,
@@ -148,8 +148,7 @@ const PRODUCTS: SeedProduct[] = [
     rating: 4.9,
     review_count: 41,
     images: [
-      "https://images.unsplash.com/photo-1612196808214-b8d6cd6b1fde?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1606744824163-985d376605aa?w=800&auto=format&fit=crop",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg",
     ],
     tags: ["decor", "ceramic", "handmade"],
     featured: false,
@@ -167,8 +166,7 @@ const PRODUCTS: SeedProduct[] = [
     rating: 4.4,
     review_count: 203,
     images: [
-      "https://images.unsplash.com/photo-1602874801006-094b8a3b3c6f?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&auto=format&fit=crop",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725483330-085f6bde-b327-4b93-8b76-ab85e8af903b.png",
     ],
     tags: ["candle", "home", "fragrance"],
     featured: true,
@@ -263,7 +261,7 @@ const PRODUCTS: SeedProduct[] = [
     review_count: 49,
     images: [
       "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1593726852644-9c4ae90db05a?w=800&auto=format&fit=crop",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg",
     ],
     tags: ["apparel", "heavyweight"],
     featured: false,
@@ -282,7 +280,7 @@ const PRODUCTS: SeedProduct[] = [
     review_count: 110,
     images: [
       "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1564422170194-896b89b98b4a?w=800&auto=format&fit=crop",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725479980-edf1bed4-2099-4ee3-9c0c-14a4eeca2bfa.jpg",
     ],
     tags: ["bag", "accessories", "apparel"],
     featured: true,
