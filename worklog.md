@@ -444,3 +444,15 @@ Work Log:
 
 Stage Summary:
 - Site NOT corrupted; stored Sifalo credentials verified working via real gateway session. Failure is client-side at pay.sifalo.com's WAF interstitial. Asked user for the address-bar URL when the error appears and to retry letting the 5s check finish; if it persists it's a Sifalo-side WAF issue for their support.
+
+---
+Task ID: 16
+Agent: Super Z (main agent)
+Task: Trigger empty deployment (user request, same as previous CI re-trigger pattern).
+
+Work Log:
+- Created empty commit ccd847b (message: UUID e9fb4637-7137-4d09-8ee4-78a278220002, consistent with prior trigger style) and pushed to main.
+- Waited ~3.5 min for Cloudflare CI, then verified fresh deploy: homepage HTTP 200; /api/payments/sifalo -> {enabled:true, environment:live}; grep of live chunks confirms the 430109b redirect overlay ("Taking you to the secure checkout") still present.
+
+Stage Summary:
+- Fresh deployment triggered and verified healthy; latest code (flash-fix overlay) live. No code changes.
