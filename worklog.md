@@ -326,3 +326,15 @@ Work Log:
 
 Stage Summary:
 - Answer for user: variables ARE supported (SIFALO_USERNAME / SIFALO_PASSWORD or aliases SIFALOPAY_API_USER / SIFALOPAY_API_KEY / SIFALO_RETURN_URL_BASE / SIFALO_ENVIRONMENT) but must be added to the "hayaan" worker - the earlier screenshot showed them on worker "tanaad". Plus one-time Supabase migration 2026-09-06-sifalo-payments.sql before the first real payment.
+
+---
+Task ID: 13d
+Agent: Super Z (main agent)
+Task: User asked to "trigger empty deployment" to apply dashboard Sifalo variables.
+
+Work Log:
+- Pushed empty commit abeca3d ("Trigger empty deployment to apply Sifalo runtime variables") - Workers Builds pipeline ran (~3 min).
+- Polled live /api/diag 4 times over ~5 min after push: sifalo still configured:false, usernameSet:false, passwordSet:false every time.
+
+Stage Summary:
+- Deployment pipeline confirmed working, but the SIFALO_* variables are still NOT reaching the hayaan worker runtime. Likely causes: (1) panel not saved with final Deploy, (2) added under Build variables instead of Settings > Variables and Secrets, (3) still on wrong worker (tanaad), (4) name typos. Asked user for a screenshot of hayaan > Settings > Variables and Secrets to pinpoint.
