@@ -558,3 +558,20 @@ Work Log:
 
 Stage Summary:
 - Panton now genuinely renders site-wide (root cause: font CSS variables scoped to body while the base font-family rule resolves at html). 5 products' dead/wrong images replaced with self-hosted Supabase Storage files + 1 AI-generated branded candle shot; hero collage fixed; metadata de-developered; repo hygiene (upload/ ignored). Site fully healthy on hayaan.co.
+
+---
+Task ID: 23
+Agent: Super Z (main agent)
+Task: User-marked typography refinements — footer fine print back to original font, hero heading bold, bold button labels (user screenshots with red circles).
+
+Work Log:
+- User screenshots marked footer texts (descriptions, Shop/Support link lists, copyright, Privacy/Terms/Cookies) to revert to original font; hero heading to be bold; button text bold.
+- Investigated hero: h1 already had font-bold (700) and live CSS/@font-face/fonts all healthy (agent-browser computed: panton, weight 700, face loaded) — Panton Bold simply reads too light at display size. PIL ink-density check confirmed font files are genuinely 400/700/900 (0.081/0.132/0.189).
+- globals.css: added .font-original utility (ui-sans-serif/system-ui/-apple-system/Segoe UI/Roboto/Helvetica Neue/Arial stack) in @layer components.
+- footer.tsx: applied font-original to the 5 marked spots only (both descriptions, both link <ul>s, bottom bar div) — column headings + logo intentionally stay Panton (not circled).
+- hero.tsx: h1 font-bold → font-black (Panton Black 900).
+- ui/button.tsx: base classes font-medium → font-bold → every button site-wide (store + admin + auth) renders bold labels.
+- Build ok; commit 676b4b7; pushed; live-verified via agent-browser: h1 weight 900, "Start shopping" weight 700, footer <p> font-family = ui-sans-serif system stack. Screenshots /tmp/verify-hero.png, /tmp/verify-footer2.png.
+
+Stage Summary:
+- Footer fine print reverts to the original system font exactly where circled; hero headline now unmistakably bold (Panton Black); all site buttons have bold labels. No layout/functional changes.
