@@ -124,6 +124,37 @@ export async function initiateSifaloCheckout(
 
 export type SifaloPaymentState = "paid" | "pending" | "failed" | "unknown";
 
+/**
+ * Admin diagnostic: try the PROVIDED credentials against the hosted-checkout
+ * endpoint with a minimal $1.00 session and report the gateway's verdict.
+ * Nothing is stored or logged — this answers "are these credentials valid?"
+ * without touching the deployment's runtime variables.
+ */
+export async function testSifaloCredentials(
+  username: string,
+  password: string,
+): Promise<{ ok: boolean; detail: string }> {
+  const base = getSifaloConfig();
+  if (!base.returnUrlBase) {
+    return { ok: false, detail: "SIFALO_RETURN_URL_BASE is not set on this deployment." };
+  }
+  const cfg: SifaloConfig = { ...base, username, password };
+  const { ok, status, data } = await postJson(GATEWAY_URL, cfg, {
+    amount: "1.00",
+    gateway: "checkout",
+    currency: "USD",
+    return_url: `${base.returnUrlBase}/payment/sifalo?order_id=credential-test`,
+  });
+  if (ok && typeof data.key === "string" && typeof data.token === "string") {
+    return { ok: true, detail: "Credentials accepted — Sifalo returned a checkout session." };
+  }
+  const detail =
+    (typeof data.response === "string" && data.response) ||
+    (typeof data.message === "string" && data.message) ||
+    `gateway returned HTTP ${status}`;
+  return { ok: false, detail };
+}
+
 export interface SifaloVerifyResult {
   state: SifaloPaymentState;
   sid?: string | null;
