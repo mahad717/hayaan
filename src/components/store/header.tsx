@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, Leaf, UserRound } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, UserRound } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -78,9 +78,8 @@ export function Header() {
           className="flex shrink-0 items-center gap-2 text-base font-semibold tracking-tight"
           aria-label="Hayaan Market home"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand text-white">
-            <Leaf className="h-5 w-5" />
-          </span>
+          {/* Official Hayaan cart mark — dark green variant */}
+          <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-9 w-9" />
           <span className="hidden text-brand sm:inline">
             Hayaan <span className="font-normal text-foreground/70">Market</span>
           </span>

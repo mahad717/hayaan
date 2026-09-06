@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   keywords: ["Hayaan Market", "online marketplace", "Next.js", "Supabase", "Cloudflare", "ecommerce", "Somalia"],
   authors: [{ name: "Hayaan Market" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: { url: "/hayaan-logo-green.svg", type: "image/svg+xml" },
   },
   openGraph: {
     title: "Hayaan Market",

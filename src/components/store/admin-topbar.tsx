@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Leaf, LogOut, Store } from "lucide-react";
+import { LogOut, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { SafeUser } from "@/lib/types";
@@ -30,9 +30,8 @@ export function AdminTopbar({ user }: { user: SafeUser }) {
             className="flex items-center gap-2 text-sm font-semibold tracking-tight text-brand"
             aria-label="Back to Hayaan Market storefront"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white">
-              <Leaf className="h-4 w-4" />
-            </span>
+            {/* Official Hayaan cart mark — dark green variant */}
+            <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-8 w-8" />
             <span className="hidden sm:inline">
               Hayaan <span className="font-normal text-foreground/70">Market</span>
             </span>

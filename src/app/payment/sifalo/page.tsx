@@ -9,7 +9,7 @@
 // pending transactions.
 
 import Link from "next/link";
-import { CheckCircle2, Clock3, XCircle, HelpCircle, ShoppingBag } from "lucide-react";
+import { CheckCircle2, Clock3, XCircle, HelpCircle } from "lucide-react";
 
 import { getServerUser } from "@/lib/current-user";
 import { getOwnedOrder, verifyAndApplyToOrder } from "@/lib/sifalo-server";
@@ -168,7 +168,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#faf8f1] px-4 py-16">
       <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-brand-dark">
-        <ShoppingBag className="h-5 w-5 text-brand" /> Hayaan Market
+        {/* Official Hayaan cart mark — dark green variant */}
+        <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-6 w-6" /> Hayaan Market
       </Link>
       {children}
     </div>

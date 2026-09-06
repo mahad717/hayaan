@@ -1,6 +1,6 @@
 "use client";
 
-import { Leaf, Github, Twitter, Mail } from "lucide-react";
+import { Github, Twitter, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -9,9 +9,8 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f28c28] text-white">
-                <Leaf className="h-4 w-4" />
-              </span>
+              {/* Official Hayaan cart mark — orange variant pops on the dark footer */}
+              <img src="/hayaan-logo-orange.svg" alt="" aria-hidden="true" className="h-8 w-8" />
               <span className="text-base font-semibold">
                 Hayaan <span className="font-normal opacity-70">Market</span>
               </span>
