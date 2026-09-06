@@ -456,3 +456,19 @@ Work Log:
 
 Stage Summary:
 - Fresh deployment triggered and verified healthy; latest code (flash-fix overlay) live. No code changes.
+
+---
+Task ID: 17
+Agent: Super Z (main agent)
+Task: Integrate the user's uploaded Hayaan logo (dark green + orange SVG cart marks) into the site branding.
+
+Work Log:
+- Inspected uploads: identical 375x375 viewBox cart mark with bubbles, #14532d (dark green) and #f28c28 (orange); rendered previews via cairosvg to confirm.
+- Copied to public/hayaan-logo-green.svg and public/hayaan-logo-orange.svg (spaces stripped from filenames).
+- Replaced the generic Leaf-in-colored-square brand marks: header.tsx (green, h-9), footer.tsx (orange on dark green bg, h-8), admin-topbar.tsx (green, h-8), payment/sifalo/page.tsx Shell (green, h-6, replaced ShoppingBag); removed now-unused Leaf/ShoppingBag imports.
+- layout.tsx favicon: z-cdn placeholder -> { url: "/hayaan-logo-green.svg", type: "image/svg+xml" }.
+- Verified no remaining references to old public/logo.svg (file left in place, harmless).
+- Build clean; committed 8a0ce81 (7 files) and pushed; CI verified live: both SVGs HTTP 200, favicon tag present, header logo reference in production bundle.
+
+Stage Summary:
+- Official Hayaan cart logo now live across storefront header, footer, admin topbar, payment-return page, and favicon — green as primary, orange on the dark footer.
