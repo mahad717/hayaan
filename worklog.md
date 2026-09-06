@@ -539,3 +539,22 @@ Work Log:
 
 Stage Summary:
 - Whole storefront now reads like a polished brand: truthful claims only, benefit-led names/descriptions, stronger CTAs, accessible labels, human errors. Zero layout/functional changes (one text-xs line added to cart footer). Demo-cart toast on product add unchanged (uses real product names).
+
+---
+Task ID: 22
+Agent: Super Z (main agent)
+Task: Fix "Panton font is not applied to headings and titles" + fix broken hero/product images (user screenshot).
+
+Work Log:
+- Diagnosed font via live CSS: preflight sets font-family on html via var(--default-font-family) → var(--font-panton), but the class DEFINING --font-panton was on <body>, so at html level the variable didn't exist → whole site silently fell back to ui-sans-serif/system-ui. No component used .font-sans, so NOTHING rendered Panton (the @font-face rules loaded but were never referenced).
+- Fix layout.tsx: moved ${panton.variable} ${geistMono.variable} from <body> to <html>; body now has explicit font-sans. Committed 6a9aa6b, pushed, deployed.
+- Ground truth via agent-browser computed styles: html/body/h1/hero p/search input/Shop chip/product card titles all compute to "panton"; document.fonts.check 400/700 loaded (900 lazy-loads on first use). Screenshots: download/panton-fixed-{desktop,mobile}.png.
+- Explained user's stale screenshot: copy rewrite (b759f7a) deployed 18:10 UTC; screenshot taken ~17:28 UTC → old page pre-deploy.
+- User screenshot also revealed broken hero collage tiles ("Ceramic vase", "Heavyweight sweatshirt" alt boxes). Audit: 5 dead Unsplash URLs (404) across 5 products + hero.tsx + seed-data.ts + api/seed/route.ts + seed-supabase.ts. Also Meadow candle's surviving 2nd image showed ceramic pots and Sable vase's showed an armchair (wrong subjects).
+- Fix: sourced verified replacements (image-search; visually screened for watermarks/competitor brands), AI-generated a branded MEADOW soy-candle product shot (image-generation), uploaded all 5 to Supabase Storage via /api/admin/upload (scripts/fix-dead-images.ts, admin login + multipart; needed explicit Blob MIME or 415), PUT images arrays → 5/5 ok. All 22 unique product image URLs now HTTP 200.
+- Patched hero.tsx + all 3 seed sources so reseeds won't reintroduce dead URLs. Commit a07ea29.
+- Metadata description was still "built on Next.js, Supabase, and Cloudflare" (CRO leftover) → customer-focused copy; gitignored upload/ session artifacts and removed them from the index. Commit 4324a91.
+- Live verified: new meta description served, hero collage renders vase/sweatshirt images, MEADOW candle card live. Final screenshot download/final-home-desktop.png.
+
+Stage Summary:
+- Panton now genuinely renders site-wide (root cause: font CSS variables scoped to body while the base font-family rule resolves at html). 5 products' dead/wrong images replaced with self-hosted Supabase Storage files + 1 AI-generated branded candle shot; hero collage fixed; metadata de-developered; repo hygiene (upload/ ignored). Site fully healthy on hayaan.co.
