@@ -472,3 +472,18 @@ Work Log:
 
 Stage Summary:
 - Official Hayaan cart logo now live across storefront header, footer, admin topbar, payment-return page, and favicon — green as primary, orange on the dark footer.
+
+---
+Task ID: 18
+Agent: Super Z (main agent)
+Task: Add product image upload for admins (answer to "should we add upload image feature" — yes, implemented).
+
+Work Log:
+- Found current state: admin product form only had a paste-URLs textarea (images: string[]); products API stores plain URLs.
+- New route src/app/api/admin/upload/route.ts: admin-only multipart upload → Supabase Storage public bucket "product-images" (auto-created via listBuckets/createBucket, cached per isolate with failure reset); validates type (jpeg/png/webp/gif) + 5MB cap; unique object names {timestamp}-{uuid}.{ext}; returns {url}; keeps products.images as URL[] so no display code changed.
+- admin-panel.tsx: upload tile (multi-select, accept filter, Loader2 uploading state) + thumbnail strip with remove buttons; uploader appends returned URLs to the same images textarea (paste still works); toasts on success/failure.
+- Build clean; committed 4357242, pushed, CI deployed.
+- Live E2E: admin login → POST /api/admin/upload with test PNG → 200 {url: supabase.co/.../product-images/1788712056126-...png}; public URL fetch → 200 image/png; anonymous → 403; customer → 403; text/plain → 415.
+
+Stage Summary:
+- Admins can now upload real product images (multi-file) with previews; stored on Supabase Storage public bucket product-images. Test artifact: 1 tiny green PNG in the bucket (can be deleted from Supabase dashboard).
