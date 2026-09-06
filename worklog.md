@@ -487,3 +487,17 @@ Work Log:
 
 Stage Summary:
 - Admins can now upload real product images (multi-file) with previews; stored on Supabase Storage public bucket product-images. Test artifact: 1 tiny green PNG in the bucket (can be deleted from Supabase dashboard).
+
+---
+Task ID: 19
+Agent: Super Z (main agent)
+Task: Integrate the uploaded Panton brand font (Regular/Bold/Black OTF) as the site typeface.
+
+Work Log:
+- Verified 3 valid OpenType files; copied to src/app/fonts/.
+- layout.tsx: replaced Geist (google) with localFont "panton" (--font-panton; 400/700/900, display swap); kept Geist_Mono for code; body class now panton.variable + geistMono.variable. Also removes the build-time Google Fonts fetch for the sans face.
+- globals.css @theme: --font-sans now var(--font-panton) — cascades to every Tailwind font-sans element site-wide.
+- Build clean (fonts fingerprinted into _next/static/media); committed adc5af4; pushed; CI verified live: Panton OTFs HTTP 200 from CDN, @font-face rules present in the live CSS, body class carries the panton variable.
+
+Stage Summary:
+- Hayaan now renders entirely in the Panton brand face (Regular body, Bold UI, Black display), self-hosted with automatic fallback metrics. No licensing file checked — user supplied the font themselves.
