@@ -398,3 +398,18 @@ Work Log:
 
 Stage Summary:
 - Diagnostic endpoint live. Next: user pastes the Sifalo API username/password in chat (private session) -> run checker -> if ok, user copies exact values into Cloudflare secrets; if not ok, the Sifalo account itself lacks valid API credentials -> Sifalo support/dashboard. Recommended rotating the API password after diagnosis.
+
+---
+Task ID: 13i
+Agent: Super Z (main agent)
+Task: User provided regenerated Sifalo credentials; verify and confirm real payment flow.
+
+Work Log:
+- User pasted new password (sp_... format, regenerated in Sifalo dashboard). Checker verdict: {"ok":true} - credentials ACCEPTED, Sifalo returned a real checkout session.
+- Username su_d1atsxq5 previously proven valid via error-signature difference (unknown user -> code:0/response:null; known user + wrong password -> "invalid api key").
+- Full live flow with STORED Cloudflare creds: POST /api/payments/sifalo -> 200 {redirectUrl: pay.sifalo.com/checkout/?key=...&token=...}. Cloudflare variable was already updated by the user. REAL PAYMENTS ARE LIVE.
+- User's "briefly shows your cart is empty" during redirect = expected (order creation empties cart); polished anyway (2916358): navigate first, clear client cart + toast after, so no flash paints.
+- Orders list: 4 pending $76.07 demo orders (test artifacts on customer@shop.demo). No completed real payment yet.
+
+Stage Summary:
+- Sifalo Pay is FULLY OPERATIONAL end-to-end up to the hosted checkout; only a completed real payment remains to prove the paid-return verification. Suggested user completes one small real payment; after confirmation, optionally rotate the API password once more (it transited chat) and update the Cloudflare secret.
