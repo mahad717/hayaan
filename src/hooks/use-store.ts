@@ -172,3 +172,34 @@ export async function placeOrder(
   }
   return res.json();
 }
+
+/** Is Sifalo Pay configured on this deployment? (drives the checkout option) */
+export async function fetchSifaloStatus(): Promise<{
+  enabled: boolean;
+  environment: string;
+  returnUrlBase: string | null;
+}> {
+  const res = await fetch("/api/payments/sifalo", { credentials: "include" });
+  if (!res.ok) return { enabled: false, environment: "unknown", returnUrlBase: null };
+  return res.json();
+}
+
+/**
+ * Sifalo Pay hosted checkout: create a PENDING order server-side, get the
+ * hosted payment URL, and hand it back — the caller redirects the browser.
+ */
+export async function startSifaloPayment(
+  shipping: { name: string; phone?: string; address: string; city: string; zip: string; country: string },
+): Promise<{ redirectUrl: string; orderId: string; total: number }> {
+  const res = await fetch("/api/payments/sifalo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ shipping }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error ?? "Could not start the Sifalo Pay checkout");
+  }
+  return res.json();
+}

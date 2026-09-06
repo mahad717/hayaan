@@ -82,6 +82,7 @@ create table if not exists orders (
   shipping_country text not null,
   payment_method text not null default 'card',
   payment_ref text,
+  payment_status text not null default 'pending',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

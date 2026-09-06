@@ -227,6 +227,24 @@ In your Cloudflare dashboard → **Workers & Pages → hayaan → Settings → B
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://mqyhgyakhfhuctnvezby.supabase.co` (plain text; also in `wrangler.toml` `[vars]`) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | your anon key (plain text) |
 | `SUPABASE_SERVICE_ROLE_KEY` | your service_role secret (**type: Secret** — never expose to the browser) |
+| `SIFALO_USERNAME` | Sifalo Pay merchant API username (from the Sifalo Pay dashboard) |
+| `SIFALO_PASSWORD` | Sifalo Pay merchant API password (**type: Secret**) |
+| `SIFALO_RETURN_URL_BASE` | `https://hayaan.gabeyre80.workers.dev` — where Sifalo redirects buyers after payment |
+| `SIFALO_ENVIRONMENT` | `live` (or `test`) — informational, shown in `/api/diag` |
+
+Legacy alternates `SIFALOPAY_API_USER` / `SIFALOPAY_API_KEY` are accepted as fallbacks for the username/password pair.
+
+### Sifalo Pay integration
+
+Payments use Sifalo Pay's **hosted checkout** (https://developer.sifalopay.com/):
+
+1. **Checkout** — the customer picks "Sifalo Pay" (default when configured) and submits. The server creates a `pending` order, computes the total itself (subtotal + $6.95 shipping under $75 + 8% tax), and `POST https://api.sifalopay.com/gateway/` with Basic Auth `{amount, gateway: "checkout", currency: "USD", return_url}`.
+2. **Redirect** — the browser goes to `https://pay.sifalo.com/checkout/?key=…&token=…` where the customer pays with cards, EVC Plus, eDahab, Sahal, Premier Wallet and 20+ other methods.
+3. **Return + verify** — Sifalo redirects back to `/payment/sifalo?order_id=…&sid=…`. The page calls `POST https://api.sifalopay.com/gateway/verify.php` server-side, and only a `success` (code 601) response marks the order **paid**. `pending` and `failed` states are shown honestly, and a "Check payment again" button re-verifies.
+
+Orders also surface a **Payment pending** chip with a live re-check button in the customer's Orders view — covering buyers who paid but closed the tab before the redirect landed.
+
+After changing `SIFALO_*` variables in the Cloudflare dashboard, redeploy so the Worker picks them up. Check `/api/diag` → `sifalo.configured` to confirm.
 
 ### How it works
 

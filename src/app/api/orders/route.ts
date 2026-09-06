@@ -21,6 +21,8 @@ export async function GET(req: NextRequest) {
       orders: (data ?? []).map((o) => ({
         ...o,
         totalAmount: Number(o.total_amount),
+        paymentStatus: o.payment_status ?? "pending",
+        shippingPhone: o.shipping_phone ?? null,
         items: (o.items ?? []).map((it: any) => ({ ...it, price: Number(it.price) })),
         createdAt: o.created_at,
       })),
@@ -45,6 +47,7 @@ export async function GET(req: NextRequest) {
     shippingCountry: o.shippingCountry,
     paymentMethod: o.paymentMethod,
     paymentRef: o.paymentRef,
+    paymentStatus: o.paymentStatus,
     items: o.items.map((it) => ({
       id: it.id,
       productId: it.productId,

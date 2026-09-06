@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Package, ChevronLeft } from "lucide-react";
+import { Package, ChevronLeft, RefreshCw, Clock3, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,6 +31,39 @@ export function OrdersView() {
   const { user, setView, setAuthOpen } = useStore();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [checkingId, setCheckingId] = useState<string | null>(null);
+  const [verifyNote, setVerifyNote] = useState<string | null>(null);
+
+  // Sifalo Pay orders can sit in "pending" if the customer paid but closed the
+  // tab before the return page loaded — this re-checks the gateway live.
+  const checkSifaloPayment = async (orderId: string) => {
+    setCheckingId(orderId);
+    setVerifyNote(null);
+    try {
+      const res = await fetch("/api/payments/sifalo/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ orderId }),
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data.state === "paid") {
+        const fresh = await fetchOrders();
+        setOrders(fresh);
+        setVerifyNote("Payment confirmed — thank you!");
+      } else if (res.ok && data.state === "pending") {
+        setVerifyNote("Still pending approval by the payment network.");
+      } else if (res.ok && data.state === "failed") {
+        setVerifyNote("The payment failed or was declined.");
+      } else {
+        setVerifyNote(data?.error ?? "Could not check with Sifalo Pay right now.");
+      }
+    } catch {
+      setVerifyNote("Network error — please try again.");
+    } finally {
+      setCheckingId(null);
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -71,6 +104,9 @@ export function OrdersView() {
           </p>
         </div>
       </div>
+      {verifyNote && (
+        <p className="mb-4 rounded-md border border-[#e6e2d4] bg-[#faf8f1] px-3 py-2 text-xs text-brand-dark">{verifyNote}</p>
+      )}
 
       {loading ? (
         <div className="flex flex-col gap-4">
@@ -138,6 +174,27 @@ export function OrdersView() {
                     <div>
                       <p className="font-medium text-foreground">Payment</p>
                       <p className="capitalize">{o.paymentMethod}</p>
+                      {o.paymentMethod === "sifalo" && o.paymentStatus && o.paymentStatus !== "paid" && o.status !== "paid" && (
+                        <div className="mt-1.5 flex flex-col items-start gap-1.5">
+                          <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                            o.paymentStatus === "failed"
+                              ? "bg-red-50 text-red-600"
+                              : "bg-[#fef1de] text-[#c87b1f]"
+                          }`}>
+                            {o.paymentStatus === "failed" ? <XCircle className="h-3 w-3" /> : <Clock3 className="h-3 w-3" />}
+                            Payment {o.paymentStatus}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => checkSifaloPayment(o.id)}
+                            disabled={checkingId === o.id}
+                            className="flex items-center gap-1 text-[11px] font-medium text-brand hover:underline disabled:opacity-60"
+                          >
+                            <RefreshCw className={`h-3 w-3 ${checkingId === o.id ? "animate-spin" : ""}`} />
+                            {checkingId === o.id ? "Checking…" : "Check payment status"}
+                          </button>
+                        </div>
+                      )}
                       {o.paymentRef && <p className="font-mono text-[10px]">{o.paymentRef}</p>}
                     </div>
                     <div className="mt-2 flex justify-between border-t border-[#e6e2d4] pt-2 text-sm">

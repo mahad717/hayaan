@@ -61,12 +61,17 @@ function useHiddenState() {
 }
 
 export default function Home() {
-  const { view, setUser, setCart } = useStore();
+  const { view, setUser, setCart, setView } = useStore();
 
   // Bootstrap: fetch the current user + cart on first mount.
   useEffect(() => {
     (async () => {
       try {
+        // Deep links like /?view=orders (payment return page "View my orders").
+        const requested = new URLSearchParams(window.location.search).get("view");
+        if (requested && ["home", "product", "checkout", "orders", "account"].includes(requested)) {
+          setView(requested as Parameters<typeof setView>[0]);
+        }
         const [meRes, cartRes] = await Promise.all([
           fetch("/api/auth/me", { credentials: "include" }),
           fetch("/api/cart", { credentials: "include" }),
@@ -83,7 +88,7 @@ export default function Home() {
         // Network errors are non-fatal — UI still works.
       }
     })();
-  }, [setUser, setCart]);
+  }, [setUser, setCart, setView]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">

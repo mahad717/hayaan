@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronLeft, CreditCard, Lock, CheckCircle2, ShoppingBag, Leaf } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, CreditCard, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStore, cartTotal, placeOrder } from "@/hooks/use-store";
+import { useStore, cartTotal, placeOrder, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -30,9 +30,24 @@ export function Checkout() {
     zip: user?.zip ?? "",
     country: user?.country || "Somalia",
   });
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "cod">("card");
+  const [paymentMethod, setPaymentMethod] = useState<"sifalo" | "card" | "paypal" | "cod">("card");
+  const [sifaloEnabled, setSifaloEnabled] = useState<boolean | null>(null); // null = probing
   const [placing, setPlacing] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
+
+  // Offer Sifalo Pay only when the deployment has merchant credentials, and
+  // make it the default method in that case (it's the real payment rail).
+  useEffect(() => {
+    let cancelled = false;
+    fetchSifaloStatus().then((s) => {
+      if (cancelled) return;
+      setSifaloEnabled(s.enabled);
+      if (s.enabled) setPaymentMethod("sifalo");
+    }).catch(() => !cancelled && setSifaloEnabled(false));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const savedAddress = !!(user?.address && user?.city);
 
@@ -115,6 +130,16 @@ export function Checkout() {
     e.preventDefault();
     setPlacing(true);
     try {
+      if (paymentMethod === "sifalo") {
+        // Real money: create a pending order, then hand off to Sifalo Pay's
+        // hosted checkout. The order status flips to paid on the return page
+        // after server-side verification.
+        const payment = await startSifaloPayment(form);
+        setCart({ id: "", items: [] }); // server cart was cleared with the order
+        toast("Redirecting to Sifalo Pay…", "success");
+        window.location.assign(payment.redirectUrl);
+        return; // keep `placing` true while the browser navigates away
+      }
       const result = await placeOrder(form, paymentMethod);
       setCart({ id: "", items: [] });
       setDone(result);
@@ -230,6 +255,26 @@ export function Checkout() {
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
               <RadioGroup value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as typeof paymentMethod)}>
+                {sifaloEnabled !== false && (
+                  <label
+                    className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition ${
+                      paymentMethod === "sifalo"
+                        ? "border-brand bg-[#eef5ec]"
+                        : "border-[#e6e2d4] bg-[#faf8f1] hover:bg-secondary"
+                    }`}
+                  >
+                    <RadioGroupItem value="sifalo" className="text-brand" />
+                    <div className="flex-1">
+                      <p className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+                        <Wallet className="h-4 w-4 text-brand" /> Sifalo Pay
+                        <span className="rounded-full bg-brand/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">Recommended</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Cards, EVC Plus, eDahab, Sahal &amp; 20+ more — you&apos;ll be redirected to a secure page to pay.
+                      </p>
+                    </div>
+                  </label>
+                )}
                 <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-3 transition hover:bg-secondary">
                   <RadioGroupItem value="card" className="text-brand" />
                   <div>
@@ -252,6 +297,19 @@ export function Checkout() {
                   </div>
                 </label>
               </RadioGroup>
+
+              {paymentMethod === "sifalo" && (
+                <div className="mt-2 grid gap-2 rounded-lg border border-brand/30 bg-[#eef5ec] p-4">
+                  <p className="text-xs leading-relaxed text-brand-dark">
+                    <strong>How it works:</strong> you&apos;ll be redirected to Sifalo Pay&apos;s secure checkout to choose your
+                    payment method and approve the payment. You&apos;ll come right back here and your order will be
+                    confirmed automatically.
+                  </p>
+                  <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Lock className="h-3 w-3" /> Processed by Sifalo Pay — your payment details never touch our servers.
+                  </p>
+                </div>
+              )}
 
               {paymentMethod === "card" && (
                 <div className="mt-2 grid gap-3 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-4">
@@ -335,8 +393,14 @@ export function Checkout() {
                 </div>
               </div>
               {/* Pay button — Market Orange (the 10% accent) */}
-              <Button type="submit" size="lg" className="btn-accent" disabled={placing}>
-                {placing ? "Placing order…" : `Pay ${formatPrice(total)}`}
+              <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled === null}>
+                {placing
+                  ? paymentMethod === "sifalo"
+                    ? "Redirecting to Sifalo Pay…"
+                    : "Placing order…"
+                  : paymentMethod === "sifalo"
+                    ? `Pay ${formatPrice(total)} with Sifalo Pay`
+                    : `Pay ${formatPrice(total)}`}
               </Button>
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                 <Lock className="h-3 w-3" /> Secure checkout · 256-bit TLS

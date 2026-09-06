@@ -82,6 +82,10 @@ export interface Order {
   shippingCountry: string;
   paymentMethod: string;
   paymentRef?: string | null;
+  // Real-gateway payment state: "pending" | "paid" | "failed".
+  // Demo methods (card/paypal/cod) keep the default "pending" — the order
+  // status field is what carries "paid" for them.
+  paymentStatus?: string | null;
   items: OrderItem[];
   createdAt: string;
 }
