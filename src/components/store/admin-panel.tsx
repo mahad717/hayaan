@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -93,6 +93,44 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY);
+  const [uploading, setUploading] = useState(false);
+
+  // The images textarea holds one URL per line; the uploader appends to it,
+  // so pasted URLs and uploaded files coexist in the same list.
+  const previewUrls = form.images.split("\n").map((s) => s.trim()).filter(Boolean);
+
+  const removeImage = (idx: number) => {
+    setForm({ ...form, images: previewUrls.filter((_, i) => i !== idx).join("\n") });
+  };
+
+  const uploadImages = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    const added: string[] = [];
+    for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
+      try {
+        const res = await fetch("/api/admin/upload", { method: "POST", body: fd, credentials: "include" });
+        const data = await res.json().catch(() => ({} as { error?: string; url?: string }));
+        if (!res.ok || !data.url) {
+          toast(data.error ?? `Upload failed for ${file.name}`, "error");
+        } else {
+          added.push(data.url);
+        }
+      } catch {
+        toast(`Upload failed for ${file.name}`, "error");
+      }
+    }
+    if (added.length > 0) {
+      setForm((f) => ({
+        ...f,
+        images: [...f.images.split("\n").map((s) => s.trim()).filter(Boolean), ...added].join("\n"),
+      }));
+      toast(added.length === 1 ? "Image uploaded" : `${added.length} images uploaded`, "success");
+    }
+    setUploading(false);
+  };
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -428,11 +466,52 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="p-images">Image URLs (one per line) <Opt /></Label>
+              <Label>Product images <Opt /></Label>
+              {/* Thumbnails of the current list + the upload tile. Removing a
+                  thumbnail rewrites the textarea value underneath. */}
+              <div className="flex flex-wrap items-center gap-2">
+                {previewUrls.map((url, i) => (
+                  <div
+                    key={`${url}-${i}`}
+                    className="group relative h-14 w-14 overflow-hidden rounded-md border border-[#e6e2d4] bg-[#faf8f1]"
+                  >
+                    <img src={url} alt="" className="h-full w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(i)}
+                      className="absolute inset-x-0 bottom-0 bg-black/60 py-0.5 text-[10px] font-medium text-white transition-opacity hover:bg-red-700 sm:opacity-0 sm:group-hover:opacity-100"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <label
+                  className={`flex h-14 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-md border border-dashed border-brand/50 bg-[#faf8f1] px-3 text-xs font-medium text-brand transition hover:bg-secondary ${
+                    uploading ? "pointer-events-none opacity-60" : ""
+                  }`}
+                >
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    multiple
+                    className="hidden"
+                    disabled={uploading}
+                    onChange={(e) => {
+                      uploadImages(e.target.files);
+                      e.currentTarget.value = ""; // allow re-picking the same file
+                    }}
+                  />
+                  {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
+                  {uploading ? "Uploading…" : "Upload"}
+                </label>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                JPG, PNG, WebP, or GIF — up to 5 MB each. Files upload to Supabase Storage; you can also paste URLs below.
+              </p>
               <Textarea
                 id="p-images"
                 rows={3}
-                placeholder={"https://...\nhttps://..."}
+                placeholder={"https://…\nhttps://…"}
                 className={FIELD_CLS}
                 value={form.images}
                 onChange={(e) => setForm({ ...form, images: e.target.value })}
