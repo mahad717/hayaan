@@ -60,7 +60,7 @@ export function Header() {
       value={q}
       onChange={(e) => setQ(e.target.value)}
       placeholder="Search products, brands, categories…"
-      className="border-[#e6e2d4] bg-[#faf8f1] pl-9 placeholder:text-muted-foreground/70 focus-visible:ring-[#f28c28]"
+      className="border-brand/40 bg-[#faf8f1] pl-9 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20 placeholder:text-muted-foreground/70"
       aria-label="Search products"
     />
   );

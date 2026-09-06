@@ -146,7 +146,7 @@ export function Checkout() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   autoComplete="name"
-                  className="bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]"
+                  className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>
               <div className="grid gap-2">
@@ -158,7 +158,7 @@ export function Checkout() {
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
                   autoComplete="street-address"
                   placeholder="123 Garden St"
-                  className="bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]"
+                  className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -170,7 +170,7 @@ export function Checkout() {
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                     autoComplete="address-level2"
-                    className="bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]"
+                    className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                   />
                 </div>
                 <div className="grid gap-2">
@@ -181,7 +181,7 @@ export function Checkout() {
                     value={form.zip}
                     onChange={(e) => setForm({ ...form, zip: e.target.value })}
                     autoComplete="postal-code"
-                    className="bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]"
+                    className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                   />
                 </div>
               </div>
@@ -193,7 +193,7 @@ export function Checkout() {
                   value={form.country}
                   onChange={(e) => setForm({ ...form, country: e.target.value })}
                   autoComplete="country-name"
-                  className="bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]"
+                  className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>
             </CardContent>

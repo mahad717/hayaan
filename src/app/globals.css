@@ -33,6 +33,11 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  /* Brand aliases — make `border-brand/30`, `focus-visible:border-brand`, etc.
+     available as real Tailwind utilities (with variants + alpha support). */
+  --color-brand: var(--primary);
+  --color-brand-mid: var(--hayaan-green-mid);
+  --color-brand-dark: var(--hayaan-green-dark);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -102,8 +107,8 @@
 
   /* Borders / inputs / focus ring */
   --border: #e6e2d4;              /* warm hairline border */
-  --input: #ffffff;               /* form inputs sit on cream surface */
-  --ring: #f28c28;                /* focus ring = orange so it pops on ivory */
+  --input: color-mix(in oklab, var(--primary) 34%, #e6e2d4); /* sage-green field border — visible on white AND cream */
+  --ring: var(--hayaan-green-mid);  /* focus border/halo = brand green */
 
   /* Chart palette (kept consistent with brand) */
   --chart-1: #14532d;
@@ -147,8 +152,8 @@
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: #f28c28;
+  --input: oklch(1 0 0 / 22%);
+  --ring: #8fc49a;
   --chart-1: #3f7d4a;
   --chart-2: #f28c28;
   --chart-3: #f9c27d;

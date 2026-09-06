@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStore } from "@/hooks/use-store";
 
-const INPUT_CLASS = "bg-[#faf8f1] border-[#e6e2d4] focus-visible:ring-[#f28c28]";
+const INPUT_CLASS =
+  "bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20";
 
 export function AuthModal() {
   const { authOpen, setAuthOpen, setUser, setCart, toast, products } = useStore();
