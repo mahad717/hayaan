@@ -52,5 +52,5 @@ binding = "ASSETS"
 enabled = true
 
 [vars]
-NEXT_PUBLIC_SITE_URL = "https://hayaan-market.workers.dev"
+NEXT_PUBLIC_SITE_URL = "https://hayaan.gabeyre80.workers.dev"
 NEXT_PUBLIC_SUPABASE_URL = "https://mqyhgyakhfhuctnvezby.supabase.co"

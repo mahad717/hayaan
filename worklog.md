@@ -259,3 +259,56 @@ Stage Summary:
 - Live-site steps: run the migration SQL, then POST /api/seed once (safe on populated catalog) to create customer@shop.demo / customer123.
 - Verification (agent-browser + curl): seeded locally, logged in as customer@shop.demo/customer123, /account identity card + prefilled contact/address cards render, profile edit persisted through PUT (verified via API + React-state input sequence), checkout prefilled with saved address + phone + green notice, cart badge updates, /api/account GET/PUT both 200. bun run build:pages passed (worker.js emitted).
 - Note: agent-browser raw mouse transport (mouse move/down/up + locator clicks) went dead mid-session (pointermove never dispatched); synthetic .click() worked - app code unaffected, all flows proven via JS clicks + API assertions.
+
+---
+Task ID: 12b
+Agent: Super Z (main agent)
+Task: User confused by "step 2: curl -X POST .../api/seed" from the live-site instructions - explain it and remove the need for them to run anything.
+
+Work Log:
+- Explained the command in plain terms (curl = terminal web-request tool, POST to /api/seed = trigger the site's setup endpoint that creates demo accounts; same thing as the in-app "Seed now" button, which only shows on an empty store).
+- Ran it for the user from the sandbox: POST https://hayaan.gabeyre80.workers.dev/api/seed -> {"ok":true,"mode":"supabase","catalog":"already-populated",admin+customer creds echoed}. Service role secret confirmed working; catalog untouched.
+- Verified end-to-end on the LIVE site via curl: POST /api/auth/login with customer@shop.demo/customer123 -> 200 {role:"customer"}; GET /api/account with session cookie -> full saved profile (Demo Customer, +252 61 234 5678, Villa 12 Maka Al Mukarama Road, Mogadishu, SH01, Somalia).
+- Address round-trip through public.users proves the 2026-09-06 profile-address migration columns exist in production (seed upsert + GET both succeeded).
+
+Stage Summary:
+- Live site is fully seeded: customer@shop.demo / customer123 and admin@shop.demo / admin123 both active; demo customer profile carries the saved shipping address.
+- No user action remains for step 2 - user just signs in via the header account modal and opens "My profile".
+
+---
+Task ID: 13
+Agent: Super Z (main agent)
+Task: "now i want add sifalo pay as the payment people will pay me where do i need to add those variables from sifalo pay" - integrate Sifalo Pay gateway (user already added SIFALO_* variables in the Cloudflare dashboard, screenshot showed worker "tanaad").
+
+Work Log:
+- Pulled official docs (developer.sifalopay.com is GitBook; fetched /getting-started.md + /sifalo-pay-checkout.md): hosted checkout = POST api.sifalopay.com/gateway/ (Basic auth) {amount, gateway:"checkout", currency:"USD", return_url} -> {key, token} -> redirect pay.sifalo.com/checkout/?key&token -> return_url gains sid -> POST gateway/verify.php {sid|order_id} -> {status: success|failure|pending, code: 601=paid}.
+- Schema: orders.payment_status text default 'pending' - Prisma push + supabase schema.sql + idempotent migration 2026-09-06-sifalo-payments.sql; Order.paymentStatus in types.
+- src/lib/sifalo.ts: lazy env config (SIFALO_USERNAME||SIFALOPAY_API_USER, SIFALO_PASSWORD||SIFALOPAY_API_KEY, SIFALO_RETURN_URL_BASE||NEXT_PUBLIC_SITE_URL, SIFALO_ENVIRONMENT informational), initiateSifaloCheckout, verifySifaloPayment; HTML-error-page-safe JSON parsing; btoa Basic auth (workerd-safe).
+- src/lib/sifalo-server.ts: createPendingSifaloOrder (server-side total = subtotal + 6.95 shipping under 75 + 8% tax - mirrors checkout display exactly; 207.36 verified against UI), getOwnedOrder, verifyAndApplyToOrder (paid -> status paid; failed -> payment_status failed; unknown -> untouched), dual Supabase/Prisma paths with payment_status column-missing hint.
+- Routes: GET+POST /api/payments/sifalo (public probe {enabled,environment,returnUrlBase} + authed initiate creating pending order then hosted-checkout URL), POST /api/payments/sifalo/verify (authed re-check used by orders view + return page).
+- /payment/sifalo return page (force-dynamic): idempotent - already-paid orders skip the gateway; verifies server-side by sid/order_id; success/pending/failed/unknown cards; Check-again client button reloads on paid; guard states for missing ref/not-found/signed-out. page.tsx now honors /?view=orders deep link for "View my orders".
+- Checkout: Sifalo Pay radio first with RECOMMENDED badge, probed via fetchSifaloStatus, auto-selected when enabled (hidden when not); submit branches to startSifaloPayment -> clears carts -> location.assign(pay.sifalo.com); button "Pay $X with Sifalo Pay", placing state "Redirecting to Sifalo Pay...".
+- Orders view: Payment pending/failed chip + "Check payment status" button on sifalo orders; orders GET now maps payment_status + shipping_phone to camelCase in the Supabase branch (was leaking snake_case via spread).
+- diag: sifalo block (configured booleans + environment + returnUrlBase, no secrets) in all three response shapes.
+- Local verification (dummy creds in .env): probe {enabled:true}; checkout shows Sifalo default-selected, button "Pay $207.36 with Sifalo Pay"; POST initiate -> order row (pending/sifalo/pending, total 207.36, items snapshotted) then clean 502 from gateway auth rejection; return page unknown state renders + Check now works; missing-ref and not-found guards render; verify endpoint leaves order untouched on unknown. build:pages passed.
+- Local hiccup: SQLite went read-only mid-test ("attempt to write a readonly database") - chmod 666 db/custom.db + dev server restart fixed it.
+- Git hygiene: dropped two unpushed artifact-only commits (17f8d3f, ad50241 - download/ screenshots) via reset --soft 925ab89; pushed clean source commit 43f48e7 (17 files, +1089/-9); ls-remote confirmed main=43f48e7.
+
+Stage Summary:
+- Sifalo Pay hosted checkout is wired end-to-end: pending order -> pay.sifalo.com -> verified return -> paid; pending/failed visible + re-checkable in Orders.
+- Pending on live: CI rebuild (~3 min), then GET /api/payments/sifalo must show enabled:true - the user's screenshot showed SIFALO_* vars on a worker named "tanaad", but the site runs on worker "hayaan"; if enabled:false the vars must be added to the right worker. Migration SQL 2026-09-06-sifalo-payments.sql must run in Supabase before first live Sifalo order.
+- Real-money smoke test by the merchant (small amount) is the only true end-to-end proof - sandbox IP was bot-blocked by Imunify360, so no fake E2E.
+
+---
+Task ID: 13b
+Agent: Super Z (main agent)
+Task: Live-deployment verification of the Sifalo Pay rollout.
+
+Work Log:
+- CI deployed 43f48e7; live /api/diag now includes the sifalo block: configured:false, usernameSet:false, passwordSet:false, environment:"live", returnUrlBase:"https://hayaan-market.workers.dev".
+- environment + returnUrlBase exactly match the code's fallbacks (SIFALO_ENVIRONMENT unset -> "live"; SIFALO_RETURN_URL_BASE unset -> NEXT_PUBLIC_SITE_URL from wrangler.toml). Conclusion: NONE of the SIFALO_* variables exist on the worker serving hayaan.gabeyre80.workers.dev (name "hayaan").
+- Root cause identified: the user's screenshot showed the variables configured on a DIFFERENT worker project named "tanaad" (it also listed PORT and SUPABASE_URL - a different project entirely).
+- Checkout on live currently hides the Sifalo option (probe enabled:false) - the graceful-disable path works as designed.
+
+Stage Summary:
+- Code is live and correct; blocker is configuration only. User must add SIFALO_USERNAME, SIFALO_PASSWORD (secret), SIFALO_RETURN_URL_BASE=https://hayaan.gabeyre80.workers.dev, SIFALO_ENVIRONMENT=live to the "hayaan" worker (Settings > Variables and Secrets) and redeploy; then run migration 2026-09-06-sifalo-payments.sql in Supabase (orders.payment_status) before the first real payment; then /api/diag must show sifalo.configured:true.
