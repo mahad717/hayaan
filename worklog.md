@@ -501,3 +501,19 @@ Work Log:
 
 Stage Summary:
 - Hayaan now renders entirely in the Panton brand face (Regular body, Bold UI, Black display), self-hosted with automatic fallback metrics. No licensing file checked — user supplied the font themselves.
+
+---
+Task ID: 20
+Agent: Super Z (main agent)
+Task: Wire up the user's newly connected custom domain hayaan.co.
+
+Work Log:
+- Verified https://hayaan.co live (HTTP 200 serving the app; API healthy). www.hayaan.co does NOT resolve (not added as a custom domain) — flagged to user.
+- Updated wrangler.toml [vars]: NEXT_PUBLIC_SITE_URL and SIFALO_RETURN_URL_BASE → https://hayaan.co.
+- layout.tsx: added metadataBase new URL("https://hayaan.co"), openGraph.url hayaan.market → hayaan.co. Updated README + sifalo.ts doc comments.
+- Built, committed 4ef336e, pushed, CI deployed.
+- Live verification: returnUrlBase now {"enabled":true,"environment":"live","returnUrlBase":"https://hayaan.co"}; favicon/metadata reference hayaan.co; full E2E on hayaan.co (login → cart → POST /api/payments/sifalo → Sifalo session created 200).
+- Note: pre-deploy in-flight payment sessions still return to workers.dev, which remains served — no breakage. New payments return to hayaan.co.
+
+Stage Summary:
+- hayaan.co fully wired as the canonical domain (site URL, metadata, Sifalo return). Test artifact: one more pending order on customer@shop.demo from the E2E check. www subdomain not yet connected; user should decide whether to add it.
