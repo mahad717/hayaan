@@ -1,9 +1,16 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, UserRound } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +35,7 @@ export function Header() {
   } = useStore();
   const [q, setQ] = useState(searchQuery);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -55,6 +63,21 @@ export function Header() {
     }, 60);
   };
 
+  // Same, from the mobile drawer: close the sheet first and wait out its
+  // 300ms close animation so body scroll-lock is released before we scroll.
+  const goShopFromMenu = () => {
+    setMenuOpen(false);
+    setView("home");
+    setTimeout(() => {
+      document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
+  };
+
+  const menuAction = (action: () => void) => () => {
+    setMenuOpen(false);
+    action();
+  };
+
   const searchInput = (
     <Input
       value={q}
@@ -71,7 +94,8 @@ export function Header() {
         scrolled ? "shadow-sm" : ""
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:gap-4 sm:px-6">
+      {/* Brand row — slightly tighter on phones (h-14) to reclaim vertical space */}
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:h-16 sm:gap-4 sm:px-6">
         {/* Logo — Deep Hayaan Green */}
         <button
           onClick={() => setView("home")}
@@ -79,8 +103,8 @@ export function Header() {
           aria-label="Hayaan Market home"
         >
           {/* Official Hayaan cart mark — dark green variant */}
-          <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-9 w-9" />
-          <span className="hidden text-brand sm:inline">
+          <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-8 w-8 sm:h-9 sm:w-9" />
+          <span className="text-sm text-brand sm:text-base">
             Hayaan <span className="font-normal text-foreground/70">Market</span>
           </span>
         </button>
@@ -184,42 +208,105 @@ export function Header() {
               </span>
             )}
           </Button>
+
+          {/* Mobile menu — hamburger below md (nav pills live in the drawer) */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-brand hover:bg-secondary md:hidden"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
         </div>
       </div>
 
-      {/* Mobile nav row (below md): search + Shop/Orders/Admin buttons */}
-      <div className="border-t border-[#e6e2d4] bg-white/90 md:hidden">
-        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
-          {/* Search moves here on phones, where the header center zone is hidden */}
-          <div className="relative mb-2 sm:hidden">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            {searchInput}
-          </div>
-          <div className="flex items-center gap-1 overflow-x-auto">
+      {/* Mobile search row — phones only. Below sm the header's center search
+          zone is hidden, so search lives here in a compact dedicated row;
+          nav links moved to the hamburger drawer. */}
+      <div className="border-t border-[#e6e2d4] bg-white/90 px-4 py-1.5 sm:hidden">
+        <div className="relative mx-auto max-w-7xl">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          {searchInput}
+        </div>
+      </div>
+
+      {/* Mobile navigation drawer (<md): Shop / Orders / Admin + account */}
+      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+        <SheetContent side="right" className="w-72">
+          <SheetHeader className="pb-0">
+            <SheetTitle className="flex items-center gap-2 text-base">
+              <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-7 w-7" />
+              Hayaan Market
+            </SheetTitle>
+            <SheetDescription>
+              {user ? (
+                <span className="block truncate">{user.name} · {user.email}</span>
+              ) : (
+                "Everyday finds, one market"
+              )}
+            </SheetDescription>
+          </SheetHeader>
+
+          <nav className="flex flex-col gap-1 px-3" aria-label="Mobile navigation">
             <Button
               variant={view === "home" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={goShop}
+              onClick={goShopFromMenu}
+              className={view === "home" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
             >
-              Shop
+              <Store className="mr-2 h-4 w-4" /> Shop
             </Button>
             {user && (
               <Button
                 variant={view === "orders" ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setView("orders")}
+                onClick={menuAction(() => setView("orders"))}
+                className={view === "orders" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
               >
-                Orders
+                <Package className="mr-2 h-4 w-4" /> Orders
               </Button>
             )}
             {user?.role === "admin" && (
-              <Button asChild variant="ghost" size="sm">
-                <Link href="/admin">Admin</Link>
+              <Button asChild variant="ghost" onClick={menuAction(() => {})} className="justify-start text-foreground/80 hover:text-brand">
+                <Link href="/admin">
+                  <LayoutGrid className="mr-2 h-4 w-4" /> Admin dashboard
+                </Link>
               </Button>
             )}
-          </div>
-        </div>
-      </div>
+          </nav>
+
+          <div className="mx-3 border-t border-[#e6e2d4]" aria-hidden="true" />
+
+          <nav className="flex flex-col gap-1 px-3" aria-label="Mobile account">
+            {user ? (
+              <>
+                <Button
+                  variant="ghost"
+                  onClick={menuAction(() => setView("account"))}
+                  className="justify-start text-foreground/80 hover:text-brand"
+                >
+                  <UserRound className="mr-2 h-4 w-4" /> My profile
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={menuAction(handleLogout)}
+                  className="justify-start text-destructive hover:text-destructive"
+                >
+                  <LogOut className="mr-2 h-4 w-4" /> Sign out
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={menuAction(() => setAuthOpen(true))}
+                className="justify-start text-foreground/80 hover:text-brand"
+              >
+                <LogIn className="mr-2 h-4 w-4" /> Sign in
+              </Button>
+            )}
+          </nav>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }
