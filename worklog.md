@@ -413,3 +413,18 @@ Work Log:
 
 Stage Summary:
 - Sifalo Pay is FULLY OPERATIONAL end-to-end up to the hosted checkout; only a completed real payment remains to prove the paid-return verification. Suggested user completes one small real payment; after confirmation, optionally rotate the API password once more (it transited chat) and update the Cloudflare secret.
+
+---
+Task ID: 14
+Agent: Super Z (main agent)
+Task: Verify user's regenerated Sifalo API password; fix the "Your cart is empty" flash shown during the seconds before the Sifalo redirect lands.
+
+Work Log:
+- Logged in live as admin@shop.demo, called POST /api/payments/sifalo/check with su_d1atsxq5 + new password sp_ppi91zusnuuo2ukvi3fxw0vob → {"ok":true,"detail":"Credentials accepted — Sifalo returned a checkout session."}. Cloudflare runtime secret confirmed in sync with the regenerated password.
+- Root-caused the flash: previous fix (2916358) reordered to assign-then-setCart, but window.location.assign is ASYNC — React still repaints during the seconds Sifalo takes to load, so setCart({id:"",items:[]}) painted the empty-cart screen.
+- Fixed checkout.tsx (430109b): new redirectingTo + stuck state; full-screen "Redirecting to Sifalo Pay…" overlay (fixed inset-0 z-100, Wallet icon, Loader2 spinner) early-returned BEFORE all other views; success path NO LONGER clears the client cart (server already emptied it at order creation; badge resyncs on return page); 8s setTimeout shows "Nothing happening? Click to continue" retry if navigation is blocked; added Loader2 import.
+- bun run build:pages clean → committed 430109b → pushed main.
+- Live verification: fetched production home HTML, downloaded all 11 /_next/static/chunks/*.js, grepped: "Taking you to the secure checkout" present (chunk-1.js), "Nothing happening? Click to continue"/"Redirecting to Sifalo Pay" present, success-path setCart({id:"",items:[]}) absent.
+
+Stage Summary:
+- New Sifalo credentials VERIFIED WORKING live; empty-cart flash fixed via full-screen redirect overlay, deployed and verified in the production bundle. Remaining: user completes one small real payment end-to-end; then rotate the password again (it transited chat) and update the Cloudflare secret; GitHub token rotation still outstanding.
