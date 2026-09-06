@@ -338,3 +338,33 @@ Work Log:
 
 Stage Summary:
 - Deployment pipeline confirmed working, but the SIFALO_* variables are still NOT reaching the hayaan worker runtime. Likely causes: (1) panel not saved with final Deploy, (2) added under Build variables instead of Settings > Variables and Secrets, (3) still on wrong worker (tanaad), (4) name typos. Asked user for a screenshot of hayaan > Settings > Variables and Secrets to pinpoint.
+
+---
+Task ID: 13e
+Agent: Super Z (main agent)
+Task: "Remove these three" - user circled Credit/debit card, PayPal, Cash on delivery in the checkout; Sifalo Pay must be the only payment method. (Screenshot also confirmed Sifalo Pay went LIVE - user's variables worked.)
+
+Work Log:
+- Rewrote src/components/store/checkout.tsx: removed the three demo radio options + card form block + placeOrder import; paymentMethod narrowed to "sifalo"; submit is now always the Sifalo handoff (placing stays true during redirect, resets on error only).
+- Graceful states kept: while probing (null) pay button disabled; if probe returns disabled, green info block is replaced with "Online payment is temporarily unavailable" notice and button stays disabled - customers can never hit a dead payment rail.
+- Done-screen now hardcodes "Sifalo Pay" label (block is unreachable dead code but harmless; left for safety).
+- Checks: rg clean of paypal/cod/placeOrder in checkout; bunx tsc --noEmit - zero errors in checkout.tsx (all reported errors pre-existing in untouched files); bun run build:pages passed; pushed c4142ba.
+- Live verification after CI deploy: probe {enabled:true}; downloaded all /_next/static/chunks/*.js from production and grepped: "Credit / debit card":0, "Redirect to PayPal":0, "Cash on delivery":0, "with Sifalo Pay":1. Removal confirmed on live.
+
+Stage Summary:
+- Checkout now offers exactly one payment rail: Sifalo Pay (auto-selected, RECOMMENDED badge, "Pay $X with Sifalo Pay" button) - no way to place an order the merchant can't collect on.
+- Remaining for merchant: one small real-money test transaction; then optionally run migration SQL 2026-09-06-sifalo-payments.sql in Supabase if not yet done (required before first order flips to paid - createPendingSifaloOrder writes payment_status).
+
+---
+Task ID: 13f
+Agent: Super Z (main agent)
+Task: Live end-to-end probe of the Sifalo payment flow (order creation + gateway handshake).
+
+Work Log:
+- curl on live: login customer@shop.demo -> add product to cart -> POST /api/payments/sifalo with saved address.
+- Order creation SUCCEEDED (no column errors, cart consumed) => orders.payment_status exists in Supabase; the 2026-09-06 migration has been applied. Database side fully ready.
+- Gateway call FAILED with Sifalo's own message: "invalid api key" => the credentials the user stored in SIFALO_USERNAME/SIFALO_PASSWORD are rejected by api.sifalopay.com. Not a code issue; Basic auth built correctly (clean JSON error, not a btoa crash).
+- Side effect: one pending demo order (Lumen Smart LED Strip, ~$76.07) on customer@shop.demo, payment pending - harmless demo artifact.
+
+Stage Summary:
+- Store code + DB verified payment-ready end to end except the final gateway auth: user must re-copy the API username/password from the pay.sifalo.com merchant dashboard (watch for swapped fields / spaces / login-password-vs-API-password confusion), update the two Cloudflare secrets, Deploy; then re-test.
