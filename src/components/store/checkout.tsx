@@ -135,9 +135,12 @@ export function Checkout() {
       // hosted checkout. The order status flips to paid on the return page
       // after server-side verification.
       const payment = await startSifaloPayment(form);
-      setCart({ id: "", items: [] }); // server cart was cleared with the order
-      toast("Redirecting to Sifalo Pay…", "success");
+      // Navigate first, clear the client cart after — otherwise React paints
+      // the empty-cart screen for a split second before the browser leaves.
+      // (The server already cleared the cart when the order was created.)
       window.location.assign(payment.redirectUrl);
+      setCart({ id: "", items: [] });
+      toast("Redirecting to Sifalo Pay…", "success");
     } catch (err) {
       const msg = (err as Error).message;
       toast(msg, "error");
