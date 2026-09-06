@@ -24,7 +24,7 @@ export function Hero({ onShop }: { onShop: () => void }) {
             Free shipping over $75
           </span>
 
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-brand-dark sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-black leading-tight tracking-tight text-brand-dark sm:text-5xl md:text-6xl">
             Find what you need,
             <br />
             <span className="bg-gradient-to-r from-[#14532d] to-[#3f7d4a] bg-clip-text text-transparent">

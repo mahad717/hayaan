@@ -193,6 +193,12 @@
  * here makes the accent win deterministically without breaking hover/focus.
  */
 @layer components {
+  /* Original (pre-Panton) system font stack — used where the brand face is
+     too stylized, e.g. the fine-print text blocks in the footer. */
+  .font-original {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+  }
   .btn-accent {
     background-color: var(--hayaan-accent) !important;
     color: var(--hayaan-accent-foreground) !important;
