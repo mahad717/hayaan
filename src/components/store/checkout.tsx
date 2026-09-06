@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStore, cartTotal, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
+import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -139,7 +139,19 @@ export function Checkout() {
       toast("Redirecting to Sifalo Pay…", "success");
       window.location.assign(payment.redirectUrl);
     } catch (err) {
-      toast((err as Error).message, "error");
+      const msg = (err as Error).message;
+      toast(msg, "error");
+      // A failed gateway handshake can still consume the server cart (the
+      // pending order is kept for later verification). If the customer retries
+      // with a stale client cart they'd hit a confusing "Cart is empty" 400 —
+      // re-sync from the server so the badge/checkout reflect reality.
+      if (/cart is empty|cart not found/i.test(msg)) {
+        try {
+          setCart(await fetchCart());
+        } catch {
+          setCart({ id: "", items: [] });
+        }
+      }
       setPlacing(false);
     }
     // No reset on success: `placing` stays true so the button keeps showing
