@@ -2,20 +2,102 @@ import { NextResponse } from "next/server";
 
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import { SEED_ADMIN, SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed-data";
+import { SEED_ADMIN, SEED_CUSTOMER, SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed-data";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 function jsonError(error: string, status: number) {
   return NextResponse.json({ ok: false, error }, { status });
 }
 
-// Production (Supabase) bootstrap: seeds categories + demo products and
-// creates the admin account via the service-role client. Only runs while the
-// catalog is empty, so it can't be abused to overwrite live data later.
-async function seedSupabase(email: string, name: string, password: string) {
+interface DemoAccountSpec {
+  email: string;
+  password: string;
+  name: string;
+  role: "admin" | "customer";
+  profile?: Partial<{ phone: string; address: string; city: string; zip: string; country: string }>;
+}
+
+// Both demo accounts: the store admin and a regular shopper with a saved
+// shipping address pre-filled (so the profile page / checkout demo well).
+const DEMO_ACCOUNTS: DemoAccountSpec[] = [
+  { ...SEED_ADMIN, role: "admin" },
+  { ...SEED_CUSTOMER, role: "customer", profile: {
+    phone: SEED_CUSTOMER.phone,
+    address: SEED_CUSTOMER.address,
+    city: SEED_CUSTOMER.city,
+    zip: SEED_CUSTOMER.zip,
+    country: SEED_CUSTOMER.country,
+  } },
+];
+
+/**
+ * Ensure both demo accounts exist in Supabase Auth + public.users.
+ * Idempotent: existing users get their password/metadata re-asserted, and the
+ * customer's saved address is only written when the profile row has none yet
+ * (so a user-cleared address is not resurrected by a re-seed).
+ */
+async function ensureDemoUsers(supabase: SupabaseClient): Promise<ReturnType<typeof jsonError> | null> {
+  for (const acc of DEMO_ACCOUNTS) {
+    const { data: existing } = await supabase.auth.admin.listUsers();
+    const found = existing?.users?.find((u) => u.email === acc.email);
+    const userId = found
+      ? (
+        await supabase.auth.admin.updateUserById(found.id, {
+          password: acc.password,
+          email_confirm: true,
+          user_metadata: { name: acc.name, role: acc.role },
+        })
+      ).data?.user?.id
+      : (
+        await supabase.auth.admin.createUser({
+          email: acc.email,
+          password: acc.password,
+          email_confirm: true,
+          user_metadata: { name: acc.name, role: acc.role },
+        })
+      ).data?.user?.id;
+
+    if (!userId) return jsonError(`Failed to create the ${acc.role} user ${acc.email}.`, 500);
+
+    // Only fill the demo address when the profile row doesn't have one yet.
+    let currentAddress: string | null = null;
+    if (acc.profile) {
+      const { data: row } = await supabase
+        .from("users")
+        .select("address")
+        .eq("id", userId)
+        .maybeSingle();
+      currentAddress = (row as { address?: string | null } | null)?.address ?? null;
+    }
+
+    const { error: profileErr } = await supabase
+      .from("users")
+      .upsert(
+        {
+          id: userId,
+          email: acc.email,
+          name: acc.name,
+          role: acc.role,
+          ...(acc.profile && !currentAddress ? acc.profile : {}),
+        },
+        { onConflict: "id" },
+      );
+    if (profileErr) {
+      return jsonError(`${acc.email}: auth user ready, but syncing the public.users profile failed: ${profileErr.message}`, 500);
+    }
+  }
+  return null;
+}
+
+// Production (Supabase) bootstrap: seeds categories + demo products on an
+// EMPTY catalog, and always ensures the demo accounts (admin + customer)
+// exist. Re-running on a live catalog is safe: it does not touch products,
+// it only (re-)asserts the demo credentials.
+async function seedSupabase() {
   const supabase = createServiceClient();
   if (!supabase) return jsonError("Supabase is enabled but the service-role key is missing.", 500);
 
-  // Bootstrap-only guard — also doubles as a "did you run schema.sql?" check.
+  // Schema sanity check — doubles as a "did you run schema.sql?" probe.
   const { count, error: countErr } = await supabase
     .from("products")
     .select("id", { count: "exact", head: true });
@@ -25,65 +107,41 @@ async function seedSupabase(email: string, name: string, password: string) {
       500,
     );
   }
-  if ((count ?? 0) > 0) {
-    return jsonError(
-      "The catalog already has products — this bootstrap seeder only runs on an empty database. Manage products from the admin dashboard instead.",
-      409,
-    );
+
+  let catalogState: "seeded" | "already-populated" = "seeded";
+
+  if ((count ?? 0) === 0) {
+    const { error: catErr } = await supabase
+      .from("categories")
+      .upsert(SEED_CATEGORIES, { onConflict: "slug" });
+    if (catErr) return jsonError(`Failed to seed categories: ${catErr.message}`, 500);
+
+    const { data: cats, error: catsFetchErr } = await supabase.from("categories").select("id, slug");
+    if (catsFetchErr || !cats) return jsonError(`Failed to load categories: ${catsFetchErr?.message}`, 500);
+    const slugToId = new Map(cats.map((c: { id: string; slug: string }) => [c.slug, c.id]));
+
+    const rows = SEED_PRODUCTS.map(({ category_slug, ...p }) => ({
+      ...p,
+      currency: "USD",
+      is_active: true,
+      category_id: slugToId.get(category_slug) ?? null,
+    }));
+    const { error: prodErr } = await supabase.from("products").upsert(rows, { onConflict: "slug" });
+    if (prodErr) return jsonError(`Failed to seed products: ${prodErr.message}`, 500);
+  } else {
+    catalogState = "already-populated";
   }
 
-  const { error: catErr } = await supabase
-    .from("categories")
-    .upsert(SEED_CATEGORIES, { onConflict: "slug" });
-  if (catErr) return jsonError(`Failed to seed categories: ${catErr.message}`, 500);
-
-  const { data: cats, error: catsFetchErr } = await supabase.from("categories").select("id, slug");
-  if (catsFetchErr || !cats) return jsonError(`Failed to load categories: ${catsFetchErr?.message}`, 500);
-  const slugToId = new Map(cats.map((c: { id: string; slug: string }) => [c.slug, c.id]));
-
-  const rows = SEED_PRODUCTS.map(({ category_slug, ...p }) => ({
-    ...p,
-    currency: "USD",
-    is_active: true,
-    category_id: slugToId.get(category_slug) ?? null,
-  }));
-  const { error: prodErr } = await supabase.from("products").upsert(rows, { onConflict: "slug" });
-  if (prodErr) return jsonError(`Failed to seed products: ${prodErr.message}`, 500);
-
-  // Admin account: user_metadata.role is what the /admin guard reads from
-  // the Supabase JWT.
-  const { data: existing } = await supabase.auth.admin.listUsers();
-  const found = existing?.users?.find((u) => u.email === email);
-  const userId = found
-    ? (
-      await supabase.auth.admin.updateUserById(found.id, {
-        password,
-        email_confirm: true,
-        user_metadata: { name, role: "admin" },
-      })
-    ).data?.user?.id
-    : (
-      await supabase.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: true,
-        user_metadata: { name, role: "admin" },
-      })
-    ).data?.user?.id;
-
-  if (!userId) return jsonError(`Failed to create the admin user ${email}.`, 500);
-
-  const { error: profileErr } = await supabase
-    .from("users")
-    .upsert({ id: userId, email, name, role: "admin" }, { onConflict: "id" });
-  if (profileErr) return jsonError(`Admin auth user created, but syncing the public.users profile failed: ${profileErr.message}`, 500);
+  const usersErr = await ensureDemoUsers(supabase);
+  if (usersErr) return usersErr;
 
   return NextResponse.json({
     ok: true,
     mode: "supabase",
-    seeded: rows.length,
-    categories: SEED_CATEGORIES.length,
-    admin: { email, password },
+    catalog: catalogState,
+    ...(catalogState === "seeded" ? { seeded: SEED_PRODUCTS.length, categories: SEED_CATEGORIES.length } : {}),
+    admin: { email: SEED_ADMIN.email, password: SEED_ADMIN.password },
+    customer: { email: SEED_CUSTOMER.email, password: SEED_CUSTOMER.password },
   });
 }
 
@@ -93,8 +151,10 @@ interface SeedBody {
   password?: string;
 }
 
-// Seeds a handful of demo products + categories and an admin user.
-// POST body: { email, name, password } — defaults to admin@shop.demo / admin123.
+// Seeds demo products + categories and BOTH demo accounts
+// (admin@shop.demo / admin123 and customer@shop.demo / customer123).
+// Safe to call on an already-populated catalog — product seeding is skipped
+// and only the demo accounts are (re-)asserted.
 export async function POST(req: Request) {
   let body: SeedBody = {};
   try {
@@ -110,7 +170,7 @@ export async function POST(req: Request) {
   // Production path (Cloudflare Workers + Supabase): the Prisma/SQLite engine
   // below cannot run on the Workers runtime, so bootstrap through Supabase.
   if (isSupabaseServerEnabled) {
-    return seedSupabase(email, name, password);
+    return seedSupabase();
   }
 
   // --- Categories ---
@@ -339,12 +399,14 @@ export async function POST(req: Request) {
     });
   }
 
-  // --- Admin user ---
+  // --- Demo users ---
   // bcrypt is dynamically imported — seed route only works under Node.js
   // (local dev). On Cloudflare, use the dedicated `scripts/seed-supabase.ts`
   // script which talks to Supabase directly via the service-role key.
   const { default: bcrypt } = await import("bcryptjs");
   const db = await getDb();
+
+  // Admin (custom body credentials honored).
   const existingUser = await db.user.findUnique({ where: { email } });
   if (!existingUser) {
     const hashed = await bcrypt.hash(password, 10);
@@ -352,7 +414,38 @@ export async function POST(req: Request) {
       data: { email, name, password: hashed, role: "admin" },
     });
   } else if (existingUser.role !== "admin") {
-    await (await getDb()).user.update({ where: { email }, data: { role: "admin" } });
+    await db.user.update({ where: { email }, data: { role: "admin" } });
+  }
+
+  // Demo customer with a saved shipping address (only pre-filled when the
+  // profile has no address yet, so a user-cleared address isn't resurrected).
+  const existingCustomer = await db.user.findUnique({ where: { email: SEED_CUSTOMER.email } });
+  if (!existingCustomer) {
+    const hashed = await bcrypt.hash(SEED_CUSTOMER.password, 10);
+    await db.user.create({
+      data: {
+        email: SEED_CUSTOMER.email,
+        name: SEED_CUSTOMER.name,
+        password: hashed,
+        role: "customer",
+        phone: SEED_CUSTOMER.phone,
+        address: SEED_CUSTOMER.address,
+        city: SEED_CUSTOMER.city,
+        zip: SEED_CUSTOMER.zip,
+        country: SEED_CUSTOMER.country,
+      },
+    });
+  } else if (!existingCustomer.address) {
+    await db.user.update({
+      where: { email: SEED_CUSTOMER.email },
+      data: {
+        phone: SEED_CUSTOMER.phone,
+        address: SEED_CUSTOMER.address,
+        city: SEED_CUSTOMER.city,
+        zip: SEED_CUSTOMER.zip,
+        country: SEED_CUSTOMER.country,
+      },
+    });
   }
 
   return NextResponse.json({
@@ -360,5 +453,6 @@ export async function POST(req: Request) {
     seeded: products.length,
     categories: categoryRecords.length,
     admin: { email, password },
+    customer: { email: SEED_CUSTOMER.email, password: SEED_CUSTOMER.password },
   });
 }

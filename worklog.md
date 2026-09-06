@@ -235,3 +235,27 @@ Work Log:
 Stage Summary:
 - Admin product dialog fully restyled in one file: brand-green visible borders, orange required marks, (optional) hints, $ prefixes, full-width select, switch group box, always-visible action bar.
 - Scope respected: no other form, component, or theme file touched.
+
+---
+Task ID: 12
+Agent: Super Z (main agent)
+Task: "Now we need to build the user's profile and also add the shipping address fields also i a demo user login so i can look" - user profile page, saved shipping address, demo customer login.
+
+Work Log:
+- Schema: Prisma User += phone/address/city/zip/country (nullable); Order += shippingPhone. Supabase schema.sql mirrored; new idempotent migration src/lib/supabase/migrations/2026-09-06-profile-address.sql (ALTER TABLE ... ADD COLUMN IF NOT EXISTS) for existing deployments. bunx prisma db push done locally.
+- Types: SafeUser + optional profile fields; Order.shippingPhone; ShippingInfo.phone.
+- Session mapping now hydrates the profile: current-user resolveSupabaseUser prefers public.users row (service role) over JWT metadata so address fields ride along on /api/auth/me; local Prisma selects extended in auth-session.ts + current-user.ts.
+- NEW GET/PUT /api/account: sanitize (name/phone/address/city/zip/country, trim, 200-char cap), name-not-empty check, Supabase upsert (keeps auth user_metadata.name in sync) with column-missing hint pointing at the migration file; Prisma update locally. Email/role not editable.
+- Demo customer SEED_CUSTOMER (customer@shop.demo / customer123 / Demo Customer, Mogadishu address) in seed-data.ts; seed route refactored: ensureDemoUsers() creates/updates BOTH accounts in Supabase mode; seeder no longer 409s on a populated catalog - it skips products and re-asserts demo logins (critical: live deployment already has 12 products). Address pre-fill only written when profile has none. scripts/seed-supabase.ts got the same ensureUser refactor.
+- Orders API accepts shipping.phone -> shipping_phone/shippingPhone in both insert paths + GET mapping.
+- NEW AccountView (view "account"): identity card (initials avatar, role badge, email, address summary), Contact card (name, phone, read-only email), Shipping address card (street, city, zip, country) with admin-form FIELD_CLS styling; Save -> PUT /api/account -> setUser so header/checkout update instantly; Reset button; signed-out empty state.
+- Header account dropdown: "My profile" item added (UserRound icon) above My Orders.
+- Checkout: form prefilled from saved profile + phone field + green "Prefilled from your saved address" notice when user has address+city.
+- Orders view shows shippingPhone when present; auth modal demo box now lists BOTH admin + customer creds side by side.
+- README: migration step for pre-2026-09-06 deployments + two-account credentials table.
+
+Stage Summary:
+- Full customer profile feature: /account view edits contact + shipping address; checkout prefills; phone persisted on orders; demo customer login ready for the deployed site.
+- Live-site steps: run the migration SQL, then POST /api/seed once (safe on populated catalog) to create customer@shop.demo / customer123.
+- Verification (agent-browser + curl): seeded locally, logged in as customer@shop.demo/customer123, /account identity card + prefilled contact/address cards render, profile edit persisted through PUT (verified via API + React-state input sequence), checkout prefilled with saved address + phone + green notice, cart badge updates, /api/account GET/PUT both 200. bun run build:pages passed (worker.js emitted).
+- Note: agent-browser raw mouse transport (mouse move/down/up + locator clicks) went dead mid-session (pointermove never dispatched); synthetic .click() worked - app code unaffected, all flows proven via JS clicks + API assertions.

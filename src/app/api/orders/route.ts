@@ -38,6 +38,7 @@ export async function GET(req: NextRequest) {
     totalAmount: o.totalAmount,
     currency: o.currency,
     shippingName: o.shippingName,
+    shippingPhone: o.shippingPhone,
     shippingAddress: o.shippingAddress,
     shippingCity: o.shippingCity,
     shippingZip: o.shippingZip,
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const { shipping, paymentMethod = "card" } = body as {
-    shipping: { name: string; address: string; city: string; zip: string; country: string };
+    shipping: { name: string; phone?: string; address: string; city: string; zip: string; country: string };
     paymentMethod?: string;
   };
   if (!shipping?.name || !shipping?.address || !shipping?.city || !shipping?.zip || !shipping?.country) {
@@ -93,6 +94,7 @@ export async function POST(req: NextRequest) {
         total_amount: total,
         currency: "USD",
         shipping_name: shipping.name,
+        shipping_phone: shipping.phone?.trim() || null,
         shipping_address: shipping.address,
         shipping_city: shipping.city,
         shipping_zip: shipping.zip,
@@ -131,6 +133,7 @@ export async function POST(req: NextRequest) {
       totalAmount: total,
       currency: "USD",
       shippingName: shipping.name,
+      shippingPhone: shipping.phone?.trim() || null,
       shippingAddress: shipping.address,
       shippingCity: shipping.city,
       shippingZip: shipping.zip,

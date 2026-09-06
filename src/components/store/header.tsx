@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, Leaf } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LayoutGrid, Package, Leaf, UserRound } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,6 +141,9 @@ export function Header() {
                     <div className="text-xs text-muted-foreground">{user.email}</div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setView("account")}>
+                    <UserRound className="mr-2 h-4 w-4" /> My profile
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setView("orders")}>
                     <Package className="mr-2 h-4 w-4" /> My Orders
                   </DropdownMenuItem>

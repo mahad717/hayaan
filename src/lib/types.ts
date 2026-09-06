@@ -8,6 +8,14 @@ export interface SafeUser {
   email: string;
   name: string;
   role: Role;
+  // Saved shipping profile — present when resolved from the profile store
+  // (public.users in Supabase mode, Prisma User locally). Optional because
+  // some resolution paths (JWT metadata only) don't carry them.
+  phone?: string | null;
+  address?: string | null;
+  city?: string | null;
+  zip?: string | null;
+  country?: string | null;
 }
 
 export interface Category {
@@ -67,6 +75,7 @@ export interface Order {
   totalAmount: number;
   currency: string;
   shippingName: string;
+  shippingPhone?: string | null;
   shippingAddress: string;
   shippingCity: string;
   shippingZip: string;
@@ -79,6 +88,7 @@ export interface Order {
 
 export interface ShippingInfo {
   name: string;
+  phone?: string;
   address: string;
   city: string;
   zip: string;

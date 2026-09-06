@@ -12,6 +12,12 @@ create table if not exists users (
   email text unique not null,
   name text not null,
   role text not null default 'customer',
+  -- Saved shipping profile (prefills checkout; editable from /account view).
+  phone text,
+  address text,
+  city text,
+  zip text,
+  country text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -69,6 +75,7 @@ create table if not exists orders (
   total_amount numeric(10,2) not null,
   currency text not null default 'USD',
   shipping_name text not null,
+  shipping_phone text,
   shipping_address text not null,
   shipping_city text not null,
   shipping_zip text not null,

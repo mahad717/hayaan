@@ -113,6 +113,13 @@ This creates `users`, `categories`, `products`, `carts`, `cart_items`,
 `orders`, `order_items` plus RLS policies and realtime. The script is
 idempotent — safe to run again.
 
+> **Already deployed before 2026-09-06?** Also run
+> [`src/lib/supabase/migrations/2026-09-06-profile-address.sql`](src/lib/supabase/migrations/2026-09-06-profile-address.sql).
+> It adds the user profile / shipping-address columns (`users.phone`,
+> `users.address`, `users.city`, `users.zip`, `users.country`) and
+> `orders.shipping_phone`. Skipping it makes saving a profile fail with a
+> "column does not exist" error. Fresh projects don't need it.
+
 ### 2. Seed the catalog and create the admin account
 
 From your machine (keys go in `.env`, which is never committed):
@@ -128,11 +135,17 @@ bun install
 bun run seed:supabase
 ```
 
-This upserts 4 categories + 12 demo products and creates the admin login:
+This upserts 4 categories + 12 demo products and creates both demo logins:
 
 | Email | Password | Role |
 | --- | --- | --- |
 | `admin@shop.demo` | `admin123` | admin |
+| `customer@shop.demo` | `customer123` | customer |
+
+The customer account ships with a saved Mogadishu shipping address so the
+profile page (`My profile` in the account menu) and checkout prefill have
+data to show. Calling `POST /api/seed` again on a populated catalog is safe —
+it skips products and only re-asserts the two demo logins.
 
 > **No terminal handy?** Supabase dashboard → **Authentication → Users →
 > Add user** (email + password, auto-confirm). Then edit that user's

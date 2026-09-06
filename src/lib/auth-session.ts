@@ -54,7 +54,7 @@ export async function getSupabaseUserById(userId: string): Promise<SafeUser | nu
 
   const { data: profile } = await supabase
     .from("users")
-    .select("id, email, name, role")
+    .select("id, email, name, role, phone, address, city, zip, country")
     .eq("id", userId)
     .maybeSingle();
   if (profile) {
@@ -63,6 +63,11 @@ export async function getSupabaseUserById(userId: string): Promise<SafeUser | nu
       email: profile.email,
       name: profile.name ?? profile.email.split("@")[0],
       role: profile.role === "admin" ? "admin" : "customer",
+      phone: profile.phone,
+      address: profile.address,
+      city: profile.city,
+      zip: profile.zip,
+      country: profile.country,
     };
   }
 
@@ -87,7 +92,17 @@ export async function getUserFromRequest(req: Request): Promise<SafeUser | null>
   const db = await getDb();
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, role: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      role: true,
+      phone: true,
+      address: true,
+      city: true,
+      zip: true,
+      country: true,
+    },
   });
   return user ?? null;
 }

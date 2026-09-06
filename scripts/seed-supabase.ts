@@ -25,6 +25,17 @@ const ADMIN_EMAIL = "admin@shop.demo";
 const ADMIN_PASSWORD = "admin123";
 const ADMIN_NAME = "Store Admin";
 
+// Demo customer — ships with a saved shipping address so the profile page
+// and checkout prefill have data to show.
+const CUSTOMER_EMAIL = "customer@shop.demo";
+const CUSTOMER_PASSWORD = "customer123";
+const CUSTOMER_NAME = "Demo Customer";
+const CUSTOMER_PHONE = "+252 61 234 5678";
+const CUSTOMER_ADDRESS = "Villa 12, Maka Al Mukarama Road";
+const CUSTOMER_CITY = "Mogadishu";
+const CUSTOMER_ZIP = "SH01";
+const CUSTOMER_COUNTRY = "Somalia";
+
 const CATEGORIES = [
   { name: "Apparel", slug: "apparel", description: "T-shirts, hoodies, and accessories." },
   { name: "Electronics", slug: "electronics", description: "Headphones, gadgets, and gear." },
@@ -335,42 +346,63 @@ async function seedProducts() {
   console.log(`Seeded ${count} products.`);
 }
 
-async function seedAdminUser() {
-  console.log(`→ Upserting admin user (${ADMIN_EMAIL})…`);
+async function ensureUser(spec: {
+  email: string;
+  password: string;
+  name: string;
+  role: "admin" | "customer";
+  profile?: Partial<{ phone: string; address: string; city: string; zip: string; country: string }>;
+}) {
+  console.log(`→ Upserting ${spec.role} user (${spec.email})…`);
   const { data: existing } = await supabase.auth.admin.listUsers();
-  const found = existing?.users?.find((u) => u.email === ADMIN_EMAIL);
+  const found = existing?.users?.find((u) => u.email === spec.email);
 
   let userId: string;
   if (found) {
     const { data, error } = await supabase.auth.admin.updateUserById(found.id, {
-      password: ADMIN_PASSWORD,
-      user_metadata: { name: ADMIN_NAME, role: "admin" },
+      password: spec.password,
+      user_metadata: { name: spec.name, role: spec.role },
       email_confirm: true,
     });
     if (error) {
-      console.error("  ✗ Failed to update admin:", error.message);
+      console.error(`  ✗ Failed to update ${spec.role}:`, error.message);
       return;
     }
     userId = data.user.id;
     console.log(`  ✓ Updated existing user ${userId}`);
   } else {
     const { data, error } = await supabase.auth.admin.createUser({
-      email: ADMIN_EMAIL,
-      password: ADMIN_PASSWORD,
+      email: spec.email,
+      password: spec.password,
       email_confirm: true,
-      user_metadata: { name: ADMIN_NAME, role: "admin" },
+      user_metadata: { name: spec.name, role: spec.role },
     });
     if (error) {
-      console.error("  ✗ Failed to create admin:", error.message);
+      console.error(`  ✗ Failed to create ${spec.role}:`, error.message);
       return;
     }
     userId = data.user.id;
     console.log(`  ✓ Created new user ${userId}`);
   }
 
+  // For the demo customer, only pre-fill the sample address when the profile
+  // row doesn't have one yet (don't resurrect a user-cleared address).
+  let profilePatch = {} as Record<string, string>;
+  if (spec.profile) {
+    const { data: row } = await supabase
+      .from("users")
+      .select("address")
+      .eq("id", userId)
+      .maybeSingle();
+    if (!row?.address) profilePatch = spec.profile;
+  }
+
   const { error: profileErr } = await supabase
     .from("users")
-    .upsert({ id: userId, email: ADMIN_EMAIL, name: ADMIN_NAME, role: "admin" }, { onConflict: "id" });
+    .upsert(
+      { id: userId, email: spec.email, name: spec.name, role: spec.role, ...profilePatch },
+      { onConflict: "id" },
+    );
   if (profileErr) console.error("  ✗ Failed to upsert public.users row:", profileErr.message);
   else console.log("  ✓ Synced public.users profile");
 }
@@ -379,7 +411,25 @@ async function main() {
   console.log(`Seeding Supabase at ${url}…\n`);
   await seedCategories();
   await seedProducts();
-  await seedAdminUser();
+  await ensureUser({
+    email: ADMIN_EMAIL,
+    password: ADMIN_PASSWORD,
+    name: ADMIN_NAME,
+    role: "admin",
+  });
+  await ensureUser({
+    email: CUSTOMER_EMAIL,
+    password: CUSTOMER_PASSWORD,
+    name: CUSTOMER_NAME,
+    role: "customer",
+    profile: {
+      phone: CUSTOMER_PHONE,
+      address: CUSTOMER_ADDRESS,
+      city: CUSTOMER_CITY,
+      zip: CUSTOMER_ZIP,
+      country: CUSTOMER_COUNTRY,
+    },
+  });
   console.log("\n✓ Done. Visit /api/products to verify.");
 }
 

@@ -26,17 +26,26 @@ function mapSupabaseUser(u: SupabaseAuthUser): SafeUser {
   };
 }
 
+async function resolveSupabaseUser(req: NextRequest | null): Promise<SafeUser | null> {
+  // 1) Canonical: the @supabase/ssr cookie session. We then hydrate the
+  //    profile from public.users (service role) so the shipping address
+  //    fields ride along — JWT user_metadata doesn't carry them.
+  const supabase = await createServerClient();
+  if (supabase) {
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      const profile = await getSupabaseUserById(data.user.id);
+      return profile ?? mapSupabaseUser(data.user);
+    }
+  }
+  // 2) Fallback: our durable `shop_session` cookie (survives lost/expired
+  //    sb-* cookies — there is no token-refresh middleware on Workers).
+  return req ? getUserFromRequest(req) : null;
+}
+
 export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null> {
   if (isSupabaseServerEnabled) {
-    // 1) Canonical: the @supabase/ssr cookie session.
-    const supabase = await createServerClient();
-    if (supabase) {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) return mapSupabaseUser(data.user);
-    }
-    // 2) Fallback: our durable `shop_session` cookie (survives lost/expired
-    //    sb-* cookies — there is no token-refresh middleware on Workers).
-    return getUserFromRequest(req);
+    return resolveSupabaseUser(req);
   }
   return getUserFromRequest(req);
 }
@@ -48,11 +57,15 @@ export async function getCurrentUser(req: NextRequest): Promise<SafeUser | null>
  */
 export async function getServerUser(): Promise<SafeUser | null> {
   if (isSupabaseServerEnabled) {
-    // 1) Canonical: the @supabase/ssr cookie session.
+    // 1) Canonical: the @supabase/ssr cookie session (hydrated from
+    //    public.users so profile/address fields are included).
     const supabase = await createServerClient();
     if (supabase) {
       const { data } = await supabase.auth.getUser();
-      if (data.user) return mapSupabaseUser(data.user);
+      if (data.user) {
+        const profile = await getSupabaseUserById(data.user.id);
+        if (profile) return profile;
+      }
     }
     // 2) Fallback: `shop_session` cookie → Supabase profile lookup.
     const cookieStore = await cookies();
@@ -68,7 +81,17 @@ export async function getServerUser(): Promise<SafeUser | null> {
   const db = await getDb();
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, role: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      role: true,
+      phone: true,
+      address: true,
+      city: true,
+      zip: true,
+      country: true,
+    },
   });
   return user ?? null;
 }

@@ -20,16 +20,21 @@ function formatPrice(price: number, currency = "USD") {
 
 export function Checkout() {
   const { cart, setCart, setView, toast, user, setAuthOpen } = useStore();
+  // Prefill from the saved profile (account view) so returning customers
+  // don't retype their address.
   const [form, setForm] = useState({
     name: user?.name ?? "",
-    address: "",
-    city: "",
-    zip: "",
-    country: "Somalia",
+    phone: user?.phone ?? "",
+    address: user?.address ?? "",
+    city: user?.city ?? "",
+    zip: user?.zip ?? "",
+    country: user?.country || "Somalia",
   });
   const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "cod">("card");
   const [placing, setPlacing] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
+
+  const savedAddress = !!(user?.address && user?.city);
 
   const subtotal = cartTotal(cart);
   const shipping = subtotal >= 75 ? 0 : 6.95;
@@ -138,6 +143,11 @@ export function Checkout() {
               <CardTitle className="text-base text-brand-dark">Shipping address</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
+              {savedAddress && (
+                <p className="rounded-md bg-[#eef5ec] px-3 py-2 text-xs text-brand">
+                  Prefilled from your saved address — edit below if you need changes. Manage it from <strong>My profile</strong>.
+                </p>
+              )}
               <div className="grid gap-2">
                 <Label htmlFor="name" className="text-foreground">Full name</Label>
                 <Input
@@ -146,6 +156,18 @@ export function Checkout() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   autoComplete="name"
+                  className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone" className="text-foreground">Phone <span className="text-xs font-normal text-muted-foreground">(optional)</span></Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  autoComplete="tel"
+                  placeholder="+252 61 234 5678"
                   className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>

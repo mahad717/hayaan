@@ -38,6 +38,19 @@ export const SEED_ADMIN = {
   name: "Store Admin",
 } as const;
 
+// Regular shopper demo account — lets you try the customer side (profile,
+// saved shipping address, checkout, orders) without touching the admin.
+export const SEED_CUSTOMER = {
+  email: "customer@shop.demo",
+  password: "customer123",
+  name: "Demo Customer",
+  phone: "+252 61 234 5678",
+  address: "Villa 12, Maka Al Mukarama Road",
+  city: "Mogadishu",
+  zip: "SH01",
+  country: "Somalia",
+} as const;
+
 export const SEED_CATEGORIES: SeedCategory[] = [
   { name: "Apparel", slug: "apparel", description: "T-shirts, hoodies, and accessories." },
   { name: "Electronics", slug: "electronics", description: "Headphones, gadgets, and gear." },

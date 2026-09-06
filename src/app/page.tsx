@@ -8,6 +8,7 @@ import { ProductGrid } from "@/components/store/product-grid";
 import { ProductDetail } from "@/components/store/product-detail";
 import { Checkout } from "@/components/store/checkout";
 import { OrdersView } from "@/components/store/orders-view";
+import { AccountView } from "@/components/store/account-view";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
 import { Footer } from "@/components/store/footer";
@@ -100,6 +101,7 @@ export default function Home() {
         {view === "product" && <ProductDetail />}
         {view === "checkout" && <Checkout />}
         {view === "orders" && <OrdersView />}
+        {view === "account" && <AccountView />}
       </main>
       <Footer />
 

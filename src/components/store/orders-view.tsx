@@ -127,6 +127,7 @@ export function OrdersView() {
                   <div>
                     <p className="font-medium text-foreground">Shipping to</p>
                     <p>{o.shippingName}</p>
+                    {o.shippingPhone && <p>{o.shippingPhone}</p>}
                     <p>{o.shippingAddress}</p>
                     <p>
                       {o.shippingCity}, {o.shippingZip}

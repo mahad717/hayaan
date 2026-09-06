@@ -170,10 +170,17 @@ export function AuthModal() {
             </p>
           </div>
         ) : (
-          <div className="mt-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground">
-            <p className="font-medium text-brand">Demo admin</p>
-            <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
-            <p>Password: <code className="text-foreground">admin123</code></p>
+          <div className="mt-2 grid gap-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground sm:grid-cols-2">
+            <div>
+              <p className="font-medium text-brand">Demo admin</p>
+              <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
+              <p>Password: <code className="text-foreground">admin123</code></p>
+            </div>
+            <div>
+              <p className="font-medium text-brand">Demo customer</p>
+              <p>Email: <code className="text-foreground">customer@shop.demo</code></p>
+              <p>Password: <code className="text-foreground">customer123</code></p>
+            </div>
           </div>
         )}
       </DialogContent>
