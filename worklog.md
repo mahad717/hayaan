@@ -778,3 +778,19 @@ Work Log:
 
 Stage Summary:
 - Buy now / Proceed to checkout / payment-return deep links now render their target view from the very first server-rendered byte: a brand-green spinner while the session resolves, then the real page. The "Demo mode / Please sign in" flash is gone for signed-in customers; guests now get the correct sign-in wall without the false demo banner. Checkout address prefill works on deep links for the first time.
+
+---
+Task ID: 38
+Agent: Super Z (main agent)
+Task: "google analytics measurement id of Hayaan Market don't change anything else — G-HHYT03XHG4" (install GA4 with the provided measurement ID; explicitly no other changes).
+
+Work Log:
+- Audited src/ for gtag/googletagmanager/G- — zero existing analytics anywhere; clean slate. Read worklog first per protocol; confirmed Task 37 already committed (44d0312) and deployed.
+- Single-file change: src/app/layout.tsx only. Added `import Script from "next/script"` plus the standard GA4 pair in <body> after <Toaster/>: external loader `https://www.googletagmanager.com/gtag/js?id=G-HHYT03XHG4` (strategy afterInteractive) + inline `ga4-init` script (dataLayer init, gtag(), gtag('js'), gtag('config','G-HHYT03XHG4')). Measurement ID hardcoded per "don't change anything else" (no .env edits, no new deps like @next/third-parties). afterInteractive keeps it out of the critical path.
+- bun run build OK (OpenNext bundle complete, no type errors). Committed ONLY src/app/layout.tsx (14 insertions) as e5e16ca (avoided mode-only pseudo-diffs and stray tool-results file); pushed HTTPS remote 44d0312..e5e16ca; deployment detected after 5 polls (~100s) via chunk-set md5 1e9f739d… → dddc3b21….
+- Live verification, curl layer: served HTML contains gtag/js loader tag + G-HHYT03XHG4 + inline dataLayer script. Browser layer (new scripts/ga-verify-cdp.mjs, Task 36 CDP harness pattern: Xvfb :99 headed Chrome 152 on port 9333, browser-level ws attach flatten, 15s per-command timeouts, proxy env cleared for bun, --disable-dev-shm-usage --disable-gpu): after 10s on https://hayaan.co → dataLayer present with config entry for G-HHYT03XHG4, window.gtag function, gtag/js resource loaded, and TWO real hits carrying tid=G-HHYT03XHG4 (analytics.google.com/g/collect page_view + stats.g.doubleclick.net/g/collect). PASS.
+- Harness bug worth remembering: gtag pushes Arguments objects into dataLayer — Array.isArray(entry) is false, so a naive hasConfig check false-negatived while the collect hits proved GA live; fixed the assert to index entries without the isArray gate. Also: chrome processes do NOT survive between Bash tool invocations here even with setsid — launch chrome + run the verify script in the SAME command.
+- Evidence: download/ga-verify-homepage.png (homepage under verification).
+
+Stage Summary:
+- GA4 (G-HHYT03XHG4) is live on every page of hayaan.co via the root layout — verified end-to-end from the browser to Google's collect endpoints. Nothing else changed: one file, 14 lines, no dependency/env/metadata edits. Owner can confirm in GA4 → Reports → Realtime within ~30 minutes of visiting.
