@@ -131,7 +131,7 @@ export function ProductGrid() {
           <p className="text-sm text-muted-foreground">Try a different search, or browse another category.</p>
           <Button
             variant="outline"
-            className="border-brand text-brand hover:bg-brand hover:text-white!"
+            className="border-brand text-brand hover:bg-brand hover:text-white"
             onClick={() => {
               setActiveCategory("all");
               useStore.getState().setSearchQuery("");

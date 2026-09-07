@@ -228,6 +228,16 @@
   .bg-brand:hover {
     background-color: var(--hayaan-green-dark) !important;
   }
+  /* Outline buttons/links that fill brand green on hover (hero "Browse
+     categories", checkout and Sifalo secondary actions) pair text-brand with
+     hover:bg-brand. On hover the label must flip to white, but .text-brand's
+     !important keeps it dark green on the dark fill — invisible. An
+     !important utilities-layer rule (hover:text-white!) can NOT win: for
+     !important declarations the EARLIER cascade layer wins, and components
+     sits before utilities. Same layer + higher specificity does. */
+  .hover\:bg-brand:hover {
+    color: #ffffff !important;
+  }
   .bg-brand-dark {
     background-color: var(--hayaan-green-dark) !important;
   }

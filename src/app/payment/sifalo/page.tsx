@@ -191,7 +191,7 @@ function BackActions({ label = "Back to store" }: { label?: string }) {
     <div className="mt-6 flex justify-center">
       <Link
         href="/"
-        className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white!"
+        className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
       >
         {label}
       </Link>
@@ -237,7 +237,7 @@ function SuccessCard({
           </Link>
           <Link
             href="/?view=orders"
-            className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white!"
+            className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
           >
             View my orders
           </Link>

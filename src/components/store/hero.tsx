@@ -43,14 +43,15 @@ export function Hero({ onShop }: { onShop: () => void }) {
               Start shopping
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
-            {/* hover:text-white! (important) — .text-brand in globals.css is
-                !important and would otherwise keep the label dark green on the
-                dark-green hover background, making it invisible. */}
+            {/* Label flip to white on the brand-green hover fill lives in
+                globals.css (.hover\:bg-brand:hover) — a utilities-layer
+                hover:text-white! can't win there (important-inverts-layer
+                order vs .text-brand). */}
             <Button
               size="lg"
               variant="outline"
               onClick={onShop}
-              className="border-brand text-brand hover:bg-brand hover:text-white!"
+              className="border-brand text-brand hover:bg-brand hover:text-white"
             >
               Browse categories
             </Button>

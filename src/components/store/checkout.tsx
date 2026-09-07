@@ -83,7 +83,7 @@ export function Checkout() {
         {stuck && (
           <Button
             variant="outline"
-            className="border-brand text-brand hover:bg-brand hover:text-white!"
+            className="border-brand text-brand hover:bg-brand hover:text-white"
             onClick={() => window.location.assign(redirectingTo)}
           >
             Nothing happening? Click to continue
@@ -129,7 +129,7 @@ export function Checkout() {
           </CardContent>
         </Card>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-brand text-brand hover:bg-brand hover:text-white!" onClick={() => setView("orders")}>
+          <Button variant="outline" className="border-brand text-brand hover:bg-brand hover:text-white" onClick={() => setView("orders")}>
             View my orders
           </Button>
           <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>
