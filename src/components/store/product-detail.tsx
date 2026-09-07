@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { addToCart, useStore } from "@/hooks/use-store";
+import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 function formatPrice(price: number, currency: string) {
@@ -16,13 +18,29 @@ function formatPrice(price: number, currency: string) {
   }
 }
 
-export function ProductDetail() {
-  const { selectedProduct, setView, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
+/**
+ * Product detail view. Rendered two ways:
+ *  • Legacy SPA mode (no props) — reads selectedProduct from the store.
+ *  • SSR route mode (/product/[slug]) — `initialProduct` comes preloaded from
+ *    the server; the store is synced so cart/auth flows behave identically.
+ */
+export function ProductDetail({ initialProduct }: { initialProduct?: Product }) {
+  const router = useRouter();
+  const { selectedProduct, openProduct, setView, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
   const [adding, setAdding] = useState(false);
 
-  const product = selectedProduct;
+  // Route mode: mirror the server-loaded product into the store so the cart
+  // drawer, auth modal, and any store-bound UI agree on the current product.
+  useEffect(() => {
+    if (initialProduct && selectedProduct?.id !== initialProduct.id) {
+      openProduct(initialProduct);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialProduct?.id]);
+
+  const product = initialProduct ?? selectedProduct;
   if (!product) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -86,7 +104,7 @@ export function ProductDetail() {
         variant="ghost"
         size="sm"
         className="mb-6 text-brand hover:bg-secondary"
-        onClick={() => setView("home")}
+        onClick={() => (initialProduct ? router.push("/") : setView("home"))}
       >
         <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
       </Button>

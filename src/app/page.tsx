@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useStore } from "@/hooks/use-store";
+import { useStoreBootstrap } from "@/components/store/store-shell";
 import { Header } from "@/components/store/header";
 import { Hero } from "@/components/store/hero";
 import { ProductGrid } from "@/components/store/product-grid";
@@ -61,34 +62,18 @@ function useHiddenState() {
 }
 
 export default function Home() {
-  const { view, setUser, setCart, setView } = useStore();
+  const { view, setView } = useStore();
 
-  // Bootstrap: fetch the current user + cart on first mount.
+  // Session (user + cart) bootstrap — shared with the SSR route shells.
+  useStoreBootstrap();
+
+  // Deep links like /?view=orders (payment return page "View my orders").
   useEffect(() => {
-    (async () => {
-      try {
-        // Deep links like /?view=orders (payment return page "View my orders").
-        const requested = new URLSearchParams(window.location.search).get("view");
-        if (requested && ["home", "product", "checkout", "orders", "account"].includes(requested)) {
-          setView(requested as Parameters<typeof setView>[0]);
-        }
-        const [meRes, cartRes] = await Promise.all([
-          fetch("/api/auth/me", { credentials: "include" }),
-          fetch("/api/cart", { credentials: "include" }),
-        ]);
-        if (meRes.ok) {
-          const { user } = await meRes.json();
-          if (user) setUser(user);
-        }
-        if (cartRes.ok) {
-          const { cart } = await cartRes.json();
-          setCart(cart);
-        }
-      } catch (err) {
-        // Network errors are non-fatal — UI still works.
-      }
-    })();
-  }, [setUser, setCart, setView]);
+    const requested = new URLSearchParams(window.location.search).get("view");
+    if (requested && ["home", "product", "checkout", "orders", "account"].includes(requested)) {
+      setView(requested as Parameters<typeof setView>[0]);
+    }
+  }, [setView]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">

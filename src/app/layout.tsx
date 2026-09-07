@@ -23,26 +23,74 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hayaan.co"),
-  title: "Hayaan Market — Everything You Need, All in One Market.",
+  title: {
+    default: "Hayaan Market — Everything You Need, All in One Market.",
+    template: "%s — Hayaan Market",
+  },
   description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home at Hayaan Market — secure checkout via Sifalo Pay, delivered to your door.",
   keywords: ["Hayaan Market", "online marketplace", "online shopping", "ecommerce", "Somalia", "apparel", "beauty", "electronics", "home & living"],
   authors: [{ name: "Hayaan Market" }],
   icons: {
     icon: { url: "/hayaan-logo-green.svg", type: "image/svg+xml" },
   },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Hayaan Market",
-    description: "Everything You Need, All in One Market.",
+    title: "Hayaan Market — Everything You Need, All in One Market.",
+    description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home — secure checkout via Sifalo Pay, delivered to your door.",
     url: "https://hayaan.co",
     siteName: "Hayaan Market",
     type: "website",
+    locale: "en_US",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Hayaan Market — Everything you need to shop." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hayaan Market",
     description: "Everything You Need, All in One Market.",
+    images: ["/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { "max-image-preview": "large", "max-snippet": -1 },
   },
 };
+
+/** Site-wide structured data: who runs this store + how to search it. */
+function OrganizationJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://hayaan.co/#organization",
+        name: "Hayaan Market",
+        url: "https://hayaan.co",
+        logo: "https://hayaan.co/hayaan-logo-green.svg",
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://hayaan.co/#website",
+        name: "Hayaan Market",
+        url: "https://hayaan.co",
+        publisher: { "@id": "https://hayaan.co/#organization" },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: "https://hayaan.co/?q={search_term_string}" },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
 export default function RootLayout({
   children,
@@ -60,6 +108,7 @@ export default function RootLayout({
       className={`${panton.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
+        <OrganizationJsonLd />
         {children}
         <Toaster />
       </body>

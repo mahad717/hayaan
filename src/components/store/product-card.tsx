@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Star, Plus, Check, ShoppingBag } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,7 +20,8 @@ function formatPrice(price: number, currency: string) {
 }
 
 export function ProductCard({ product }: { product: Product }) {
-  const { openProduct, setCart, toast, user, setAuthOpen } = useStore();
+  const router = useRouter();
+  const { setCart, toast, user, setAuthOpen } = useStore();
   // Brief "added" confirmation: the card's add buttons flash a check mark
   // after a successful add, then revert.
   const [added, setAdded] = useState(false);
@@ -56,9 +59,9 @@ export function ProductCard({ product }: { product: Product }) {
     <Card
       role="button"
       tabIndex={0}
-      onClick={() => openProduct(product)}
+      onClick={() => router.push(`/product/${product.slug}`)}
       onKeyDown={(e) => {
-        if (e.key === "Enter") openProduct(product);
+        if (e.key === "Enter") router.push(`/product/${product.slug}`);
       }}
       className="group relative flex cursor-pointer flex-col overflow-hidden p-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f28c28] bg-white border-[#e6e2d4]"
       aria-label={`View ${product.name}`}
@@ -130,7 +133,16 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground font-original">
-          {product.name}
+          {/* Real anchor → crawlable product URL (SEO). The card's onClick
+              handles taps/prokes; the link must NOT stretch over the card
+              (after:inset-0) or it would swallow the add-to-cart buttons. */}
+          <Link
+            href={`/product/${product.slug}`}
+            onClick={(e) => e.stopPropagation()}
+            className="hover:text-brand"
+          >
+            {product.name}
+          </Link>
         </h3>
 
         {/* Price row — deep green price, strikethrough compareAt */}
