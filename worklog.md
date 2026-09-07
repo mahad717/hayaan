@@ -617,3 +617,17 @@ Work Log:
 
 Stage Summary:
 - First-touch add-to-cart bug eliminated: taps anywhere on a product card now open the product on touch devices; hover overlay exclusively a desktop affordance via (hover:hover) and (pointer:fine); mobile add-to-cart path unchanged.
+
+---
+Task ID: 28
+Agent: Super Z (main agent)
+Task: "Make the text color of those buttons #0B3B22" (3 screenshots circling the orange accent buttons: cart drawer "Proceed to checkout", hero "Start shopping", auth dialog "Sign in").
+
+Work Log:
+- All three circled buttons share one style source: .btn-accent → color: var(--hayaan-accent-foreground). #0B3B22 is the brand Forest Green (--hayaan-green-dark).
+- globals.css: --hayaan-accent-foreground #ffffff → #0b3b22 in BOTH the light and dark theme blocks. Applies to every accent button site-wide (checkout submit, PDP add-to-cart, product card + and hover overlay, admin, account) — consistent with the user circling the same button type on three surfaces.
+- Build ok; commit d08715e; pushed. Deploy false-positive: grepping live CSS for "0b3b22" matched the pre-existing --hayaan-green-dark, and the first hero check still showed white — real signal was the new chunk name 3r7ia-rfg0nu2.css appearing in the homepage HTML (live on next poll).
+- Live verified (agent-browser 1440×900): "Start shopping", "Sign in" (auth dialog), "Proceed to checkout" (logged in as admin@shop.demo) all compute rgb(11,59,34) on rgb(242,140,40) orange. Screenshot download/accent-buttons-green.png. Cleanup: POST /api/auth/logout → 200.
+
+Stage Summary:
+- Orange accent buttons now carry Forest Green #0B3B22 labels instead of white, consistently across light/dark themes and every surface; single-variable change, no layout/behavior touched.
