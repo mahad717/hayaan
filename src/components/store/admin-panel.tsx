@@ -166,9 +166,6 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
         <p className="mt-2 text-sm text-muted-foreground">
           Sign in with an admin account to manage products.
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Tip: <code>admin@shop.demo</code> / <code>admin123</code> — call <code>POST /api/seed</code> first to create it.
-        </p>
       </div>
     );
   }

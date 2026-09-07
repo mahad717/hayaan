@@ -67,7 +67,7 @@ export async function GET() {
   } else if ((count ?? 0) === 0) {
     hint = "The admin exists but the catalog is empty — click 'Seed now' to finish seeding.";
   } else {
-    hint = "Everything looks ready. Sign in with the demo admin credentials from the auth dialog.";
+    hint = "Everything looks ready.";
   }
 
   return NextResponse.json({
@@ -75,7 +75,7 @@ export async function GET() {
     supabase: env,
     sifalo,
     catalog: { products: prodErr ? null : (count ?? 0), error: prodErr?.message ?? null },
-    auth: { demoAdminExists: adminExists, adminEmail: SEED_ADMIN.email, error: usersErr?.message ?? null },
+    auth: { demoAdminExists: adminExists, error: usersErr?.message ?? null },
     hint,
   });
 }

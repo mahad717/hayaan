@@ -160,26 +160,13 @@ export function AuthModal() {
           </TabsContent>
         </Tabs>
 
-        {products.length === 0 ? (
+        {products.length === 0 && (
           <div className="mt-2 rounded-md bg-[#fef1de] p-3 text-xs text-[#7a4a14]">
             <p className="font-medium">Setting up for the first time?</p>
             <p>
               Close this dialog, tap <strong>“Seed now”</strong> on the orange
               banner above, then sign in with the credentials shown there.
             </p>
-          </div>
-        ) : (
-          <div className="mt-2 grid gap-2 rounded-md bg-secondary p-3 text-xs text-muted-foreground sm:grid-cols-2">
-            <div>
-              <p className="font-medium text-brand">Demo admin</p>
-              <p>Email: <code className="text-foreground">admin@shop.demo</code></p>
-              <p>Password: <code className="text-foreground">admin123</code></p>
-            </div>
-            <div>
-              <p className="font-medium text-brand">Demo customer</p>
-              <p>Email: <code className="text-foreground">customer@shop.demo</code></p>
-              <p>Password: <code className="text-foreground">customer123</code></p>
-            </div>
           </div>
         )}
       </DialogContent>
