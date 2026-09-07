@@ -86,7 +86,7 @@
 
   /* Brand accent (10% orange) — surfaced via custom .btn-accent class */
   --hayaan-accent: #f28c28;       /* Market Orange */
-  --hayaan-accent-foreground: #ffffff;
+  --hayaan-accent-foreground: #0b3b22; /* Forest Green button labels */
   --hayaan-accent-soft: #f9c27d;  /* Soft Apricot */
 
   /* Brand support greens */
@@ -145,7 +145,7 @@
   --accent: #1a4a30;
   --accent-foreground: #faf8f1;
   --hayaan-accent: #f28c28;
-  --hayaan-accent-foreground: #ffffff;
+  --hayaan-accent-foreground: #0b3b22;
   --hayaan-accent-soft: #f9c27d;
   --hayaan-green-dark: #021d12;
   --hayaan-green-mid: #3f7d4a;
