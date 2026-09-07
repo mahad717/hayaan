@@ -88,6 +88,25 @@ export const useStore = create<StoreState>((set, get) => ({
 }));
 
 // Helpers
+
+/**
+ * View navigation that works from every route. The storefront views (home /
+ * product / checkout / orders / account) are rendered by the home-page SPA,
+ * so switching views from an SSR route (/product/[slug], /blog…) must
+ * navigate back to "/" with the same ?view= deep link the payment-return
+ * page uses. On the home page it behaves like setView, plus a scroll-to-top
+ * for non-home views so the target view is actually on screen.
+ */
+export function goToView(view: View) {
+  if (typeof window === "undefined") return;
+  if (window.location.pathname === "/") {
+    useStore.getState().setView(view);
+    if (view !== "home") window.scrollTo({ top: 0 });
+  } else {
+    window.location.assign(`/?view=${view}`);
+  }
+}
+
 export function cartCount(cart: Cart): number {
   return cart.items.reduce((sum, it) => sum + it.quantity, 0);
 }
