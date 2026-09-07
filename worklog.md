@@ -631,3 +631,18 @@ Work Log:
 
 Stage Summary:
 - Orange accent buttons now carry Forest Green #0B3B22 labels instead of white, consistently across light/dark themes and every surface; single-variable change, no layout/behavior touched.
+
+---
+Task ID: 29
+Agent: Super Z (main agent)
+Task: "When the user clicks the checkout button it should be check marked" (screenshot circling the product card's mobile orange "+" add button).
+
+Work Log:
+- Interpretation: the circled control is the product card add-to-cart button; after a successful add it should show a check mark as on-button confirmation (in addition to the existing toast).
+- product-card.tsx: added `added` state + ref-based 1500ms timer (reset on rapid re-clicks, cleared on unmount). Mobile "+" button flips Plus → Check icon and aria-label → "...added to cart"; desktop hover overlay button flips to Check + "Added" for the same period. Reverts automatically.
+- Build ok; commit 4a3396b; pushed. Deploy detection: polled for a change in the homepage JS chunk-set hash (chunk names are content-hashed; string greps can false-match old bundles).
+- Live verified (375×667, admin@shop.demo): clicking "+" → lucide-check icon + aria "...added to cart", cart badge incremented; ~1.5s later reverts to lucide-plus "Add ... to cart". First verification attempt clicked the display:none desktop overlay by mistake (HTMLElement.click fires on hidden elements) — also proved the overlay add path works.
+- Cleanup: removed the test line item (badge back to 1), POST /api/auth/logout → 200.
+
+Stage Summary:
+- Product card add buttons now flash a check mark ("Added" on desktop overlay) for ~1.5s after a successful add, giving immediate visual confirmation; toast + badge unchanged. PDP add button not touched (not circled).
