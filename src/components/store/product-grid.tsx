@@ -90,8 +90,8 @@ export function ProductGrid() {
           onClick={() => setActiveCategory("all")}
           className={
             activeCategory === "all"
-              ? "bg-brand text-white hover:bg-brand-dark"
-              : "border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
+              ? "font-original bg-brand text-white hover:bg-brand-dark"
+              : "font-original border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
           }
         >
           All
@@ -104,8 +104,8 @@ export function ProductGrid() {
             onClick={() => setActiveCategory(c.id)}
             className={
               activeCategory === c.id
-                ? "bg-brand text-white hover:bg-brand-dark"
-                : "border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
+                ? "font-original bg-brand text-white hover:bg-brand-dark"
+                : "font-original border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
             }
           >
             {c.name}
