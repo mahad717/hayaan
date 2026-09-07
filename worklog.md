@@ -733,3 +733,18 @@ Work Log:
 
 Stage Summary:
 - Demo credentials are no longer displayed anywhere on the public site (auth dialog, /admin gate, diag API). Login itself unchanged — the merchant keeps using the same credentials by typing them. Reminder from earlier security notes: rotating admin123 and the exposed GitHub token is still recommended.
+
+---
+Task ID: 35
+Agent: Super Z (main agent)
+Task: "when i click buy now, it doesn't redirect to checkout page also when i click checkout button it doesn't work" (2 screenshots: PDP "Buy now" and cart drawer "Proceed to checkout" circled, both taken ON a /product/[slug] page).
+
+Work Log:
+- Root cause: the storefront views (checkout/orders/account) are rendered by the home-page SPA (page.tsx view state); SSR routes (/product/[slug], /blog) only render StoreShell. Both buttons called setView("checkout"), which flips zustand state but mounts nothing on SSR routes — dead click. Same latent bug in header Orders/Account/Shop/logo and product-grid "View your cart" (view "cart" renders nothing anywhere).
+- Fix: shared route-aware goToView(view) helper in use-store.ts — on "/" it setViews (plus scroll-to-top for non-home views); from SSR routes it window.location.assign("/?view=<view>"), the exact deep-link mechanism the Sifalo payment-return page already uses. Applied to: PDP Buy now, drawer Proceed-to-checkout + empty-cart Start shopping, header logo/Orders pill/account dropdown/mobile drawer (goShop + goShopFromMenu assign "/" when off-home, keep scroll-to-catalog on-home), product-grid View-your-cart now opens the drawer.
+- Note: an auto-checkpoint commit (5d06984) created by the session restart carried the use-store.ts helper; all five files verified on remote main in bff5c51.
+- Build ok; commit bff5c51; pushed (HTTPS remote); deployed after ~90s via chunk-set hash change.
+- Live E2E (1440×900, signed in via typed credentials): PDP Buy now → /?view=checkout with full checkout form (address fields, Sifalo Pay, order summary, totals) — screenshot download/buy-now-checkout-live.png; PDP drawer Proceed to checkout → /?view=checkout; PDP header Orders → /?view=orders ("Your orders"); PDP drawer item removed (cart 1 → 0); logout 200.
+
+Stage Summary:
+- Buy now and Proceed to checkout now reliably land on the checkout page from ANY route (previously only worked from the home SPA); header Orders/Account/Shop and View-your-cart fixed in the same pass. No changes to checkout logic itself.
