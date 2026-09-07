@@ -808,3 +808,18 @@ Work Log:
 
 Stage Summary:
 - Header logo text is now noticeably heavier — "Hayaan" in Panton Black (900), "Market" in Panton Bold (700) — with identical colors, sizes, spacing, and zero other changes site-wide.
+
+---
+Task ID: 40
+Agent: Super Z (main agent)
+Task: "When I upload an image, it doesn't upload" (screenshot: admin dashboard, blog post editor, Cover image Upload button).
+
+Work Log:
+- Screenshot triage: the failing uploader is the blog editor's Cover image (admin-blog.tsx), which POSTs to /api/admin/upload. Grep + Glob showed BOTH uploaders (admin-blog.tsx, admin-panel.tsx product images) target that endpoint — but src/app/api/admin/ contained only blog/. Client-called-path audit (rg every "/api/…" literal vs disk) confirmed /api/admin/upload was the ONLY missing route.
+- Root cause, two layers: (1) the route was created in 4357242 ("Admin: real image uploads for products") and worked (worklog Task ~20); (2) auto-sync commit 9a71614 (UUID-named, binary-artifact sweep) recorded its deletion. Why: .gitignore line 66 `upload/` — a pattern with NO leading/middle separator matches at ANY depth, so besides the intended root upload/ screenshots dir it also ignored src/app/api/admin/upload/. The auto-sync's re-index dropped the now-"ignored" tracked path. Confirmed via git log --diff-filter=D.
+- Fix: restored the route byte-identical from 4357242 (git checkout <sha> -- path) — admin-guard via getCurrentUser(req), isSupabaseServerEnabled/createServiceClient both still exported unchanged, client contract (FormData "file" → {url}) matches; AND anchored .gitignore to /upload/ so this can never recur. Build OK; committed only .gitignore + the route (excluded a storefront-app.tsx mode-only pseudo diff) as 7706cf1; pushed 978ebcc..7706cf1.
+- Deploy detection gotcha: chunk-set md5 poll NEVER fired — this change is server-only (no client chunk changed), so the md5 probe is blind to it. Direct probe instead: POST /api/admin/upload pre-auth now returns 403 ("Admin access required") instead of 404 → route live. Remember: md5 poll only detects client-visible changes; for API-only deploys, probe the endpoint.
+- Live E2E (scripts/test-upload-e2e.ts, run with proxy env cleared): admin@shop.demo login 200 → multipart POST tiny 8×8 PNG with explicit Blob MIME (worklog lesson: missing MIME → 415) → 200 + public URL https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788801450344-e9f92c93-….png → GET url = 200 image/png 78B. PASS end-to-end. Test artifact: one 78B PNG now in the bucket root (deletable from Supabase dashboard, same note as the earlier test PNG).
+
+Stage Summary:
+- Image uploads are fixed site-wide: blog post Cover image (the reported case) AND product image uploads share the restored /api/admin/upload endpoint → Supabase Storage product-images bucket. The uploader UI code was never broken; the server route had silently vanished via a gitignore collision and is now restored and anchored so it can't happen again.
