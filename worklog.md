@@ -590,3 +590,16 @@ Work Log:
 
 Stage Summary:
 - All user-marked texts now render in the original font; site content remains the deployed CRO-approved copy. Stale local branch quarantined (backup-local-307302b) — main now fast-forward tracks remote; no Sifalo/auth functionality touched.
+
+---
+Task ID: 26
+Agent: Super Z (main agent)
+Task: "Those items are touching the wall" — cart drawer item rows flush against drawer edges (user screenshot).
+
+Work Log:
+- Root cause: cart-drawer.tsx item list container used "-mx-6 px-6" full-bleed trick, which presupposes a padded parent; SheetContent has NO horizontal padding, so the negative margins extended the container 24px past the drawer on both sides and content landed exactly at the edges (image flush left, price flush right).
+- Fix: container -> "flex-1 overflow-y-auto px-4" (16px inset, aligns with SheetHeader p-4 and SheetFooter p-4); ul py-4 -> py-2 to compensate removed slack. Audited for the same pattern elsewhere: admin-panel.tsx line 295 uses -mx-6/px-6 inside CardContent (p-6) — correct there, untouched.
+- Build ok; commit 514c297; pushed; live-verified at 375×800 with a real cart item (admin test cart, pre-existing item): item row leftGap 17px / rightGap 16px vs drawer edges; screenshot /tmp/cart-fixed.png confirms visual alignment with header and summary.
+
+Stage Summary:
+- Cart drawer items no longer touch the drawer walls; padding consistent top-to-bottom (header / items / summary). Admin table scroll unaffected.
