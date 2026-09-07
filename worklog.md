@@ -719,3 +719,17 @@ Work Log:
 
 Stage Summary:
 - Category filter chips render in the original system font again; every other surface keeps Panton Black. Minimal 4-line class change, no layout/behavior impact.
+
+---
+Task ID: 34
+Agent: Super Z (main agent)
+Task: "Now hide or remove" (screenshot circling the demo credentials block — Demo admin / Demo customer emails+passwords — inside the sign-in dialog).
+
+Work Log:
+- Removed the demo-credentials branch of the ternary in auth-modal.tsx (kept the first-time "Seed now" helper, which only renders while the catalog is empty — on live it never shows).
+- Same-intent sweep: admin-panel.tsx "Admin access required" gate (visible to any signed-out /admin visitor) no longer prints the admin email/password tip; /api/diag no longer returns adminEmail and its ready-hint no longer references the auth dialog. Remaining matches are server-side seed files that never render to visitors.
+- Build ok; commit b705c59; pushed (HTTPS remote); deployed after ~120s via chunk-set hash change.
+- Live verified (1440×900): sign-in dialog has zero demo-credential text with fields/tabs intact (screenshot download/signin-no-demo-credentials.png); /api/diag auth keys now {demoAdminExists,error} only; signed-out /admin redirects to home (server guard); typed admin@shop.demo/admin123 still signs in successfully (auth unbroken); logout 200.
+
+Stage Summary:
+- Demo credentials are no longer displayed anywhere on the public site (auth dialog, /admin gate, diag API). Login itself unchanged — the merchant keeps using the same credentials by typing them. Reminder from earlier security notes: rotating admin123 and the exposed GitHub token is still recommended.
