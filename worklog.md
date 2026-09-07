@@ -646,3 +646,17 @@ Work Log:
 
 Stage Summary:
 - Product card add buttons now flash a check mark ("Added" on desktop overlay) for ~1.5s after a successful add, giving immediate visual confirmation; toast + badge unchanged. PDP add button not touched (not circled).
+
+---
+Task ID: 30
+Agent: Super Z (main agent)
+Task: "Make the button texts bolder" (screenshot circling the hero CTA pair: "Start shopping" + "Browse categories").
+
+Work Log:
+- Button base class in ui/button.tsx was font-bold (Panton 700, set in Task 23); user wants bolder → font-black (Panton Black 900, heaviest available weight; same display-size lesson as the hero h1).
+- Single-line change in the Button component base classes → every button site-wide (store, auth, admin) renders weight 900.
+- Build ok; commit 228fc07; pushed; deploy detected via homepage JS chunk-set hash change.
+- Live verified (1440×900): "Start shopping", "Browse categories", header "Shop" chip all compute font-weight 900 in family panton. Screenshot download/buttons-panton-black.png.
+
+Stage Summary:
+- All button labels now render in Panton Black 900 — visibly chunkier CTAs everywhere; no layout/behavior changes.
