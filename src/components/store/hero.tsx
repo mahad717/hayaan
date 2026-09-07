@@ -32,7 +32,7 @@ export function Hero({ onShop }: { onShop: () => void }) {
             </span>
           </h1>
 
-          <p className="max-w-prose text-base text-muted-foreground sm:text-lg">
+          <p className="max-w-prose text-base text-muted-foreground font-original sm:text-lg">
             Useful, well-selected finds across fashion, beauty, electronics, and
             home — all in one place, ready to order in minutes.
           </p>
@@ -54,7 +54,7 @@ export function Hero({ onShop }: { onShop: () => void }) {
           </div>
 
           {/* Reassurance row */}
-          <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-xs text-muted-foreground">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-xs text-muted-foreground font-original">
             <span className="flex items-center gap-1.5">
               <Truck className="h-3.5 w-3.5 text-brand" /> Delivered to your door
             </span>

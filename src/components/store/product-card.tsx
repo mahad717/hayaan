@@ -102,7 +102,7 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground">
+        <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground font-original">
           {product.name}
         </h3>
 

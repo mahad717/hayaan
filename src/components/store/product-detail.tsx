@@ -169,7 +169,7 @@ export function ProductDetail() {
             )}
           </div>
 
-          <p className="max-w-prose text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="max-w-prose text-sm leading-relaxed text-muted-foreground font-original sm:text-base">
             {product.description}
           </p>
 
@@ -249,7 +249,7 @@ export function ProductDetail() {
           </div>
 
           {/* Reassurance row */}
-          <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm sm:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm font-original sm:grid-cols-3">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-brand" />
               Free shipping over $75
