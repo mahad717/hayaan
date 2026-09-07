@@ -794,3 +794,17 @@ Work Log:
 
 Stage Summary:
 - GA4 (G-HHYT03XHG4) is live on every page of hayaan.co via the root layout — verified end-to-end from the browser to Google's collect endpoints. Nothing else changed: one file, 14 lines, no dependency/env/metadata edits. Owner can confirm in GA4 → Reports → Realtime within ~30 minutes of visiting.
+
+---
+Task ID: 39
+Agent: Super Z (main agent)
+Task: "Make that logo text bolder, don't change anything else" (screenshot: header "Hayaan Market" logo circled in red).
+
+Work Log:
+- Read worklog + located the logo: src/components/store/header.tsx brand button (lines ~113-122). Outer span "Hayaan" inherited font-semibold (600, resolving to Panton Bold) + text-brand green; inner "Market" was font-normal (400) gray at /70 opacity. Confirmed only one other "Hayaan Market" string (mobile drawer SheetTitle — separate component styling, not the circled logo) and zero font-weight rules in globals.css that could interfere.
+- Self-hosted Panton is loaded at 400/700/900 (layout.tsx localFont), so the bump uses real glyphs, no faux-bold: button font-semibold → font-black ("Hayaan" 600→900, Panton Black), "Market" font-normal → font-bold (400→700). Weight hierarchy between the two words preserved; colors, sizes, spacing, cart mark untouched. Two-line diff in one file.
+- bun run build OK; committed ONLY header.tsx as 978ebcc; pushed e5e16ca..978ebcc; deployed after 5 polls (~100s), chunk md5 dddc3b21… → aa2a6f23….
+- Live verification (scripts/logo-weight-verify-cdp.mjs, Task 38's harness pattern — chrome launched + script run in the SAME bash command): computed styles on https://hayaan.co → outer span font-weight 900, color rgb(20,83,45) (brand green unchanged), family panton; inner span font-weight 700, same gray/70. Header-strip screenshot: download/logo-bolder-header.png. PASS.
+
+Stage Summary:
+- Header logo text is now noticeably heavier — "Hayaan" in Panton Black (900), "Market" in Panton Bold (700) — with identical colors, sizes, spacing, and zero other changes site-wide.
