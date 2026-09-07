@@ -705,3 +705,17 @@ Work Log:
 
 Stage Summary:
 - Orange buttons' labels are back to the original white; Market Orange background, font weight, and all behavior unchanged. Single-variable revert, no other styles touched.
+
+---
+Task ID: 33
+Agent: Super Z (main agent)
+Task: "Also, turn this text font back to its original font" (screenshot circling the category filter chips: All / Apparel / Beauty / Electronics / Home & Living).
+
+Work Log:
+- Site-wide default font is Panton (--font-sans: var(--font-panton)); the pre-Panton system stack is preserved as the .font-original utility (already used by hero body, footer, blog pages).
+- Scope = exactly the circled chips: product-grid.tsx category pills got "font-original" added to both state branches of the "All" button and the categories map. Other buttons (hero CTAs, header, cart) and font weight (Panton-era font-black from Task 30) untouched.
+- Build ok; commit 1180a28; pushed via HTTPS remote (sandbox has no ssh binary); deployed after ~120s via chunk-set hash change.
+- Live verified (1440×900): all five chips compute font-family "ui-sans-serif, system-ui, -apple-system, ..." while hero "Start shopping" still computes panton w900. Screenshot download/chips-original-font.png.
+
+Stage Summary:
+- Category filter chips render in the original system font again; every other surface keeps Panton Black. Minimal 4-line class change, no layout/behavior impact.
