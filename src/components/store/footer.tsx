@@ -27,6 +27,11 @@ export function Footer() {
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Featured picks</li>
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Top rated</li>
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Gift ideas</li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/blog" className="inline-flex items-center gap-1">
+                  Blog — guides &amp; picks
+                </a>
+              </li>
             </ul>
           </div>
           <div>

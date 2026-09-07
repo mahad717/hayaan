@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useStore } from "@/hooks/use-store";
 import { fetchProducts } from "@/hooks/use-store";
+import { AdminBlog } from "@/components/store/admin-blog";
 import type { Product, SafeUser } from "@/lib/types";
 
 function formatPrice(n: number, currency = "USD") {
@@ -552,6 +553,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Blog management — admin-authored articles at /blog (independent of
+          the catalog form state above). */}
+      <AdminBlog />
     </div>
   );
 }

@@ -117,3 +117,17 @@ model OrderItem {
   quantity   Int
   image      String? // snapshot of first image URL
 }
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String    @default("")
+  content     String    @default("")
+  coverImage  String?
+  authorName  String    @default("Hayaan Team")
+  status      String    @default("draft") // "draft" | "published"
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

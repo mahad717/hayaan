@@ -1,7 +1,8 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu, Newspaper } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,6 +37,8 @@ export function Header() {
   const [q, setQ] = useState(searchQuery);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const onBlogRoute = pathname?.startsWith("/blog") ?? false;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -140,6 +143,16 @@ export function Header() {
                 <Package className="mr-1 h-4 w-4" /> Orders
               </Button>
             )}
+            <Button
+              asChild
+              variant={onBlogRoute ? "secondary" : "ghost"}
+              size="sm"
+              className={onBlogRoute ? "" : "text-foreground/80 hover:text-brand"}
+            >
+              <Link href="/blog">
+                <Newspaper className="mr-1 h-4 w-4" /> Blog
+              </Link>
+            </Button>
             {user?.role === "admin" && (
               <Button asChild variant="ghost" size="sm" className="text-foreground/80 hover:text-brand">
                 <Link href="/admin">
@@ -266,6 +279,16 @@ export function Header() {
                 <Package className="mr-2 h-4 w-4" /> Orders
               </Button>
             )}
+            <Button
+              asChild
+              variant={onBlogRoute ? "secondary" : "ghost"}
+              onClick={menuAction(() => {})}
+              className={onBlogRoute ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
+            >
+              <Link href="/blog">
+                <Newspaper className="mr-2 h-4 w-4" /> Blog
+              </Link>
+            </Button>
             {user?.role === "admin" && (
               <Button asChild variant="ghost" onClick={menuAction(() => {})} className="justify-start text-foreground/80 hover:text-brand">
                 <Link href="/admin">

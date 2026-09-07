@@ -98,3 +98,20 @@ export interface ShippingInfo {
   zip: string;
   country: string;
 }
+
+export type BlogStatus = "draft" | "published";
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  /** Markdown-lite content (headings, lists, bold/italic, links, quotes). */
+  content: string;
+  coverImage: string | null;
+  authorName: string;
+  status: BlogStatus;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
