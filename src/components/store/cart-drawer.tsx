@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useStore, cartTotal, addToCart, removeFromCart } from "@/hooks/use-store";
+import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -23,7 +23,7 @@ function formatPrice(price: number, currency = "USD") {
 }
 
 export function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, setCart, setView, toast, user, setAuthOpen } = useStore();
+  const { cart, cartOpen, setCartOpen, setCart, toast, user, setAuthOpen } = useStore();
 
   const updateQty = async (itemId: string, productId: string, qty: number, action: "increment" | "decrement") => {
     try {
@@ -71,7 +71,7 @@ export function CartDrawer() {
               className="bg-brand hover:bg-brand-dark"
               onClick={() => {
                 setCartOpen(false);
-                setView("home");
+                goToView("home");
               }}
             >
               Start shopping
@@ -178,7 +178,7 @@ export function CartDrawer() {
                 if (!user) {
                   setAuthOpen(true);
                 } else {
-                  setView("checkout");
+                  goToView("checkout");
                 }
               }}
             >

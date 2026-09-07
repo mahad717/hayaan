@@ -6,7 +6,7 @@ import { ChevronLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { addToCart, useStore } from "@/hooks/use-store";
+import { addToCart, goToView, useStore } from "@/hooks/use-store";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -90,7 +90,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
     try {
       const cart = await addToCart(product.id, qty, "increment");
       setCart(cart);
-      setView("checkout");
+      goToView("checkout");
     } catch (err) {
       toast((err as Error).message, "error");
     } finally {

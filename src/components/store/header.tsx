@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useStore, cartCount } from "@/hooks/use-store";
+import { useStore, cartCount, goToView } from "@/hooks/use-store";
 import { useState, useEffect } from "react";
 
 export function Header() {
@@ -59,7 +59,13 @@ export function Header() {
 
   // Navigate home and scroll to the catalog. The timeout lets the home view
   // mount first when arriving from product/checkout/orders views.
+  // From an SSR route (/product/[slug], /blog…) a view switch would render
+  // nothing — navigate to the home page instead.
   const goShop = () => {
+    if (pathname !== "/") {
+      window.location.assign("/");
+      return;
+    }
     setView("home");
     setTimeout(() => {
       document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -70,6 +76,10 @@ export function Header() {
   // 300ms close animation so body scroll-lock is released before we scroll.
   const goShopFromMenu = () => {
     setMenuOpen(false);
+    if (pathname !== "/") {
+      window.location.assign("/");
+      return;
+    }
     setView("home");
     setTimeout(() => {
       document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -101,7 +111,7 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:h-16 sm:gap-4 sm:px-6">
         {/* Logo — Deep Hayaan Green */}
         <button
-          onClick={() => setView("home")}
+          onClick={() => goToView("home")}
           className="flex shrink-0 items-center gap-2 text-base font-semibold tracking-tight"
           aria-label="Hayaan Market home"
         >
@@ -137,7 +147,7 @@ export function Header() {
               <Button
                 variant={view === "orders" ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setView("orders")}
+                onClick={() => goToView("orders")}
                 className={view === "orders" ? "" : "text-foreground/80 hover:text-brand"}
               >
                 <Package className="mr-1 h-4 w-4" /> Orders
@@ -177,10 +187,10 @@ export function Header() {
                     <div className="text-xs text-muted-foreground">{user.email}</div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setView("account")}>
+                  <DropdownMenuItem onClick={() => goToView("account")}>
                     <UserRound className="mr-2 h-4 w-4" /> My profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView("orders")}>
+                  <DropdownMenuItem onClick={() => goToView("orders")}>
                     <Package className="mr-2 h-4 w-4" /> My orders
                   </DropdownMenuItem>
                   {user.role === "admin" && (
@@ -273,7 +283,7 @@ export function Header() {
             {user && (
               <Button
                 variant={view === "orders" ? "secondary" : "ghost"}
-                onClick={menuAction(() => setView("orders"))}
+                onClick={menuAction(() => goToView("orders"))}
                 className={view === "orders" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
               >
                 <Package className="mr-2 h-4 w-4" /> Orders
@@ -305,7 +315,7 @@ export function Header() {
               <>
                 <Button
                   variant="ghost"
-                  onClick={menuAction(() => setView("account"))}
+                  onClick={menuAction(() => goToView("account"))}
                   className="justify-start text-foreground/80 hover:text-brand"
                 >
                   <UserRound className="mr-2 h-4 w-4" /> My profile

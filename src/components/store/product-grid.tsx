@@ -19,7 +19,7 @@ export function ProductGrid() {
     setActiveCategory,
     sort,
     setSort,
-    setView,
+    setCartOpen,
   } = useStore();
   const [loading, setLoading] = useState(products.length === 0);
 
@@ -152,7 +152,7 @@ export function ProductGrid() {
         <Button
           variant="ghost"
           className="text-brand hover:bg-secondary"
-          onClick={() => setView("cart")}
+          onClick={() => setCartOpen(true)}
         >
           View your cart →
         </Button>
