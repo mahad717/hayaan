@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, Mail, MapPin, Phone, Save, ShieldCheck, UserRound } from "lucide-react";
+import { ChevronLeft, Mail, MapPin, Phone, Save, ShieldCheck, UserRound, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,9 +47,20 @@ const Opt = () => (
  * header and checkout prefill pick up the new values immediately.
  */
 export function AccountView() {
-  const { user, setUser, setView, setAuthOpen, toast } = useStore();
+  const { user, setUser, setView, setAuthOpen, toast, bootReady } = useStore();
   const [form, setForm] = useState<ProfileForm>(user ? toForm(user) : EMPTY);
   const [saving, setSaving] = useState(false);
+
+  if (!bootReady && !user) {
+    // Deep link (e.g. /?view=account) — bootstrap still in flight. Neutral
+    // loading state instead of a sign-in flash.
+    return (
+      <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
+        <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        <p className="text-sm text-muted-foreground">Loading your profile…</p>
+      </div>
+    );
+  }
 
   if (!user) {
     return (

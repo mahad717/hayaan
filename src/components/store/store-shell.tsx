@@ -16,7 +16,7 @@ import { AuthModal } from "@/components/store/auth-modal";
  * structured data) by prefilling the catalog search.
  */
 export function useStoreBootstrap() {
-  const { setUser, setCart, setSearchQuery } = useStore();
+  const { setUser, setCart, setSearchQuery, setBootReady } = useStore();
 
   useEffect(() => {
     (async () => {
@@ -39,6 +39,11 @@ export function useStoreBootstrap() {
         }
       } catch {
         // Network errors are non-fatal — UI still works.
+      } finally {
+        // Signal "session known" even on failure, so gated views stop
+        // showing their loading state and signed-out users see the real
+        // sign-in walls instead of an endless spinner.
+        setBootReady(true);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

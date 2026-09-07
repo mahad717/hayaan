@@ -19,7 +19,7 @@ function formatPrice(price: number, currency = "USD") {
 }
 
 export function Checkout() {
-  const { cart, setCart, setView, toast, user, setAuthOpen } = useStore();
+  const { cart, setCart, setView, toast, user, setAuthOpen, bootReady } = useStore();
   // Prefill from the saved profile (account view) so returning customers
   // don't retype their address.
   const [form, setForm] = useState({
@@ -56,6 +56,22 @@ export function Checkout() {
       cancelled = true;
     };
   }, []);
+
+  // Prefill once the session bootstrap delivers the user — on deep links like
+  // /?view=checkout this component mounts before /api/auth/me resolves, so the
+  // useState initializer above saw user === null. Fill only still-empty
+  // fields so anything the customer already typed is never clobbered.
+  useEffect(() => {
+    if (!user) return;
+    setForm((f) => ({
+      name: f.name || user.name || "",
+      phone: f.phone || user.phone || "",
+      address: f.address || user.address || "",
+      city: f.city || user.city || "",
+      zip: f.zip || user.zip || "",
+      country: f.country || user.country || "Somalia",
+    }));
+  }, [user]);
 
   const savedAddress = !!(user?.address && user?.city);
 
@@ -136,6 +152,19 @@ export function Checkout() {
             Continue shopping
           </Button>
         </div>
+      </div>
+    );
+  }
+
+  // Session bootstrap still in flight (deep links land here before
+  // /api/auth/me resolves). Show a neutral loading state instead of the
+  // sign-in wall — otherwise signed-in customers see a "Please sign in"
+  // flash during the Buy-now redirect.
+  if (!bootReady && !user) {
+    return (
+      <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
+        <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        <p className="text-sm text-muted-foreground">Preparing checkout…</p>
       </div>
     );
   }

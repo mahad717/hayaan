@@ -30,6 +30,12 @@ interface StoreState {
   setUser: (u: SafeUser | null) => void;
   authOpen: boolean;
   setAuthOpen: (b: boolean) => void;
+  /** True once the session bootstrap (/api/auth/me + /api/cart) has settled.
+   *  Gates the "sign in" walls of checkout/orders/account so a deep link like
+   *  /?view=checkout renders a neutral loading state instead of flashing
+   *  "Please sign in" while the session fetch is still in flight. */
+  bootReady: boolean;
+  setBootReady: (b: boolean) => void;
 
   // Cart
   cart: Cart;
@@ -66,6 +72,8 @@ export const useStore = create<StoreState>((set, get) => ({
   setUser: (user) => set({ user }),
   authOpen: false,
   setAuthOpen: (authOpen) => set({ authOpen }),
+  bootReady: false,
+  setBootReady: (bootReady) => set({ bootReady }),
 
   cart: { id: "", items: [] },
   setCart: (cart) => set({ cart }),

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Package, ChevronLeft, RefreshCw, Clock3, XCircle } from "lucide-react";
+import { Package, ChevronLeft, RefreshCw, Clock3, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +28,7 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
 };
 
 export function OrdersView() {
-  const { user, setView, setAuthOpen } = useStore();
+  const { user, setView, setAuthOpen, bootReady } = useStore();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [checkingId, setCheckingId] = useState<string | null>(null);
@@ -78,6 +78,17 @@ export function OrdersView() {
       cancelled = true;
     };
   }, [user]);
+
+  if (!bootReady && !user) {
+    // Deep link (e.g. /?view=orders from the payment return page) — bootstrap
+    // still in flight. Neutral loading state instead of a sign-in flash.
+    return (
+      <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
+        <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        <p className="text-sm text-muted-foreground">Loading your orders…</p>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
