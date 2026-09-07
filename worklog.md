@@ -575,3 +575,18 @@ Work Log:
 
 Stage Summary:
 - Footer fine print reverts to the original system font exactly where circled; hero headline now unmistakably bold (Panton Black); all site buttons have bold labels. No layout/functional changes.
+
+---
+Task ID: 25
+Agent: Super Z (main agent)
+Task: "Turn all these texts back to their original font" (3 user screenshots circling hero subheadline + reassurance row, product card titles, PDP description + trust card).
+
+Work Log:
+- CRITICAL REPO INCIDENT found en route: local main had 8 unpushed diverged commits from another session, written against a STALE base — they had silently REVERTED the deployed state: no font-original utility, no Panton Black h1, hero copy regressed to "built on Next.js, Supabase, and Cloudflare" + fabricated "Carbon-neutral shipping" claim, PDP trust row de-CRO'd, AND the whole Sifalo integration (sifalo.ts, sifalo-server.ts, migrations) deleted (-2500 lines). Remote main was still bd60b81 (= live, user-approved).
+- Quarantine: created branch backup-local-307302b preserving the stale work; reset local main to remote bd60b81.
+- Cherry-picked the two genuine functional commits: 36818e9 (sign-in fix) resolved to HEAD everywhere — deployed code already contained the durable-session + profile-hydration approach (net zero, no commit created); 3def139 (auto-confirm signup) aborted — already present with better null-check. 4b1de3b (build alias) skipped: deploys work without it. Auto-named commits were only worklog/upload noise + mode changes.
+- Applied font-original (system stack, utility already in globals.css at bd60b81) to the 5 marked spots: hero subheadline p, hero reassurance row div, product-card h3 title, PDP description p, PDP trust card div. Headlines/prices/badges keep Panton.
+- Build ok; commit 34e621b; pushed; live-verified at 375×800: hero sub + reassurance + card titles + PDP desc + trust rows all compute ui-sans-serif system stack; PDP screenshot confirms letterform contrast vs Panton headline.
+
+Stage Summary:
+- All user-marked texts now render in the original font; site content remains the deployed CRO-approved copy. Stale local branch quarantined (backup-local-307302b) — main now fast-forward tracks remote; no Sifalo/auth functionality touched.
