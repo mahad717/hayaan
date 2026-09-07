@@ -660,3 +660,19 @@ Work Log:
 
 Stage Summary:
 - All button labels now render in Panton Black 900 — visibly chunkier CTAs everywhere; no layout/behavior changes.
+
+---
+Task ID: 31
+Agent: Super Z (main agent)
+Task: "make the whole app seo optimized and also add a blog page that the admin can post articles"
+
+Work Log:
+- SEO: /product/[slug] SSR route (generateMetadata with title template/canonical/OG+Twitter using the product image, Product + BreadcrumbList JSON-LD, notFound for unknown slugs); product cards navigate to real URLs and the card title is a real <a> (deliberately NOT stretched over the card — after:inset-0 would have re-created the Task-27 tap-stealing class of bug). ProductDetail accepts initialProduct and mirrors it into the store; back button route-aware.
+- Shared StoreShell + useStoreBootstrap extracted from page.tsx (user+cart boot identical on SSR routes; also honors /?q= so the WebSite SearchAction deep link works). robots.ts (disallow /admin,/api,/payment + sitemap) replaced the stale static public/robots.txt (Next conflict error found locally first). force-dynamic sitemap.ts emits home, /blog, every published post, every active product from the live DB. Root metadata upgraded (title template, og.png 1200×630 generated from Panton + brand palette via scripts/gen-og-image.py, canonical, max-image-preview). Organization + WebSite JSON-LD injected site-wide in layout.
+- Blog: blog_posts migration SQL (src/lib/supabase/migrations/2026-09-07-blog-posts.sql, idempotent, RLS = public reads published only) + Prisma mirror + lib/blog.ts dual-path data layer with missing-table detection. Public SSR /blog index + /blog/[slug] (per-post metadata, BlogPosting/Blog JSON-LD, zero-dep markdown-lite renderer emitting React elements). Admin CRUD API /api/admin/blog(+/[id]) behind getCurrentUser guard with unique-slug logic and publish-stamp preservation. AdminBlog section in the dashboard: list (status/updated/edit/delete/view), editor dialog (auto-slug, excerpt, cover upload via existing /api/admin/upload, markdown content, draft/published), and a one-time "Copy setup SQL" card shown while the Supabase table is missing (same bootstrap pattern as the original Seed banner). Header desktop pills + mobile drawer and footer link to /blog.
+- Local E2E (dev server + Prisma path): robots/sitemap render; product page SSR w/ metadata+JSON-LD; 404s for unknown product/post; admin login → Blog section → created published post via API AND via the UI dialog (auto-slug verified), draft invisible on public /blog, published post listed + article rendered (h2/strong/quote) + in sitemap; guest POST → 403; test posts deleted, logout 200. Note: local dev server had cached a stale Prisma client (Unknown field `phone`) — restarted to pick up the regenerated client; local-only, production uses Supabase.
+- Committed 95b6034 (SEO) + 064a0fb (blog); pushed; live verified: robots.txt (dynamic rules appended after Cloudflare's managed content-signals block), sitemap 14 URLs incl. product slugs, /product/carry-canvas-tote SSR (title/Product JSON-LD/canonical/Organization), /blog graceful empty state, og.png 200, header Blog pill live, admin blog section with the setup card on live (table not yet created in Supabase). Logout 200.
+
+Stage Summary:
+- Whole app SEO: every product now has a crawlable SSR page with structured data; sitemap/robots/canonical/OG complete; home remains a client SPA (Googlebot renders JS; sitemap covers discovery) — SSR-ing the grid is a possible next step.
+- Blog fully functional end-to-end. ONE merchant step remains: click "Copy setup SQL" in Admin → Blog posts and run it in the Supabase SQL editor; after that the admin can post articles that appear instantly on /blog.
