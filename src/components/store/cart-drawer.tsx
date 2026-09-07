@@ -78,8 +78,8 @@ export function CartDrawer() {
             </Button>
           </div>
         ) : (
-          <div className="-mx-6 flex-1 overflow-y-auto px-6">
-            <ul className="flex flex-col gap-4 py-4">
+          <div className="flex-1 overflow-y-auto px-4">
+            <ul className="flex flex-col gap-4 py-2">
               {cart.items.map((it) => (
                 <li key={it.id} className="flex gap-3">
                   <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-[#faf8f1]">
