@@ -199,6 +199,21 @@
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif;
   }
+
+  /* Product-card hover-reveal "Add to cart" overlay. On touch devices the
+     overlay never reveals (group-hover is hover-gated), but its invisible
+     hit area still covered the bottom of the product image and swallowed
+     taps — a first tap on a product added it to the cart instead of
+     opening it. Remove it from touch devices entirely; mobile users add
+     to cart with the always-visible "+" button in the price row. */
+  .card-hover-add {
+    display: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover-add {
+      display: block;
+    }
+  }
   .btn-accent {
     background-color: var(--hayaan-accent) !important;
     color: var(--hayaan-accent-foreground) !important;

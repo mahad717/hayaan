@@ -75,8 +75,12 @@ export function ProductCard({ product }: { product: Product }) {
           </Badge>
         )}
 
-        {/* Hover add-to-cart overlay button (orange, 10% accent) */}
-        <div className="absolute inset-x-3 bottom-3 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+        {/* Hover add-to-cart overlay button (orange, 10% accent).
+            pointer-events dance keeps the hidden overlay from stealing taps
+            on touch screens; .card-hover-add (globals.css) removes it from
+            touch devices entirely — mobile already has the always-visible
+            "+" button in the price row. */}
+        <div className="card-hover-add pointer-events-none group-hover:pointer-events-auto absolute inset-x-3 bottom-3 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
           <Button
             size="sm"
             className="btn-accent w-full shadow-md"
