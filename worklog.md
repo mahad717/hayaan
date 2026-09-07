@@ -691,3 +691,17 @@ Work Log:
 
 Stage Summary:
 - Task 31 fully closed: blog table live in Supabase, admin authoring works on production, starter article "Welcome to the Hayaan Market blog" is published at /blog/welcome-to-the-hayaan-market-blog, indexed in the sitemap with complete SEO metadata. The merchant can now write, edit, publish, or delete that starter post from Admin → Blog posts (it is theirs to keep or remove).
+
+---
+Task ID: 32
+Agent: Super Z (main agent)
+Task: "turn all orange buttons text back to there original text color" (screenshot circling the hero "Start shopping" button with its green label).
+
+Work Log:
+- Revert of Task 28: globals.css --hayaan-accent-foreground #0b3b22 → #ffffff in BOTH the light and dark theme blocks (comments updated). .btn-accent sources from this single variable, so every accent button site-wide (hero CTAs, cart drawer checkout, auth dialog, PDP/card add buttons) reverts together. Button weight stays Panton Black 900 (Task 30 untouched).
+- git push hiccup: sandbox has no ssh binary and origin is SSH (git@github.com) — pushed via the HTTPS remote with the existing token instead; commit dc71cef on main.
+- Build ok; deployed after ~150s; deploy signal = homepage HTML referencing new CSS chunk 1-ywls4o9v_67.css (chunk contains hayaan-accent-foreground:#fff).
+- Live verified (agent-browser 1440×900): all .btn-accent elements on the homepage compute color rgb(255,255,255) on rgb(242,140,40) — "Start shopping", every "Add to cart", and the icon-only "+" buttons. Screenshot download/buttons-white-revert.png.
+
+Stage Summary:
+- Orange buttons' labels are back to the original white; Market Orange background, font weight, and all behavior unchanged. Single-variable revert, no other styles touched.
