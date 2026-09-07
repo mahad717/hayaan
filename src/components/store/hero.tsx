@@ -43,11 +43,14 @@ export function Hero({ onShop }: { onShop: () => void }) {
               Start shopping
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
+            {/* hover:text-white! (important) — .text-brand in globals.css is
+                !important and would otherwise keep the label dark green on the
+                dark-green hover background, making it invisible. */}
             <Button
               size="lg"
               variant="outline"
               onClick={onShop}
-              className="border-brand text-brand hover:bg-brand hover:text-white"
+              className="border-brand text-brand hover:bg-brand hover:text-white!"
             >
               Browse categories
             </Button>
