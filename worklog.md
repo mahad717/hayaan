@@ -748,3 +748,18 @@ Work Log:
 
 Stage Summary:
 - Buy now and Proceed to checkout now reliably land on the checkout page from ANY route (previously only worked from the home SPA); header Orders/Account/Shop and View-your-cart fixed in the same pass. No changes to checkout logic itself.
+
+---
+Task ID: 36
+Agent: Super Z (main agent)
+Task: "When you hover over that button, the text color make white" (video: homepage hero, hovering "Browse categories" — on hover the button fills dark brand green but the label stays dark green → invisible).
+
+Work Log:
+- Root cause (two layers deep): (1) globals.css defines .text-brand { color: var(--primary) !important }, which always beats the plain hover:text-white utility → label stayed dark green on the dark hover fill. (2) First fix attempt hover:text-white! (Tailwind 4 important suffix) ALSO lost, because CSS cascade layers invert order for !important declarations: components layer precedes utilities, so .text-brand's !important outranks ANY utilities-layer !important regardless of specificity.
+- Final fix: one scoped rule in the same components layer of globals.css — .hover\:bg-brand:hover { color: #ffffff !important } (specificity 0,2,0 beats .text-brand 0,1,0, same layer → wins). Scoped to exactly the elements that already declare the dark hover fill (hero "Browse categories", checkout "Nothing happening?"/"View my orders", product-grid "clear filters", Sifalo payment page 2 links) → zero collateral: anything with hover:bg-brand gets a dark fill, so white is always correct. TSX files keep plain hover:text-white (intent docs).
+- Verification tooling: headless Chrome (both agent-browser and vanilla CLI) reports (hover:none) → Tailwind 4 gates hover: styles behind @media (hover:hover) → hover styles untestable there. Built a CDP harness (scripts/hover-verify-cdp.mjs): headed Chrome under Xvfb :99 (real hover:hover media), browser-level ws attach, Input.dispatchMouseEvent hover, computed-style asserts, screenshots. Sandbox gotchas solved along the way: bun fetch to 127.0.0.1 must run with proxy env vars unset; chrome needs --disable-dev-shm-usage --disable-gpu or the renderer freezes after page load.
+- Build ok; commits 79e1c71 (first attempt, superseded) + ac449fa (final layer fix); pushed HTTPS remote; deployed after ~90s via chunk-set md5 change.
+- Live E2E under Xvfb (1440×900, deployed site): "Browse categories" hover → color rgb(255,255,255) on bg rgb(20,83,45) = white label on brand-green fill (PASS; screenshot download/hover-fix-browse-categories.png). Regression: "Start shopping" hover → white on darker orange, unchanged (download/hover-regression-start-shopping.png). Normal state: dark green label on ivory, unchanged.
+
+Stage Summary:
+- Hovering any brand-green-fill button now flips its label to white everywhere the pattern exists (6 spots across hero, checkout, product-grid empty-state, Sifalo payment page). No changes to colors, fonts, or behavior outside the hover state.
