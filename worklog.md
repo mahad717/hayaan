@@ -603,3 +603,17 @@ Work Log:
 
 Stage Summary:
 - Cart drawer items no longer touch the drawer walls; padding consistent top-to-bottom (header / items / summary). Admin table scroll unaffected.
+
+---
+Task ID: 27
+Agent: Super Z (main agent)
+Task: "When I freshly load the website for the first time, when I click a product instead of opening it, it adds to cart, but this problem is only on the first touch" (user screenshot: tap marker on product image bottom edge of Carry Canvas Tote card).
+
+Work Log:
+- Root cause: product-card.tsx desktop hover-reveal "Add to cart" overlay used opacity-0 to hide — but opacity-0 elements remain hit-testable. On touch screens the invisible button permanently covered the bottom ~36px strip of every product image (inset-x-3 bottom-3, h-8, translate-y-2); a tap there hit it, and its stopPropagation() suppressed the card's openProduct, so the item landed in the cart instead of the PDP. "Only on the first touch" matched because some browsers activate sticky :hover mid-gesture (overlay shifts up 8px and re-steals the tap), and afterwards users tap title/center.
+- Fix (two layers): ① wrapper div got pointer-events-none + group-hover:pointer-events-auto (hidden overlay can never intercept taps; hybrid devices covered); ② new .card-hover-add utility in globals.css — display:none by default, display:block only inside @media (hover:hover) and (pointer:fine), so touch devices don't render the overlay at all. Mobile keeps the always-visible "+" button in the price row; admin-panel's similar overlay is the inverse pattern (sm:opacity-0, visible on mobile) — safe, untouched.
+- Build ok; commit f45eac0; pushed. Deploy lag investigation: Workers Builds CI was slower than usual (~15min); false stale-cache suspicion resolved — homepage loads TWO css chunks and head -1 only saw the unchanged shared one; new chunk 2xjgxo4rkkd5r.css live (200) with both card-hover-add rules.
+- Live verification (agent-browser 375×667): elementFromPoint at the image bottom strip → IMG inside card (was the invisible button); .card-hover-add computed display:none; guest tap at strip → PDP opened ("Carry Canvas Tote…", no auth modal); logged-in (admin@shop.demo) tap → PDP opened, cart badge unchanged (1), no toast; mobile "+" button still adds to cart (badge 1→2, stays on home). Cleanup: removed the test item (badge back to 1), POST /api/auth/logout → 200.
+
+Stage Summary:
+- First-touch add-to-cart bug eliminated: taps anywhere on a product card now open the product on touch devices; hover overlay exclusively a desktop affordance via (hover:hover) and (pointer:fine); mobile add-to-cart path unchanged.
