@@ -1,6 +1,7 @@
 "use client";
 
-import { Star, Plus, ShoppingBag } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Star, Plus, Check, ShoppingBag } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,16 @@ function formatPrice(price: number, currency: string) {
 
 export function ProductCard({ product }: { product: Product }) {
   const { openProduct, setCart, toast, user, setAuthOpen } = useStore();
+  // Brief "added" confirmation: the card's add buttons flash a check mark
+  // after a successful add, then revert.
+  const [added, setAdded] = useState(false);
+  const addedTimer = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (addedTimer.current) window.clearTimeout(addedTimer.current);
+    },
+    [],
+  );
   const discount =
     product.compareAt && product.compareAt > product.price
       ? Math.round((1 - product.price / product.compareAt) * 100)
@@ -33,6 +44,9 @@ export function ProductCard({ product }: { product: Product }) {
       const cart = await addToCart(product.id, 1, "increment");
       setCart(cart);
       toast(`${product.name} added to cart`, "success");
+      setAdded(true);
+      if (addedTimer.current) window.clearTimeout(addedTimer.current);
+      addedTimer.current = window.setTimeout(() => setAdded(false), 1500);
     } catch (err) {
       toast((err as Error).message, "error");
     }
@@ -85,10 +99,19 @@ export function ProductCard({ product }: { product: Product }) {
             size="sm"
             className="btn-accent w-full shadow-md"
             onClick={handleAdd}
-            aria-label={`Add ${product.name} to cart`}
+            aria-label={added ? `${product.name} added to cart` : `Add ${product.name} to cart`}
           >
-            <ShoppingBag className="mr-1.5 h-4 w-4" />
-            Add to cart
+            {added ? (
+              <>
+                <Check className="mr-1.5 h-4 w-4" aria-hidden />
+                Added
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="mr-1.5 h-4 w-4" aria-hidden />
+                Add to cart
+              </>
+            )}
           </Button>
         </div>
       </div>
@@ -123,14 +146,15 @@ export function ProductCard({ product }: { product: Product }) {
             )}
           </div>
 
-          {/* Mobile add button (always visible) — orange */}
+          {/* Mobile add button (always visible) — orange; flashes a check
+              mark for ~1.5s after a successful add */}
           <Button
             size="icon"
             className="btn-accent h-9 w-9 sm:hidden"
             onClick={handleAdd}
-            aria-label={`Add ${product.name} to cart`}
+            aria-label={added ? `${product.name} added to cart` : `Add ${product.name} to cart`}
           >
-            <Plus className="h-4 w-4" />
+            {added ? <Check className="h-4 w-4" aria-hidden /> : <Plus className="h-4 w-4" aria-hidden />}
           </Button>
         </div>
       </div>
