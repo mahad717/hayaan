@@ -920,3 +920,17 @@ Work Log:
 
 Stage Summary:
 - "Back to shop" is now instant on mobile: the homepage payload is fully prefetched the moment the PDP opens and the click swaps from memory (measured 5.6× faster under throttled mobile conditions; zero network on click). One-click behavior, SPA mode, and button styling are unchanged.
+
+---
+Task ID: 46 (completion addendum)
+Agent: Super Z (main agent)
+Task: Close out "Back to shop takes too much time" — push the pending artifacts commit and re-verify live in a fresh session.
+
+Work Log:
+- Found the prior session had already shipped the fix (6959e7f, Link href="/" prefetch={true} on the route-mode PDP button) but the final artifacts commit db4a5bc (worklog entry + scripts/back-to-shop-speed-cdp.mjs + download/back-to-shop-instant-pdp.png) was still unpushed; remote main sat at 6959e7f.
+- Confirmed the live build serves the fix: chunk 0ne06320ne5pw.js contains href:"/",prefetch:!0 next to "Back to shop".
+- Pushed db4a5bc (6959e7f..db4a5bc main -> main). Repo and remote now identical.
+- Fresh live CDP re-verification (Xvfb + chrome in one command, container-recycled binary path): THROTTLE=150ms RTT/1.6Mbps, click→home hero visible = 71/89/66 ms, median 71 ms (prior session: 77 ms median vs 435 ms pre-fix — ~6×). Request log shows /?_rsc full-payload fetches happen during the PDP load window; zero same-origin navigation requests at click time. Single-click behavior intact 3/3.
+
+Stage Summary:
+- Task 46 fully closed: "Back to shop" is instant from the PDP under throttled mobile conditions (median 71 ms live re-verified), fix + verification artifacts all committed and pushed, nothing else changed.
