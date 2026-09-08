@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { ChevronLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +25,6 @@ function formatPrice(price: number, currency: string) {
  *    the server; the store is synced so cart/auth flows behave identically.
  */
 export function ProductDetail({ initialProduct }: { initialProduct?: Product }) {
-  const router = useRouter();
   const { selectedProduct, openProduct, setView, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
@@ -39,14 +38,6 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialProduct?.id]);
-
-  // Route mode: warm the router cache for "/" while the shopper reads the
-  // page, so "Back to shop" swaps instantly from the cached payload instead
-  // of paying a full dynamic SSR round-trip (very visible on mobile). The
-  // 30s staleTimes.dynamic window in next.config.ts keeps it fresh.
-  useEffect(() => {
-    if (initialProduct) router.prefetch("/");
-  }, [initialProduct, router]);
 
   const product = initialProduct ?? selectedProduct;
   if (!product) {
@@ -108,14 +99,33 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <Button
-        variant="ghost"
-        size="sm"
-        className="mb-6 text-brand hover:bg-secondary"
-        onClick={() => (initialProduct ? router.push("/") : setView("home"))}
-      >
-        <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
-      </Button>
+      {initialProduct ? (
+        // Route mode — <Link prefetch> instead of router.push so the click is
+        // instant: a plain router.prefetch() only stores a PARTIAL (layout-only)
+        // payload for dynamic routes and push() discards it, still paying a full
+        // SSR round-trip (~450ms throttled, seconds on real mobile data).
+        // prefetch={true} caches the COMPLETE "/" payload (fresh for the 30s
+        // staleTimes.dynamic window in next.config.ts) — the swap needs no network.
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mb-6 text-brand hover:bg-secondary"
+          asChild
+        >
+          <Link href="/" prefetch={true}>
+            <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+          </Link>
+        </Button>
+      ) : (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mb-6 text-brand hover:bg-secondary"
+          onClick={() => setView("home")}
+        >
+          <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+        </Button>
+      )}
 
       <div className="grid gap-8 md:grid-cols-2 md:gap-12">
         {/* Gallery */}
