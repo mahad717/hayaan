@@ -839,3 +839,19 @@ Work Log:
 
 Stage Summary:
 - The first-visit flash of the orange "Demo mode" banner above the navbar is gone (measured 25 sightings → 0). The seed callout still exists for a genuinely empty catalog but now only ever evaluates after the catalog fetch has truly settled, so it can no longer appear transiently. Nothing else changed.
+
+---
+Task ID: 42
+Agent: Super Z (main agent)
+Task: "also fix this when i want to go back to shop i need to click two times fix that, don't change anything else" (screenshot: mobile Chrome on hayaan.co/product/h…, "Back to shop" button circled).
+
+Work Log:
+- Located the button: product-detail.tsx line ~107. In route mode (/product/[slug]) it does router.push("/"); in SPA mode setView("home"). Two client paths into "/" exist: this button and admin-topbar "Back to store" — both potentially affected.
+- Root cause: the zustand store is a module-level singleton that SURVIVES client-side navigation. ProductDetail's route-mode mirror effect (useEffect → openProduct) sets view:"product" on the store. router.push("/") then mounts StorefrontApp, but its seed initializer was guarded `initialView !== "home"`, so a param-less "/" left the stale view in place; after the storeHydrated flip the homepage re-rendered the STALE SPA product view (URL says /, screen shows the same product). Click 2 (now SPA mode, no initialProduct) hits setView("home") → home. Deterministic two clicks, exactly as reported. /?view=home deep links had the same latent hole.
+- Reproduced live BEFORE the fix (scripts/back-to-shop-repro-cdp.mjs: open PDP → click "Back to shop" → snapshot): click 1 → path "/" but heroVisible:false, productVisible:true; click 2 → heroVisible:true. BUG REPRODUCED (download/back-to-shop-repro.png).
+- Fix (1 file, 1 logical change): storefront-app.tsx seed initializer now runs unconditionally — `useStore.setState({ view: initialView })` where initialView derives from the URL (viewParam or "home"). The URL is the source of truth: "/" without ?view= means home, so the stale view is always reset on mount. Deep-link seeding (/checkout/orders/account) unchanged; Task 37 SSR flash logic untouched (render still trusts initialView until hydration flip; storeView now agrees with it).
+- Build OK; committed storefront-app.tsx as 12a9f04; pushed 7e55279..12a9f04; deployed after 5 polls (~100s), chunk md5 5cbe8e79… → da9c4971….
+- AFTER verification, same repro: click 1 → path "/", heroVisible:true, productVisible:false → ONE CLICK SUFFICES. Regressions: SSR /?view=checkout → "Preparing checkout" (no hero), /?view=orders → "Loading your orders", / → hero present, /product/carry-canvas-tote → 200.
+
+Stage Summary:
+- "Back to shop" from a product page now returns to the storefront in ONE click (and admin "Back to store" + /?view=home links inherit the same fix). Root cause was a stale SPA view surviving client-side navigation; "/" now always re-derives its view from the URL on mount. No other behavior changed — deep links and the Task 37 no-flash flow verified intact.
