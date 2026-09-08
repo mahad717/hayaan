@@ -12,6 +12,7 @@ export function ProductGrid() {
   const {
     products,
     setProducts,
+    setProductsLoaded,
     categories,
     setCategories,
     searchQuery,
@@ -30,6 +31,10 @@ export function ProductGrid() {
       if (cancelled) return;
       setProducts(p);
       setCategories(c);
+      // Mark the catalog as settled so the "Demo mode" seed callout (which
+      // keys off this flag) only evaluates against real fetch results —
+      // never against the initial empty array while this request is loading.
+      setProductsLoaded(true);
       setLoading(false);
     })();
     return () => {

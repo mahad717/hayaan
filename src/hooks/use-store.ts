@@ -16,6 +16,12 @@ interface StoreState {
   // Catalog
   products: Product[];
   setProducts: (p: Product[]) => void;
+  /** True once ProductGrid's catalog fetch has settled. Gates the "Demo mode"
+   *  seed callout: bootReady alone left a flash window where the session was
+   *  resolved but /api/products was still in flight, so the banner blinked
+   *  above the header on every first visit with an empty products array. */
+  productsLoaded: boolean;
+  setProductsLoaded: (b: boolean) => void;
   categories: Category[];
   setCategories: (c: Category[]) => void;
   searchQuery: string;
@@ -59,6 +65,8 @@ export const useStore = create<StoreState>((set, get) => ({
 
   products: [],
   setProducts: (products) => set({ products }),
+  productsLoaded: false,
+  setProductsLoaded: (productsLoaded) => set({ productsLoaded }),
   categories: [],
   setCategories: (categories) => set({ categories }),
   searchQuery: "",

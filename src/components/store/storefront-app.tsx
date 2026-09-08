@@ -15,12 +15,15 @@ import { AuthModal } from "@/components/store/auth-modal";
 import { Footer } from "@/components/store/footer";
 
 function SeedCallout() {
-  const { products, user, bootReady, view } = useStore();
+  const { products, user, productsLoaded, view } = useStore();
   const [hidden, setHidden] = useHiddenState();
-  // Only meaningful on the catalog view, and only once the session bootstrap
-  // has settled — otherwise it flashes above the header on deep links like
-  // /?view=checkout, whose views never load the catalog at all.
-  if (hidden || !bootReady || view !== "home" || products.length > 0 || user) return null;
+  // Only meaningful on the catalog view, and only once the catalog fetch has
+  // actually settled. Gating on bootReady alone (session bootstrap) left a
+  // flash window: session resolved, /api/products still in flight → the
+  // initial empty products array made the banner blink above the header on
+  // every first visit. Deep links never mount the catalog and stay excluded
+  // by the view check below.
+  if (hidden || !productsLoaded || view !== "home" || products.length > 0 || user) return null;
   return (
     <div className="border-b border-[#e6e2d4] bg-[#fef1de] text-[#7a4a14]">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 text-sm sm:px-6">
