@@ -823,3 +823,19 @@ Work Log:
 
 Stage Summary:
 - Image uploads are fixed site-wide: blog post Cover image (the reported case) AND product image uploads share the restored /api/admin/upload endpoint → Supabase Storage product-images bucket. The uploader UI code was never broken; the server route had silently vanished via a gitignore collision and is now restored and anchored so it can't happen again.
+
+---
+Task ID: 41
+Agent: Super Z (main agent)
+Task: "Remove the briefly appearing notice above navbar first time you open the website, don't change anything else."
+
+Work Log:
+- Identified the notice: the orange "Demo mode. No products yet — Seed now" SeedCallout in storefront-app.tsx, rendered directly ABOVE <Header/>. It is supposed to be gated, but its gate used bootReady (session bootstrap: /api/auth/me + /api/cart) while products come from ProductGrid's own /api/products fetch. For a signed-out first visitor there is a window where bootReady=true and products=[] (fetch in flight) → the callout condition becomes true → banner blinks above the navbar until the catalog lands.
+- Reproduced on live BEFORE the fix with a new harness (scripts/flash-detect-cdp.mjs): Page.addScriptToEvaluateOnNewDocument samples document for the callout's signature class every 25ms from before first paint for 16s. Result: FLASH DETECTED — visible 826ms→1426ms, 25/588 samples, then gone once 12 product cards rendered (download/flash-before-fix.png). Diagnosis proven.
+- Fix (3 files, minimal): (1) use-store.ts — new productsLoaded/setProductsLoaded store flag; (2) product-grid.tsx — set it right after setProducts/setCategories when the catalog fetch settles (same success path as setLoading(false); a rejected fetch leaves the callout hidden, same as today's stuck skeleton); (3) storefront-app.tsx — SeedCallout now requires productsLoaded instead of bootReady. Behavior preserved: fresh-DB home still shows the callout (fetch settles with []), deep links still never show it (view gate), checkout/orders/account bootReady gates untouched.
+- Sandbox note: Xvfb :99 had died with the container recycle (chrome: "Missing X server") — clean-restarted Xvfb (rm /tmp/.X11-unix, mkdir, chmod 1777, setsid) then chrome with the port-poll launch loop; chrome+script must run in the same bash command (processes die between invocations).
+- Build OK; committed the 3 files as 7e55279; pushed 7706cf1..7e55279; deployed after 5 polls (~100s), chunk md5 aa2a6f23… → 5cbe8e79… (client chunks changed this time, so the md5 probe worked).
+- AFTER verification, identical detector run: 0 sightings in 591 samples over 16s, catalog fetched, 12 product cards, no callout at rest (download/flash-after-fix.png). NO FLASH — fixed.
+
+Stage Summary:
+- The first-visit flash of the orange "Demo mode" banner above the navbar is gone (measured 25 sightings → 0). The seed callout still exists for a genuinely empty catalog but now only ever evaluates after the catalog fetch has truly settled, so it can no longer appear transiently. Nothing else changed.
