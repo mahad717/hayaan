@@ -855,3 +855,18 @@ Work Log:
 
 Stage Summary:
 - "Back to shop" from a product page now returns to the storefront in ONE click (and admin "Back to store" + /?view=home links inherit the same fix). Root cause was a stale SPA view surviving client-side navigation; "/" now always re-derives its view from the URL on mount. No other behavior changed — deep links and the Task 37 no-flash flow verified intact.
+
+---
+Task ID: 43
+Agent: Super Z (main agent)
+Task: "Add continue with Google social login i added it in supabase but also tell me url configuration, don't change anything else."
+
+Work Log:
+- Session model study: all app APIs resolve the user from the app's own `shop_session` cookie (Supabase user id) via getUserFromRequest; email/password login writes it alongside the @supabase/ssr `sb-*` cookies. Therefore Google OAuth only needs to end with that same cookie — no downstream changes.
+- Implementation (3 files, +110 lines): (1) src/lib/supabase/client.ts — new createOAuthBrowserClient() using @supabase/ssr's createBrowserClient (cookie-backed, so the PKCE code verifier is visible to the server; plain supabase-js keeps it in localStorage and the server exchange would fail); (2) auth-modal.tsx — "Continue with Google" outline button (official 4-color G SVG) below an "or" divider, visible for both Sign in / Create account tabs, spinner while redirecting; handler calls signInWithOAuth({provider:"google", options:{redirectTo: origin + "/auth/callback"}}); (3) NEW src/app/auth/callback/route.ts — GET exchanges ?code= via the lib's cookie-bound createServerClient(), then setAuthCookie(redirect home, user.id); failures log + redirect home signed-out; supports ?next=.
+- Build OK (/auth/callback registered ƒ); commit 33c9d6a; pushed 12a9f04..33c9d6a; deployed after 6 polls, chunk md5 da9c4971… → 5dc065b4….
+- Live verification: /auth/callback without code → 307 → https://hayaan.co/ (route live). Browser E2E attempt (scripts/google-oauth-verify-cdp.mjs + google-oauth-debug-cdp.mjs): /?view=account → Sign in → modal renders (screenshot download/google-signin-modal.png) → click Continue with Google → browser navigates to https://mqyhgyakhfhuctnvezby.supabase.co/auth/v1/authorize?provider=google&redirect_to=https%3A%2F%2Fhayaan.co%2Fauth%2Fcallback&code_challenge=…&code_challenge_method=s256 — PKCE flow correctly constructed. BUT it stalls there; direct curl of the authorize URL → 400 {"error_code":"validation_failed","msg":"Unsupported provider: provider is not enabled"} — Google provider is NOT actually enabled on the Supabase project (user believes it is; likely the enable toggle wasn't saved, or configured on a different project). Code-side flow proven correct up to Supabase; final hop is blocked purely by dashboard config. First verify run's "STILL ON hayaan.co" was a harness artifact (cross-origin nav kept Runtime.evaluate throwing until I re-ran with sampling — the flow had actually left the site).
+- Supabase project ref: mqyhgyakhfhuctnvezby. Told the user the exact URL configuration (see chat): enable Google provider; Site URL https://hayaan.co; Redirect URLs += https://hayaan.co/auth/callback; Google Cloud OAuth client must allow https://mqyhgyakhfhuctnvezby.supabase.co/auth/v1/callback.
+
+Stage Summary:
+- "Continue with Google" is live on the site and fully wired: modal button → Supabase PKCE → /auth/callback → app shop_session cookie → all existing auth/cart/orders/admin flows work unchanged. Currently stops at Supabase's authorize endpoint because the Google provider is disabled server-side; once the owner flips it on (and the URL config above), the flow completes with zero further code changes.
