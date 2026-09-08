@@ -40,6 +40,14 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialProduct?.id]);
 
+  // Route mode: warm the router cache for "/" while the shopper reads the
+  // page, so "Back to shop" swaps instantly from the cached payload instead
+  // of paying a full dynamic SSR round-trip (very visible on mobile). The
+  // 30s staleTimes.dynamic window in next.config.ts keeps it fresh.
+  useEffect(() => {
+    if (initialProduct) router.prefetch("/");
+  }, [initialProduct, router]);
+
   const product = initialProduct ?? selectedProduct;
   if (!product) {
     return (

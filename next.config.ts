@@ -18,6 +18,20 @@ const nextConfig: NextConfig = {
   // try to bundle them. They're only loaded via dynamic import() in the
   // local-dev fallback paths, which never execute on Cloudflare.
   serverExternalPackages: ["@prisma/client", "bcryptjs", "dotenv"],
+
+  experimental: {
+    // Reuse dynamic-route payloads in the client router cache for 30s.
+    // Next's default is 0, so every router.push to a dynamic route (e.g.
+    // "Back to shop" from /product/[slug] to "/") paid a full SSR
+    // round-trip — very visible on mobile. With a 30s window, the PDP's
+    // prefetch of "/" (see product-detail.tsx) lands in the cache and the
+    // click swaps instantly from memory instead of re-rendering server-side.
+    // Data surfaces (catalog/cart/orders/admin) are client-fetched via /api,
+    // so a 30s-old RSC shell never hides fresher data.
+    staleTimes: {
+      dynamic: 30,
+    },
+  },
 };
 
 export default nextConfig;
