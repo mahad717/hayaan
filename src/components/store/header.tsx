@@ -112,7 +112,7 @@ export function Header() {
         {/* Logo — Deep Hayaan Green */}
         <button
           onClick={() => goToView("home")}
-          className="flex shrink-0 items-center gap-2 text-base font-black tracking-tight"
+          className="flex shrink-0 items-center gap-2 text-base font-black font-panton tracking-tight"
           aria-label="Hayaan Market home"
         >
           {/* Official Hayaan cart mark — dark green variant */}

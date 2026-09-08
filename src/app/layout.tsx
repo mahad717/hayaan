@@ -6,10 +6,11 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 // Panton — the official Hayaan brand face (self-hosted, no external fetch).
-// Regular carries body text, Bold headings/UI emphasis, Black display moments.
+// Bold/Black are pinned to the brand display spots (logo, hero heading,
+// button labels) via the .font-panton utility; regular/body text stays on
+// the original system stack — the Regular face is deliberately NOT loaded.
 const panton = localFont({
   src: [
-    { path: "./fonts/Panton-Regular.otf", weight: "400", style: "normal" },
     { path: "./fonts/Panton-Bold.otf", weight: "700", style: "normal" },
     { path: "./fonts/Panton-Black.otf", weight: "900", style: "normal" },
   ],
@@ -100,7 +101,7 @@ export default function RootLayout({
 }>) {
   return (
     // Font variables MUST live on <html>: Tailwind's base layer resolves
-    // --default-font-family (→ --font-panton) at the html/:root level.
+    // --default-font-family (→ --font-sans) at the html/:root level.
     // On <body> they were invisible to that rule and the whole site fell
     // back to the system font.
     <html
