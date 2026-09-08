@@ -83,11 +83,15 @@ export function StorefrontApp({ viewParam }: { viewParam?: string }) {
     viewParam && VALID_VIEWS.includes(viewParam) ? (viewParam as View) : "home";
 
   // Seed the client store so every setView consumer (header, cart drawer,
-  // checkout…) starts on the deep-linked view. Server-side this is a no-op:
-  // the SSR snapshot reads getInitialState(), and the render below trusts
-  // initialView until the store is hydrated anyway.
+  // checkout…) starts on the URL-derived view. This must run for the no-param
+  // case too: the store is a module-level singleton that survives client-side
+  // navigation, so arriving here from /product/[slug] (whose mount mirrors
+  // view:"product" into the store) or /admin otherwise re-renders the stale
+  // view after hydration — the "Back to shop needs two clicks" bug. Server-side
+  // this is a no-op: the SSR snapshot reads getInitialState(), and the render
+  // below trusts initialView until the store is hydrated anyway.
   useState(() => {
-    if (typeof window !== "undefined" && initialView !== "home") {
+    if (typeof window !== "undefined") {
       useStore.setState({ view: initialView });
     }
   });
