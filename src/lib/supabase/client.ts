@@ -13,6 +13,7 @@
 // and the app falls back to Prisma + bcrypt auth defined in this repo.
 
 import { createClient as supabaseCreateClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient as ssrCreateBrowserClient } from "@supabase/ssr";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -28,4 +29,16 @@ export function createBrowserClient(): SupabaseClient | null {
       detectSessionInUrl: true,
     },
   });
+}
+
+/**
+ * Cookie-backed browser client for OAuth flows ("Continue with Google").
+ * @supabase/ssr stores the PKCE code verifier in a cookie, which lets the
+ * /auth/callback route handler complete the exchange server-side. The plain
+ * supabase-js client above keeps the verifier in localStorage where the
+ * server can never see it — OAuth must start from THIS client.
+ */
+export function createOAuthBrowserClient() {
+  if (!isSupabaseEnabled) return null;
+  return ssrCreateBrowserClient(url as string, anonKey as string);
 }
