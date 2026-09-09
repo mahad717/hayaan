@@ -27,15 +27,21 @@ export function ProductGrid() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [p, c] = await Promise.all([fetchProducts(), fetchCategories()]);
+      // Products gate the grid; categories only feed the filter pills, so the
+      // two requests settle independently. Gating both behind Promise.all let
+      // ONE slow response keep skeletons up long after the products had
+      // arrived — mobile users saw a frozen catalog when a cold server
+      // isolate made /api/categories multi-second (measured 6.6s live).
+      const productsPromise = fetchProducts();
+      const categoriesPromise = fetchCategories();
+      const p = await productsPromise;
       if (cancelled) return;
       setProducts(p);
-      setCategories(c);
-      // Mark the catalog as settled so the "Demo mode" seed callout (which
-      // keys off this flag) only evaluates against real fetch results —
-      // never against the initial empty array while this request is loading.
       setProductsLoaded(true);
       setLoading(false);
+      const c = await categoriesPromise;
+      if (cancelled) return;
+      setCategories(c);
     })();
     return () => {
       cancelled = true;

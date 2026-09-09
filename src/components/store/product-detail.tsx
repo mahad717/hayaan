@@ -6,7 +6,7 @@ import { ChevronLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { addToCart, goToView, useStore } from "@/hooks/use-store";
+import { addToCart, fetchCategories, fetchProducts, goToView, useStore } from "@/hooks/use-store";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +38,24 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialProduct?.id]);
+
+  // Route mode: the store starts COLD when the PDP is opened directly (shared
+  // link, refresh), and "Back to shop" used to land on a homepage grid that
+  // waited on fresh /api/products + /api/categories — multi-second on mobile
+  // data. Warm the catalog into the store while the user reads the page, so
+  // the click renders the grid from memory. The grid still refetches on
+  // mount (freshness unchanged); skipped when the store already holds
+  // products (browsed in from the grid via client-side navigation).
+  useEffect(() => {
+    if (!initialProduct) return;
+    if (useStore.getState().products.length > 0) return;
+    (async () => {
+      const [p, c] = await Promise.all([fetchProducts(), fetchCategories()]);
+      useStore.getState().setProducts(p);
+      useStore.getState().setCategories(c);
+      useStore.getState().setProductsLoaded(true);
+    })();
+  }, [initialProduct]);
 
   const product = initialProduct ?? selectedProduct;
   if (!product) {
