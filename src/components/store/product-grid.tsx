@@ -7,8 +7,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
+import type { Category, Product } from "@/lib/types";
 
-export function ProductGrid() {
+export function ProductGrid({
+  initialProducts,
+  initialCategories,
+}: {
+  /** Catalog server-fetched by the home page (page.tsx) — makes the product
+   *  cards part of the FIRST HTML paint, so a pre-hydration "Back to shop"
+   *  (a full document reload on real phones) shows products immediately
+   *  instead of skeletons until JS boots and /api/products answers.
+   *  Undefined (SSR fetch slow/failed) keeps the previous client-fetch path. */
+  initialProducts?: Product[];
+  initialCategories?: Category[];
+} = {}) {
   const {
     products,
     setProducts,
@@ -22,16 +34,26 @@ export function ProductGrid() {
     setSort,
     setCartOpen,
   } = useStore();
-  const [loading, setLoading] = useState(products.length === 0);
+  const catalogReady = initialProducts !== undefined;
+  const [loading, setLoading] = useState(products.length === 0 && !catalogReady);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      // Seed the store with the SSR catalog so every store-bound surface
+      // (PDP "openProduct", cart flows, SPA-mode views) sees the catalog
+      // without an extra round-trip. Only when the store is still empty —
+      // a client-side navigation arriving with a pre-warmed store (PDP
+      // pre-warm, previous browsing) must not be clobbered by the possibly
+      // staler SSR snapshot.
+      if (catalogReady && useStore.getState().products.length === 0) {
+        setProducts(initialProducts!);
+        if (initialCategories) setCategories(initialCategories);
+        setProductsLoaded(true);
+      }
       // Products gate the grid; categories only feed the filter pills, so the
-      // two requests settle independently. Gating both behind Promise.all let
-      // ONE slow response keep skeletons up long after the products had
-      // arrived — mobile users saw a frozen catalog when a cold server
-      // isolate made /api/categories multi-second (measured 6.6s live).
+      // two requests settle independently. This silent refresh keeps catalog
+      // freshness semantics identical to the pre-SSR behavior.
       const productsPromise = fetchProducts();
       const categoriesPromise = fetchCategories();
       const p = await productsPromise;
@@ -46,11 +68,17 @@ export function ProductGrid() {
     return () => {
       cancelled = true;
     };
-  }, [setProducts, setCategories]);
+  }, [catalogReady, initialProducts, initialCategories, setProducts, setCategories]);
+
+  // Display source: the live store once it holds products (client-side nav
+  // with a pre-warmed store, or the refresh above), otherwise the SSR catalog
+  // — which is what puts the cards into the first paint.
+  const displayProducts = products.length > 0 ? products : initialProducts ?? [];
+  const displayCategories = categories.length > 0 ? categories : initialCategories ?? [];
 
   const visible = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    let out = products.filter((p) => {
+    let out = displayProducts.filter((p) => {
       if (activeCategory !== "all" && p.categoryId !== activeCategory) return false;
       if (q) {
         const hay = `${p.name} ${p.description} ${p.tags.join(" ")} ${p.category?.name ?? ""}`.toLowerCase();
@@ -63,7 +91,7 @@ export function ProductGrid() {
     else if (sort === "rating") out = [...out].sort((a, b) => b.rating - a.rating);
     else out = [...out].sort((a, b) => (a.featured === b.featured ? 0 : a.featured ? -1 : 1));
     return out;
-  }, [products, searchQuery, activeCategory, sort]);
+  }, [displayProducts, searchQuery, activeCategory, sort]);
 
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -107,7 +135,7 @@ export function ProductGrid() {
         >
           All
         </Button>
-        {categories.map((c) => (
+        {displayCategories.map((c) => (
           <Button
             key={c.id}
             size="sm"

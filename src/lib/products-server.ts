@@ -5,7 +5,7 @@
 
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
-import type { Product } from "@/lib/types";
+import type { Category, Product } from "@/lib/types";
 
 export function rowToProduct(row: any): Product {
   return {
@@ -49,6 +49,54 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     include: { category: true },
   });
   return product ? rowToProduct(product) : null;
+}
+
+/** All active products for the storefront grid — mirrors GET /api/products'
+ *  default (newest-first) query. Used by the home page to render the catalog
+ *  into the SSR HTML. */
+export async function listActiveProducts(limit = 100): Promise<Product[]> {
+  if (isSupabaseServerEnabled) {
+    const supabase = createServiceClient()!;
+    const { data, error } = await supabase
+      .from("products")
+      .select("*, category:categories(*)")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map(rowToProduct);
+  }
+
+  const products = await (await getDb()).product.findMany({
+    where: { isActive: true },
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+  });
+  return products.map(rowToProduct);
+}
+
+/** Categories for the storefront filter pills — mirrors GET /api/categories. */
+export async function listCategories(): Promise<Category[]> {
+  if (isSupabaseServerEnabled) {
+    const supabase = createServiceClient()!;
+    const { data, error } = await supabase.from("categories").select("*").order("name");
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((c: any) => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      description: c.description ?? null,
+    }));
+  }
+
+  const categories = await (await getDb()).category.findMany({ orderBy: { name: "asc" } });
+  return categories.map((c) => ({
+    id: c.id,
+    name: c.name,
+    slug: c.slug,
+    description: c.description ?? null,
+  }));
 }
 
 /** All active products (id + slug + updated), for sitemap generation. */

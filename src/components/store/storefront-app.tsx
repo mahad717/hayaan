@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useStore, type View } from "@/hooks/use-store";
+import type { Category, Product } from "@/lib/types";
 import { useStoreBootstrap } from "@/components/store/store-shell";
 import { Header } from "@/components/store/header";
 import { Hero } from "@/components/store/hero";
@@ -78,7 +79,18 @@ const VALID_VIEWS: readonly string[] = ["home", "product", "checkout", "orders",
  * INITIAL state ("home"), so the store alone can never carry the deep-linked
  * view into the server-rendered HTML.
  */
-export function StorefrontApp({ viewParam }: { viewParam?: string }) {
+export function StorefrontApp({
+  viewParam,
+  initialProducts,
+  initialCategories,
+}: {
+  viewParam?: string;
+  /** Server-fetched catalog from the home page (page.tsx) — rendered into the
+   *  first HTML so product cards paint immediately, before JS/hydration.
+   *  Undefined keeps the grid on its client-side /api fetch path. */
+  initialProducts?: Product[];
+  initialCategories?: Category[];
+}) {
   const initialView: View =
     viewParam && VALID_VIEWS.includes(viewParam) ? (viewParam as View) : "home";
 
@@ -120,7 +132,7 @@ export function StorefrontApp({ viewParam }: { viewParam?: string }) {
             <Hero onShop={() => {
               document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
             }} />
-            <ProductGrid />
+            <ProductGrid initialProducts={initialProducts} initialCategories={initialCategories} />
           </>
         )}
         {view === "product" && <ProductDetail />}
