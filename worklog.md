@@ -991,3 +991,16 @@ Stage Summary:
 - On any browser: a Back-to-shop tap now ALWAYS responds within ~170ms (overlay), and the shop page arrives with products already painted.
 - On Android Chrome/Samsung Internet (Galaxy M13's browsers): Speculation Rules prerender makes the read-then-tap flow activate the pre-built shop page ~instantly.
 - Session recovery hazard documented: UUID-named auto-commits can silently revert deliberate restores (upload route); always diff against remote before pushing.
+
+---
+Task ID: 47 (closure addendum — desktop safety + live integrity checks)
+Agent: Super Z (main agent)
+Task: Confirm the tap-feedback overlay + speculation rules do not regress desktop and everything shipped is structurally sound.
+
+Work Log:
+- Live integrity: PDP speculationrules JSON parses clean ({"prefetch":[{"source":"list","urls":["/"],"eagerness":"eager"}],"prerender":[...]}); __hayaanTapFeedback present on home HTML; POST /api/admin/upload returns 403 (route alive — the recovery-snapshot deletion is fully undone on live).
+- Desktop regression (scripts/back-to-shop-speed-cdp.mjs, unthrottled): click→hero 72/135/131ms, median 131ms, ZERO same-origin requests during click — prefetch SPA swap intact (Task 46 behavior preserved).
+- Desktop overlay probe (scripts/desktop-overlay-probe.mjs): 3 hydrated desktop clicks — overlay never/never/118ms (only on the slowest swap, where it is legitimate feedback), pathname flips 52-119ms, overlay cleaned up after arrival 3/3, no stuck overlay. 100ms delay kept: no perceptible desktop flicker, mobile feedback unchanged (~100-170ms measured).
+
+Stage Summary:
+- Task 47 closed on all fronts: mobile taps always respond ~100-170ms; reload paths paint all cards with the document; Android Chromium gets prerender activation; desktop untouched (median 131ms, no flicker); admin upload route confirmed alive on live.
