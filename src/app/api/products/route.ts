@@ -21,8 +21,12 @@ function rowToProduct(row: any): Product {
     images: Array.isArray(row.images) ? row.images : JSON.parse(row.images || "[]"),
     tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
     featured: row.featured,
-    isActive: row.isActive,
-    categoryId: row.categoryId,
+    isActive: row.isActive ?? row.is_active,
+    // Supabase rows are snake_case (category_id); Prisma rows are camelCase.
+    // Without the fallback every product's categoryId came back undefined and
+    // the storefront's category pills filtered EVERYTHING out ("No products
+    // found" on any pill except All) while the DB data itself was intact.
+    categoryId: row.categoryId ?? row.category_id,
     category: row.category
       ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
       : undefined,
