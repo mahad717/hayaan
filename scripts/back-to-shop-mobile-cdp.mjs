@@ -110,12 +110,16 @@ async function goto(sessionId, url) {
 
 const HERO_OK = `location.pathname === "/" && (() => { const h = document.querySelector("h1"); return !!h && h.offsetParent !== null && /Find what you need/.test(h.textContent || ""); })()`;
 const CARD_OK = `(() => { const c = document.querySelector('a[href^="/product/"]'); return !!c && c.offsetParent !== null; })()`;
+const FEEDBACK_OK = `!!document.getElementById("hayaan-nav-feedback")`;
 async function pollMilestones(sessionId, t0, capMs = 45000) {
-  let hero = null, grid = null;
+  let hero = null, grid = null, feedback = null;
   const start = Date.now();
   while (Date.now() - start < capMs) {
-    await sleep(150);
+    await sleep(120);
     const t = Date.now() - t0;
+    if (feedback === null && t > 60) {
+      try { if (await evalJs(ws, sessionId, FEEDBACK_OK)) feedback = t; } catch {}
+    }
     if (hero === null && t > 60) {
       try { if (await evalJs(ws, sessionId, HERO_OK)) hero = t; } catch {}
     }
@@ -124,11 +128,11 @@ async function pollMilestones(sessionId, t0, capMs = 45000) {
     }
     if (hero !== null && grid !== null) break;
   }
-  return { hero, grid };
+  return { hero, grid, feedback };
 }
 
-function report(label, { hero, grid }) {
-  console.log(`${label}: t_hero=${hero ?? "TIMEOUT"} ms | t_grid=${grid ?? "TIMEOUT"} ms`);
+function report(label, { hero, grid, feedback }) {
+  console.log(`${label}: t_feedback=${feedback ?? "none"} ms | t_hero=${hero ?? "TIMEOUT"} ms | t_grid=${grid ?? "TIMEOUT"} ms`);
 }
 
 const READ_REQS = `(function(){
