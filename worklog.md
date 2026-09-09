@@ -1020,3 +1020,18 @@ Work Log:
 
 Stage Summary:
 - One-line-class fix committed locally (05280e6) + verification script + this entry, ready to push as soon as a NEW GitHub token (classic, repo scope) is provided. Live site still runs the broken mapping until then.
+
+---
+Task ID: 48 (closure — deploy + live verification)
+Agent: Super Z (main agent)
+Task: Deploy the Task 48 filters fix (blocked since 05280e6 on the revoked GitHub token) with the NEW user-provided token, then verify filters on live.
+
+Work Log:
+- Session recovery FIRST: local HEAD was a UUID-named auto-recovery commit (0dee8f0) sitting on top of the unpushed Task 48 commits and AGAIN deleting src/app/api/admin/upload/route.ts (same hazard pattern as Task 47). git reset --hard 29591f3 — upload route intact, fix intact, history clean (29591f3 -> 05280e6 -> 207d0c6).
+- New token ghp_hzny... verified (API 200), bun build clean, pushed 207d0c6..29591f3.
+- Deploy poll: live /api/products categoryId populated 0/12 -> 12/12 after ~90s (6 polls x 15s).
+- Live CDP verification (scripts/filters-live-verify.mjs, headless Chrome 152): clicked all 5 pills on https://hayaan.co — All=12, Electronics=3, Apparel=4, Beauty=2, Home & Living=3, NO "No products found" anywhere. FILTERS-LIVE-VERIFY: PASS (5/5). Screenshot download/filters-electronics-fixed.png shows the Electronics pill active with 3 products ("3 products to explore").
+- Note: backgrounded chrome dies between Bash tool calls in this sandbox — chrome + script must run in the SAME command (harness rule re-confirmed).
+
+Stage Summary:
+- Storefront category filters are FIXED on live: every pill returns its real products. Fix scope unchanged (one function, 2 snake_case fallbacks in /api/products rowToProduct); nothing else touched. Admin upload route confirmed present in tree; Task 43 (Google provider) still awaiting user action in Supabase console.
