@@ -165,7 +165,7 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     rating: 4.4,
     review_count: 203,
     images: [
-      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725483330-085f6bde-b327-4b93-8b76-ab85e8af903b.png",
+      "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788929457997-8c6d317f-e378-41d0-b231-349db04eeb6c.jpg",
     ],
     tags: ["candle", "home", "fragrance"],
     featured: true,
