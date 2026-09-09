@@ -105,10 +105,10 @@ async function pollMilestones(sessionId, t0, capMs = 45000) {
   while (Date.now() - start < capMs) {
     await sleep(150);
     const t = Date.now() - t0;
-    if (hero === null && t > 300) {
+    if (hero === null && t > 60) {
       try { if (await evalJs(ws, sessionId, HERO_OK)) hero = t; } catch {}
     }
-    if (grid === null && t > 500) {
+    if (grid === null && t > 60) {
       try { if (await evalJs(ws, sessionId, CARD_OK)) { grid = t; break; } } catch {}
     }
     if (hero !== null && grid !== null) break;
@@ -155,7 +155,7 @@ const READ_REQS = `(function(){
 {
   const { targetId, sessionId } = await newTarget();
   await goto(sessionId, PDP);
-  await sleep(6000);
+  await sleep(9000);
   const ready = await evalJs(ws, sessionId, `!!document.querySelector('a[href="/"]')`);
   console.log(`[cold] button ready: ${ready}`);
   if (ready) {
@@ -176,7 +176,7 @@ const READ_REQS = `(function(){
   console.log(`[warm] first card rendered: ${card}`);
   if (card) {
     await evalJs(ws, sessionId, `(async () => { const c = document.querySelector('a[href^="/product/"]'); c.click(); for (let k=0;k<400;k++){ await new Promise(r=>setTimeout(r,25)); if (location.pathname.startsWith("/product/")) return true; } return false; })()`, true);
-    await sleep(6000);
+    await sleep(9000);
     const ready = await evalJs(ws, sessionId, `!!document.querySelector('a[href="/"]')`);
     console.log(`[warm] button ready: ${ready}`);
     if (ready) {
