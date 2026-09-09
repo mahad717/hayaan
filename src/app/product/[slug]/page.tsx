@@ -90,6 +90,22 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <StoreShell>
+      {/* Speculation Rules (Task 47): while the shopper reads this product,
+          Chrome/Samsung Internet builds the shop page in the background — a
+          "Back to shop" tap then ACTIVATES the pre-built document instantly
+          instead of a multi-second frozen reload. On browsers without
+          Speculation Rules this tag is ignored; those fall back to the SSR
+          catalog (products in the first HTML) plus the pre-hydration
+          tap-feedback overlay from the root layout. */}
+      <script
+        type="speculationrules"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            prefetch: [{ source: "list", urls: ["/"], eagerness: "eager" }],
+            prerender: [{ source: "list", urls: ["/"], eagerness: "eager" }],
+          }),
+        }}
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductDetail initialProduct={product} />
     </StoreShell>

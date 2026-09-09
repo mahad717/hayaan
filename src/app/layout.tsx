@@ -110,6 +110,21 @@ export default function RootLayout({
       className={`${panton.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
+        {/* Pre-hydration tap feedback (Task 47). On slow phones (e.g. Galaxy
+            M13) a "Back to shop" tap that lands BEFORE React hydrates starts a
+            full-document navigation, and the old page sits frozen with zero
+            feedback for seconds — the "it feels stuck, no response" report.
+            This runs from the first HTML byte, long before hydration: if a tap
+            on a link to "/" isn't owned by React (defaultPrevented) and the
+            navigation doesn't commit within 100ms (SPA swaps finish faster),
+            show an immediate full-screen "Loading the shop…" response. It
+            hides itself when the shop page becomes current, on bfcache
+            restores, and via a 10s failsafe so it can never stick. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(window.__hayaanTapFeedback)return;window.__hayaanTapFeedback=1;var ID="hayaan-nav-feedback";function hide(){var el=document.getElementById(ID);if(el)el.remove();var css=document.getElementById(ID+"-css");if(css)css.remove();}function show(){if(document.getElementById(ID))return;var st=document.createElement("style");st.id=ID+"-css";st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";document.head.appendChild(st);var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";var sp=document.createElement("div");sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";var lb=document.createElement("div");lb.textContent="Loading the shop…";lb.style.cssText="font-size:14px;color:#111827";ov.appendChild(sp);ov.appendChild(lb);document.body.appendChild(ov);var iv=setInterval(function(){if(location.pathname==="/"){clearInterval(iv);hide();}},120);setTimeout(function(){clearInterval(iv);hide();},10000);window.addEventListener("pageshow",function(ev){if(ev.persisted){clearInterval(iv);hide();}});}document.addEventListener("click",function(e){try{if(e.defaultPrevented)return;var t=e.target;var a=t&&t.closest?t.closest('a[href="/"]'):null;if(!a||a.target==="_blank")return;if(location.pathname==="/")return;setTimeout(function(){if(location.pathname!=="/")show();},100);}catch(err){}});})();`,
+          }}
+        />
         <OrganizationJsonLd />
         {children}
         <Toaster />

@@ -1,12 +1,17 @@
 // Task 47 — reproduce "Back to shop takes 10s on MOBILE" on https://hayaan.co
-// Mobile emulation (390x844 @3x touch, iPhone UA) + harsh throttle (400ms RTT,
-// 1.0 Mbps down / 512 Kbps up). Scenarios:
+// Device profile: Samsung Galaxy M13 (360x800 CSS viewport, Android Chrome UA,
+// touch) + harsh throttle (400ms RTT, 1.0 Mbps down / 512 Kbps up) + CPU
+// throttle (CPU_RATE env, default 4x — the M13's Exynos 850 is ~4x slower
+// than a desktop core). Scenarios:
 //   early : click the SSR <a> the MOMENT it exists (pre-hydration) -> full doc load path
+//   read  : stay on the PDP 8s (speculation-rules prerender of "/" gets a
+//           chance to build), then click — the realistic Galaxy M13 flow
 //   cold  : PDP deep link, hydrated, click Back to shop (cold store)
 //   warm  : homepage -> client-side into PDP -> click Back to shop
 // Milestones from the click, host-side (survives cross-document navigation):
 // t_hero = home h1 visible; t_grid = real product card visible.
 // a[href^="/product/"] matches ONLY real cards (skeleton has no anchors).
+// SHOT=/abs/path.png captures the settled shop page at the end of the read run.
 
 const DEBUG_PORT = 9333;
 const BASE = "https://hayaan.co";
@@ -72,22 +77,28 @@ const versionInfo = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/version`).t
 const ws = await connectWs(versionInfo.webSocketDebuggerUrl);
 console.log("browser: " + versionInfo.Browser);
 
+const CPU_RATE = Number(process.env.CPU_RATE || 4);
+
 async function newTarget() {
   const { targetId } = await sendCmd(ws, "Target.createTarget", { url: "about:blank" });
   const { sessionId } = await sendCmd(ws, "Target.attachToTarget", { targetId, flatten: true });
   await sendCmd(ws, "Page.enable", {}, sessionId);
   await sendCmd(ws, "Runtime.enable", {}, sessionId);
   await sendCmd(ws, "Emulation.setDeviceMetricsOverride", {
-    width: 390, height: 844, deviceScaleFactor: 3, mobile: true,
+    width: 360, height: 800, deviceScaleFactor: 3, mobile: true,
   }, sessionId);
   await sendCmd(ws, "Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 }, sessionId);
   await sendCmd(ws, "Emulation.setUserAgentOverride", {
-    userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+    userAgent: "Mozilla/5.0 (Linux; Android 12; SM-M135FU) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.82 Mobile Safari/537.36",
   }, sessionId);
   await sendCmd(ws, "Network.enable", {}, sessionId);
   await sendCmd(ws, "Network.emulateNetworkConditions", {
     offline: false, latency: 400, downloadThroughput: 125000, uploadThroughput: 64000,
   }, sessionId);
+  if (CPU_RATE > 1) {
+    await sendCmd(ws, "Emulation.setCPUThrottlingRate", { rate: CPU_RATE }, sessionId);
+    console.log(`cpu throttle: ${CPU_RATE}x`);
+  }
   return { targetId, sessionId };
 }
 
@@ -129,6 +140,22 @@ const READ_REQS = `(function(){
   } catch (e) { return []; }
 })()`;
 
+async function prerenderPresent() {
+  try {
+    const list = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/list`).then((r) => r.json());
+    return list.some((t) => t.type === "page" && t.url.replace(/\/$/, "") === BASE);
+  } catch { return false; }
+}
+
+async function shoot(sessionId, path) {
+  if (!path) return;
+  await sleep(1200);
+  const { data } = await sendCmd(ws, "Page.captureScreenshot", { format: "png" }, sessionId);
+  const { writeFileSync } = await import("node:fs");
+  writeFileSync(path, Buffer.from(data, "base64"));
+  console.log(`screenshot: ${path}`);
+}
+
 // ---------- Scenario 1: EARLY tap (pre-hydration, impatient user) ----------
 {
   const { targetId, sessionId } = await newTarget();
@@ -147,6 +174,26 @@ const READ_REQS = `(function(){
     await sleep(1500);
     console.log("    (new-document resource entries, relative to that document's origin)");
     for (const q of await evalJs(ws, sessionId, READ_REQS)) console.log(`    ${String(q.start).padStart(6)}ms dur=${String(q.dur).padStart(6)}ms  ${q.p.slice(0, 90)}`);
+  }
+  await sendCmd(ws, "Target.closeTarget", { targetId }).catch(() => {});
+}
+
+// ---------- Scenario 1b: READ then tap (8s on the PDP, like a real shopper) ----------
+{
+  const { targetId, sessionId } = await newTarget();
+  await goto(sessionId, PDP);
+  let pre = false;
+  for (let i = 0; i < 16; i++) { pre = await prerenderPresent(); if (pre) break; await sleep(500); }
+  console.log(`[read] speculation prerender of "/" present: ${pre}`);
+  await sleep(Math.max(0, 8000 - 8000)); // prerender poll already spans ~8s
+  const ready = await evalJs(ws, sessionId, `!!document.querySelector('a[href="/"]')`).catch(() => false);
+  console.log(`[read] button ready: ${ready}`);
+  if (ready) {
+    const t0 = Date.now();
+    await evalJs(ws, sessionId, `document.querySelector('a[href="/"]').click()`);
+    const m = await pollMilestones(sessionId, t0);
+    report("[read] ", m);
+    await shoot(sessionId, process.env.SHOT || "");
   }
   await sendCmd(ws, "Target.closeTarget", { targetId }).catch(() => {});
 }
