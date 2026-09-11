@@ -3,6 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
+import {
+  upsertProductCost,
+  deleteProductCost,
+  getProductCost,
+  auditChange,
+  isMissingAccountingSchema,
+  accountingUnavailableResponse,
+} from "@/lib/accounting";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -54,6 +62,45 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
   const body = await req.json();
+
+  // Confidential cost updates (Task 49): validate, audit old → new, then
+  // persist in the RLS-locked side-car. Never touches the public product row.
+  if (body.cost !== undefined) {
+    const oldCost = await getProductCost(id);
+    if (body.cost === null || body.cost === "") {
+      try {
+        await deleteProductCost(id);
+        await auditChange({ actor: user, entity: "product", entityId: id, field: "cost", oldValue: oldCost, newValue: null });
+      } catch (err: any) {
+        if (isMissingAccountingSchema(err)) return NextResponse.json(accountingUnavailableResponse(), { status: 503 });
+        return NextResponse.json({ error: err.message }, { status: 400 });
+      }
+    } else {
+      const newCost = Number(body.cost);
+      if (!Number.isFinite(newCost) || newCost < 0) {
+        return NextResponse.json({ error: "Product cost must be zero or greater." }, { status: 400 });
+      }
+      try {
+        await upsertProductCost(id, newCost, user);
+        if (oldCost !== newCost) {
+          await auditChange({ actor: user, entity: "product", entityId: id, field: "cost", oldValue: oldCost, newValue: newCost });
+        }
+      } catch (err: any) {
+        if (isMissingAccountingSchema(err)) return NextResponse.json(accountingUnavailableResponse(), { status: 503 });
+        return NextResponse.json({ error: err.message }, { status: 400 });
+      }
+    }
+  }
+  // Selling price is also a sensitive financial field — audit the change.
+  if (body.price !== undefined) {
+    const supabase = isSupabaseServerEnabled ? createServiceClient()! : null;
+    const oldPrice = supabase
+      ? await supabase.from("products").select("price").eq("id", id).single().then((r: any) => (r.data ? Number(r.data.price) : null))
+      : await (await getDb()).product.findUnique({ where: { id }, select: { price: true } }).then((p) => (p ? p.price : null));
+    if (oldPrice != null && Number(body.price) !== oldPrice) {
+      await auditChange({ actor: user, entity: "product", entityId: id, field: "price", oldValue: oldPrice, newValue: Number(body.price) });
+    }
+  }
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
     const update: Record<string, unknown> = {};

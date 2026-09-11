@@ -3,6 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
+import {
+  getProductCostMap,
+  snapshotOrderItemCosts,
+  insertPayment,
+  applySaleAccounting,
+  toCents,
+} from "@/lib/accounting";
 import type { Order } from "@/lib/types";
 
 export async function GET(req: NextRequest) {
@@ -89,6 +96,9 @@ export async function POST(req: NextRequest) {
       .eq("cart_id", cart.data.id);
     if (!items || items.length === 0) return NextResponse.json({ error: "Your cart is empty — add an item before checking out." }, { status: 400 });
     const total = items.reduce((sum, it) => sum + Number(it.product.price) * it.quantity, 0);
+    // Demo captures settle instantly — make the reference collision-proof so
+    // the payments table's unique (provider, transaction_ref) index holds.
+    const demoRef = `DEMO-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const { data: order, error: orderErr } = await supabase
       .from("orders")
       .insert({
@@ -103,12 +113,12 @@ export async function POST(req: NextRequest) {
         shipping_zip: shipping.zip,
         shipping_country: shipping.country,
         payment_method: paymentMethod,
-        payment_ref: `DEMO-${Date.now()}`,
+        payment_ref: demoRef,
       })
       .select("id")
       .single();
     if (orderErr) return NextResponse.json({ error: orderErr.message }, { status: 400 });
-    const rows = items.map((it) => ({
+    const itemRows = items.map((it) => ({
       order_id: order!.id,
       product_id: it.product.id,
       name: it.product.name,
@@ -116,8 +126,47 @@ export async function POST(req: NextRequest) {
       quantity: it.quantity,
       image: it.product.images?.[0] ?? null,
     }));
-    await supabase.from("order_items").insert(rows);
+    const inserted = await supabase
+      .from("order_items")
+      .insert(itemRows)
+      .select("id, product_id, quantity");
     await supabase.from("cart_items").delete().eq("cart_id", cart.data.id);
+
+    // --- Accounting (best-effort: a missing/failed accounting schema must
+    // never block checkout; the admin UI surfaces the migration banner) ---
+    try {
+      const costMap = await getProductCostMap(items.map((it) => it.product.id));
+      await snapshotOrderItemCosts(
+        (inserted.data ?? []).map((it: any) => ({
+          orderItemId: it.id,
+          productId: it.product_id,
+          quantity: it.quantity,
+        })),
+        costMap,
+      );
+      await insertPayment({
+        orderId: order!.id,
+        provider: "demo",
+        method: paymentMethod,
+        transactionRef: demoRef,
+        amount: total,
+        status: "paid",
+      });
+      await applySaleAccounting({
+        orderId: order!.id,
+        lines: items.map((it) => ({
+          productId: it.product.id,
+          quantity: it.quantity,
+          unitCost: costMap.get(it.product.id) ?? null,
+        })),
+        subtotalCents: toCents(total),
+        discountCents: 0,
+        shippingCents: 0,
+        taxCents: 0,
+      });
+    } catch (acctErr) {
+      console.error("[orders] accounting skipped:", acctErr);
+    }
     return NextResponse.json({ orderId: order!.id, total });
   }
 
@@ -129,6 +178,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Your cart is empty — add an item before checking out." }, { status: 400 });
   }
   const total = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
+  const demoRef = `DEMO-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const order = await (await getDb()).order.create({
     data: {
       userId: user.id,
@@ -142,7 +192,7 @@ export async function POST(req: NextRequest) {
       shippingZip: shipping.zip,
       shippingCountry: shipping.country,
       paymentMethod,
-      paymentRef: `DEMO-${Date.now()}`,
+      paymentRef: demoRef,
       items: {
         create: cart.items.map((it) => ({
           productId: it.productId,
@@ -153,7 +203,39 @@ export async function POST(req: NextRequest) {
         })),
       },
     },
+    include: { items: { select: { id: true, productId: true, quantity: true } } },
   });
   await (await getDb()).cartItem.deleteMany({ where: { cartId: cart.id } });
+
+  // --- Accounting (best-effort; see the Supabase branch) ---
+  try {
+    const costMap = await getProductCostMap(cart.items.map((it) => it.productId));
+    await snapshotOrderItemCosts(
+      order.items.map((it) => ({ orderItemId: it.id, productId: it.productId, quantity: it.quantity })),
+      costMap,
+    );
+    await insertPayment({
+      orderId: order.id,
+      provider: "demo",
+      method: paymentMethod,
+      transactionRef: demoRef,
+      amount: total,
+      status: "paid",
+    });
+    await applySaleAccounting({
+      orderId: order.id,
+      lines: order.items.map((it) => ({
+        productId: it.productId,
+        quantity: it.quantity,
+        unitCost: costMap.get(it.productId) ?? null,
+      })),
+      subtotalCents: toCents(total),
+      discountCents: 0,
+      shippingCents: 0,
+      taxCents: 0,
+    });
+  } catch (acctErr) {
+    console.error("[orders] accounting skipped:", acctErr);
+  }
   return NextResponse.json({ orderId: order.id, total });
 }

@@ -40,6 +40,11 @@ You **cannot** yet:
 4. Open Supabase's SQL editor and paste the contents of
    `src/lib/supabase/schema.sql`. Run it. This creates the tables, RLS policies,
    and realtime publication that mirror the Prisma models.
+   Then run `src/lib/supabase/migrations/2026-09-11-accounting.sql` — it adds
+   the accounting / reconciliation tables (costs, payments, ledger, purchases,
+   inventory movements, audit) and their aggregate RPC functions. Existing
+   projects that already ran schema.sql before 2026-09-11 only need the
+   accounting migration.
 5. Every API route in `src/app/api/**` will now use Supabase instead of Prisma.
 
 ## Why we keep Prisma around

@@ -101,6 +101,13 @@ model Order {
   paymentMethod   String      @default("card")
   paymentRef      String?
   paymentStatus   String      @default("pending") // pending | paid | failed (real gateways like Sifalo Pay)
+  // Accounting columns (Task 49). Discount/shipping/tax are what the customer
+  // was charged; refund_amount accumulates admin-recorded refunds.
+  discountAmount  Float       @default(0)
+  shippingCost    Float       @default(0)
+  taxAmount       Float       @default(0)
+  refundAmount    Float       @default(0)
+  refundedAt      DateTime?
   items           OrderItem[]
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
@@ -130,4 +137,134 @@ model BlogPost {
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Accounting & reconciliation (Task 49).
+//
+// Deliberately SIDE-CAR tables keyed by plain ids (no Prisma relations) so the
+// existing catalog/order models are untouched. In Supabase these tables are
+// RLS-locked (no anon/authenticated policies) — only the server's service
+// role can read them, so product cost never reaches customers through any
+// public API (the public routes simply never select these tables).
+// ---------------------------------------------------------------------------
+
+// Confidential supplier cost, 1:1 with Product. Kept OUT of the Product model
+// so every existing public product query stays cost-free by construction.
+model ProductCost {
+  productId String   @id
+  unitCost  Float // >= 0, major currency units (matches Product.price)
+  currency  String   @default("USD")
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Cost snapshot at the time of sale. One row per order item WITH a known
+// cost; historical items without a row mean COGS unknown (reported as such —
+// never guessed). Kept out of OrderItem because customers can SELECT their
+// own order_items (RLS) and must never receive margin data.
+model OrderItemCost {
+  id          String   @id @default(cuid())
+  orderItemId String   @unique
+  productId   String?
+  unitCost    Float // product cost at the moment the order was placed
+  currency    String   @default("USD")
+  createdAt   DateTime @default(now())
+
+  @@index([productId])
+}
+
+// Payment records for reconciliation (gateway webhooks, manual entries, demo
+// captures). (provider, transactionRef) unique → the same gateway reference
+// can never be counted twice.
+model PaymentRecord {
+  id             String    @id @default(cuid())
+  orderId        String
+  provider       String // "sifalo" | "demo" | "manual" | ...
+  method         String? // card | edahab | evc | cod | ...
+  transactionRef String?
+  amount         Float? // gateway-reported amount; null for failed attempts
+  currency       String    @default("USD")
+  status         String // pending | paid | failed
+  paidAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@unique([provider, transactionRef])
+  @@index([orderId])
+  @@index([status])
+}
+
+// Internal double-entry-style ledger. Grouped by entryGroup: one financial
+// event writes related rows (e.g. a SALE writes revenue +, cogs -,
+// gross_profit +). Traceability layer only — report totals aggregate the
+// order tables directly so the two can be cross-checked.
+model LedgerEntry {
+  id          String   @id @default(cuid())
+  entryType   String // sale | refund | purchase | cancel | adjustment
+  account     String // revenue | cogs | gross_profit | refunds | shipping | tax | inventory | cash | accounts_payable
+  entryGroup  String?
+  orderId     String?
+  paymentId   String?
+  purchaseId  String?
+  productId   String?
+  amount      Float // signed
+  currency    String   @default("USD")
+  description String?
+  actor       String?
+  createdAt   DateTime @default(now())
+
+  @@index([entryType])
+  @@index([entryGroup])
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+// Supplier purchases / restocks (section 9). stockApplied records whether
+// product.stock was incremented, keeping the auditable inventory trail honest.
+model Purchase {
+  id            String   @id @default(cuid())
+  supplier      String
+  productId     String?
+  quantity      Int // > 0
+  unitCost      Float // >= 0
+  totalCost     Float
+  purchaseDate  DateTime @default(now())
+  reference     String?
+  paymentStatus String   @default("unpaid") // paid | unpaid
+  stockApplied  Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  @@index([purchaseDate])
+}
+
+// Auditable Inventory → Sale → COGS chain.
+model InventoryMovement {
+  id            String   @id @default(cuid())
+  productId     String
+  orderId       String?
+  purchaseId    String?
+  movementType  String // sale | purchase | refund_restock | adjustment
+  quantityDelta Int // negative when stock leaves
+  unitCost      Float? // cost snapshot tied to this movement
+  createdAt     DateTime @default(now())
+
+  @@index([productId])
+  @@index([createdAt])
+}
+
+// Who changed what, old → new, for sensitive financial fields.
+model AccountingAudit {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actorEmail String?
+  entity     String // product | order | payment | purchase | reconciliation | inventory
+  entityId   String?
+  field      String
+  oldValue   String?
+  newValue   String?
+  createdAt  DateTime @default(now())
+
+  @@index([entity])
+  @@index([createdAt])
 }

@@ -6,6 +6,13 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { verifySifaloPayment, type SifaloVerifyResult } from "@/lib/sifalo";
+import {
+  getProductCostMap,
+  snapshotOrderItemCosts,
+  insertPayment,
+  applySaleAccounting,
+  auditChange,
+} from "@/lib/accounting";
 import type { NextRequest } from "next/server";
 
 export interface ShippingInput {
@@ -22,10 +29,10 @@ export interface ShippingInput {
  * (free over $75) + 8% tax. Charging exactly what the customer saw avoids
  * "why was I charged less/more than the screen showed" disputes.
  */
-export function computeCheckoutTotal(subtotal: number): number {
+export function computeCheckoutTotal(subtotal: number): { total: number; shipping: number; tax: number } {
   const shipping = subtotal >= 75 ? 0 : 6.95;
   const tax = subtotal * 0.08;
-  return Math.round((subtotal + shipping + tax) * 100) / 100;
+  return { total: Math.round((subtotal + shipping + tax) * 100) / 100, shipping, tax: Math.round(tax * 100) / 100 };
 }
 
 export interface CreatedOrder {
@@ -53,25 +60,41 @@ export async function createPendingSifaloOrder(
     if (!items || items.length === 0) return { error: "Cart is empty.", status: 400 };
 
     const subtotal = items.reduce((sum, it) => sum + Number(it.product.price) * it.quantity, 0);
-    const total = computeCheckoutTotal(subtotal);
-    const { data: order, error: orderErr } = await supabase
-      .from("orders")
-      .insert({
-        user_id: userId,
-        status: "pending",
-        total_amount: total,
-        currency: "USD",
-        shipping_name: shipping.name,
-        shipping_phone: shipping.phone?.trim() || null,
-        shipping_address: shipping.address,
-        shipping_city: shipping.city,
-        shipping_zip: shipping.zip,
-        shipping_country: shipping.country,
-        payment_method: "sifalo",
-        payment_status: "pending",
-      })
-      .select("id")
-      .single();
+    const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal);
+    // Receipt-level accounting columns (Task 49): what the customer was
+    // actually asked to pay. If the accounting migration has not been applied
+    // yet the columns don't exist — retry without them so checkout NEVER
+    // breaks (the amounts are recomputable from the total).
+    const baseInsert = {
+      user_id: userId,
+      status: "pending",
+      total_amount: total,
+      currency: "USD",
+      shipping_name: shipping.name,
+      shipping_phone: shipping.phone?.trim() || null,
+      shipping_address: shipping.address,
+      shipping_city: shipping.city,
+      shipping_zip: shipping.zip,
+      shipping_country: shipping.country,
+      payment_method: "sifalo",
+      payment_status: "pending",
+    };
+    let order: any = null;
+    let orderErr: any = null;
+    {
+      const res = await supabase
+        .from("orders")
+        .insert({ ...baseInsert, shipping_cost: shippingFee, tax_amount: taxAmt })
+        .select("id")
+        .single();
+      order = res.data;
+      orderErr = res.error;
+      if (orderErr && /shipping_cost|tax_amount|column/i.test(orderErr.message ?? "")) {
+        const retry = await supabase.from("orders").insert(baseInsert).select("id").single();
+        order = retry.data;
+        orderErr = retry.error;
+      }
+    }
     if (orderErr || !order) {
       const msg = orderErr?.message ?? "insert failed";
       const hint = /payment_status/.test(msg)
@@ -79,17 +102,34 @@ export async function createPendingSifaloOrder(
         : "";
       return { error: msg + hint, status: 400 };
     }
-    await supabase.from("order_items").insert(
-      items.map((it) => ({
-        order_id: order.id,
-        product_id: it.product.id,
-        name: it.product.name,
-        price: it.product.price,
-        quantity: it.quantity,
-        image: it.product.images?.[0] ?? null,
-      })),
-    );
+    const insertedItems = await supabase
+      .from("order_items")
+      .insert(
+        items.map((it) => ({
+          order_id: order.id,
+          product_id: it.product.id,
+          name: it.product.name,
+          price: it.product.price,
+          quantity: it.quantity,
+          image: it.product.images?.[0] ?? null,
+        })),
+      )
+      .select("id, product_id, quantity");
     await supabase.from("cart_items").delete().eq("cart_id", cart.data.id);
+    // Cost-at-sale snapshot (best-effort — checkout must never block on it).
+    try {
+      const costMap = await getProductCostMap(items.map((it) => it.product.id));
+      await snapshotOrderItemCosts(
+        (insertedItems.data ?? []).map((it: any) => ({
+          orderItemId: it.id,
+          productId: it.product_id,
+          quantity: it.quantity,
+        })),
+        costMap,
+      );
+    } catch (acctErr) {
+      console.error("[sifalo] cost snapshot skipped:", acctErr);
+    }
     return { orderId: order.id, total };
   }
 
@@ -102,7 +142,7 @@ export async function createPendingSifaloOrder(
   if (!cart || cart.items.length === 0) return { error: "Cart is empty.", status: 400 };
 
   const subtotal = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
-  const total = computeCheckoutTotal(subtotal);
+  const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal);
   const order = await db.order.create({
     data: {
       userId,
@@ -117,6 +157,8 @@ export async function createPendingSifaloOrder(
       shippingCountry: shipping.country,
       paymentMethod: "sifalo",
       paymentStatus: "pending",
+      shippingCost: shippingFee,
+      taxAmount: taxAmt,
       items: {
         create: cart.items.map((it) => ({
           productId: it.productId,
@@ -127,8 +169,19 @@ export async function createPendingSifaloOrder(
         })),
       },
     },
+    include: { items: { select: { id: true, productId: true, quantity: true } } },
   });
   await db.cartItem.deleteMany({ where: { cartId: cart.id } });
+  // Cost-at-sale snapshot (best-effort).
+  try {
+    const costMap = await getProductCostMap(cart.items.map((it) => it.productId));
+    await snapshotOrderItemCosts(
+      order.items.map((it) => ({ orderItemId: it.id, productId: it.productId, quantity: it.quantity })),
+      costMap,
+    );
+  } catch (acctErr) {
+    console.error("[sifalo] cost snapshot skipped:", acctErr);
+  }
   return { orderId: order.id, total };
 }
 
@@ -186,6 +239,14 @@ export interface AppliedVerification {
 /**
  * Verify a Sifalo transaction (by sid or order id) and persist the outcome on
  * the order. "unknown" states leave the order untouched.
+ *
+ * Task 49: every terminal state also lands in the accounting layer —
+ *   paid   → payments row (deduped by transaction ref) + sale accounting
+ *            (stock decrement, COGS ledger) exactly once
+ *   failed → payments row with status failed (reconciliation shows Failed)
+ *   any    → payment_status changes are audited
+ * Accounting is best-effort: an unmigrated/failed accounting layer never
+ * breaks the payment flow.
  */
 export async function verifyAndApplyToOrder(
   userId: string,
@@ -213,6 +274,40 @@ export async function verifyAndApplyToOrder(
       });
     }
     updated = { ...order, status: "paid", paymentStatus: "paid", paymentRef: ref };
+    // --- Accounting (best-effort) ---
+    try {
+      await auditChange({
+        actor: null,
+        entity: "order",
+        entityId: orderId,
+        field: "payment_status",
+        oldValue: order.paymentStatus,
+        newValue: "paid",
+      });
+      const paid = await insertPayment({
+        orderId,
+        provider: "sifalo",
+        method: result.paymentType ?? "sifalo",
+        transactionRef: ref ?? `sifalo-order-${orderId}`,
+        amount: result.amount != null ? Number(result.amount) : order.totalAmount,
+        status: "paid",
+      });
+      if (!paid.duplicate) {
+        const { buildSaleLines } = await import("@/lib/accounting");
+        const { lines, subtotalCents } = await buildSaleLines(orderId);
+        await applySaleAccounting({
+          orderId,
+          lines,
+          subtotalCents,
+          discountCents: 0,
+          // Sifalo orders record shipping/tax on the order row (receipt).
+          shippingCents: 0,
+          taxCents: 0,
+        });
+      }
+    } catch (acctErr) {
+      console.error("[sifalo] sale accounting skipped:", acctErr);
+    }
   } else if (result.state === "failed") {
     const ref = result.sid ?? order.paymentRef;
     if (isSupabaseServerEnabled) {
@@ -228,6 +323,27 @@ export async function verifyAndApplyToOrder(
       });
     }
     updated = { ...order, paymentStatus: "failed", paymentRef: ref };
+    // --- Accounting (best-effort): record the failed attempt ---
+    try {
+      await auditChange({
+        actor: null,
+        entity: "order",
+        entityId: orderId,
+        field: "payment_status",
+        oldValue: order.paymentStatus,
+        newValue: "failed",
+      });
+      await insertPayment({
+        orderId,
+        provider: "sifalo",
+        method: result.paymentType ?? "sifalo",
+        transactionRef: ref ?? null,
+        amount: result.amount != null ? Number(result.amount) : null,
+        status: "failed",
+      });
+    } catch (acctErr) {
+      console.error("[sifalo] failed-payment record skipped:", acctErr);
+    }
   } else if (result.state === "pending" && result.sid && !order.paymentRef) {
     if (isSupabaseServerEnabled) {
       const supabase = createServiceClient()!;

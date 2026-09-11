@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
+import { upsertProductCost, isMissingAccountingSchema, accountingUnavailableResponse } from "@/lib/accounting";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -84,9 +85,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
   const body = await req.json();
-  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured } = body;
+  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost } = body;
   if (!name || !description || !price || !categoryId) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  }
+  // Confidential supplier cost (Task 49). Validated server-side: >= 0, and
+  // stored in the RLS-locked product_costs side-car — never on the product
+  // row that public queries read.
+  let costValue: number | null = null;
+  if (cost !== undefined && cost !== null && cost !== "") {
+    costValue = Number(cost);
+    if (!Number.isFinite(costValue) || costValue < 0) {
+      return NextResponse.json({ error: "Product cost must be zero or greater." }, { status: 400 });
+    }
   }
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
@@ -109,6 +120,16 @@ export async function POST(req: NextRequest) {
       .select("*, category:categories(*)")
       .single();
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+    if (costValue != null) {
+      try {
+        await upsertProductCost(data.id, costValue, user);
+      } catch (err: any) {
+        if (isMissingAccountingSchema(err)) {
+          return NextResponse.json(accountingUnavailableResponse(), { status: 503 });
+        }
+        return NextResponse.json({ error: err.message }, { status: 400 });
+      }
+    }
     return NextResponse.json({ product: rowToProduct(data) });
   }
   const product = await (await getDb()).product.create({
@@ -128,5 +149,15 @@ export async function POST(req: NextRequest) {
     },
     include: { category: true },
   });
+  if (costValue != null) {
+    try {
+      await upsertProductCost(product.id, costValue, user);
+    } catch (err: any) {
+      if (isMissingAccountingSchema(err)) {
+        return NextResponse.json(accountingUnavailableResponse(), { status: 503 });
+      }
+      return NextResponse.json({ error: err.message }, { status: 400 });
+    }
+  }
   return NextResponse.json({ product: rowToProduct(product) });
 }

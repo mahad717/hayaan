@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,9 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useStore } from "@/hooks/use-store";
-import { fetchProducts } from "@/hooks/use-store";
 import { AdminBlog } from "@/components/store/admin-blog";
+import { AdminAccounting } from "@/components/store/admin-accounting";
+import { AdminReconciliation } from "@/components/store/admin-reconciliation";
+import { AdminProfit } from "@/components/store/admin-profit";
 import type { Product, SafeUser } from "@/lib/types";
+
+/** Product as served by the admin-only /api/admin/products (adds cost). */
+export type AdminProduct = Product & { cost: number | null };
 
 function formatPrice(n: number, currency = "USD") {
   try {
@@ -58,6 +63,7 @@ interface FormState {
   name: string;
   description: string;
   price: string;
+  cost: string;
   compareAt: string;
   stock: string;
   categoryId: string;
@@ -71,6 +77,7 @@ const EMPTY: FormState = {
   name: "",
   description: "",
   price: "",
+  cost: "",
   compareAt: "",
   stock: "",
   categoryId: "",
@@ -89,12 +96,18 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   const storeUser = useStore((s) => s.user);
   const user = serverUser ?? storeUser;
   const { categories, setProducts, setCategories, toast } = useStore();
-  const [products, setLocalProducts] = useState<Product[]>([]);
+  // Admin catalog comes from /api/admin/products (admin-only, adds the
+  // confidential supplier cost). The shared zustand store NEVER receives the
+  // cost-bearing objects — they are stripped before setProducts (defense in
+  // depth on top of the public API never returning cost).
+  const [products, setLocalProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState<"catalog" | "accounting" | "reconciliation" | "profitability">("catalog");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editing, setEditing] = useState<Product | null>(null);
+  const [editing, setEditing] = useState<AdminProduct | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [uploading, setUploading] = useState(false);
+  const [costWarning, setCostWarning] = useState<string | null>(null);
 
   // The images textarea holds one URL per line; the uploader appends to it,
   // so pasted URLs and uploaded files coexist in the same list.
@@ -135,9 +148,21 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
 
   const reload = useCallback(async () => {
     setLoading(true);
-    const [p, c] = await Promise.all([fetchProducts(), (await fetch("/api/categories")).json()]);
-    setLocalProducts(p);
-    setProducts(p);
+    const [pRes, cRes] = await Promise.all([
+      fetch("/api/admin/products", { credentials: "include" }),
+      fetch("/api/categories"),
+    ]);
+    const pData = await pRes.json().catch(() => ({ products: [] }));
+    const c = await cRes.json();
+    if (pData.migrationRequired) {
+      setCostWarning(pData.hint ?? "Accounting migration required.");
+    } else {
+      setCostWarning(null);
+    }
+    const list: AdminProduct[] = pData.products ?? [];
+    setLocalProducts(list);
+    // Storefront store gets the SAME products minus the confidential cost.
+    setProducts(list.map(({ cost: _cost, ...pub }) => pub as Product));
     setCategories(c.categories);
     setLoading(false);
   }, [setProducts, setCategories]);
@@ -145,12 +170,19 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const p = await fetchProducts();
-      const cRes = await fetch("/api/categories");
+      const [pRes, cRes] = await Promise.all([
+        fetch("/api/admin/products", { credentials: "include" }),
+        fetch("/api/categories"),
+      ]);
+      const pData = await pRes.json().catch(() => ({ products: [] }));
       const c = await cRes.json();
       if (cancelled) return;
-      setLocalProducts(p);
-      setProducts(p);
+      if (pData.migrationRequired) {
+        setCostWarning(pData.hint ?? "Accounting migration required.");
+      }
+      const list: AdminProduct[] = pData.products ?? [];
+      setLocalProducts(list);
+      setProducts(list.map(({ cost: _cost, ...pub }) => pub as Product));
       setCategories(c.categories);
       setLoading(false);
     })();
@@ -176,12 +208,13 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
     setDialogOpen(true);
   };
 
-  const openEdit = (p: Product) => {
+  const openEdit = (p: AdminProduct) => {
     setEditing(p);
     setForm({
       name: p.name,
       description: p.description,
       price: String(p.price),
+      cost: p.cost != null ? String(p.cost) : "",
       compareAt: p.compareAt ? String(p.compareAt) : "",
       stock: String(p.stock),
       categoryId: p.categoryId,
@@ -199,6 +232,9 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       name: form.name,
       description: form.description,
       price: Number(form.price),
+      // Confidential supplier cost — empty field clears it; must be >= 0
+      // (server validates too).
+      cost: form.cost === "" ? null : Number(form.cost),
       compareAt: form.compareAt ? Number(form.compareAt) : null,
       stock: Number(form.stock) || 0,
       categoryId: form.categoryId,
@@ -209,6 +245,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
     };
     if (!body.name || !body.price || !body.categoryId) {
       toast("Name, price, and category are required.", "error");
+      return;
+    }
+    if (body.cost != null && (isNaN(body.cost) || body.cost < 0)) {
+      toast("Product cost must be zero or greater.", "error");
       return;
     }
     try {
@@ -255,10 +295,51 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
           <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Admin dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">Manage your catalog, pricing, and inventory.</p>
         </div>
-        <Button onClick={openNew} className="btn-accent">
-          <Plus className="mr-1 h-4 w-4" /> New product
-        </Button>
+        {tab === "catalog" && (
+          <Button onClick={openNew} className="btn-accent">
+            <Plus className="mr-1 h-4 w-4" /> New product
+          </Button>
+        )}
       </div>
+
+      {/* Section tabs — Catalog is the default and renders exactly what the
+          dashboard always has; the accounting sections extend it in the same
+          visual language. */}
+      <div className="mb-6 flex flex-wrap gap-2 border-b border-[#e6e2d4] pb-3">
+        {([
+          ["catalog", "Catalog", Package],
+          ["accounting", "Accounting", Calculator],
+          ["reconciliation", "Reconciliation", Scale],
+          ["profitability", "Profitability", TrendingUp],
+        ] as const).map(([key, label, Icon]) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            aria-pressed={tab === key}
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition ${
+              tab === key
+                ? "bg-brand text-white shadow-sm"
+                : "border border-[#e6e2d4] bg-white text-foreground/80 hover:bg-secondary hover:text-brand"
+            }`}
+          >
+            <Icon className="h-4 w-4" />
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "accounting" && <AdminAccounting />}
+      {tab === "reconciliation" && <AdminReconciliation />}
+      {tab === "profitability" && <AdminProfit />}
+
+      {tab === "catalog" && (
+      <>
+      {costWarning && (
+        <div className="mb-4 rounded-lg border border-[#f28c28]/40 bg-[#f28c28]/10 px-4 py-3 text-sm text-[#8a5215]">
+          Accounting tables are not migrated yet — cost entries will fail until the SQL below is run in the Supabase SQL editor:
+          <code className="ml-1 rounded bg-white/70 px-1.5 py-0.5 text-xs">src/lib/supabase/migrations/2026-09-11-accounting.sql</code>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
@@ -297,6 +378,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                     <th className="py-3 pr-4">Product</th>
                     <th className="py-3 pr-4">Category</th>
                     <th className="py-3 pr-4 text-right">Price</th>
+                    <th className="py-3 pr-4 text-right">Cost</th>
                     <th className="py-3 pr-4 text-right">Stock</th>
                     <th className="py-3 pr-4">Status</th>
                     <th className="py-3 text-right">Actions</th>
@@ -328,6 +410,9 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                             {formatPrice(p.compareAt, p.currency)}
                           </span>
                         )}
+                      </td>
+                      <td className="py-3 pr-4 text-right text-muted-foreground">
+                        {p.cost != null ? formatPrice(p.cost, p.currency) : "—"}
                       </td>
                       <td className="py-3 pr-4 text-right">{p.stock}</td>
                       <td className="py-3 pr-4">
@@ -463,6 +548,25 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 </Select>
               </div>
             </div>
+            <div className="grid gap-2 rounded-lg border border-brand/25 bg-brand/5 px-4 py-3">
+              <Label htmlFor="p-cost" className="whitespace-nowrap">Product Cost <span className="text-xs font-normal text-muted-foreground">/ Qiimaha Shaygu Noogu Fadhiyo</span> <Opt /></Label>
+              <div className="relative">
+                <DollarPrefix />
+                <Input
+                  id="p-cost"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="0.00"
+                  className={`pl-7 ${FIELD_CLS}`}
+                  value={form.cost}
+                  onChange={(e) => setForm({ ...form, cost: e.target.value })}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                The amount this product costs Hayaan Market to purchase from the supplier. Confidential — never shown to customers. Used to calculate gross profit (selling price − product cost) and frozen per order at sale time.
+              </p>
+            </div>
             <div className="grid gap-2">
               <Label>Product images <Opt /></Label>
               {/* Thumbnails of the current list + the upload tile. Removing a
@@ -554,6 +658,8 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       {/* Blog management — admin-authored articles at /blog (independent of
           the catalog form state above). */}
       <AdminBlog />
+      </>
+      )}
     </div>
   );
 }
