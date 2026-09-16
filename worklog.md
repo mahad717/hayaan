@@ -1075,3 +1075,20 @@ Stage Summary:
 - Scripts: scripts/sanguni_fetch_all.py, scripts/sanguni_fetch_cats.py, scripts/build_product_price_list.py
 - Data: scripts/all_product_urls.txt (702), scripts/sanguni_categories.json
 - User next steps offered: full 702-product sheet, import into Hayaan admin, resume Task 49
+
+---
+Task ID: 51
+Agent: Super Z (main)
+Task: Product price list as Word document table
+
+Work Log:
+- Loaded docx skill; read routes/create.md, references/common-rules.md, references/docx-js-core.md
+- Reused same 108-product dataset from Task 50 (4 tier sections, Product|Price columns)
+- Built via docx-js: Times New Roman, full-grid borders matching user's sketch, navy header row (white text), alternating row shading, right-aligned $-formatted prices, cantSplit+tableHeader for cross-page integrity, footer page numbers, no cover/TOC (short doc per decision tree)
+- postcheck.py: 9/9 passed, 0 errors, 0 warnings
+- python-docx verification: 4 tables, 108 product rows, headers correct
+
+Stage Summary:
+- Deliverable: /home/z/my-project/download/hayaan-product-price-list.docx
+- Script: scripts/build_product_price_docx.js
+- Blank price cells (14 items) intentionally left empty for user editing
