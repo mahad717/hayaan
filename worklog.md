@@ -1054,3 +1054,24 @@ Work Log:
 
 Stage Summary:
 - Hayaan Market now tracks cost → COGS → gross profit → payments → reconciliation → ledger → audit fully in the background, admin-only, decimal-safe, and invisible to customers. PRODUCTION ACTIVATION STEP (user): run src/lib/supabase/migrations/2026-09-11-accounting.sql in the Supabase SQL editor; until then live behaves exactly as before (orders fine, accounting tabs show the banner, cost saves 503 with the hint). Legacy orders have no cost snapshots — enter costs going forward; reports mark those rows "cost missing". Admin order management now exists inside Reconciliation (cancel/refund/record-payment) with full audit.
+
+---
+Task ID: 50
+Agent: Super Z (main)
+Task: Sanguni.so product research + editable Product|Price xlsx table
+
+Work Log:
+- Scraped sanguni.so via page_reader (direct curl blocked by anti-bot)
+- Mapped 89 WooCommerce categories, extracted 702 product URLs from sitemap
+- WooCommerce Store API returned only 10 items (pagination ignored); pivoted to category pages
+- Scraped 15 category pages (mobile, laptops, TVs, watches, kitchen, routers, cameras, ACs, projectors, Samsung, iPhone, chargers, power banks) with 12s pacing to avoid 429
+- Prices: USD display on frontend; API base values in SOS (~570 SOS/USD) - converted where needed
+- Demand research (web_search): EVC/Zaad 70%+ mobile money, Hormuud 100k smartphone financing, power-cut driven power-product demand
+- Built xlsx per xlsx skill (LITE scene, design system, B2 origin, alternating fills): 108 products in 4 tier sections, Product|Price columns matching user's uploaded image format
+- QA pipeline: recalc/audit/scan/validate all clean, exit 0
+
+Stage Summary:
+- Deliverable: /home/z/my-project/download/hayaan-product-price-list.xlsx (108 products, 14 blank prices for user editing)
+- Scripts: scripts/sanguni_fetch_all.py, scripts/sanguni_fetch_cats.py, scripts/build_product_price_list.py
+- Data: scripts/all_product_urls.txt (702), scripts/sanguni_categories.json
+- User next steps offered: full 702-product sheet, import into Hayaan admin, resume Task 49
