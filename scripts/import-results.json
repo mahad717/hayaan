@@ -1,0 +1,576 @@
+{
+ "ranAt": "2026-09-16T18:31:40.964Z",
+ "placeholderUrl": "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1789583419199-9ae99ccd-b343-461c-ade9-f7291808b221.png",
+ "deleted": [],
+ "createdCount": 94,
+ "failedCount": 0,
+ "failed": [],
+ "created": [
+  {
+   "id": "c36c4a90-a5dc-4b55-b6f8-e0239a26e410",
+   "slug": "power-bank-green-lion-thunder-80,000mah",
+   "sku": "HAY-T1-001",
+   "tier": 1
+  },
+  {
+   "id": "62b07869-4244-49e5-93c8-8e21ce86e04a",
+   "slug": "power-bank-lion-ultra-thin-20,000mah-120w",
+   "sku": "HAY-T1-002",
+   "tier": 1
+  },
+  {
+   "id": "8a94ecb4-6f03-45a3-90b6-aa905da82843",
+   "slug": "power-bank-anker-maggo-10,000mah",
+   "sku": "HAY-T1-003",
+   "tier": 1
+  },
+  {
+   "id": "1e9c19fd-8667-4cf2-af4b-fe46dbfba2cc",
+   "slug": "power-bank-anker-zolo-10,000mah",
+   "sku": "HAY-T1-004",
+   "tier": 1
+  },
+  {
+   "id": "a19afb59-7d40-41b9-bc1c-bd9845bbabf1",
+   "slug": "power-bank-porodo-chrome-volt-10,000mah",
+   "sku": "HAY-T1-005",
+   "tier": 1
+  },
+  {
+   "id": "2548b3e3-e99f-44ac-97a2-4de8a2d6f751",
+   "slug": "power-bank-porodo-pocket-volt-10,000mah",
+   "sku": "HAY-T1-006",
+   "tier": 1
+  },
+  {
+   "id": "d165b8b7-2942-40f4-8269-b7fdce56e41f",
+   "slug": "power-bank-maxvolt-10,000mah",
+   "sku": "HAY-T1-007",
+   "tier": 1
+  },
+  {
+   "id": "7f858c70-cbcd-4516-a9c1-bb6a737aa2c1",
+   "slug": "power-bank-aston-magsafe-10,000mah",
+   "sku": "HAY-T1-008",
+   "tier": 1
+  },
+  {
+   "id": "7a256497-5393-46c4-853d-b60ebf995e5c",
+   "slug": "power-bank-porodo-5,000mah-with-lightning",
+   "sku": "HAY-T1-009",
+   "tier": 1
+  },
+  {
+   "id": "dd83bfea-f701-44cd-931c-466c9f80e3c5",
+   "slug": "battery-case-iphone-16-pro-max-7000mah",
+   "sku": "HAY-T1-010",
+   "tier": 1
+  },
+  {
+   "id": "3e95b72d-5d2e-45ff-ad50-4e645a2a9780",
+   "slug": "battery-case-iphone-17-pro-max-7000mah",
+   "sku": "HAY-T1-011",
+   "tier": 1
+  },
+  {
+   "id": "ae2b8c83-e01f-427b-b74d-8ad3abb91509",
+   "slug": "anker-prime-100w-3-port-gan-wall-charger",
+   "sku": "HAY-T1-012",
+   "tier": 1
+  },
+  {
+   "id": "1ae89754-71b5-4440-b76d-d9ff358cf5a9",
+   "slug": "apple-20w-usb-c-power-adapter-(original)",
+   "sku": "HAY-T1-013",
+   "tier": 1
+  },
+  {
+   "id": "03e3641c-e7a6-466c-9f5b-b5ca0fb47b64",
+   "slug": "wiwu-helix-65w-fast-charger",
+   "sku": "HAY-T1-014",
+   "tier": 1
+  },
+  {
+   "id": "d3a22caa-1018-4917-a630-3d255e459173",
+   "slug": "adaptor-usb-c-25w-pd",
+   "sku": "HAY-T1-015",
+   "tier": 1
+  },
+  {
+   "id": "66d8cc5e-c4e4-4c32-a1d8-12c53d5e7256",
+   "slug": "cable-charge-usb-c-to-lightning-1m",
+   "sku": "HAY-T1-016",
+   "tier": 1
+  },
+  {
+   "id": "881e684b-b8da-470b-bf7a-a750dfd9e6e8",
+   "slug": "cable-charge-usb-c-1m",
+   "sku": "HAY-T1-017",
+   "tier": 1
+  },
+  {
+   "id": "f4cf60f4-ec0d-4e11-8a99-568ce288749c",
+   "slug": "cable-charge-60w-usb-c-1m",
+   "sku": "HAY-T1-018",
+   "tier": 1
+  },
+  {
+   "id": "14d9fa2a-5464-4b9d-80f1-8cb14d00c65b",
+   "slug": "cable-charge-240w-usb-c-2m",
+   "sku": "HAY-T1-019",
+   "tier": 1
+  },
+  {
+   "id": "dab219ab-7376-4855-ba1b-4b28e545444f",
+   "slug": "anker-boom-3i-outdoor-bluetooth-speaker",
+   "sku": "HAY-T1-020",
+   "tier": 1
+  },
+  {
+   "id": "99d84fbe-fb4c-4916-82e8-970d6e59827c",
+   "slug": "headphone-earpods-usb-c-wired",
+   "sku": "HAY-T1-021",
+   "tier": 1
+  },
+  {
+   "id": "c2bb4712-f4cd-4ac3-897c-5b60fe0f59ac",
+   "slug": "earphone-samsung-3.5mm-jack",
+   "sku": "HAY-T1-022",
+   "tier": 1
+  },
+  {
+   "id": "fac162a9-f00b-4781-9f45-4e03b04e557f",
+   "slug": "headphone-samsung-type-c",
+   "sku": "HAY-T1-023",
+   "tier": 1
+  },
+  {
+   "id": "9ccc4fb1-4e92-4d64-ab3c-ae591d7c0112",
+   "slug": "headphone-iphone-wired",
+   "sku": "HAY-T1-024",
+   "tier": 1
+  },
+  {
+   "id": "b9689620-b394-41c5-8c6d-753b7a5c4594",
+   "slug": "maxwell-smart-watch-(budget-line)",
+   "sku": "HAY-T1-025",
+   "tier": 1
+  },
+  {
+   "id": "f3dbe1f9-76cb-4080-b199-1779785dcaba",
+   "slug": "digital-voltage-stabilizer-lightwave",
+   "sku": "HAY-T1-026",
+   "tier": 1
+  },
+  {
+   "id": "87f4a5d5-99a4-4b11-aef6-f2e401e8cb56",
+   "slug": "samsung-galaxy-a06",
+   "sku": "HAY-T2-001",
+   "tier": 2
+  },
+  {
+   "id": "9da7722a-2ea5-465c-a05d-346211bf724f",
+   "slug": "samsung-galaxy-a07",
+   "sku": "HAY-T2-002",
+   "tier": 2
+  },
+  {
+   "id": "7798dbd3-0942-426b-b338-6fb831a68bc2",
+   "slug": "samsung-galaxy-a16",
+   "sku": "HAY-T2-003",
+   "tier": 2
+  },
+  {
+   "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+   "slug": "samsung-galaxy-a17",
+   "sku": "HAY-T2-004",
+   "tier": 2
+  },
+  {
+   "id": "7ab10ab9-1e68-42e5-8f91-4170bda31ae3",
+   "slug": "samsung-galaxy-a36-5g",
+   "sku": "HAY-T2-005",
+   "tier": 2
+  },
+  {
+   "id": "c3ec2721-641f-48b2-b2d1-1dd9bd8c73ce",
+   "slug": "samsung-galaxy-a37-5g",
+   "sku": "HAY-T2-006",
+   "tier": 2
+  },
+  {
+   "id": "12ada641-5257-4c09-a08b-ca811a61daeb",
+   "slug": "iphone-17-(physical-sim)",
+   "sku": "HAY-T2-007",
+   "tier": 2
+  },
+  {
+   "id": "98c2d18e-55d4-48a5-a9e8-30aa9d48e11e",
+   "slug": "iphone-16-pro",
+   "sku": "HAY-T2-008",
+   "tier": 2
+  },
+  {
+   "id": "b732b00b-1a20-43f4-8979-aa7cf3f0c347",
+   "slug": "iphone-15-pro-max",
+   "sku": "HAY-T2-009",
+   "tier": 2
+  },
+  {
+   "id": "4d7c7314-ba70-4551-a3bf-796be54ca31d",
+   "slug": "iphone-16-pro-max",
+   "sku": "HAY-T2-010",
+   "tier": 2
+  },
+  {
+   "id": "acd28470-c0d8-4d14-9841-47b673e7e350",
+   "slug": "iphone-air",
+   "sku": "HAY-T2-011",
+   "tier": 2
+  },
+  {
+   "id": "452f340e-409b-41de-a0db-ab58b6cfca70",
+   "slug": "iphone-17-pro-(physical-sim)",
+   "sku": "HAY-T2-012",
+   "tier": 2
+  },
+  {
+   "id": "8d41900f-9e74-43cb-b54d-10a8e911c36c",
+   "slug": "iphone-17-pro-max-(physical-sim)",
+   "sku": "HAY-T2-013",
+   "tier": 2
+  },
+  {
+   "id": "4ac8a3bb-4405-4f78-a4bb-371cdf285fd5",
+   "slug": "amazfit-active-42mm-smart-watch",
+   "sku": "HAY-T2-014",
+   "tier": 2
+  },
+  {
+   "id": "ea5739d2-d6f1-4307-a309-e2a28b882343",
+   "slug": "samsung-galaxy-watch-7-44mm",
+   "sku": "HAY-T2-015",
+   "tier": 2
+  },
+  {
+   "id": "784d5394-93dd-4712-8818-2161a6d5ab25",
+   "slug": "huawei-watch-gt-6-gps-46mm",
+   "sku": "HAY-T2-016",
+   "tier": 2
+  },
+  {
+   "id": "77e1e1f7-5d52-4810-b178-3fb9185e8d71",
+   "slug": "apple-watch-se-40mm",
+   "sku": "HAY-T2-017",
+   "tier": 2
+  },
+  {
+   "id": "f8e8ff45-02e2-47d7-8793-3596a7e644b1",
+   "slug": "apple-watch-series-9-45mm",
+   "sku": "HAY-T2-018",
+   "tier": 2
+  },
+  {
+   "id": "8fc309ed-bc0b-49f5-ac88-b0f59a753cc2",
+   "slug": "apple-watch-series-10-46mm",
+   "sku": "HAY-T2-019",
+   "tier": 2
+  },
+  {
+   "id": "8b92f00a-04b5-4f9e-b646-aa7e13c744bd",
+   "slug": "apple-watch-series-11-46mm",
+   "sku": "HAY-T2-020",
+   "tier": 2
+  },
+  {
+   "id": "01e2d8df-3ea6-4649-8ca5-8942c6e8a17e",
+   "slug": "hp-elitebook-840-g7-notebook",
+   "sku": "HAY-T3-001",
+   "tier": 3
+  },
+  {
+   "id": "9cb20bb9-cf58-400a-8e52-1b8067139d36",
+   "slug": "hp-elitebook-830-g7-intel-core-i7-10gen",
+   "sku": "HAY-T3-002",
+   "tier": 3
+  },
+  {
+   "id": "4428bee6-31b1-48fb-be35-ea593df47ce3",
+   "slug": "hp-elitebook-830-g8-intel-core-i7-11gen",
+   "sku": "HAY-T3-003",
+   "tier": 3
+  },
+  {
+   "id": "1be68364-2ed6-4af0-9b90-ad538082bac2",
+   "slug": "hp-elitebook-840-g9-intel-core-i7-12gen",
+   "sku": "HAY-T3-004",
+   "tier": 3
+  },
+  {
+   "id": "53d63511-03c9-4002-9496-c8315e428a1c",
+   "slug": "asus-tuf-fx507-gaming-i7-13gen",
+   "sku": "HAY-T3-005",
+   "tier": 3
+  },
+  {
+   "id": "769492d1-ef17-409c-9452-2431aaea9afd",
+   "slug": "macbook-pro-m3",
+   "sku": "HAY-T3-006",
+   "tier": 3
+  },
+  {
+   "id": "132014a2-ac37-4a62-b50b-2dbbd9720ece",
+   "slug": "macbook-air-m5",
+   "sku": "HAY-T3-007",
+   "tier": 3
+  },
+  {
+   "id": "d1fdc53c-5edd-4762-98e4-9de53ce876be",
+   "slug": "macbook-pro-m4",
+   "sku": "HAY-T3-008",
+   "tier": 3
+  },
+  {
+   "id": "3f74e41d-ec9a-47d1-ad24-c4baa12d97ae",
+   "slug": "macbook-pro-m5",
+   "sku": "HAY-T3-009",
+   "tier": 3
+  },
+  {
+   "id": "4ed59245-42c7-429e-a9cc-8b2b5d715d26",
+   "slug": "tv-geepas-smart-32",
+   "sku": "HAY-T3-010",
+   "tier": 3
+  },
+  {
+   "id": "a4fad3e3-6ff6-4cf1-b427-18cc0f8ae061",
+   "slug": "tv-geepas-smart-43",
+   "sku": "HAY-T3-011",
+   "tier": 3
+  },
+  {
+   "id": "b34607a3-5b38-4d1f-81c8-a96bb7588989",
+   "slug": "tv-lg-43-inch-smart",
+   "sku": "HAY-T3-012",
+   "tier": 3
+  },
+  {
+   "id": "aa34dcdb-ffec-4637-9fb9-cd5eaa0cb7d7",
+   "slug": "tv-lg-55-inch-smart",
+   "sku": "HAY-T3-013",
+   "tier": 3
+  },
+  {
+   "id": "a7a1d190-92d9-484f-844e-6aa0fde9f096",
+   "slug": "tv-lg-65-inch-smart",
+   "sku": "HAY-T3-014",
+   "tier": 3
+  },
+  {
+   "id": "f4a512c4-5565-42be-9112-3389b0ef09bd",
+   "slug": "tv-lg-75-inch-smart",
+   "sku": "HAY-T3-015",
+   "tier": 3
+  },
+  {
+   "id": "51303d32-b922-4e46-96ac-ac8783c29694",
+   "slug": "tv-samsung-85-inch-smart",
+   "sku": "HAY-T3-016",
+   "tier": 3
+  },
+  {
+   "id": "a8d642a8-2e2c-42e1-9174-20cfc4cbea16",
+   "slug": "playstation-5-digital-edition-(slim)",
+   "sku": "HAY-T3-017",
+   "tier": 3
+  },
+  {
+   "id": "e78c0bf3-1d0c-4499-b07a-7398451345b3",
+   "slug": "playstation-sony-5-pro-2tb-slim",
+   "sku": "HAY-T3-018",
+   "tier": 3
+  },
+  {
+   "id": "4617b872-d974-4556-aaad-4c18a84a1516",
+   "slug": "speaker-outdoor-l208-100w",
+   "sku": "HAY-T3-019",
+   "tier": 3
+  },
+  {
+   "id": "15a85304-2255-4afb-91e9-e1bddeda5478",
+   "slug": "projector-maxwell-spectra",
+   "sku": "HAY-T3-020",
+   "tier": 3
+  },
+  {
+   "id": "60f590e4-469f-4526-abe4-6e3646b256ec",
+   "slug": "projector-epson-co-w01",
+   "sku": "HAY-T3-021",
+   "tier": 3
+  },
+  {
+   "id": "fe2c5356-2dd2-45f6-9bf7-f489d115027c",
+   "slug": "projector-screen-manual-180x180cm",
+   "sku": "HAY-T3-022",
+   "tier": 3
+  },
+  {
+   "id": "6c37eecb-4985-414e-a4a7-de1a254359f8",
+   "slug": "geepas-electric-kettle",
+   "sku": "HAY-T4-001",
+   "tier": 4
+  },
+  {
+   "id": "886f0467-508e-4731-b16c-5e17e453aafb",
+   "slug": "geepas-blender-2in1",
+   "sku": "HAY-T4-002",
+   "tier": 4
+  },
+  {
+   "id": "67e60014-16b1-40aa-81dd-2a1eed89aec4",
+   "slug": "geepas-blender-4in1",
+   "sku": "HAY-T4-003",
+   "tier": 4
+  },
+  {
+   "id": "c5c5b985-b967-4f92-9306-a441f24a5c80",
+   "slug": "sandwich-maker-geepas",
+   "sku": "HAY-T4-004",
+   "tier": 4
+  },
+  {
+   "id": "01f17666-36ae-4825-9d74-dcbaf3a36fdf",
+   "slug": "popcorn-maker-geepas",
+   "sku": "HAY-T4-005",
+   "tier": 4
+  },
+  {
+   "id": "3fc534ba-2494-4cad-9758-085c1a3d0f7c",
+   "slug": "rice-cooker-geepas-with-steamer",
+   "sku": "HAY-T4-006",
+   "tier": 4
+  },
+  {
+   "id": "d8b5a3ff-e220-403d-959c-66076e6aa8a2",
+   "slug": "geepas-coffee-maker-1.5l",
+   "sku": "HAY-T4-007",
+   "tier": 4
+  },
+  {
+   "id": "f0273532-f062-495f-96ec-39631cd56848",
+   "slug": "geepas-mini-oven-and-grill-48l",
+   "sku": "HAY-T4-008",
+   "tier": 4
+  },
+  {
+   "id": "2da3b6d8-4a58-4328-ab8b-c4bd7be07e5c",
+   "slug": "hot-air-styler-tp-5+1",
+   "sku": "HAY-T4-009",
+   "tier": 4
+  },
+  {
+   "id": "d5664e9f-2e4e-42cb-a565-296bb3d37d18",
+   "slug": "water-dispenser-light-wave",
+   "sku": "HAY-T4-010",
+   "tier": 4
+  },
+  {
+   "id": "2811ee2d-646d-448d-8c62-a83e385454ef",
+   "slug": "air-conditioner-lightwave-9k",
+   "sku": "HAY-T4-011",
+   "tier": 4
+  },
+  {
+   "id": "27238d4b-752c-4920-8bc4-67c1519c41a6",
+   "slug": "air-conditioner-lightwave-12k",
+   "sku": "HAY-T4-012",
+   "tier": 4
+  },
+  {
+   "id": "98605e5a-0499-48b9-87a5-ddfe766bb0f0",
+   "slug": "air-conditioner-lightwave-18k",
+   "sku": "HAY-T4-013",
+   "tier": 4
+  },
+  {
+   "id": "0ec49e39-5f94-4214-84f2-8f759705fe6c",
+   "slug": "air-conditioner-lightwave-24k",
+   "sku": "HAY-T4-014",
+   "tier": 4
+  },
+  {
+   "id": "b8aa71be-cae8-4d89-bb3d-3926ceec71de",
+   "slug": "tp-link-840n-wi-fi-router",
+   "sku": "HAY-T4-015",
+   "tier": 4
+  },
+  {
+   "id": "8f485f0b-08aa-44ca-ad11-616663123127",
+   "slug": "tp-link-ac750-wireless-dual-band-router",
+   "sku": "HAY-T4-016",
+   "tier": 4
+  },
+  {
+   "id": "1fbd83eb-0370-4547-848c-b9d30758053b",
+   "slug": "tp-link-ac1200-wifi-range-extender",
+   "sku": "HAY-T4-017",
+   "tier": 4
+  },
+  {
+   "id": "1880a50b-0a43-412c-8727-aef4cd973334",
+   "slug": "tp-link-omada-ac1350-access-point",
+   "sku": "HAY-T4-018",
+   "tier": 4
+  },
+  {
+   "id": "3c372803-0a40-4ad7-a759-bb284b159141",
+   "slug": "mikrotik-l009-series-router",
+   "sku": "HAY-T4-019",
+   "tier": 4
+  },
+  {
+   "id": "a0fb3e07-9a08-4083-929d-5d3c48939917",
+   "slug": "unifi-ap-ac-pro-wireless-access-point",
+   "sku": "HAY-T4-020",
+   "tier": 4
+  },
+  {
+   "id": "05318c07-25be-4a50-9f16-7106e20d634d",
+   "slug": "hp-printer-laser-107a",
+   "sku": "HAY-T4-021",
+   "tier": 4
+  },
+  {
+   "id": "29c170fa-9afd-48fb-9d3a-09f7500cf530",
+   "slug": "hp-printer-laser-mfp-135a",
+   "sku": "HAY-T4-022",
+   "tier": 4
+  },
+  {
+   "id": "67c63987-3d76-49af-9aa8-4609946e751c",
+   "slug": "hp-toner-cartridge-651a-original-set",
+   "sku": "HAY-T4-023",
+   "tier": 4
+  },
+  {
+   "id": "37aa868b-4dc4-49ce-b74b-4f76fe71480c",
+   "slug": "microphone-dji-mic-mini-2",
+   "sku": "HAY-T4-024",
+   "tier": 4
+  },
+  {
+   "id": "69d48c7d-32a8-4a41-ac9a-6df681104cc1",
+   "slug": "aputure-amaran-200xs-studio-light",
+   "sku": "HAY-T4-025",
+   "tier": 4
+  },
+  {
+   "id": "a0ffcd41-842b-401c-8e90-2078de3af421",
+   "slug": "battery-for-canon-lpe10-normal",
+   "sku": "HAY-T4-026",
+   "tier": 4
+  }
+ ],
+ "demoRemaining": [],
+ "totalNow": 94
+}

@@ -1,0 +1,409 @@
+{
+ "fetchedAt": "2026-09-16T18:29:17.075Z",
+ "categories": [
+  {
+   "id": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+   "name": "Apparel",
+   "slug": "apparel",
+   "description": "T-shirts, hoodies, and accessories."
+  },
+  {
+   "id": "c91941ef-77ff-43f4-96f4-b6541ed3c83e",
+   "name": "Beauty",
+   "slug": "beauty",
+   "description": "Skincare, haircare, and fragrances."
+  },
+  {
+   "id": "cda34eff-69fa-470a-b625-4d996511f16b",
+   "name": "Electronics",
+   "slug": "electronics",
+   "description": "Headphones, gadgets, and gear."
+  },
+  {
+   "id": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+   "name": "Home & Living",
+   "slug": "home-living",
+   "description": "Decor, kitchenware, and furniture."
+  }
+ ],
+ "products": [
+  {
+   "id": "3d1d24e9-7d1c-4225-bbda-55b4612267ea",
+   "name": "Carry Canvas Tote — built to haul your whole day",
+   "slug": "carry-canvas-tote",
+   "description": "Commute, gym, market run — Carry handles it all. Waxed 16oz canvas with leather handles and an interior laptop sleeve keeps everything organized and ages into its own character.",
+   "price": 64,
+   "compareAt": 80,
+   "currency": "USD",
+   "sku": "CAR-TT-012",
+   "stock": 73,
+   "rating": 4.6,
+   "reviewCount": 110,
+   "images": [
+    "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&auto=format&fit=crop",
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725479980-edf1bed4-2099-4ee3-9c0c-14a4eeca2bfa.jpg"
+   ],
+   "tags": [
+    "bag",
+    "accessories",
+    "apparel"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+   "category": {
+    "id": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+    "name": "Apparel",
+    "slug": "apparel",
+    "description": "T-shirts, hoodies, and accessories."
+   },
+   "cost": null
+  },
+  {
+   "id": "ba16e879-d211-42db-ac44-d453d4ddd31c",
+   "name": "Foundry Heavyweight Sweatshirt — substantial comfort for cool days",
+   "slug": "foundry-heavyweight-sweatshirt",
+   "description": "Substantial in the best way. Foundry is a 500gsm loopback cotton sweatshirt with a boxy fit and ribbed cuffs, garment-dyed for a vintage hand-feel that only gets softer with every wash.",
+   "price": 96,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "FOU-SW-011",
+   "stock": 58,
+   "rating": 4.7,
+   "reviewCount": 49,
+   "images": [
+    "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop",
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg"
+   ],
+   "tags": [
+    "apparel",
+    "heavyweight"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+   "category": {
+    "id": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+    "name": "Apparel",
+    "slug": "apparel",
+    "description": "T-shirts, hoodies, and accessories."
+   },
+   "cost": null
+  },
+  {
+   "id": "53e2d5fa-8f23-417c-88c8-610364a80a0c",
+   "name": "Bloom Botanical Skincare Set — a simple three-step routine",
+   "slug": "bloom-botanical-skincare-set",
+   "description": "Cleanse, tone, moisturize — that's the whole routine. Bloom pairs plant-derived actives with gentle formulas made for sensitive skin, all in a reusable cotton drawstring bag that travels well.",
+   "price": 89,
+   "compareAt": 110,
+   "currency": "USD",
+   "sku": "BLO-SK-010",
+   "stock": 42,
+   "rating": 4.8,
+   "reviewCount": 78,
+   "images": [
+    "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "skincare",
+    "gift-set",
+    "beauty"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "c91941ef-77ff-43f4-96f4-b6541ed3c83e",
+   "category": {
+    "id": "c91941ef-77ff-43f4-96f4-b6541ed3c83e",
+    "name": "Beauty",
+    "slug": "beauty",
+    "description": "Skincare, haircare, and fragrances."
+   },
+   "cost": null
+  },
+  {
+   "id": "b196a15a-e2d3-49bf-8884-52c8232bc17a",
+   "name": "Lumen Smart LED Strip — set any mood in seconds",
+   "slug": "lumen-smart-led-strip",
+   "description": "Change the whole feel of a room from your phone or your voice. This 16ft addressable LED strip works with HomeKit, Alexa, and Google Home, and comes with mounting clips and a Wi-Fi controller for a quick setup.",
+   "price": 46,
+   "compareAt": 59,
+   "currency": "USD",
+   "sku": "LUM-LS-009",
+   "stock": 120,
+   "rating": 4.3,
+   "reviewCount": 234,
+   "images": [
+    "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "smart-home",
+    "lighting"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "cda34eff-69fa-470a-b625-4d996511f16b",
+   "category": {
+    "id": "cda34eff-69fa-470a-b625-4d996511f16b",
+    "name": "Electronics",
+    "slug": "electronics",
+    "description": "Headphones, gadgets, and gear."
+   },
+   "cost": null
+  },
+  {
+   "id": "4bfda80e-9285-45e7-a194-b296de66d9b3",
+   "name": "Quill Leather Journal — a timeless home for your ideas",
+   "slug": "quill-leather-journal",
+   "description": "Ideas deserve a good place to live. Quill wraps 192 pages of smooth 120gsm cream paper in full-grain leather that ages beautifully, with lay-flat binding for comfortable writing anywhere.",
+   "price": 38,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "QUI-JN-008",
+   "stock": 95,
+   "rating": 4.7,
+   "reviewCount": 64,
+   "images": [
+    "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "stationery",
+    "journal",
+    "gift"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+   "category": {
+    "id": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+    "name": "Home & Living",
+    "slug": "home-living",
+    "description": "Decor, kitchenware, and furniture."
+   },
+   "cost": null
+  },
+  {
+   "id": "26c2bcbe-cbf9-4270-b9d2-f528e2b665df",
+   "name": "Helix Vitamin C Serum — brighter, more even-looking skin",
+   "slug": "helix-vitamin-c-serum",
+   "description": "A brighter, more even look, one drop at a time. Helix blends 15% vitamin C with ferulic acid and vitamin E to smooth texture and even out skin tone over 4–6 weeks. Fragrance-free and dermatologist-tested.",
+   "price": 42,
+   "compareAt": 52,
+   "currency": "USD",
+   "sku": "HEL-SR-007",
+   "stock": 80,
+   "rating": 4.6,
+   "reviewCount": 178,
+   "images": [
+    "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "skincare",
+    "beauty"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "c91941ef-77ff-43f4-96f4-b6541ed3c83e",
+   "category": {
+    "id": "c91941ef-77ff-43f4-96f4-b6541ed3c83e",
+    "name": "Beauty",
+    "slug": "beauty",
+    "description": "Skincare, haircare, and fragrances."
+   },
+   "cost": null
+  },
+  {
+   "id": "e41f5b1b-a03f-4e5d-8a78-ac8b2578775a",
+   "name": "Meadow Soy Candle — a softer atmosphere, for hours",
+   "slug": "meadow-soy-candle",
+   "description": "Fig, cedar, and white tea — a calm, welcoming scent that fills the room without overpowering it. Hand-poured soy wax burns cleanly for 60+ hours in a reusable glass vessel.",
+   "price": 28,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "MEA-CD-006",
+   "stock": 140,
+   "rating": 4.4,
+   "reviewCount": 203,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788929457997-8c6d317f-e378-41d0-b231-349db04eeb6c.jpg"
+   ],
+   "tags": [
+    "candle",
+    "home",
+    "fragrance"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+   "category": {
+    "id": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+    "name": "Home & Living",
+    "slug": "home-living",
+    "description": "Decor, kitchenware, and furniture."
+   },
+   "cost": null
+  },
+  {
+   "id": "a551b402-dcf9-42bf-a6eb-7d38ac0d9ed1",
+   "name": "Sable Ceramic Vase — an effortless accent for any room",
+   "slug": "sable-ceramic-vase",
+   "description": "Warm up a shelf, table, or entryway in seconds. Each Sable vase is hand-thrown matte black ceramic — no two glazes alike — standing 22cm tall and pairing beautifully with fresh stems or dried botanicals.",
+   "price": 54,
+   "compareAt": 68,
+   "currency": "USD",
+   "sku": "SAB-VS-005",
+   "stock": 36,
+   "rating": 4.9,
+   "reviewCount": 41,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg"
+   ],
+   "tags": [
+    "decor",
+    "ceramic",
+    "handmade"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+   "category": {
+    "id": "56131f58-da8a-4d9a-8d18-37c228f1c109",
+    "name": "Home & Living",
+    "slug": "home-living",
+    "description": "Decor, kitchenware, and furniture."
+   },
+   "cost": null
+  },
+  {
+   "id": "0bfec2e9-ff5d-4482-9184-17fc6fda0369",
+   "name": "Drift Linen Hoodie — easy layering for in-between days",
+   "slug": "drift-linen-hoodie",
+   "description": "Light enough for spring, cozy enough for fall. Drift is a relaxed French terry hoodie with a kangaroo pocket and brushed-metal drawcord tips — your grab-and-go layer for unpredictable days.",
+   "price": 78,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "DRI-HD-004",
+   "stock": 64,
+   "rating": 4.7,
+   "reviewCount": 92,
+   "images": [
+    "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "hoodie",
+    "apparel"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+   "category": {
+    "id": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+    "name": "Apparel",
+    "slug": "apparel",
+    "description": "T-shirts, hoodies, and accessories."
+   },
+   "cost": null
+  },
+  {
+   "id": "bf1e2a0b-c8af-4c00-8c33-2d88fc26db7c",
+   "name": "Terra Organic Cotton Tee — an easy everyday essential",
+   "slug": "terra-organic-cotton-tee",
+   "description": "The tee you'll reach for again and again. Cut from soft 100% organic cotton that's pre-shrunk and dyed with low-impact pigments, in three easy colorways that pair with everything.",
+   "price": 32,
+   "compareAt": 40,
+   "currency": "USD",
+   "sku": "TER-TS-003",
+   "stock": 220,
+   "rating": 4.5,
+   "reviewCount": 156,
+   "images": [
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "organic",
+    "apparel",
+    "unisex"
+   ],
+   "featured": false,
+   "isActive": true,
+   "categoryId": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+   "category": {
+    "id": "7c2b3b10-bda0-4993-834e-9b010ba21ab4",
+    "name": "Apparel",
+    "slug": "apparel",
+    "description": "T-shirts, hoodies, and accessories."
+   },
+   "cost": null
+  },
+  {
+   "id": "63089eb1-d56a-4d3f-bc49-236297ca24d8",
+   "name": "Nimbus Mechanical Keyboard — satisfying, responsive typing",
+   "slug": "nimbus-mechanical-keyboard",
+   "description": "Typing that feels as good as it sounds. Nimbus is a compact 75% mechanical keyboard with hot-swappable switches, durable PBT keycaps, and per-key RGB — built for coders and writers who live on their keyboards.",
+   "price": 129,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "NIM-KB-002",
+   "stock": 30,
+   "rating": 4.6,
+   "reviewCount": 87,
+   "images": [
+    "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop",
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725485555-21878fec-add1-4c8f-a1c1-ca2d376fa768.jpg"
+   ],
+   "tags": [
+    "keyboard",
+    "gaming",
+    "productivity"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "cda34eff-69fa-470a-b625-4d996511f16b",
+   "category": {
+    "id": "cda34eff-69fa-470a-b625-4d996511f16b",
+    "name": "Electronics",
+    "slug": "electronics",
+    "description": "Headphones, gadgets, and gear."
+   },
+   "cost": null
+  },
+  {
+   "id": "95c7b5b9-f946-4c9a-8928-0f81f58af5c9",
+   "name": "Aurora Wireless Headphones — immersive sound, no wires",
+   "slug": "aurora-wireless-headphones",
+   "description": "Noise fades out; your music comes forward. Aurora pairs active noise cancellation with a 40-hour battery and plush memory-foam earcups, so long listening sessions stay comfortable. Tuned for warm lows and crystal-clear highs — with no wires to get in the way.",
+   "price": 199,
+   "compareAt": 249,
+   "currency": "USD",
+   "sku": "AUR-WH-001",
+   "stock": 48,
+   "rating": 4.8,
+   "reviewCount": 312,
+   "images": [
+    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop"
+   ],
+   "tags": [
+    "audio",
+    "wireless",
+    "noise-cancelling"
+   ],
+   "featured": true,
+   "isActive": true,
+   "categoryId": "cda34eff-69fa-470a-b625-4d996511f16b",
+   "category": {
+    "id": "cda34eff-69fa-470a-b625-4d996511f16b",
+    "name": "Electronics",
+    "slug": "electronics",
+    "description": "Headphones, gadgets, and gear."
+   },
+   "cost": null
+  }
+ ]
+}

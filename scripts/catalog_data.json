@@ -1,0 +1,402 @@
+[
+ {
+  "tier": 1,
+  "title": "TIER 1 — Power, Charging & Audio (fastest rotation)",
+  "products": [
+   {
+    "name": "Power Bank Green Lion Thunder 80,000mAh",
+    "price": 65.0
+   },
+   {
+    "name": "Power Bank Lion Ultra-Thin 20,000mAh 120W",
+    "price": 49.9
+   },
+   {
+    "name": "Power Bank Anker MagGo 10,000mAh",
+    "price": 48.0
+   },
+   {
+    "name": "Power Bank Anker Zolo 10,000mAh",
+    "price": 45.0
+   },
+   {
+    "name": "Power Bank Porodo Chrome Volt 10,000mAh",
+    "price": 25.0
+   },
+   {
+    "name": "Power Bank Porodo Pocket Volt 10,000mAh",
+    "price": 22.0
+   },
+   {
+    "name": "Power Bank Maxvolt 10,000mAh",
+    "price": 24.0
+   },
+   {
+    "name": "Power Bank Aston MagSafe 10,000mAh",
+    "price": 22.0
+   },
+   {
+    "name": "Power Bank Porodo 5,000mAh with Lightning",
+    "price": 15.0
+   },
+   {
+    "name": "Battery Case iPhone 16 Pro Max 7000mAh",
+    "price": 45.0
+   },
+   {
+    "name": "Battery Case iPhone 17 Pro Max 7000mAh",
+    "price": 56.0
+   },
+   {
+    "name": "Anker Prime 100W 3-Port GaN Wall Charger",
+    "price": 65.0
+   },
+   {
+    "name": "Apple 20W USB-C Power Adapter (Original)",
+    "price": 25.0
+   },
+   {
+    "name": "WiWU Helix 65W Fast Charger",
+    "price": 18.0
+   },
+   {
+    "name": "Adaptor USB-C 25W PD",
+    "price": 4.5
+   },
+   {
+    "name": "Cable Charge USB-C to Lightning 1M",
+    "price": 2.0
+   },
+   {
+    "name": "Cable Charge USB-C 1M",
+    "price": 3.0
+   },
+   {
+    "name": "Cable Charge 60W USB-C 1M",
+    "price": 22.0
+   },
+   {
+    "name": "Cable Charge 240W USB-C 2M",
+    "price": 25.0
+   },
+   {
+    "name": "Anker Boom 3i Outdoor Bluetooth Speaker",
+    "price": 16.7
+   },
+   {
+    "name": "Headphone EarPods USB-C Wired",
+    "price": 4.0
+   },
+   {
+    "name": "Earphone Samsung 3.5mm Jack",
+    "price": 1.5
+   },
+   {
+    "name": "Headphone Samsung Type-C",
+    "price": 18.0
+   },
+   {
+    "name": "Headphone iPhone Wired",
+    "price": 24.0
+   },
+   {
+    "name": "Maxwell Smart Watch (budget line)",
+    "price": 55.0
+   },
+   {
+    "name": "Digital Voltage Stabilizer Lightwave",
+    "price": 11.5
+   }
+  ]
+ },
+ {
+  "tier": 2,
+  "title": "TIER 2 — Smartphones & Wearables",
+  "products": [
+   {
+    "name": "Samsung Galaxy A06",
+    "price": 110.0
+   },
+   {
+    "name": "Samsung Galaxy A07",
+    "price": 125.0
+   },
+   {
+    "name": "Samsung Galaxy A16",
+    "price": 118.0
+   },
+   {
+    "name": "Samsung Galaxy A17",
+    "price": 165.0
+   },
+   {
+    "name": "Samsung Galaxy A36 5G",
+    "price": 285.0
+   },
+   {
+    "name": "Samsung Galaxy A37 5G",
+    "price": 320.0
+   },
+   {
+    "name": "iPhone 17 (Physical SIM)",
+    "price": 990.0
+   },
+   {
+    "name": "iPhone 16 Pro",
+    "price": 1120.0
+   },
+   {
+    "name": "iPhone 15 Pro Max",
+    "price": 1170.0
+   },
+   {
+    "name": "iPhone 16 Pro Max",
+    "price": 1240.0
+   },
+   {
+    "name": "iPhone Air",
+    "price": 1280.0
+   },
+   {
+    "name": "iPhone 17 Pro (Physical SIM)",
+    "price": 1420.0
+   },
+   {
+    "name": "iPhone 17 Pro Max (Physical SIM)",
+    "price": 1550.0
+   },
+   {
+    "name": "Amazfit Active 42mm Smart Watch",
+    "price": 130.0
+   },
+   {
+    "name": "Samsung Galaxy Watch 7 44mm",
+    "price": 190.0
+   },
+   {
+    "name": "Huawei Watch GT 6 GPS 46mm",
+    "price": 230.0
+   },
+   {
+    "name": "Apple Watch SE 40mm",
+    "price": 250.0
+   },
+   {
+    "name": "Apple Watch Series 9 45mm",
+    "price": 360.0
+   },
+   {
+    "name": "Apple Watch Series 10 46mm",
+    "price": 390.0
+   },
+   {
+    "name": "Apple Watch Series 11 46mm",
+    "price": 440.0
+   }
+  ]
+ },
+ {
+  "tier": 3,
+  "title": "TIER 3 — Computers, TV & Gaming (big ticket)",
+  "products": [
+   {
+    "name": "HP EliteBook 840 G7 Notebook",
+    "price": 310.0
+   },
+   {
+    "name": "HP EliteBook 830 G7 Intel Core i7-10Gen",
+    "price": 340.0
+   },
+   {
+    "name": "HP EliteBook 830 G8 Intel Core i7-11Gen",
+    "price": 380.0
+   },
+   {
+    "name": "HP EliteBook 840 G9 Intel Core i7-12Gen",
+    "price": 950.0
+   },
+   {
+    "name": "Asus TUF FX507 Gaming i7-13Gen",
+    "price": 1320.0
+   },
+   {
+    "name": "MacBook Pro M3",
+    "price": 1350.0
+   },
+   {
+    "name": "MacBook Air M5",
+    "price": 1530.0
+   },
+   {
+    "name": "MacBook Pro M4",
+    "price": 1720.0
+   },
+   {
+    "name": "MacBook Pro M5",
+    "price": 1900.0
+   },
+   {
+    "name": "TV Geepas Smart 32",
+    "price": 175.0
+   },
+   {
+    "name": "TV Geepas Smart 43",
+    "price": 210.0
+   },
+   {
+    "name": "TV LG 43-Inch Smart",
+    "price": 450.0
+   },
+   {
+    "name": "TV LG 55-Inch Smart",
+    "price": 650.0
+   },
+   {
+    "name": "TV LG 65-Inch Smart",
+    "price": 850.0
+   },
+   {
+    "name": "TV LG 75-Inch Smart",
+    "price": 1290.0
+   },
+   {
+    "name": "TV Samsung 85-Inch Smart",
+    "price": 2350.0
+   },
+   {
+    "name": "PlayStation 5 Digital Edition (Slim)",
+    "price": 720.0
+   },
+   {
+    "name": "PlayStation Sony 5 Pro 2TB Slim",
+    "price": 1180.0
+   },
+   {
+    "name": "Speaker Outdoor L208 100W",
+    "price": 70.0
+   },
+   {
+    "name": "Projector Maxwell Spectra",
+    "price": 120.0
+   },
+   {
+    "name": "Projector Epson CO-W01",
+    "price": 350.0
+   },
+   {
+    "name": "Projector Screen Manual 180x180cm",
+    "price": 90.0
+   }
+  ]
+ },
+ {
+  "tier": 4,
+  "title": "TIER 4 — Home, Office & Networking (steady sellers)",
+  "products": [
+   {
+    "name": "Geepas Electric Kettle",
+    "price": 15.0
+   },
+   {
+    "name": "Geepas Blender 2in1",
+    "price": 25.0
+   },
+   {
+    "name": "Geepas Blender 4in1",
+    "price": 39.9
+   },
+   {
+    "name": "Sandwich Maker Geepas",
+    "price": 25.0
+   },
+   {
+    "name": "Popcorn Maker Geepas",
+    "price": 20.0
+   },
+   {
+    "name": "Rice Cooker Geepas with Steamer",
+    "price": 46.0
+   },
+   {
+    "name": "Geepas Coffee Maker 1.5L",
+    "price": 35.0
+   },
+   {
+    "name": "Geepas Mini Oven and Grill 48L",
+    "price": 75.0
+   },
+   {
+    "name": "Hot Air Styler TP-5+1",
+    "price": 10.0
+   },
+   {
+    "name": "Water Dispenser Light Wave",
+    "price": 120.0
+   },
+   {
+    "name": "Air Conditioner Lightwave 9K",
+    "price": 260.0
+   },
+   {
+    "name": "Air Conditioner Lightwave 12K",
+    "price": 280.0
+   },
+   {
+    "name": "Air Conditioner Lightwave 18K",
+    "price": 390.0
+   },
+   {
+    "name": "Air Conditioner Lightwave 24K",
+    "price": 460.0
+   },
+   {
+    "name": "TP-Link 840N Wi-Fi Router",
+    "price": 15.0
+   },
+   {
+    "name": "TP-Link AC750 Wireless Dual Band Router",
+    "price": 24.9
+   },
+   {
+    "name": "TP-Link AC1200 WiFi Range Extender",
+    "price": 36.0
+   },
+   {
+    "name": "TP-Link Omada AC1350 Access Point",
+    "price": 85.0
+   },
+   {
+    "name": "MikroTik L009 series Router",
+    "price": 135.0
+   },
+   {
+    "name": "UniFi AP AC PRO Wireless Access Point",
+    "price": 145.0
+   },
+   {
+    "name": "HP Printer Laser 107A",
+    "price": 75.0
+   },
+   {
+    "name": "HP Printer Laser MFP 135A",
+    "price": 165.0
+   },
+   {
+    "name": "HP Toner Cartridge 651A Original Set",
+    "price": 277.0
+   },
+   {
+    "name": "Microphone DJI Mic Mini 2",
+    "price": 33.3
+   },
+   {
+    "name": "Aputure Amaran 200XS Studio Light",
+    "price": 330.0
+   },
+   {
+    "name": "Battery for Canon LPE10 Normal",
+    "price": 18.0
+   }
+  ]
+ }
+]

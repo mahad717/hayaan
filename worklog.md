@@ -1092,3 +1092,24 @@ Stage Summary:
 - Deliverable: /home/z/my-project/download/hayaan-product-price-list.docx
 - Script: scripts/build_product_price_docx.js
 - Blank price cells (14 items) intentionally left empty for user editing
+
+---
+Task ID: 52
+Agent: Super Z (main)
+Task: "Yes, import them into Hayaan.co admin also remove the demo products that are in the website right now"
+
+Work Log:
+- Session recovery FIRST: local HEAD was 4 ahead / 1 behind remote 361fb0c and the local "Task 49 closure" re-commit (b43979e) had AGAIN lost src/app/api/admin/upload/route.ts (4th strike of the UUID-recovery hazard). git rebase --onto FETCH_HEAD b43979e main restored the correct remote tree under the 3 Task 50/51 commits (clean, no conflicts).
+- Access path: no service_role key in env and RLS has NO write policies on products/categories (service-role-only writes) -> used the app's own admin API (login gabeyre80@gmail.com -> shop_session cookie -> POST/DELETE /api/products, /api/admin/upload), the proven apply-copy-live/fix-dead-images pattern. Live data ops => NO deploy needed (storefront is SSR).
+- User's newest GitHub token ghp_dpVj... is DEAD (API 401); wrangler not authed, no CF creds -> push of new commits blocked (same state as Task 48 until a fresh token arrives). Did NOT block the import itself.
+- Backup before mutation: GET /api/admin/products + /api/categories -> scripts/backup-catalog-2026-09-17.json (12 demo products, 4 categories, full rows).
+- Deleted exactly the 12 seed demo products by slug whitelist (cart_items cascade / order_items set-null keep history intact). 0 non-demo products present.
+- Placeholder image: branded "Hayaan Market / Photo coming soon" PNG (scripts/make_placeholder.py, Panton, green/orange/cream). Direct Storage POST is RLS-blocked (403) -> uploaded via /api/admin/upload (service-role server-side), set as images[0] on every import so no card shows a broken image.
+- Import: scripts/extract_catalog_json.py parses SECTIONS out of build_product_price_list.py via ast -> catalog_data.json. 94 priced products POSTed (tiers 1-3 -> electronics, tier 4 -> home-living; tags = tier slug for later SQL re-map; SKU HAY-T<tier>-<nnn>; stock 25 because product detail disables Add to cart at 0; currency USD; rotating per-tier descriptions). 14 unpriced list items CANNOT be created via API (price is required) -> left for the owner, listed in the final report.
+- Live verification (curl + CDP): /api/products count 94, 0 missing categoryId/images/price, tier tags 26+20+22+26=94; SSR homepage has new products, 0 demo names. CDP (headless=new chrome from .agent-browser path — headed Xvfb pattern dead in this container, harness note): HOME 94 cards / 0 demo leftovers / no empty-state banner; PDP renders price, SKU, tag chip, "25 in stock", Add to cart + Buy now enabled; pills Electronics=68 (68 expected), Home & Living=26 (26 expected). Screenshots: download/task52-home-new-catalog.png, task52-pdp-placeholder.png, task52-electronics-pill.png.
+- Category upgrade path prepared: src/lib/supabase/migrations/2026-09-17-catalog-categories.sql (user pastes in Supabase SQL editor; creates Power & Charging / Phones & Wearables / Computers & TV / Home & Office, re-maps by tier tag, strips tags, deletes the 4 empty demo categories; idempotent, single transaction).
+
+Stage Summary:
+- hayaan.co now shows the real 94-product Sanguni-derived catalog (4 tiers, USD prices, HAY- SKUs, stock 25, branded placeholder images); ALL 12 demo products are gone. Products manageable in /admin (edit price/stock/photos there).
+- Owner follow-ups: (1) paste 2026-09-17-catalog-categories.sql in Supabase SQL editor to get proper category pills and drop dead Apparel/Beauty pills; (2) 14 unpriced items need prices before they can exist (API requires one) — add via admin form; (3) upload real photos per product in admin (placeholder shows meanwhile); (4) adjust stock from the default 25.
+- Push BLOCKED: newest GitHub token revoked (401), no CF creds. New local commits (rebased Task 50/51 history + Task 52) await a fresh repo-scoped token.
