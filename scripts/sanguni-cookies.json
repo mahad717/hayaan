@@ -1,0 +1,67 @@
+[
+ {
+  "name": "wp-dark-mode-device",
+  "domain": "sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "_fbp",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "fr",
+  "domain": ".facebook.com",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_migrations",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_current_add",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_first_add",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_current",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_first",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_udata",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "PHPSESSID",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "wssplashchk",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "woodmart_recently_viewed_products",
+  "domain": "sanguni.so",
+  "valuePresent": true
+ },
+ {
+  "name": "sbjs_session",
+  "domain": ".sanguni.so",
+  "valuePresent": true
+ }
+]
