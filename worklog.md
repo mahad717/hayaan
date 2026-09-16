@@ -1153,3 +1153,18 @@ Stage Summary:
 - All Sanguni watermarks removed from the live catalog (18 images); 76 images were never affected. Images remain hosted in our own Supabase Storage.
 - Artifacts: scripts/remove_logo_v3.py (final), remove_logo.py/v2 (kept as the decision record), logo-detection.json, reupload_clean_images.mjs, reupload-results.json, verify-clean-images-cdp.mjs, product_images_clean/ (canonical cleaned set), logo-crops/ evidence, download/task54-*.png.
 - Owner follow-ups unchanged: categories SQL migration in Supabase editor, 14 unpriced items, stock=25 defaults, Google provider for Task 43.
+
+---
+Task ID: 55
+Agent: Super Z (main)
+Task: "Will all the products be indexable in search engines" (SEO audit, read-only)
+
+Work Log:
+- Audited src/app/robots.ts (allow all, disallow /admin|/api|/payment, sitemap declared), sitemap.ts (force-dynamic, live product slugs + lastModified), product/[slug]/page.tsx (force-dynamic SSR, generateMetadata w/ canonical+og+twitter, Product+BreadcrumbList JSON-LD, noindex only for not-found), layout.tsx metadataBase=https://hayaan.co.
+- Live checks: robots.txt served as configured; sitemap.xml = 97 URLs (94 products + home + blog + 1 post), iphone-17-pro-(physical-sim) included; PDP raw HTML shows unique title, meta description, absolute canonical, index,follow, og:image = cleaned Supabase photo, JSON-LD price 1420.00/InStock, SSR body contains product + real img; homepage SSR HTML has 94 unique /product/ links.
+- Web search for site:hayaan.co returned only the homepage — site young, largely undiscovered yet (third-party index signal, not authoritative).
+
+Stage Summary:
+- Verdict: all 94 live products are fully indexable (SSR + per-product metadata + structured data + sitemap + robots clean); nothing code-side blocks indexing.
+- User action handed over: verify hayaan.co in Google Search Console, submit sitemap.xml, optionally request indexing for top products; Bing WT optional.
+- Reminders kept: 14 unpriced items don't exist on-site yet (hence not indexable); star ratings only appear once genuine reviews exist.
