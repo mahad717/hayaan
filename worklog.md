@@ -1133,3 +1133,23 @@ Stage Summary:
 - hayaan.co catalog now shows real product photos on all 94 items; images hosted in our own Supabase Storage (no hotlinking).
 - Artifacts: scripts/match_products.py, image_targets.json, scrape_sanguni_images.mjs, image_manifest.json, apply_images.mjs, apply-images-results.json, verify-images-cdp.mjs, product_images/ (94 jpg source backup); download/task53-home-real-images.png, task53-pdp-real-photo.png.
 - Owner follow-ups still open: (1) paste src/lib/supabase/migrations/2026-09-17-catalog-categories.sql in Supabase SQL editor to replace the tier-tag electronics/home-living split with real category pills (dead Apparel/Beauty pills remain until then); (2) 14 unpriced list items still need prices to be created; (3) stock defaults at 25 — adjust in admin; (4) Task 43 Google login still waiting on Google provider in Supabase dashboard.
+
+---
+Task ID: 54
+Agent: Super Z (main)
+Task: "remove their logo from those images" (Sanguni watermark on product photos, user sent two WhatsApp screenshots circling it)
+
+Work Log:
+- Watermark identified: Sanguni hexagon (blue RGB(17,97,159) + orange RGB(243,164,46)), composited at fixed size ~133x159 in the top corners of 18 of the 94 scraped photos.
+- Detection v1 (top-right window, both-color threshold): 16 hits but missed logos at alternate x position AND would have missed the user's own example (HP EliteBook 840 G7). v2 (full-image connected components): caught all but ALSO matched product colors (orange blender, blue iPhone 17 Pro Max phones, watch faces) — visually caught BEFORE upload; source images were never touched (clean dir rebuilt from source each iteration).
+- v3 (final): accepts ONLY the exact template fingerprint — box 133x159 +/-25%, aspect 0.70-1.05, blue/orange counts both 2000-7000 x scale, balance 0.5-2.0. Result: 18 boxes, all pixel-identical signature ([102,97,235,256] or [958,97,1091,256], counts ~4009/4014) — zero false positives. 76 images untouched.
+- Inpainting: stroke-mask left a blue residue from the logo's anti-aliased bottom tip (soft edge forms a separate component ~35px below the tight bbox; measured tip ends y1+34). Final method: solid-rect mask (pad 14 sides/top, 52 bottom) + cv2.INPAINT_TELEA — zero residual, verified on all 18 before|after evidence crops (scripts/logo-crops/, contact sheet).
+- False-negative sweep: corner sheet of the 12 highest color-count untouched images — all clean (counts came from product colors).
+- Applied: scripts/reupload_clean_images.mjs -> 18 uploads via /api/admin/upload + PUT /api/products/:id images; 18/18 ok, 0 fail.
+- Live verify: PDP hp-elitebook-840-g7-notebook (the user's own screenshot example) renders clean photo, price/stock/buttons fine; homepage screenshot shows real photos with no watermarks; PS5 Pro + projector screen cleaned files verified intact.
+- Commit 562a8c5 pushed (d3da941..562a8c5).
+
+Stage Summary:
+- All Sanguni watermarks removed from the live catalog (18 images); 76 images were never affected. Images remain hosted in our own Supabase Storage.
+- Artifacts: scripts/remove_logo_v3.py (final), remove_logo.py/v2 (kept as the decision record), logo-detection.json, reupload_clean_images.mjs, reupload-results.json, verify-clean-images-cdp.mjs, product_images_clean/ (canonical cleaned set), logo-crops/ evidence, download/task54-*.png.
+- Owner follow-ups unchanged: categories SQL migration in Supabase editor, 14 unpriced items, stock=25 defaults, Google provider for Task 43.
