@@ -1,0 +1,27 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "html": "<html><head><title>Sitemap Index</title><meta name=\"description\" content=\"\"></head><body><div><a href=\"https://sanguni.so/wp-sitemap-posts-post-1.xml\">https://sanguni.so/wp-sitemap-posts-post-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-posts-page-1.xml\">https://sanguni.so/wp-sitemap-posts-page-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-posts-product-1.xml\">https://sanguni.so/wp-sitemap-posts-product-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-category-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-category-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-post_tag-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-post_tag-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-woodmart_slider-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-woodmart_slider-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-product_brand-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-product_brand-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-product_cat-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-product_cat-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-taxonomies-product_tag-1.xml\">https://sanguni.so/wp-sitemap-taxonomies-product_tag-1.xml</a><br /><time></time></div>\n<div><a href=\"https://sanguni.so/wp-sitemap-users-1.xml\">https://sanguni.so/wp-sitemap-users-1.xml</a><br /><time></time></div></body></html>",
+    "httpStatus": 200,
+    "httpStatusText": "",
+    "metadata": {},
+    "title": "Sitemap Index",
+    "url": "https://sanguni.so/wp-sitemap.xml",
+    "usage": {
+      "measuredTokens": 0,
+      "outputTokens": 0,
+      "scaledTokens": 500,
+      "tokens": 500
+    }
+  },
+  "meta": {
+    "usage": {
+      "measuredTokens": 0,
+      "outputTokens": 0,
+      "scaledTokens": 500,
+      "tokens": 500
+    }
+  },
+  "status": 20000
+}

@@ -1,0 +1,1218 @@
+{
+ "mobile-accessories": {
+  "label": "Mobile & Accessories (all)",
+  "count": 12,
+  "products": [
+   {
+    "name": "Adaptor Power USB-C 35W Normal",
+    "slug": "adaptor-power-usb-c-35w-normal",
+    "prices": [
+     [
+      "$",
+      "5.00"
+     ]
+    ]
+   },
+   {
+    "name": "Adaptor Power USB-C 35W with Caple Normal",
+    "slug": "adaptor-power-usb-c-35w-with-caple-normal",
+    "prices": [
+     [
+      "$",
+      "8.00"
+     ]
+    ]
+   },
+   {
+    "name": "Adaptor USB-C 25W PD Normal",
+    "slug": "adaptor-usb-c-25w-pd-normal",
+    "prices": [
+     [
+      "$",
+      "4.50"
+     ]
+    ]
+   },
+   {
+    "name": "Amazfit Active 42mm Smart Watch",
+    "slug": "amazfit-active-42mm-smart-watch",
+    "prices": [
+     [
+      "$",
+      "130.00"
+     ]
+    ]
+   },
+   {
+    "name": "Amazon Kindle Paperwhite Signature",
+    "slug": "amazon-kindle-paperwhite-signature",
+    "prices": [
+     [
+      "$",
+      "230.00"
+     ]
+    ]
+   },
+   {
+    "name": "Anker Prime 100W 3-Port GaN Wall Charger",
+    "slug": "anker-prime-100w-3-port-gan-wall-charger",
+    "prices": [
+     [
+      "$",
+      "65.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple 20W USB-C Power Adapter Org",
+    "slug": "apple-20w-usb-c-power-adapter-org",
+    "prices": [
+     [
+      "$",
+      "25.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch SE 40mm",
+    "slug": "apple-watch-se-40mm",
+    "prices": [
+     [
+      "$",
+      "250.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 10 46mm",
+    "slug": "apple-watch-series-10-46mm",
+    "prices": [
+     [
+      "$",
+      "390.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 11 46mm",
+    "slug": "apple-watch-series-11-46mm",
+    "prices": [
+     [
+      "$",
+      "440.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 9 45mm",
+    "slug": "apple-watch-series-9-45mm",
+    "prices": [
+     [
+      "$",
+      "360.00"
+     ]
+    ]
+   },
+   {
+    "name": "Battery Case for iPhone 14 Pro Max 6000mAh",
+    "slug": "battery-case-for-iphone-14-pro-max-6000mah",
+    "prices": [
+     [
+      "$",
+      "35.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "computer-accessories/laptop": {
+  "label": "Laptops",
+  "count": 12,
+  "products": [
+   {
+    "name": "Apple MacBook Air M5",
+    "slug": "apple-macbook-air-m5",
+    "prices": [
+     [
+      "$",
+      "1,530.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M3",
+    "slug": "apple-macbook-pro-m3-2",
+    "prices": [
+     [
+      "$",
+      "1,785.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M3",
+    "slug": "apple-macbook-pro-m3-3",
+    "prices": [
+     [
+      "$",
+      "1,350.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M4",
+    "slug": "apple-macbook-pro-m4",
+    "prices": [
+     [
+      "$",
+      "1,850.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M4",
+    "slug": "apple-macbook-pro-m4-2",
+    "prices": [
+     [
+      "$",
+      "1,720.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M5",
+    "slug": "apple-macbook-pro-m5",
+    "prices": [
+     [
+      "$",
+      "1,900.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple MacBook Pro M5",
+    "slug": "apple-macbook-pro-m5-2",
+    "prices": [
+     [
+      "$",
+      "2,100.00"
+     ]
+    ]
+   },
+   {
+    "name": "Asus Tuf Fx507Gaming Intel Core i7-13Gen",
+    "slug": "asus-tuf-fx507gaming-intel-core-i7-13gen",
+    "prices": [
+     [
+      "$",
+      "1,320.00"
+     ]
+    ]
+   },
+   {
+    "name": "HP EliteBook 830 G7 Intel Core i7-10Gen",
+    "slug": "hp-elitebook-830-g7-intel-core-i7-10gen",
+    "prices": [
+     [
+      "$",
+      "340.00"
+     ]
+    ]
+   },
+   {
+    "name": "HP EliteBook 830 G8 Intel Core i7-11Gen",
+    "slug": "hp-elitebook-830-g8-intel-core-i7-11gen",
+    "prices": [
+     [
+      "$",
+      "380.00"
+     ]
+    ]
+   },
+   {
+    "name": "HP EliteBook 840 G7 Notebook",
+    "slug": "hp-elitebook-840-g7-notebook",
+    "prices": [
+     [
+      "$",
+      "310.00"
+     ]
+    ]
+   },
+   {
+    "name": "Hp EliteBook 840 G9 Intel\u00ae Core\u2122 i7-1255U",
+    "slug": "hp-elitebook-840-g9-intel-core-i7-1255u",
+    "prices": [
+     [
+      "$",
+      "950.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "home-appliances/tv": {
+  "label": "TVs",
+  "count": 12,
+  "products": [
+   {
+    "name": "Lemorele Wireless Video Extender",
+    "slug": "lemorele-wireless-video-extender",
+    "prices": [
+     [
+      "$",
+      "165.00"
+     ]
+    ]
+   },
+   {
+    "name": "PlayStation Sony 5Pro 2TB Slim",
+    "slug": "playstation-sony-5pro-2tb-slim",
+    "prices": [
+     [
+      "$",
+      "1,180.00"
+     ]
+    ]
+   },
+   {
+    "name": "PlayStation\u00ae5 Digital Edition (slim)",
+    "slug": "playstation5-digital-edition-slim",
+    "prices": [
+     [
+      "$",
+      "720.00"
+     ]
+    ]
+   },
+   {
+    "name": "Speaker Outdoor L208 100W",
+    "slug": "speaker-outdoor-l208-100w",
+    "prices": [
+     [
+      "$",
+      "70.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV Geepas Smart  32\u2033",
+    "slug": "tv-geepas-smart-32",
+    "prices": [
+     [
+      "$",
+      "175.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV Geepas Smart  43\u2033",
+    "slug": "tv-geepas-smart-43",
+    "prices": [
+     [
+      "$",
+      "210.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV LG 43-Inch Smart",
+    "slug": "tv-lg-43-inch-smart",
+    "prices": [
+     [
+      "$",
+      "450.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV LG 55-Inch Smart",
+    "slug": "tv-lg-55-inch-smart",
+    "prices": [
+     [
+      "$",
+      "650.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV LG 65-Inch Smart",
+    "slug": "tv-lg-65-inch-smart",
+    "prices": [
+     [
+      "$",
+      "850.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV LG 75-Inch Smart",
+    "slug": "tv-lg-75-inch-smart",
+    "prices": [
+     [
+      "$",
+      "1,290.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV LG 86-Inch 4K Smart",
+    "slug": "tv-lg-86-inch-4k-smart",
+    "prices": [
+     [
+      "$",
+      "2,300.00"
+     ]
+    ]
+   },
+   {
+    "name": "TV Samsung 85-Inch Smart",
+    "slug": "tv-samsung-85-inch-smart",
+    "prices": [
+     [
+      "$",
+      "2,350.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "mobile-accessories/headphone": {
+  "label": "Headphones/Earbuds",
+  "count": 5,
+  "products": [
+   {
+    "name": "Earphone Baseus Immersive Virtual 3D Gamin",
+    "slug": "earphone-baseus-immersive-virtual-3d-gamin",
+    "prices": [
+     [
+      "$",
+      "25.00"
+     ]
+    ]
+   },
+   {
+    "name": "Earphone For Samsung 3.5mm Jack",
+    "slug": "earphone-for-samsung-3-5mm-jack",
+    "prices": [
+     [
+      "$",
+      "1.50"
+     ]
+    ]
+   },
+   {
+    "name": "Headphone EarPods USB-C Wired",
+    "slug": "headphone-earpods-usb-c-wired",
+    "prices": [
+     [
+      "$",
+      "4.00"
+     ]
+    ]
+   },
+   {
+    "name": "Headphone iPhone Wired",
+    "slug": "headphone-iphone-wired",
+    "prices": [
+     [
+      "$",
+      "24.00"
+     ]
+    ]
+   },
+   {
+    "name": "Headphone Samsung Type-C",
+    "slug": "headphone-samsung-type-c",
+    "prices": [
+     [
+      "$",
+      "18.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "mobile-accessories/watchs": {
+  "label": "Smart Watches",
+  "count": 12,
+  "products": [
+   {
+    "name": "Amazfit Active 42mm Smart Watch",
+    "slug": "amazfit-active-42mm-smart-watch",
+    "prices": [
+     [
+      "$",
+      "130.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch SE 40mm",
+    "slug": "apple-watch-se-40mm",
+    "prices": [
+     [
+      "$",
+      "250.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 10 46mm",
+    "slug": "apple-watch-series-10-46mm",
+    "prices": [
+     [
+      "$",
+      "390.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 11 46mm",
+    "slug": "apple-watch-series-11-46mm",
+    "prices": [
+     [
+      "$",
+      "440.00"
+     ]
+    ]
+   },
+   {
+    "name": "Apple Watch Series 9 45mm",
+    "slug": "apple-watch-series-9-45mm",
+    "prices": [
+     [
+      "$",
+      "360.00"
+     ]
+    ]
+   },
+   {
+    "name": "HUAWEI Watch GT 6 GPS 46 mm",
+    "slug": "huawei-watch-gt-6-gps-46-mm",
+    "prices": [
+     [
+      "$",
+      "230.00"
+     ]
+    ]
+   },
+   {
+    "name": "Maxwell Fusion Smart Watch",
+    "slug": "maxwell-fusion-smart-watch",
+    "prices": [
+     [
+      "$",
+      "55.00"
+     ]
+    ]
+   },
+   {
+    "name": "Maxwell Kinetic Smart Watch",
+    "slug": "maxwell-kinetic-smart-watch",
+    "prices": [
+     [
+      "$",
+      "55.00"
+     ]
+    ]
+   },
+   {
+    "name": "Maxwell Libra Smart Watch",
+    "slug": "maxwell-libra-smart-watch",
+    "prices": [
+     [
+      "$",
+      "55.00"
+     ]
+    ]
+   },
+   {
+    "name": "Maxwell Lynx Smart Watch",
+    "slug": "maxwell-lynx-smart-watch",
+    "prices": [
+     [
+      "$",
+      "55.00"
+     ]
+    ]
+   },
+   {
+    "name": "Maxwell Titan Smart Watch",
+    "slug": "maxwell-titan-smart-watch",
+    "prices": [
+     [
+      "$",
+      "55.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy Watch 7 44mm",
+    "slug": "samsung-galaxy-watch-7-44mm",
+    "prices": [
+     [
+      "$",
+      "190.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "home-appliances/kitchen": {
+  "label": "Kitchen Appliances",
+  "count": 12,
+  "products": [
+   {
+    "name": "Coffee Machine Geepas Espresso &Cappuccino",
+    "slug": "coffee-machine-geepas-espresso-cappuccino",
+    "prices": [
+     [
+      "$",
+      "145.00"
+     ]
+    ]
+   },
+   {
+    "name": "Electric Kettle Geepas",
+    "slug": "electric-kettle-geepas",
+    "prices": [
+     [
+      "$",
+      "15.00"
+     ]
+    ]
+   },
+   {
+    "name": "Geepas Blender 2in1",
+    "slug": "geepas-blender-2in1",
+    "prices": [
+     [
+      "$",
+      "25.00"
+     ]
+    ]
+   },
+   {
+    "name": "Geepas Blender 4in1",
+    "slug": "geepas-blender-4in1",
+    "prices": [
+     [
+      "$",
+      "39.90"
+     ]
+    ]
+   },
+   {
+    "name": "Geepas Cappuccino Maker",
+    "slug": "geepas-cappuccino-maker",
+    "prices": [
+     [
+      "$",
+      "45.00"
+     ]
+    ]
+   },
+   {
+    "name": "Geepas Mini Oven and Grill 48L",
+    "slug": "geepas-mini-oven-and-grill-48l",
+    "prices": [
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Geepas-Coffee Maker, 1.5L",
+    "slug": "geepas-coffee-maker-1-5l",
+    "prices": [
+     [
+      "$",
+      "35.00"
+     ]
+    ]
+   },
+   {
+    "name": "Hot Air Styler Tp- 5+1",
+    "slug": "hot-air-styler-tp-51",
+    "prices": [
+     [
+      "$",
+      "10.00"
+     ]
+    ]
+   },
+   {
+    "name": "Popcorn Maker Geepas",
+    "slug": "popcorn-maker-geepas",
+    "prices": [
+     [
+      "$",
+      "20.00"
+     ]
+    ]
+   },
+   {
+    "name": "Professional Hot Air Styler Gemei",
+    "slug": "professional-hot-air-styler-gemei",
+    "prices": [
+     [
+      "$",
+      "13.00"
+     ]
+    ]
+   },
+   {
+    "name": "Rice Cooker Geepas Electric with Steamer",
+    "slug": "rice-cooker-geepas-electric-with-steamer",
+    "prices": [
+     [
+      "$",
+      "46.00"
+     ]
+    ]
+   },
+   {
+    "name": "Sandwich Maker Geepas",
+    "slug": "sandwich-maker-geepas",
+    "prices": [
+     [
+      "$",
+      "25.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "computer-accessories/network/router": {
+  "label": "Routers/Networking",
+  "count": 11,
+  "products": [
+   {
+    "name": "MikroTik L009 series",
+    "slug": "mikrotik-l009-series",
+    "prices": [
+     [
+      "$",
+      "135.00"
+     ]
+    ]
+   },
+   {
+    "name": "Tp Link 5-port 10/100Mbps",
+    "slug": "tp-link-5-port-10-100mbps",
+    "prices": [
+     [
+      "$",
+      "8.00"
+     ]
+    ]
+   },
+   {
+    "name": "Tp Link AC750 Wireless Dual Band Router",
+    "slug": "tp-link-ac750-wireless-dual-band-router",
+    "prices": [
+     [
+      "$",
+      "24.90"
+     ]
+    ]
+   },
+   {
+    "name": "Tp Link Omada AC1350 Wireless  Access Point",
+    "slug": "tp-link-omada-ac1350-wireless-access-point",
+    "prices": [
+     [
+      "$",
+      "85.00"
+     ]
+    ]
+   },
+   {
+    "name": "TP-Link  N450 Wi-Fi Router",
+    "slug": "tp-link-n450-wi-fi-router",
+    "prices": [
+     [
+      "$",
+      "25.00"
+     ]
+    ]
+   },
+   {
+    "name": "TP-Link 5-Port",
+    "slug": "tp-link-5-port",
+    "prices": [
+     [
+      "$",
+      "9.00"
+     ]
+    ]
+   },
+   {
+    "name": "TP-Link 840N",
+    "slug": "tp-link-840n",
+    "prices": [
+     [
+      "$",
+      "15.00"
+     ]
+    ]
+   },
+   {
+    "name": "TP-Link AC1200 WiFi Range Extender",
+    "slug": "tp-link-ac1200-wifi-range-extender",
+    "prices": [
+     [
+      "$",
+      "36.00"
+     ]
+    ]
+   },
+   {
+    "name": "TP-Link N300 Universal Wi-Fi Range Extender",
+    "slug": "tp-link-n300-universal-wi-fi-range-extender",
+    "prices": [
+     [
+      "$",
+      "24.90"
+     ]
+    ]
+   },
+   {
+    "name": "Unifi AC Mesh",
+    "slug": "unifi-ac-mesh",
+    "prices": [
+     [
+      "$",
+      "145.00"
+     ]
+    ]
+   },
+   {
+    "name": "Unifi AP AC PRO Wireless Access Point",
+    "slug": "unifi-ap-ac-pro-wireless-access-point",
+    "prices": [
+     [
+      "$",
+      "145.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "camera-accessories/camera": {
+  "label": "Cameras",
+  "count": 12,
+  "products": [
+   {
+    "name": "Adjustable Desk Lamp Flex",
+    "slug": "adjustable-desk-lamp-flex",
+    "prices": [
+     [
+      "$",
+      "22.00"
+     ]
+    ]
+   },
+   {
+    "name": "Amaran 150c RGB Video Light",
+    "slug": "amaran-150c-rgb-video-light",
+    "prices": [
+     [
+      "$",
+      "360.00"
+     ]
+    ]
+   },
+   {
+    "name": "Aputure Amaran 200XS",
+    "slug": "aputure-amaran-200xs",
+    "prices": [
+     [
+      "$",
+      "330.00"
+     ]
+    ]
+   },
+   {
+    "name": "Aputure Amaran 300c RGB",
+    "slug": "aputure-amaran-300c-rgb",
+    "prices": [
+     [
+      "$",
+      "540.00"
+     ]
+    ]
+   },
+   {
+    "name": "Background Bookshelf Photography",
+    "slug": "background-bookshelf-photography",
+    "prices": [
+     [
+      "$",
+      "80.00"
+     ],
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Background Decoration Portrait for Photo Studio",
+    "slug": "background-decoration-portrait-for-photo-studio",
+    "prices": [
+     [
+      "$",
+      "80.00"
+     ],
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Background Decoration Portrait for Photo Studio",
+    "slug": "background-decoration-portrait-for-photo-studio-2",
+    "prices": [
+     [
+      "$",
+      "80.00"
+     ],
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Background Decoration Portrait for Photo Studio",
+    "slug": "background-decoration-portrait-for-photo-studio-3",
+    "prices": [
+     [
+      "$",
+      "80.00"
+     ],
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Background Decoration Portrait for Photo Studio",
+    "slug": "background-decoration-portrait-for-photo-studio-4",
+    "prices": [
+     [
+      "$",
+      "80.00"
+     ],
+     [
+      "$",
+      "75.00"
+     ]
+    ]
+   },
+   {
+    "name": "Battery Canon LP-E6 Original",
+    "slug": "battery-canon-lp-e6-original",
+    "prices": [
+     [
+      "$",
+      "95.00"
+     ]
+    ]
+   },
+   {
+    "name": "Battery Charger Kit Promage",
+    "slug": "battery-charger-kit-promage",
+    "prices": [
+     [
+      "$",
+      "17.00"
+     ]
+    ]
+   },
+   {
+    "name": "Battery for Canon LPE10 Normal",
+    "slug": "battery-for-canon-lpe10-normal",
+    "prices": [
+     [
+      "$",
+      "18.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "home-appliances/air-condition": {
+  "label": "Air Conditioners",
+  "count": 4,
+  "products": [
+   {
+    "name": "Air Conditioner Lightwave 12K",
+    "slug": "air-conditioner-lightwave-12k",
+    "prices": [
+     [
+      "$",
+      "280.00"
+     ]
+    ]
+   },
+   {
+    "name": "Air Conditioner Lightwave 18K",
+    "slug": "air-conditioner-lightwave-18k",
+    "prices": [
+     [
+      "$",
+      "390.00"
+     ]
+    ]
+   },
+   {
+    "name": "Air Conditioner Lightwave 24K",
+    "slug": "air-conditioner-lightwave-24k",
+    "prices": [
+     [
+      "$",
+      "460.00"
+     ]
+    ]
+   },
+   {
+    "name": "Air Conditioner Lightwave 9K",
+    "slug": "air-conditioner-lightwave-9k",
+    "prices": [
+     [
+      "$",
+      "260.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "projector": {
+  "label": "Projectors",
+  "count": 6,
+  "products": [
+   {
+    "name": "Projector Borrego Smart 2",
+    "slug": "projector-borrego-smart-2",
+    "prices": [
+     [
+      "$",
+      "70.00"
+     ]
+    ]
+   },
+   {
+    "name": "Projector Ceiling Wall Mount",
+    "slug": "projector-ceiling-wall-mount",
+    "prices": [
+     [
+      "$",
+      "30.00"
+     ]
+    ]
+   },
+   {
+    "name": "Projector Epson Co-W01",
+    "slug": "projector-epson-co-w01",
+    "prices": [
+     [
+      "$",
+      "350.00"
+     ]
+    ]
+   },
+   {
+    "name": "Projector Maxwell Spectra",
+    "slug": "projector-maxwell-spectra",
+    "prices": [
+     [
+      "$",
+      "120.00"
+     ]
+    ]
+   },
+   {
+    "name": "Projector Screen Electric 180x180Cm",
+    "slug": "projector-screen-electric-180x180cm",
+    "prices": [
+     [
+      "$",
+      "130.00"
+     ]
+    ]
+   },
+   {
+    "name": "Projector Screen Manual 180x180Cm",
+    "slug": "projector-screen-manual-180x180cm",
+    "prices": [
+     [
+      "$",
+      "90.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "mobile-accessories/samsung": {
+  "label": "Samsung",
+  "count": 12,
+  "products": [
+   {
+    "name": "Samsung Galaxy A06",
+    "slug": "samsung-galaxy-a06",
+    "prices": [
+     [
+      "$",
+      "118.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A06",
+    "slug": "samsung-galaxy-a06-2",
+    "prices": [
+     [
+      "$",
+      "110.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A07",
+    "slug": "samsung-galaxy-a07",
+    "prices": [
+     [
+      "$",
+      "140.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A07",
+    "slug": "samsung-galaxy-a07-2",
+    "prices": [
+     [
+      "$",
+      "125.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A16",
+    "slug": "samsung-galaxy-a16",
+    "prices": [
+     [
+      "$",
+      "145.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A16",
+    "slug": "samsung-galaxy-a16-2",
+    "prices": [
+     [
+      "$",
+      "173.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A16",
+    "slug": "samsung-galaxy-a16-3",
+    "prices": [
+     [
+      "$",
+      "118.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A17",
+    "slug": "samsung-galaxy-a17",
+    "prices": [
+     [
+      "$",
+      "165.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A17",
+    "slug": "samsung-galaxy-a17-2",
+    "prices": [
+     [
+      "$",
+      "240.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A17",
+    "slug": "samsung-galaxy-a17-3",
+    "prices": [
+     [
+      "$",
+      "190.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A36 5G",
+    "slug": "samsung-galaxy-a36-5g",
+    "prices": [
+     [
+      "$",
+      "285.00"
+     ],
+     [
+      "$",
+      "295.00"
+     ]
+    ]
+   },
+   {
+    "name": "Samsung Galaxy A37 5G",
+    "slug": "samsung-galaxy-a37-5g",
+    "prices": [
+     [
+      "$",
+      "320.00"
+     ]
+    ]
+   }
+  ]
+ },
+ "home-appliances/water-dispenser": {
+  "label": "Water Dispensers",
+  "count": 2,
+  "products": [
+   {
+    "name": "Tea Bar Machine Denx",
+    "slug": "tea-bar-machine-denx",
+    "prices": [
+     [
+      "$",
+      "120.00"
+     ]
+    ]
+   },
+   {
+    "name": "Water Dispenser Light Wave",
+    "slug": "water-dispenser-light-wave",
+    "prices": [
+     [
+      "$",
+      "120.00"
+     ]
+    ]
+   }
+  ]
+ }
+}
