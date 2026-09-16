@@ -1,0 +1,634 @@
+[
+ {
+  "slug": "adaptor-usb-c-25w-pd-normal",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "air-conditioner-lightwave-12k",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "air-conditioner-lightwave-18k",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "air-conditioner-lightwave-24k",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "air-conditioner-lightwave-9k",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "amazfit-active-42mm-smart-watch",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "anker-prime-100w-3-port-gan-wall-charger",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "apple-20w-usb-c-power-adapter-org",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-macbook-air-m5",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-macbook-pro-m3-3",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-macbook-pro-m4",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-macbook-pro-m5",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-watch-se-40mm",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-watch-series-10-46mm",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-watch-series-11-46mm",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "apple-watch-series-9-45mm",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "aputure-amaran-200xs",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "asus-tuf-fx507gaming-intel-core-i7-13gen",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "battery-case-for-iphone-16-pro-max-7000mah",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "battery-case-for-iphone-17-pro-max-7000mah",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "battery-for-canon-lpe10-normal",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "bluetooth-speaker-anker-boom-3i-outdoor",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "cable-charge-240w-usb-c-2m",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "cable-charge-60w-usb-c-1m",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "cable-charge-usb-c-1m-normal",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "cable-charge-usb-c-to-lightning-1m-normal",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "digital-voltage-stabilizer-lightwave",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "earphone-for-samsung-3-5mm-jack",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "electric-kettle-geepas",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "fast-charge-adapter-wiwu-helix-65w",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "geepas-blender-2in1",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "geepas-blender-4in1",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "geepas-coffee-maker-1-5l",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "geepas-mini-oven-and-grill-48l",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "headphone-earpods-usb-c-wired",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "headphone-iphone-wired",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "headphone-samsung-type-c",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hot-air-styler-tp-51",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hp-elitebook-830-g7-intel-core-i7-10gen",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hp-elitebook-830-g8-intel-core-i7-11gen",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hp-elitebook-840-g7-notebook",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "hp-elitebook-840-intel-core-i7-12gen",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "hp-printer-laser-107a",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hp-printer-laser-mfp-135a",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "hp-toner-cartridge-651a-original-set",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "huawei-watch-gt-6-gps-46-mm",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "iphone-15-pro-max",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "iphone-16-pro-max",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "iphone-16-pro",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "iphone-17-physical",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "iphone-17pro-max-physical",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "iphone-17pro-physical",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "iphone-air",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "maxwell-lynx-smart-watch",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "microphone-dji-mic-mini-2",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "mikrotik-l009-series",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "playstation-sony-5pro-2tb-slim",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4049,
+    4023
+   ]
+  ]
+ },
+ {
+  "slug": "playstation5-digital-edition-slim",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "popcorn-maker-geepas",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "power-bank-10000-mah-maxvolt",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4006,
+    3999
+   ]
+  ]
+ },
+ {
+  "slug": "power-bank-10000mah-porodo-chrome-volt",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "power-bank-10000mah-porodo-pocket-volt",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "power-bank-20000mah-lion-ultra-thin-120w",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "power-bank-5000mah-porodo-with-lightning",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "power-bank-anker-maggo-10000-mah",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "power-bank-anker-zolo-10000mah",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4017,
+    4042
+   ]
+  ]
+ },
+ {
+  "slug": "power-bank-green-lion-thunder-80000mah",
+  "status": "cleaned",
+  "boxes": [
+   [
+    958,
+    97,
+    1091,
+    256,
+    4009,
+    4014
+   ]
+  ]
+ },
+ {
+  "slug": "power-bank-magsafe-10000mah",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "projector-epson-co-w01",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "projector-maxwell-spectra",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "projector-screen-manual-180x180cm",
+  "status": "cleaned",
+  "boxes": [
+   [
+    102,
+    97,
+    235,
+    256,
+    4036,
+    4009
+   ]
+  ]
+ },
+ {
+  "slug": "rice-cooker-geepas-electric-with-steamer",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a06",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a07",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a16",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a17",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a36-5g",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-a37-5g",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "samsung-galaxy-watch-7-44mm",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "sandwich-maker-geepas",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "speaker-outdoor-l208-100w",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tp-link-ac1200-wifi-range-extender",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tp-link-ac750-wireless-dual-band-router",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tp-link-n450-wi-fi-router",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tp-link-omada-ac1350-wireless-access-point",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-geepas-smart-32",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-geepas-smart-43",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-lg-43-inch-smart",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-lg-55-inch-smart",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-lg-65-inch-smart",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-lg-75-inch-smart",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "tv-samsung-85-inch-smart",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "unifi-ap-ac-pro-wireless-access-point",
+  "status": "none",
+  "boxes": []
+ },
+ {
+  "slug": "water-dispenser-light-wave",
+  "status": "none",
+  "boxes": []
+ }
+]
