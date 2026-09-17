@@ -1236,3 +1236,25 @@ Work Log:
 Stage Summary:
 - Lead engine fully operational on hayaan.co: newsletter/popup/quote forms write to the leads table; admin Leads tab pipeline (new/contacted/won/lost + delete) verified against live Supabase; floating WhatsApp CTA live site-wide on the owner's number 252615990144.
 - No owner actions left for the lead engine; remaining follow-ups unchanged (accounting migration 2026-09-11-accounting.sql, 14 unpriced items, stock defaults, Google provider for Task 43).
+
+---
+Task ID: 59
+Agent: Super Z (main)
+Task: "The email I will be sending from emails is support@hayaan.co" (make support@hayaan.co the store's email identity)
+
+Work Log:
+- Audited the site: zero customer-facing email anywhere before this; no sending infrastructure.
+- New src/lib/support-email.ts: SUPPORT_EMAIL = NEXT_PUBLIC_SUPPORT_EMAIL override, default support@hayaan.co.
+- Footer Support column: dead "Contact" li replaced with a mailto:support@hayaan.co link showing the address (client, EN/SO-safe).
+- /quote: new line under the form — "Prefer email? Write to us directly: support@hayaan.co" (new i18n key quote.preferEmail in EN + SO: "Email miyaad doorbidaysaa? Nagala soo qor:").
+- layout.tsx Organization JSON-LD: contactPoint (customer support, email, availableLanguage EN/SO) — server-side, reads SUPPORT_EMAIL.
+- Admin Leads tab: lead email in Reach column is now a reply mailto (subject preset "Re: your Hayaan Market request", title shows it replies via support@).
+- /api/leads: notifyLead() after every successful insert — Resend REST, env-gated by RESEND_API_KEY (no key = no-op), defaults to= support@hayaan.co, from= "Hayaan Market <support@hayaan.co>", reply_to= lead's email; best-effort try/catch, never fails the capture. Optional LEAD_NOTIFY_EMAIL / LEAD_NOTIFY_FROM overrides. README documents the whole setup.
+- bun run build pass; eslint clean on 6 changed files; commit ecb5090 pushed (d649510..ecb5090); deploy polled via support@ marker (~100s).
+- Live verify: home JSON-LD contactPoint present (EN+SO SSR); /quote shows the email line in EN and SO (curl); RSC payload confirms WhatsApp number still flows via the new provider; lead POST regression {ok:true} -> admin saw the row -> deleted; CDP (scripts/verify-support-email-cdp.mjs): footer mailto found, quote line found, 0 console exceptions.
+- Screenshots: download/task59-footer-support-email.png, task59-quote-email-line.png.
+
+Stage Summary:
+- support@hayaan.co is now the store's visible email identity on every lead surface + structured data; lead notifications will auto-email it once RESEND_API_KEY is set (after Resend domain verification of hayaan.co).
+- OWNER next steps for email: (1) receive: Cloudflare Email Routing support@hayaan.co -> personal inbox (free); (2) auto-notify: Resend account, verify hayaan.co domain (SPF/DKIM DNS), set RESEND_API_KEY; (3) manual sending from support@: Gmail "Send mail as" or mail client.
+- Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43).
