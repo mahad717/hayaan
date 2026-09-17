@@ -1,19 +1,26 @@
 "use client";
 
 import { useLang } from "@/components/store/language-provider";
+import { useWhatsAppNumber } from "@/components/store/whatsapp-number";
 
-// Owner's WhatsApp business number, digits only with country code
-// (e.g. 2526XXXXXXXX). Set as NEXT_PUBLIC_WHATSAPP_NUMBER in the Cloudflare
-// build environment; the button simply stays hidden until it exists.
-const NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/[^0-9]/g, "");
+// Build-time path: NEXT_PUBLIC_ vars present in the build environment are
+// inlined into this client bundle by the compiler. Empty when the variable
+// was instead set as a Worker runtime variable (served via the context).
+const BUILD_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/[^0-9]/g, "");
 
 /**
  * Floating WhatsApp CTA (Task 57 lead engine). In the Somali market WhatsApp
  * IS the sales channel — this is the lowest-friction lead path we can offer:
  * one tap opens a chat with a pre-filled greeting in the visitor's language.
+ *
+ * Number resolution order: explicit prop → runtime value from the server
+ * layout (Worker variable, works without a rebuild) → build-time inline
+ * (Cloudflare build variable). Stays hidden until one of them exists.
  */
-export function WhatsAppButton() {
+export function WhatsAppButton({ number: propNumber }: { number?: string }) {
+  const runtimeNumber = useWhatsAppNumber();
   const { t } = useLang();
+  const NUMBER = (propNumber ?? runtimeNumber ?? BUILD_NUMBER).replace(/[^0-9]/g, "");
   if (!NUMBER) return null;
 
   const href = `https://wa.me/${NUMBER}?text=${encodeURIComponent(t("wa.message"))}`;

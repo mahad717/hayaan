@@ -126,9 +126,15 @@ idempotent — safe to run again.
 > bulk-quote requests, RLS deny-all). Without it the footer/popup/quote
 > forms return an error and the admin Leads tab shows a setup banner.
 >
-> Optional: set `NEXT_PUBLIC_WHATSAPP_NUMBER` (digits only, with country
-> code, e.g. `252612345678`) as a Cloudflare **build variable** to enable
-> the floating WhatsApp chat button; the button stays hidden until it's set.
+> Optional: enable the floating WhatsApp chat button by setting
+> `NEXT_PUBLIC_WHATSAPP_NUMBER` (digits only, with country code, e.g.
+> `252612345678`) in Cloudflare. Two paths, either works:
+> - **Worker variable** (Workers & Pages → hayaan → Settings → Variables and
+>   Secrets): applies on save, no rebuild needed — the layout reads it at
+>   request time;
+> - **Build variable**: baked into the client bundle on the next deployment.
+>
+> The button stays hidden until the variable exists in one of those places.
 
 ### 2. Seed the catalog and create the admin account
 

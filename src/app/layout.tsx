@@ -6,6 +6,7 @@ import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { LangProvider } from "@/components/store/language-provider";
+import { WhatsAppNumberProvider } from "@/components/store/whatsapp-number";
 import { LANG_COOKIE, isLang, type Lang } from "@/lib/i18n/dictionary";
 
 // Panton — the official Hayaan brand face (self-hosted, no external fetch).
@@ -97,6 +98,28 @@ function OrganizationJsonLd() {
   );
 }
 
+/**
+ * Resolve the WhatsApp business number at REQUEST time so the owner can set
+ * it as a Worker runtime variable (instant, no rebuild), not just as a build
+ * variable. Order: OpenNext worker process.env → worker context env.
+ * Digit-normalized; empty string keeps the floating button hidden.
+ */
+async function resolveWhatsAppNumber(): Promise<string> {
+  const digits = (v: unknown): string =>
+    typeof v === "string" ? v.replace(/[^0-9]/g, "") : "";
+  let n = digits(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER);
+  if (!n) {
+    try {
+      const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+      const env = getCloudflareContext().env as unknown as Record<string, unknown>;
+      n = digits(env.NEXT_PUBLIC_WHATSAPP_NUMBER);
+    } catch {
+      // Not running on the OpenNext worker (local dev / build) — ignore.
+    }
+  }
+  return n;
+}
+
 // Reading the language cookie makes the layout async/dynamic, but every
 // storefront route is already force-dynamic — cost is zero in practice.
 // The payoff: the SSR HTML (and <html lang>) comes out in the visitor's
@@ -110,6 +133,7 @@ export default async function RootLayout({
   const lang: Lang = isLang(cookieStore.get(LANG_COOKIE)?.value)
     ? (cookieStore.get(LANG_COOKIE)!.value as Lang)
     : "en";
+  const waNumber = await resolveWhatsAppNumber();
 
   return (
     // Font variables MUST live on <html>: Tailwind's base layer resolves
@@ -139,8 +163,10 @@ export default async function RootLayout({
         />
         <OrganizationJsonLd />
         <LangProvider initialLang={lang}>
-          {children}
-          <Toaster />
+          <WhatsAppNumberProvider number={waNumber}>
+            {children}
+            <Toaster />
+          </WhatsAppNumberProvider>
         </LangProvider>
         {/* Google Analytics 4 — loads after hydration, never blocks rendering. */}
         <Script
