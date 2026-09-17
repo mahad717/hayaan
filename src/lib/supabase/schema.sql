@@ -157,3 +157,22 @@ exception when duplicate_object then null; end $$;
 do $$ begin
   alter publication supabase_realtime add table orders;
 exception when duplicate_object then null; end $$;
+
+-- ---------- Leads (Task 57: newsletter + bulk-quote capture) ----------
+-- Deny-by-default: no anon/authenticated policies. The service role (API
+-- routes only) reads and writes; see migrations/2026-09-17-leads.sql.
+create table if not exists leads (
+  id         uuid primary key default uuid_generate_v4(),
+  type       text not null default 'newsletter' check (type in ('newsletter', 'quote')),
+  name       text,
+  email      text,
+  phone      text,
+  business   text,
+  message    text,
+  source     text not null default 'site',
+  status     text not null default 'new' check (status in ('new', 'contacted', 'won', 'lost')),
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_leads_created on leads(created_at desc);
+create index if not exists idx_leads_status  on leads(status);
+alter table leads enable row level security;

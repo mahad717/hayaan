@@ -268,3 +268,22 @@ model AccountingAudit {
   @@index([entity])
   @@index([createdAt])
 }
+
+// Lead capture (Task 57) — newsletter signups + bulk-quote requests.
+// Supabase table: leads (RLS deny-all; API routes use the service role).
+model Lead {
+  id        String   @id @default(cuid())
+  type      String   @default("newsletter") // newsletter | quote
+  name      String?
+  email     String?
+  phone     String?
+  business  String?
+  message   String?
+  source    String   @default("site") // popup | footer | quote-page
+  status    String   @default("new") // new | contacted | won | lost
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("leads")
+}

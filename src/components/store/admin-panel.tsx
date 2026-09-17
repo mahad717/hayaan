@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import { AdminBlog } from "@/components/store/admin-blog";
 import { AdminAccounting } from "@/components/store/admin-accounting";
 import { AdminReconciliation } from "@/components/store/admin-reconciliation";
 import { AdminProfit } from "@/components/store/admin-profit";
+import { AdminLeads } from "@/components/store/admin-leads";
 import type { Product, SafeUser } from "@/lib/types";
 
 /** Product as served by the admin-only /api/admin/products (adds cost). */
@@ -102,7 +103,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   // depth on top of the public API never returning cost).
   const [products, setLocalProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"catalog" | "accounting" | "reconciliation" | "profitability">("catalog");
+  const [tab, setTab] = useState<"catalog" | "leads" | "accounting" | "reconciliation" | "profitability">("catalog");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<AdminProduct | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY);
@@ -308,6 +309,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       <div className="mb-6 flex flex-wrap gap-2 border-b border-[#e6e2d4] pb-3">
         {([
           ["catalog", "Catalog", Package],
+          ["leads", "Leads", Users],
           ["accounting", "Accounting", Calculator],
           ["reconciliation", "Reconciliation", Scale],
           ["profitability", "Profitability", TrendingUp],
@@ -328,6 +330,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
         ))}
       </div>
 
+      {tab === "leads" && <AdminLeads />}
       {tab === "accounting" && <AdminAccounting />}
       {tab === "reconciliation" && <AdminReconciliation />}
       {tab === "profitability" && <AdminProfit />}

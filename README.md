@@ -120,6 +120,16 @@ idempotent — safe to run again.
 > `orders.shipping_phone`. Skipping it makes saving a profile fail with a
 > "column does not exist" error. Fresh projects don't need it.
 
+> **Existing deployments adding the lead engine (2026-09-17)?** Run
+> [`src/lib/supabase/migrations/2026-09-17-leads.sql`](src/lib/supabase/migrations/2026-09-17-leads.sql)
+> in the SQL editor — it creates the `leads` table (newsletter signups +
+> bulk-quote requests, RLS deny-all). Without it the footer/popup/quote
+> forms return an error and the admin Leads tab shows a setup banner.
+>
+> Optional: set `NEXT_PUBLIC_WHATSAPP_NUMBER` (digits only, with country
+> code, e.g. `252612345678`) as a Cloudflare **build variable** to enable
+> the floating WhatsApp chat button; the button stays hidden until it's set.
+
 ### 2. Seed the catalog and create the admin account
 
 From your machine (keys go in `.env`, which is never committed):

@@ -6,6 +6,7 @@ import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
+import { WhatsAppButton } from "@/components/store/whatsapp-button";
 
 /**
  * Session bootstrap: hydrate the zustand store with the signed-in user and
@@ -64,6 +65,7 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
       <Footer />
       <CartDrawer />
       <AuthModal />
+      <WhatsAppButton />
     </div>
   );
 }

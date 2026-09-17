@@ -1,10 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { Instagram, Twitter, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { useStore } from "@/hooks/use-store";
 
 export function Footer() {
   const { t } = useLang();
+  const { toast } = useStore();
+  const [nlEmail, setNlEmail] = useState("");
+  const [nlBusy, setNlBusy] = useState(false);
+  const [nlDone, setNlDone] = useState(false);
+
+  // Footer newsletter (Task 57 lead engine) — one field, zero friction.
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nlEmail.trim()) return;
+    setNlBusy(true);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "newsletter", email: nlEmail.trim(), source: "footer" }),
+      });
+      if (res.ok) {
+        setNlDone(true);
+        toast(t("ft.subscribed"), "success");
+      } else {
+        const data = await res.json().catch(() => null);
+        toast(data?.error ?? t("lead.popupError"), "error");
+      }
+    } catch {
+      toast(t("lead.popupError"), "error");
+    } finally {
+      setNlBusy(false);
+    }
+  };
   return (
     <footer className="mt-auto bg-brand-dark text-[#faf8f1]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -41,6 +72,11 @@ export function Footer() {
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.help")}</li>
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.shippingInfo")}</li>
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.track")}</li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/quote" className="inline-flex items-center gap-1">
+                  {t("ft.bulkOrders")}
+                </a>
+              </li>
               <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.contact")}</li>
             </ul>
           </div>
@@ -49,6 +85,28 @@ export function Footer() {
             <p className="mt-3 text-sm opacity-70 font-original">
               {t("ft.stayBlurb")}
             </p>
+            {nlDone ? (
+              <p className="mt-3 text-sm font-medium text-[#f9c27d]">{t("ft.subscribed")}</p>
+            ) : (
+              <form onSubmit={subscribe} className="mt-3 flex gap-2">
+                <input
+                  type="email"
+                  value={nlEmail}
+                  onChange={(e) => setNlEmail(e.target.value)}
+                  placeholder={t("ft.newsletterPh")}
+                  aria-label={t("ft.subscribe")}
+                  autoComplete="email"
+                  className="h-9 min-w-0 flex-1 rounded-lg border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/40 focus:border-[#f28c28] focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={nlBusy}
+                  className="h-9 shrink-0 rounded-lg bg-[#f28c28] px-3 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
+                >
+                  {t("ft.subscribe")}
+                </button>
+              </form>
+            )}
             <div className="mt-3 flex gap-2">
               <a
                 href="#"

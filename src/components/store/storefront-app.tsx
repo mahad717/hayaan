@@ -14,6 +14,8 @@ import { AccountView } from "@/components/store/account-view";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
 import { Footer } from "@/components/store/footer";
+import { LeadPopup } from "@/components/store/lead-popup";
+import { WhatsAppButton } from "@/components/store/whatsapp-button";
 import { useLang } from "@/components/store/language-provider";
 
 function SeedCallout() {
@@ -146,6 +148,8 @@ export function StorefrontApp({
 
       <CartDrawer />
       <AuthModal />
+      <LeadPopup />
+      <WhatsAppButton />
     </div>
   );
 }
