@@ -1218,3 +1218,21 @@ Stage Summary:
 - Optional: set NEXT_PUBLIC_WHATSAPP_NUMBER (digits, with country code) as a Cloudflare build variable to switch on the floating WhatsApp button; documented in README.
 - Artifacts: scripts/verify-leads-cdp.mjs, download/task57-quote-en.png, task57-quote-so.png, task57-popup.png, task57-footer-newsletter.png.
 - Owner follow-ups unchanged: accounting migration (2026-09-11-accounting.sql) still pending; 14 unpriced items; stock defaults; Google provider for Task 43.
+
+---
+Task ID: 58
+Agent: Super Z (main)
+Task: "done leads migration, and WhatsApp button" (verify lead engine live + get the WhatsApp button showing)
+
+Work Log:
+- Leads migration verified end-to-end on live API: POST /api/leads newsletter {ok:true} + quote {ok:true} stored; bad-email 400 guard intact; admin login -> GET /api/admin/leads returned both rows -> PATCH status new->contacted {ok:true} -> DELETE both -> {leads:[]} (test rows cleaned).
+- WhatsApp button was NOT live: deployed chunk still held runtime lookup (no inlined number) — the owner's NEXT_PUBLIC_WHATSAPP_NUMBER build var postdated the last deployed build.
+- Hardened anyway: WhatsAppButton now resolves number = prop -> WhatsAppNumberProvider context (server-fed) -> build-time inline. New src/components/store/whatsapp-number.tsx client context; layout.tsx resolveWhatsAppNumber() reads process.env then getCloudflareContext().env (dynamic import, try/catch) per request, so a Worker runtime variable now also works without rebuild. README documents both paths.
+- bun run build pass; eslint clean on the 3 files; commit d649510 pushed (50a26a4..d649510, housekeeping commit b0499c3 rode along).
+- Deploy polled via new chunk hashes (~60s). Fresh build INLINED the number: chunk shows "252615990144".replace(...) — owner's var was correctly a build variable.
+- CDP live verify (scripts/verify-whatsapp-cdp.mjs): a[href^=https://wa.me/252615990144] found+visible on home desktop (fixed, 52x52, bottom-right), home mobile, and PDP; href carries the prefilled greeting (wa.message); aria "Chat with us on WhatsApp"; 0 console exceptions.
+- Screenshots: download/task58-whatsapp-desktop.png, task58-whatsapp-mobile.png (+corner crops).
+
+Stage Summary:
+- Lead engine fully operational on hayaan.co: newsletter/popup/quote forms write to the leads table; admin Leads tab pipeline (new/contacted/won/lost + delete) verified against live Supabase; floating WhatsApp CTA live site-wide on the owner's number 252615990144.
+- No owner actions left for the lead engine; remaining follow-ups unchanged (accounting migration 2026-09-11-accounting.sql, 14 unpriced items, stock defaults, Google provider for Task 43).
