@@ -1168,3 +1168,27 @@ Stage Summary:
 - Verdict: all 94 live products are fully indexable (SSR + per-product metadata + structured data + sitemap + robots clean); nothing code-side blocks indexing.
 - User action handed over: verify hayaan.co in Google Search Console, submit sitemap.xml, optionally request indexing for top products; Bing WT optional.
 - Reminders kept: 14 unpriced items don't exist on-site yet (hence not indexable); star ratings only appear once genuine reviews exist.
+
+---
+Task ID: 56
+Agent: Super Z (main)
+Task: "Add somali language" (storefront i18n EN/SO)
+
+Work Log:
+- Built src/lib/i18n/dictionary.ts: typed flat en/so dictionaries (~250 keys, Record<DictKey> completeness enforced by TS), {var} interpolation, Somali category names keyed by slug, Somali mirrors of the 8 rotating import-time description templates (regex-exact match on the English template with {n}=product-name capture; owner-edited text falls back to stored English).
+- language-provider.tsx: client LangProvider (context, {lang,setLang,t}) + compact EN|SO pill toggle in the header right cluster (all viewports). setLang writes hayaan_lang cookie (1y, samesite=lax) + document.documentElement.lang; instant switch, no reload.
+- Root layout now async: reads hayaan_lang cookie -> initialLang prop + <html lang>; SSR HTML renders in the chosen language on first byte (no flash). Pre-hydration tap-feedback loader label templated per language. All routes already force-dynamic, so cookies() costs nothing.
+- Translated every customer surface: header (nav/dropdowns/drawer/aria), hero, catalog grid (heading/counts/sort options/pills/empty state), product card, PDP (back/stock/save/qty/CTAs/reassurance), cart drawer (totals/free-shipping meter), checkout (all guards, address form, Sifalo explainer, pay button), auth modal (both tabs + Google), account/profile, orders (status badges via ord.st* keys, verify notes, so-SO dates), seed callout, Sifalo Pay return page (server component uses translate() with cookie lang; SuccessCard/BackActions take lang prop).
+- PDP generateMetadata honors the cookie: Somali meta description + og:locale so_SO.
+- NOT translated (by design): admin dashboard (English back-office), product names (brand names), gateway-returned message bodies.
+- Lint: 5 errors confirmed PRE-EXISTING on baseline (react-hooks/set-state-in-effect in admin-*/checkout/storefront-app; stash-verified) — zero new issues from this change.
+- bun run build: pass (TS validated the so dictionary completeness; OpenNext worker emitted). Local smoke: curl with Cookie hayaan_lang=so -> html lang=so + Somali SSR, zero EN leftovers.
+- Commit b4ba22f pushed (562a8c5..b4ba22f); Cloudflare deploy live in ~90s (polled Somali hero marker).
+- Live verify (curl + CDP): home/PDP so-cookie -> lang=so, Somali meta+og:locale, pills Dhammaan/Kombuyuutarada & TV-yada/Guryaha & Xafiisyada/Teleefoonada & Saacadaha/Koronto & Shubista; default (no cookie) = English intact, no leak; CDP toggle click switches instantly + persists across reload via cookie; PDP description renders Somali template; 0 console exceptions. NOTE: user has since APPLIED the categories migration (live categories = the 4 new slugs) — Somali names map 1:1.
+- Two first-pass innerText probes reported false — self-inflicted: card hover "Add to cart" is opacity-0 on desktop so innerText excludes it; screenshots prove correct render.
+
+Stage Summary:
+- hayaan.co is bilingual: EN default, full Somali UI one tap away (EN|SO in header), cookie-persisted, SSR-correct on first paint.
+- Artifacts: scripts/verify-i18n-cdp.mjs, download/task56-home-en.png, task56-home-so.png, task56-pdp-so.png.
+- Follow-up option: crawlable /so/* URLs + hreflang (current v1 is cookie-based, single URL set — Somali text not separately indexable).
+- Owner follow-ups unchanged: 14 unpriced items, stock defaults, Google provider (Task 43).
