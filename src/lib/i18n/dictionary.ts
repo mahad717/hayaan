@@ -287,6 +287,7 @@ const en = {
   "quote.successBody":
     "We'll reply within one business day — WhatsApp first if you left a number.",
   "quote.another": "Send another request",
+  "quote.preferEmail": "Prefer email? Write to us directly:",
 
   // Seed callout (fresh deployments only)
   "seed.demo": "Demo mode.",
@@ -597,6 +598,7 @@ const so: Record<DictKey, string> = {
   "quote.successBody":
     "Waxaan kula soo jawaabi doonaa maalinta shaqada ee soo socda — WhatsApp haddii number ka tagtay.",
   "quote.another": "Dir codsi kale",
+  "quote.preferEmail": "Email miyaad doorbidaysaa? Nagala soo qor:",
 
   // Seed callout (fresh deployments only)
   "seed.demo": "Habka demo.",

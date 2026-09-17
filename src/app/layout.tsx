@@ -7,6 +7,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { LangProvider } from "@/components/store/language-provider";
 import { WhatsAppNumberProvider } from "@/components/store/whatsapp-number";
+import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { LANG_COOKIE, isLang, type Lang } from "@/lib/i18n/dictionary";
 
 // Panton — the official Hayaan brand face (self-hosted, no external fetch).
@@ -75,6 +76,14 @@ function OrganizationJsonLd() {
         name: "Hayaan Market",
         url: "https://hayaan.co",
         logo: "https://hayaan.co/hayaan-logo-green.svg",
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            email: SUPPORT_EMAIL,
+            availableLanguage: ["English", "Somali"],
+          },
+        ],
       },
       {
         "@type": "WebSite",

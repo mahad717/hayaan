@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Instagram, Twitter, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
 import { useStore } from "@/hooks/use-store";
+import { SUPPORT_EMAIL } from "@/lib/support-email";
 
 export function Footer() {
   const { t } = useLang();
@@ -77,7 +78,11 @@ export function Footer() {
                   {t("ft.bulkOrders")}
                 </a>
               </li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.contact")}</li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href={`mailto:${SUPPORT_EMAIL}`} className="inline-flex items-center gap-1">
+                  {SUPPORT_EMAIL}
+                </a>
+              </li>
             </ul>
           </div>
           <div>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Loader2, Trash2 } from "lucide-react";
 import { useStore } from "@/hooks/use-store";
+import { SUPPORT_EMAIL } from "@/lib/support-email";
 
 type Lead = {
   id: string;
@@ -180,7 +181,15 @@ export function AdminLeads() {
                   </td>
                   <td className="px-4 py-3 text-xs">
                     {l.phone && <p className="font-medium">{l.phone}</p>}
-                    {l.email && <p className="text-muted-foreground">{l.email}</p>}
+                    {l.email && (
+                      <a
+                        href={`mailto:${l.email}?subject=${encodeURIComponent("Re: your Hayaan Market request")}`}
+                        className="text-muted-foreground underline-offset-2 hover:underline"
+                        title={`Reply from ${SUPPORT_EMAIL}`}
+                      >
+                        {l.email}
+                      </a>
+                    )}
                     {!l.phone && !l.email && "—"}
                   </td>
                   <td className="max-w-[280px] px-4 py-3 text-xs text-foreground/80">

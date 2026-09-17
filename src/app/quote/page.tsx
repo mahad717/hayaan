@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { PackageCheck, ReceiptText, Timer } from "lucide-react";
 import { StoreShell } from "@/components/store/store-shell";
 import { QuoteForm } from "@/components/store/quote-form";
+import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
@@ -58,6 +59,16 @@ export default async function QuotePage() {
         <div className="mt-8">
           <QuoteForm />
         </div>
+
+        <p className="mt-4 text-center text-sm text-muted-foreground">
+          {t("quote.preferEmail")}{" "}
+          <a
+            href={`mailto:${SUPPORT_EMAIL}`}
+            className="font-medium text-brand-dark underline-offset-2 hover:underline"
+          >
+            {SUPPORT_EMAIL}
+          </a>
+        </p>
       </div>
     </StoreShell>
   );

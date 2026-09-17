@@ -136,6 +136,14 @@ idempotent — safe to run again.
 >
 > The button stays hidden until the variable exists in one of those places.
 
+> **Lead email notifications (optional):** every stored lead can be mirrored
+> to `support@hayaan.co` (or any inbox) via [Resend](https://resend.com).
+> Set `RESEND_API_KEY` (Worker secret or build variable) and, optionally,
+> `LEAD_NOTIFY_EMAIL` / `LEAD_NOTIFY_FROM` (both default to the support
+> address). Verify the `hayaan.co` domain in Resend (DNS SPF/DKIM records)
+> so notifications send from `support@hayaan.co` and replies thread back to
+> the lead. Without a key the site stores leads as usual — just no email.
+
 ### 2. Seed the catalog and create the admin account
 
 From your machine (keys go in `.env`, which is never committed):
