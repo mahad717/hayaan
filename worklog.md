@@ -1258,3 +1258,17 @@ Stage Summary:
 - support@hayaan.co is now the store's visible email identity on every lead surface + structured data; lead notifications will auto-email it once RESEND_API_KEY is set (after Resend domain verification of hayaan.co).
 - OWNER next steps for email: (1) receive: Cloudflare Email Routing support@hayaan.co -> personal inbox (free); (2) auto-notify: Resend account, verify hayaan.co domain (SPF/DKIM DNS), set RESEND_API_KEY; (3) manual sending from support@: Gmail "Send mail as" or mail client.
 - Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43).
+
+---
+Task ID: 59b
+Agent: Super Z (main)
+Task: "I'm using Zoho Mail" (+ screenshot: Zoho Mail onboarding wizard, Hayaan Market org) — email DNS advisory, no code changes
+
+Work Log:
+- Read the uploaded screenshot: user is mid Zoho Mail onboarding for the Hayaan Market org (welcome wizard 1 of 5).
+- DNS audit of hayaan.co (dig): NS = Cloudflare (davina/leo); MX = 10 mx.zoho.com / 20 mx2 / 50 mx3 (all correct); TXT = zoho-verification zb54202681 + SPF v=spf1 include:zohomail.com ~all + google-site-verification; DKIM zoho._domainkey EMPTY; _dmarc EMPTY.
+- Delivered the remaining-setup walkthrough: DKIM TXT (generate in Zoho Admin -> Domains -> hayaan.co -> DKIM, selector zoho, paste in Cloudflare as zoho._domainkey) + DMARC TXT (v=DMARC1; p=none; rua=mailto:support@hayaan.co) + finish wizard + two-way test send.
+- Confirmed plan fit: no code changes needed; Cloudflare Email Routing dropped (MX owned by Zoho); Resend auto-notifications unaffected (separate selector, lands in Zoho inbox, reply_to the lead).
+
+Stage Summary:
+- Owner-side email state: MX/SPF/verification done; DKIM + DMARC pending on user side (I verify propagation with dig once they add them). support@hayaan.co site wiring from Task 59 unchanged.
