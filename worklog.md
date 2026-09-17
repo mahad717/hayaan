@@ -1192,3 +1192,29 @@ Stage Summary:
 - Artifacts: scripts/verify-i18n-cdp.mjs, download/task56-home-en.png, task56-home-so.png, task56-pdp-so.png.
 - Follow-up option: crawlable /so/* URLs + hreflang (current v1 is cookie-based, single URL set — Somali text not separately indexable).
 - Owner follow-ups unchanged: 14 unpriced items, stock defaults, Google provider (Task 43).
+
+---
+Task ID: 57
+Agent: Super Z (main)
+Task: "Can we generate leads for hayaan like this company is doing https://explee.com/"
+
+Work Log:
+- Researched explee.com live (page_reader): it is now "AutoGTM by Explee" — AI B2B outbound: agents study your market, find high-intent prospects, write personalized cold emails, handle replies, book demos ($9 median cost/lead, $30 free credits).
+- Fit assessment delivered: that exact model (B2B cold-email outreach) does not fit B2C Somali retail — no Somali consumer email databases, email is not the local commerce channel (WhatsApp/phone is). The transferable playbook = capture reachable contacts + follow up + convert; built it into the storefront as the "lead engine" (commit 8801a7c, 16 files, +1070/-2).
+- DB: leads table (type newsletter|quote, name/email/phone/business/message/source, status new|contacted|won|lost) — migration src/lib/supabase/migrations/2026-09-17-leads.sql (RLS deny-all, service-role only, idempotent), schema.sql section for fresh installs, Prisma Lead model + db push for local fallback.
+- API: POST /api/leads (public: validation per type, email regex, honeypot field `website` with fake-ok drop, per-IP 5/10min throttle, length caps) and /api/admin/leads GET?status&limit / PATCH {id,status} / DELETE ?id (requireAdminUser, service client).
+- Storefront: footer "Stay in touch" now a working email capture (toast + success state) with "Bulk orders & quotes" link in Support; timed offer popup (18s, localStorage hayaan_offer_seen, weekly re-ask, EN/SO, honeypot, email+WhatsApp capture); floating WhatsApp button (env-gated NEXT_PUBLIC_WHATSAPP_NUMBER, prefilled greeting in visitor language, hidden when unset); new SSR /quote page (metadata+canonical, benefit cards, bulk-quote form = Explee's "book a demo" analog) mounted via StoreShell.
+- Admin: new "Leads" tab (Users icon) between Catalog and Accounting — table newest-first with type/name/business/contact/message/source, status select (optimistic PATCH), delete with confirm, empty state, and a "run the migration" banner when the table is missing.
+- i18n: ~40 new keys (lead.*, ft.bulkOrders, ft.newsletter*, wa.*, quote.*) added to BOTH en and so dictionaries (TS-enforced completeness); /quote SSRs in cookie language.
+- Local verify (dev + sqlite): newsletter + quote POSTs stored; validation 400s; honeypot drop; admin 403 unauthenticated; login→GET→PATCH(status→contacted)→DELETE all pass; /quote EN+SO markers; footer markers. Local test rows cleaned; dev server stopped.
+- Build: bun run build pass; zero new eslint issues (only new/changed files linted). Commit 8801a7c pushed (b4ba22f..8801a7c); Cloudflare deploy live ~3 min (polled /quote 404→200).
+- Live verify (curl + CDP): /quote EN+SO markers, lang attr correct; footer Subscribe + Bulk orders present; POST /api/leads returns 500 "Could not find the table 'public.leads'" (expected until owner runs the migration); popup appears at ~18s with correct title; 0 console exceptions.
+- Tooling note: Bash output layer renders the literal text "[m" as eaten (ANSI-stripping artifact) — a correct `const [meRes, cartRes]` line in store-shell.tsx appeared as `const eRes, cartRes]` in cat/grep/node output and burned investigation time; Read tool + bun run build are the source of truth. scripts/verify-leads-cdp.mjs uses new chrome path (/home/z/.cache/puppeteer/chrome/linux-153.0.8010.36/chrome-linux64/chrome).
+- Incidental: pushed previously-local housekeeping commit f3a7c94 (screenshots/debug scripts) along with the task commit.
+
+Stage Summary:
+- Hayaan now captures leads like Explee captures customers: footer newsletter, weekly offer popup (email + WhatsApp), /quote bulk-request page for B2B (offices/schools/hotels/shops), WhatsApp CTA — all bilingual EN/SO, all landing in a new admin Leads tab with a new→contacted→won/lost pipeline.
+- OWNER ACTION REQUIRED: run src/lib/supabase/migrations/2026-09-17-leads.sql in the Supabase SQL editor (same flow as the categories/accounting migrations). Until then the forms return an error and the admin Leads tab shows a setup banner.
+- Optional: set NEXT_PUBLIC_WHATSAPP_NUMBER (digits, with country code) as a Cloudflare build variable to switch on the floating WhatsApp button; documented in README.
+- Artifacts: scripts/verify-leads-cdp.mjs, download/task57-quote-en.png, task57-quote-so.png, task57-popup.png, task57-footer-newsletter.png.
+- Owner follow-ups unchanged: accounting migration (2026-09-11-accounting.sql) still pending; 14 unpriced items; stock defaults; Google provider for Task 43.
