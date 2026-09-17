@@ -9,10 +9,12 @@
 // pending transactions.
 
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { CheckCircle2, Clock3, XCircle, HelpCircle } from "lucide-react";
 
 import { getServerUser } from "@/lib/current-user";
 import { getOwnedOrder, verifyAndApplyToOrder } from "@/lib/sifalo-server";
+import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { SifaloReturnActions } from "./sifalo-return-client";
 
 export const dynamic = "force-dynamic";
@@ -37,6 +39,12 @@ export default async function SifaloReturnPage({
   const sid = params.sid ?? null;
 
   const user = await getServerUser();
+  // Somali (so) when the visitor's language cookie says so; English otherwise.
+  const cookieStore = await cookies();
+  const lang = isLang(cookieStore.get(LANG_COOKIE)?.value)
+    ? (cookieStore.get(LANG_COOKIE)!.value as "en" | "so")
+    : "en";
+  const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
 
   // ---- Guard states -------------------------------------------------------
   if (!orderId) {
@@ -45,10 +53,10 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
           <ResultHead
             icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-            title="Missing payment reference"
-            body="We couldn't tell which order this payment belongs to. If you completed a payment, check your Orders page — it will update once the payment is confirmed."
+            title={t("sf.missingRefTitle")}
+            body={t("sf.missingRefBody")}
           />
-          <BackActions />
+          <BackActions lang={lang} />
         </div>
       </Shell>
     );
@@ -60,10 +68,10 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
           <ResultHead
             icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-            title="Sign in to confirm your payment"
-            body={`We couldn't confirm order ${orderId.slice(0, 8).toUpperCase()} because you are signed out. Sign in with the same account you paid with, then open Orders — the payment status will refresh there.`}
+            title={t("sf.signinTitle")}
+            body={t("sf.signinBody", { ref: orderId.slice(0, 8).toUpperCase() })}
           />
-          <BackActions />
+          <BackActions lang={lang} />
         </div>
       </Shell>
     );
@@ -78,17 +86,17 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
           <ResultHead
             icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-            title="Order not found"
-            body="This order doesn't exist or belongs to a different account."
+            title={t("sf.notFoundTitle")}
+            body={t("sf.notFoundBody")}
           />
-          <BackActions />
+          <BackActions lang={lang} />
         </div>
       </Shell>
     );
   }
 
   if (existing.paymentStatus === "paid" || existing.status === "paid") {
-    return <SuccessCard orderId={orderId} total={existing.totalAmount} paymentType={null} />;
+    return <SuccessCard lang={lang} orderId={orderId} total={existing.totalAmount} paymentType={null} />;
   }
 
   // ---- Live verification ----------------------------------------------------
@@ -99,11 +107,11 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
           <ResultHead
             icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-            title="Couldn't check your payment"
+            title={t("sf.cantCheckTitle")}
             body={applied.error}
           />
           <SifaloReturnActions orderId={orderId} initialState="unknown" />
-          <BackActions />
+          <BackActions lang={lang} />
         </div>
       </Shell>
     );
@@ -112,7 +120,7 @@ export default async function SifaloReturnPage({
   const { result, order } = applied;
 
   if (result.state === "paid") {
-    return <SuccessCard orderId={orderId} total={order?.totalAmount ?? existing.totalAmount} paymentType={result.paymentType} />;
+    return <SuccessCard lang={lang} orderId={orderId} total={order?.totalAmount ?? existing.totalAmount} paymentType={result.paymentType} />;
   }
 
   if (result.state === "pending") {
@@ -121,11 +129,11 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#f5e3c8", backgroundColor: "#fffaf1" }}>
           <ResultHead
             icon={<Clock3 className="h-12 w-12 text-[#f28c28]" />}
-            title="Payment pending approval"
-            body={`${result.message} Your order ${orderId.slice(0, 8).toUpperCase()} is saved — we'll confirm it as soon as the network approves the transaction. You can safely check again.`}
+            title={t("sf.pendingTitle")}
+            body={t("sf.pendingBody", { msg: result.message, ref: orderId.slice(0, 8).toUpperCase() })}
           />
           <SifaloReturnActions orderId={orderId} initialState="pending" />
-          <BackActions />
+          <BackActions lang={lang} />
         </div>
       </Shell>
     );
@@ -137,10 +145,10 @@ export default async function SifaloReturnPage({
         <div className={CARD_BASE} style={{ borderColor: "#f3d4cf", backgroundColor: "#fff7f5" }}>
           <ResultHead
             icon={<XCircle className="h-12 w-12 text-red-500" />}
-            title="Payment was not completed"
-            body={`${result.message} No money has left your account. Your order ${orderId.slice(0, 8).toUpperCase()} is saved — you can retry checkout from the store.`}
+            title={t("sf.failedTitle")}
+            body={t("sf.failedBody", { msg: result.message, ref: orderId.slice(0, 8).toUpperCase() })}
           />
-          <BackActions label="Back to store to retry" />
+          <BackActions lang={lang} label={t("sf.backRetry")} />
         </div>
       </Shell>
     );
@@ -152,11 +160,11 @@ export default async function SifaloReturnPage({
       <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
         <ResultHead
           icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-          title="We couldn't verify the payment yet"
-          body={`${result.message} If you just completed the payment it can take a moment to register — try checking again.`}
+          title={t("sf.unknownTitle")}
+          body={t("sf.unknownBody", { msg: result.message })}
         />
         <SifaloReturnActions orderId={orderId} initialState="unknown" />
-        <BackActions />
+        <BackActions lang={lang} />
       </div>
     </Shell>
   );
@@ -186,14 +194,14 @@ function ResultHead({ icon, title, body }: { icon: React.ReactNode; title: strin
   );
 }
 
-function BackActions({ label = "Back to store" }: { label?: string }) {
+function BackActions({ label, lang }: { label?: string; lang: "en" | "so" }) {
   return (
     <div className="mt-6 flex justify-center">
       <Link
         href="/"
         className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
       >
-        {label}
+        {label ?? translate(lang, "pdp.back")}
       </Link>
     </div>
   );
@@ -203,28 +211,31 @@ function SuccessCard({
   orderId,
   total,
   paymentType,
+  lang,
 }: {
   orderId: string;
   total: number;
   paymentType: string | null;
+  lang: "en" | "so";
 }) {
+  const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
   return (
     <Shell>
       <div className={CARD_BASE} style={{ borderColor: "#cfe3cb", backgroundColor: "#fbfdf9" }}>
         <div className="flex flex-col items-center gap-3 text-center">
           <CheckCircle2 className="h-14 w-14 text-brand" />
-          <h1 className="text-2xl font-semibold text-brand-dark">Payment received — thank you!</h1>
+          <h1 className="text-2xl font-semibold text-brand-dark">{t("sf.received")}</h1>
           <p className="text-sm text-muted-foreground">
-            Order reference{" "}
+            {t("co.orderRef")}{" "}
             <code className="rounded bg-secondary px-1.5 py-0.5 text-brand">
               {orderId.slice(0, 8).toUpperCase()}
             </code>
-            {paymentType ? <span className="ml-2 text-xs">via {paymentType}</span> : null}
+            {paymentType ? <span className="ml-2 text-xs">{t("sf.via", { type: paymentType })}</span> : null}
           </p>
         </div>
         <div className="mt-6 rounded-lg border border-[#e6e2d4] bg-white px-4 py-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Amount paid</span>
+            <span className="text-muted-foreground">{t("co.totalPaid")}</span>
             <span className="font-medium text-brand">{formatPrice(total)}</span>
           </div>
         </div>
@@ -233,13 +244,13 @@ function SuccessCard({
             href="/"
             className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark"
           >
-            Continue shopping
+            {t("co.continueShopping")}
           </Link>
           <Link
             href="/?view=orders"
             className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
           >
-            View my orders
+            {t("co.viewOrders")}
           </Link>
         </div>
       </div>

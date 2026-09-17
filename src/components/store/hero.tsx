@@ -2,8 +2,10 @@
 
 import { Sparkles, ArrowRight, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLang } from "@/components/store/language-provider";
 
 export function Hero({ onShop }: { onShop: () => void }) {
+  const { t } = useLang();
   return (
     <section className="relative overflow-hidden border-b border-[#e6e2d4] bg-[#faf8f1]">
       {/* Soft botanical gradient — green + apricot wash */}
@@ -21,26 +23,25 @@ export function Hero({ onShop }: { onShop: () => void }) {
         <div className="flex flex-col gap-5">
           <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-brand shadow-sm ring-1 ring-[#e6e2d4]">
             <Sparkles className="h-3.5 w-3.5 text-[#f28c28]" />
-            Free shipping over $75
+            {t("hero.badge")}
           </span>
 
           <h1 className="text-4xl font-black font-panton leading-tight tracking-tight text-brand-dark sm:text-5xl md:text-6xl">
-            Find what you need,
+            {t("hero.title1")}
             <br />
             <span className="bg-gradient-to-r from-[#14532d] to-[#3f7d4a] bg-clip-text text-transparent">
-              discover what you&apos;ll love.
+              {t("hero.title2")}
             </span>
           </h1>
 
           <p className="max-w-prose text-base text-muted-foreground font-original sm:text-lg">
-            Useful, well-selected finds across fashion, beauty, electronics, and
-            home — all in one place, ready to order in minutes.
+            {t("hero.sub")}
           </p>
 
           {/* CTAs — primary green, secondary outlined green */}
           <div className="flex flex-wrap gap-3">
             <Button size="lg" onClick={onShop} className="btn-accent group">
-              Start shopping
+              {t("hero.ctaShop")}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
             {/* Label flip to white on the brand-green hover fill lives in
@@ -53,20 +54,20 @@ export function Hero({ onShop }: { onShop: () => void }) {
               onClick={onShop}
               className="border-brand text-brand hover:bg-brand hover:text-white"
             >
-              Browse categories
+              {t("hero.ctaCategories")}
             </Button>
           </div>
 
           {/* Reassurance row */}
           <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-xs text-muted-foreground font-original">
             <span className="flex items-center gap-1.5">
-              <Truck className="h-3.5 w-3.5 text-brand" /> Delivered to your door
+              <Truck className="h-3.5 w-3.5 text-brand" /> {t("hero.reassure1")}
             </span>
             <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-brand" /> Secure payment via Sifalo Pay
+              <Shield className="h-3.5 w-3.5 text-brand" /> {t("hero.reassure2")}
             </span>
             <span className="flex items-center gap-1.5">
-              <RotateCcw className="h-3.5 w-3.5 text-brand" /> Track every order
+              <RotateCcw className="h-3.5 w-3.5 text-brand" /> {t("hero.reassure3")}
             </span>
           </div>
         </div>
@@ -101,8 +102,8 @@ export function Hero({ onShop }: { onShop: () => void }) {
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f28c28]/10 text-[#f28c28]">
               <Wallet className="h-4 w-4" />
             </span>
-            <span className="font-medium text-foreground">Pay your way</span>
-            <span className="text-muted-foreground">cards, EVC Plus, eDahab &amp; more</span>
+            <span className="font-medium text-foreground">{t("hero.payYourWay")}</span>
+            <span className="text-muted-foreground">{t("hero.payMethods")}</span>
           </div>
         </div>
       </div>

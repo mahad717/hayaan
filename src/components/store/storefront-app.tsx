@@ -14,9 +14,11 @@ import { AccountView } from "@/components/store/account-view";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
 import { Footer } from "@/components/store/footer";
+import { useLang } from "@/components/store/language-provider";
 
 function SeedCallout() {
   const { products, user, productsLoaded, view } = useStore();
+  const { t } = useLang();
   const [hidden, setHidden] = useHiddenState();
   // Only meaningful on the catalog view, and only once the catalog fetch has
   // actually settled. Gating on bootReady alone (session bootstrap) left a
@@ -29,7 +31,7 @@ function SeedCallout() {
     <div className="border-b border-[#e6e2d4] bg-[#fef1de] text-[#7a4a14]">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 text-sm sm:px-6">
         <p>
-          <strong>Demo mode.</strong> No products yet. Click below to seed the catalog with sample data and an admin user.
+          <strong>{t("seed.demo")}</strong> {t("seed.body")}
         </p>
         <div className="flex gap-2">
           <button
@@ -41,16 +43,16 @@ function SeedCallout() {
                 return;
               }
               const data = await res.json().catch(() => null);
-              alert(data?.error ?? "Seeding failed — check the deployment logs.");
+              alert(data?.error ?? t("seed.fail"));
             }}
           >
-            Seed now
+            {t("seed.now")}
           </button>
           <button
             className="text-xs underline"
             onClick={() => setHidden(true)}
           >
-            Dismiss
+            {t("seed.dismiss")}
           </button>
         </div>
       </div>

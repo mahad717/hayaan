@@ -9,6 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { addToCart, fetchCategories, fetchProducts, goToView, useStore } from "@/hooks/use-store";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/components/store/language-provider";
+import { categoryName, productDescription } from "@/lib/i18n/dictionary";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -26,6 +28,7 @@ function formatPrice(price: number, currency: string) {
  */
 export function ProductDetail({ initialProduct }: { initialProduct?: Product }) {
   const { selectedProduct, openProduct, setView, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
+  const { t, lang } = useLang();
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
   const [adding, setAdding] = useState(false);
@@ -89,7 +92,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
     try {
       const cart = await addToCart(product.id, qty, "increment");
       setCart(cart);
-      toast(`${qty} × ${product.name} added to cart`, "success");
+      toast(t("card.addedAria", { name: product.name }), "success");
       setCartOpen(true);
     } catch (err) {
       toast((err as Error).message, "error");
@@ -131,7 +134,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           asChild
         >
           <Link href="/" prefetch={true}>
-            <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+            <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
           </Link>
         </Button>
       ) : (
@@ -141,7 +144,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           className="mb-6 text-brand hover:bg-secondary"
           onClick={() => setView("home")}
         >
-          <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+          <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
         </Button>
       )}
 
@@ -170,7 +173,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                     "aspect-square overflow-hidden rounded-lg border bg-[#faf8f1] transition",
                     activeImage === i ? "border-brand ring-2 ring-[#f28c28]/30" : "border-[#e6e2d4] hover:border-brand/50",
                   )}
-                  aria-label={`View image ${i + 1}`}
+                  aria-label={t("pdp.imgAria", { n: i + 1 })}
                   aria-pressed={activeImage === i}
                 >
                   <img src={src} alt="" className="h-full w-full object-cover" />
@@ -185,11 +188,11 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           <div>
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
-                {product.category?.name ?? "—"}
+                {product.category ? categoryName(product.category.name, product.category.slug, lang) : "—"}
               </span>
               {product.featured && (
                 <Badge variant="secondary" className="bg-secondary text-brand">
-                  Featured
+                  {t("card.featured")}
                 </Badge>
               )}
             </div>
@@ -198,11 +201,11 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             </h1>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
               <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
-              <span aria-label={product.rating ? `Rated ${product.rating} out of 5` : "Unrated"}>
-                {product.rating || "Unrated"}
+              <span aria-label={product.rating ? t("card.ratedAria", { r: product.rating }) : t("pdp.unrated")}>
+                {product.rating || t("pdp.unrated")}
               </span>
-              {product.reviewCount > 0 && <span>· {product.reviewCount} reviews</span>}
-              <span>· SKU {product.sku ?? "—"}</span>
+              {product.reviewCount > 0 && <span>· {t("pdp.reviews", { n: product.reviewCount })}</span>}
+              <span>· {t("pdp.sku", { sku: product.sku ?? "—" })}</span>
             </div>
           </div>
 
@@ -218,13 +221,13 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             )}
             {discount > 0 && (
               <Badge className="bg-[#fef1de] text-[#f28c28] hover:bg-[#fef1de]">
-                Save {discount}%
+                {t("pdp.save", { p: discount })}
               </Badge>
             )}
           </div>
 
           <p className="max-w-prose text-sm leading-relaxed text-muted-foreground font-original sm:text-base">
-            {product.description}
+            {productDescription(product.description, lang)}
           </p>
 
           {product.tags.length > 0 && (
@@ -246,10 +249,10 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             />
             <span className="text-muted-foreground">
               {product.stock > 5
-                ? `${product.stock} in stock`
+                ? t("pdp.stock", { n: product.stock })
                 : product.stock > 0
-                  ? `Only ${product.stock} left in stock`
-                  : "Out of stock"}
+                  ? t("pdp.lowStock", { n: product.stock })
+                  : t("pdp.out")}
             </span>
           </div>
 
@@ -261,7 +264,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                 size="icon"
                 className="h-10 w-10 text-brand"
                 onClick={() => setQty(Math.max(1, qty - 1))}
-                aria-label="Decrease quantity"
+                aria-label={t("pdp.qtyMinus")}
                 disabled={qty <= 1}
               >
                 <Minus className="h-4 w-4" />
@@ -274,7 +277,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                 size="icon"
                 className="h-10 w-10 text-brand"
                 onClick={() => setQty(Math.min(product.stock, qty + 1))}
-                aria-label="Increase quantity"
+                aria-label={t("pdp.qtyPlus")}
                 disabled={qty >= product.stock}
               >
                 <Plus className="h-4 w-4" />
@@ -288,7 +291,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
               onClick={handleAdd}
               disabled={adding || product.stock === 0}
             >
-              <ShoppingBag className="mr-2 h-4 w-4" /> Add to cart
+              <ShoppingBag className="mr-2 h-4 w-4" /> {t("card.add")}
             </Button>
 
             {/* Buy now — Deep Hayaan Green */}
@@ -298,7 +301,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
               onClick={handleBuyNow}
               disabled={adding || product.stock === 0}
             >
-              Buy now
+              {t("pdp.buyNow")}
             </Button>
           </div>
 
@@ -306,15 +309,15 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm font-original sm:grid-cols-3">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-brand" />
-              Free shipping over $75
+              {t("hero.badge")}
             </div>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-brand" />
-              Secure checkout via Sifalo Pay
+              {t("hero.reassure2")}
             </div>
             <div className="flex items-center gap-2">
               <RotateCcw className="h-4 w-4 text-brand" />
-              Track every order
+              {t("hero.reassure3")}
             </div>
           </div>
         </div>

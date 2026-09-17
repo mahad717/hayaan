@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useStore, fetchOrders } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
 import type { Order, OrderStatus } from "@/lib/types";
 
 function formatPrice(n: number, currency = "USD") {
@@ -29,6 +30,7 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
 
 export function OrdersView() {
   const { user, setView, setAuthOpen, bootReady } = useStore();
+  const { t, lang } = useLang();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [checkingId, setCheckingId] = useState<string | null>(null);
@@ -50,16 +52,16 @@ export function OrdersView() {
       if (res.ok && data.state === "paid") {
         const fresh = await fetchOrders();
         setOrders(fresh);
-        setVerifyNote("Payment confirmed — thank you!");
+        setVerifyNote(t("ord.verifyPaid"));
       } else if (res.ok && data.state === "pending") {
-        setVerifyNote("Still pending approval by the payment network.");
+        setVerifyNote(t("ord.verifyPending"));
       } else if (res.ok && data.state === "failed") {
-        setVerifyNote("The payment failed or was declined.");
+        setVerifyNote(t("ord.verifyFailed"));
       } else {
-        setVerifyNote(data?.error ?? "Could not check with Sifalo Pay right now.");
+        setVerifyNote(data?.error ?? t("ord.verifyError"));
       }
     } catch {
-      setVerifyNote("Network error — please try again.");
+      setVerifyNote(t("ord.verifyNetwork"));
     } finally {
       setCheckingId(null);
     }
@@ -85,7 +87,7 @@ export function OrdersView() {
     return (
       <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
         <Loader2 className="h-8 w-8 animate-spin text-brand" />
-        <p className="text-sm text-muted-foreground">Loading your orders…</p>
+        <p className="text-sm text-muted-foreground">{t("ord.loading")}</p>
       </div>
     );
   }
@@ -94,9 +96,9 @@ export function OrdersView() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
         <Package className="mx-auto h-12 w-12 text-brand" />
-        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">Sign in to see your orders</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Your order history lives in your account.</p>
-        <Button className="mt-4 bg-brand hover:bg-brand-dark" onClick={() => setAuthOpen(true)}>Sign in</Button>
+        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">{t("ord.signinTitle")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("ord.signinBody")}</p>
+        <Button className="mt-4 bg-brand hover:bg-brand-dark" onClick={() => setAuthOpen(true)}>{t("header.signIn")}</Button>
       </div>
     );
   }
@@ -104,14 +106,18 @@ export function OrdersView() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
-        <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+        <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
       </Button>
 
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Your orders</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">{t("ord.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {loading ? "Loading…" : `${orders.length} order${orders.length === 1 ? "" : "s"}`}
+            {loading
+              ? t("ord.loadingDots")
+              : orders.length === 1
+                ? t("ord.countOne")
+                : t("ord.countOther", { n: orders.length })}
           </p>
         </div>
       </div>
@@ -131,8 +137,8 @@ export function OrdersView() {
         <Card className="border-dashed border-[#e6e2d4]">
           <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
             <Package className="h-10 w-10 text-brand" />
-            <p className="text-sm text-muted-foreground">You haven’t placed any orders yet.</p>
-            <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>Start shopping</Button>
+            <p className="text-sm text-muted-foreground">{t("ord.none")}</p>
+            <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>{t("cart.startShopping")}</Button>
           </CardContent>
         </Card>
       ) : (
@@ -141,9 +147,9 @@ export function OrdersView() {
             <Card key={o.id} className="border-[#e6e2d4]">
               <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0 pb-3">
                 <div>
-                  <CardTitle className="text-base text-brand-dark">Order {o.id.slice(0, 8).toUpperCase()}</CardTitle>
+                  <CardTitle className="text-base text-brand-dark">{t("ord.orderLabel", { ref: o.id.slice(0, 8).toUpperCase() })}</CardTitle>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    {new Date(o.createdAt).toLocaleDateString(undefined, {
+                    {new Date(o.createdAt).toLocaleDateString(lang === "so" ? "so-SO" : undefined, {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -151,7 +157,7 @@ export function OrdersView() {
                   </p>
                 </div>
                 <Badge className={STATUS_COLOR[o.status as OrderStatus]}>
-                  {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
+                  {t(`ord.st${o.status.charAt(0).toUpperCase()}${o.status.slice(1)}` as import("@/lib/i18n/dictionary").DictKey)}
                 </Badge>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
@@ -163,7 +169,7 @@ export function OrdersView() {
                       </div>
                       <div className="flex-1">
                         <p className="font-medium leading-tight">{it.name}</p>
-                        <p className="text-xs text-muted-foreground">Qty {it.quantity}</p>
+                        <p className="text-xs text-muted-foreground">{t("ord.qty", { n: it.quantity })}</p>
                       </div>
                       <span className="text-sm">{formatPrice(it.price * it.quantity, o.currency)}</span>
                     </li>
@@ -172,7 +178,7 @@ export function OrdersView() {
                 <Separator />
                 <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground">
                   <div>
-                    <p className="font-medium text-foreground">Shipping to</p>
+                    <p className="font-medium text-foreground">{t("ord.shipTo")}</p>
                     <p>{o.shippingName}</p>
                     {o.shippingPhone && <p>{o.shippingPhone}</p>}
                     <p>{o.shippingAddress}</p>
@@ -183,7 +189,7 @@ export function OrdersView() {
                   </div>
                   <div className="flex flex-col justify-between">
                     <div>
-                      <p className="font-medium text-foreground">Payment</p>
+                      <p className="font-medium text-foreground">{t("ord.payment")}</p>
                       <p className="capitalize">{o.paymentMethod}</p>
                       {o.paymentMethod === "sifalo" && o.paymentStatus && o.paymentStatus !== "paid" && o.status !== "paid" && (
                         <div className="mt-1.5 flex flex-col items-start gap-1.5">
@@ -193,7 +199,7 @@ export function OrdersView() {
                               : "bg-[#fef1de] text-[#c87b1f]"
                           }`}>
                             {o.paymentStatus === "failed" ? <XCircle className="h-3 w-3" /> : <Clock3 className="h-3 w-3" />}
-                            Payment {o.paymentStatus}
+                            {t("ord.payStatus", { status: o.paymentStatus })}
                           </span>
                           <button
                             type="button"
@@ -202,14 +208,14 @@ export function OrdersView() {
                             className="flex items-center gap-1 text-[11px] font-medium text-brand hover:underline disabled:opacity-60"
                           >
                             <RefreshCw className={`h-3 w-3 ${checkingId === o.id ? "animate-spin" : ""}`} />
-                            {checkingId === o.id ? "Checking…" : "Check payment status"}
+                            {checkingId === o.id ? t("ord.checking") : t("ord.checkStatus")}
                           </button>
                         </div>
                       )}
                       {o.paymentRef && <p className="font-mono text-[10px]">{o.paymentRef}</p>}
                     </div>
                     <div className="mt-2 flex justify-between border-t border-[#e6e2d4] pt-2 text-sm">
-                      <span className="font-medium text-foreground">Total</span>
+                      <span className="font-medium text-foreground">{t("cart.total")}</span>
                       <span className="font-semibold text-brand">{formatPrice(o.totalAmount, o.currency)}</span>
                     </div>
                   </div>

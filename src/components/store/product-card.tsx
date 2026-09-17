@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@/lib/types";
 import { addToCart, useStore } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
+import { categoryName } from "@/lib/i18n/dictionary";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -22,6 +24,7 @@ function formatPrice(price: number, currency: string) {
 export function ProductCard({ product }: { product: Product }) {
   const router = useRouter();
   const { setCart, toast, user, setAuthOpen } = useStore();
+  const { t, lang } = useLang();
   // Brief "added" confirmation: the card's add buttons flash a check mark
   // after a successful add, then revert.
   const [added, setAdded] = useState(false);
@@ -46,7 +49,7 @@ export function ProductCard({ product }: { product: Product }) {
     try {
       const cart = await addToCart(product.id, 1, "increment");
       setCart(cart);
-      toast(`${product.name} added to cart`, "success");
+      toast(t("card.addedAria", { name: product.name }), "success");
       setAdded(true);
       if (addedTimer.current) window.clearTimeout(addedTimer.current);
       addedTimer.current = window.setTimeout(() => setAdded(false), 1500);
@@ -64,7 +67,7 @@ export function ProductCard({ product }: { product: Product }) {
         if (e.key === "Enter") router.push(`/product/${product.slug}`);
       }}
       className="group relative flex cursor-pointer flex-col overflow-hidden p-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f28c28] bg-white border-[#e6e2d4]"
-      aria-label={`View ${product.name}`}
+      aria-label={t("card.viewAria", { name: product.name })}
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-[#faf8f1]">
@@ -88,7 +91,7 @@ export function ProductCard({ product }: { product: Product }) {
             variant="secondary"
             className="absolute right-3 top-3 bg-white/95 text-brand hover:bg-white shadow-sm"
           >
-            Featured
+            {t("card.featured")}
           </Badge>
         )}
 
@@ -102,17 +105,17 @@ export function ProductCard({ product }: { product: Product }) {
             size="sm"
             className="btn-accent w-full shadow-md"
             onClick={handleAdd}
-            aria-label={added ? `${product.name} added to cart` : `Add ${product.name} to cart`}
+            aria-label={added ? t("card.addedAria", { name: product.name }) : t("card.addAria", { name: product.name })}
           >
             {added ? (
               <>
                 <Check className="mr-1.5 h-4 w-4" aria-hidden />
-                Added
+                {t("card.added")}
               </>
             ) : (
               <>
                 <ShoppingBag className="mr-1.5 h-4 w-4" aria-hidden />
-                Add to cart
+                {t("card.add")}
               </>
             )}
           </Button>
@@ -123,11 +126,11 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
-            {product.category?.name ?? "—"}
+            {product.category ? categoryName(product.category.name, product.category.slug, lang) : "—"}
           </span>
-          <div className="flex items-center gap-1 text-xs text-muted-foreground" aria-label={product.rating ? `Rated ${product.rating} out of 5` : "New product"}>
+          <div className="flex items-center gap-1 text-xs text-muted-foreground" aria-label={product.rating ? t("card.ratedAria", { r: product.rating }) : t("card.newAria")}>
             <Star className="h-3.5 w-3.5 fill-[#f9c27d] text-[#f9c27d]" />
-            {product.rating || "New"}
+            {product.rating || t("card.new")}
             {product.reviewCount > 0 && <span className="opacity-70">({product.reviewCount})</span>}
           </div>
         </div>
@@ -164,7 +167,7 @@ export function ProductCard({ product }: { product: Product }) {
             size="icon"
             className="btn-accent h-9 w-9 sm:hidden"
             onClick={handleAdd}
-            aria-label={added ? `${product.name} added to cart` : `Add ${product.name} to cart`}
+            aria-label={added ? t("card.addedAria", { name: product.name }) : t("card.addAria", { name: product.name })}
           >
             {added ? <Check className="h-4 w-4" aria-hidden /> : <Plus className="h-4 w-4" aria-hidden />}
           </Button>

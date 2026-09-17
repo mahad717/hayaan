@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
+import { isLang, LANG_COOKIE, productDescription } from "@/lib/i18n/dictionary";
 
 // SSR per request — catalog changes are visible immediately and crawlers
 // always see fresh content.
@@ -15,8 +17,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) return { title: "Product not found", robots: { index: false, follow: true } };
 
+  // Honor the language cookie so shares/crawl previews render the Somali
+  // description for Somali-preferring visitors.
+  const cookieStore = await cookies();
+  const lang = isLang(cookieStore.get(LANG_COOKIE)?.value)
+    ? (cookieStore.get(LANG_COOKIE)!.value as "en" | "so")
+    : "en";
+  const soDesc = productDescription(product.description, lang);
   const description =
-    product.description.length > 157 ? `${product.description.slice(0, 157)}…` : product.description;
+    soDesc.length > 157 ? `${soDesc.slice(0, 157)}…` : soDesc;
   const image = product.images[0];
 
   return {
@@ -28,6 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `/product/${product.slug}`,
       type: "website",
+      locale: lang === "so" ? "so_SO" : "en_US",
       images: image ? [{ url: image, alt: product.name }] : undefined,
     },
     twitter: {

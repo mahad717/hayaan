@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { Category, Product } from "@/lib/types";
+import { useLang } from "@/components/store/language-provider";
+import { categoryName } from "@/lib/i18n/dictionary";
 
 export function ProductGrid({
   initialProducts,
@@ -34,6 +36,7 @@ export function ProductGrid({
     setSort,
     setCartOpen,
   } = useStore();
+  const { t, lang } = useLang();
   const catalogReady = initialProducts !== undefined;
   const [loading, setLoading] = useState(products.length === 0 && !catalogReady);
 
@@ -98,24 +101,26 @@ export function ProductGrid({
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">
-            Find your next favorite
+            {t("grid.heading")}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {visible.length} product{visible.length === 1 ? "" : "s"} to explore
-            {searchQuery && <> · results for “{searchQuery}”</>}
+            {visible.length === 1
+              ? t("grid.countOne")
+              : t("grid.countOther", { n: visible.length })}
+            {searchQuery && <> · {t("grid.resultsFor", { q: searchQuery })}</>}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="w-44 bg-white" aria-label="Sort by">
+            <SelectTrigger className="w-44 bg-white" aria-label={t("grid.sortAria")}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="newest">Featured first</SelectItem>
-              <SelectItem value="price-asc">Price: low to high</SelectItem>
-              <SelectItem value="price-desc">Price: high to low</SelectItem>
-              <SelectItem value="rating">Top rated</SelectItem>
+              <SelectItem value="newest">{t("grid.sortFeatured")}</SelectItem>
+              <SelectItem value="price-asc">{t("grid.sortPriceAsc")}</SelectItem>
+              <SelectItem value="price-desc">{t("grid.sortPriceDesc")}</SelectItem>
+              <SelectItem value="rating">{t("grid.sortRating")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -133,7 +138,7 @@ export function ProductGrid({
               : "font-original border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
           }
         >
-          All
+          {t("grid.all")}
         </Button>
         {displayCategories.map((c) => (
           <Button
@@ -147,7 +152,7 @@ export function ProductGrid({
                 : "font-original border-[#e6e2d4] text-foreground hover:bg-secondary hover:text-brand"
             }
           >
-            {c.name}
+            {categoryName(c.name, c.slug, lang)}
           </Button>
         ))}
         {loading && (
@@ -166,8 +171,8 @@ export function ProductGrid({
         </div>
       ) : visible.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#e6e2d4] py-16 text-center">
-          <p className="font-medium text-foreground">No products found</p>
-          <p className="text-sm text-muted-foreground">Try a different search, or browse another category.</p>
+          <p className="font-medium text-foreground">{t("grid.none")}</p>
+          <p className="text-sm text-muted-foreground">{t("grid.noneHint")}</p>
           <Button
             variant="outline"
             className="border-brand text-brand hover:bg-brand hover:text-white"
@@ -176,7 +181,7 @@ export function ProductGrid({
               useStore.getState().setSearchQuery("");
             }}
           >
-            Reset filters
+            {t("grid.resetFilters")}
           </Button>
         </div>
       ) : (
@@ -193,7 +198,7 @@ export function ProductGrid({
           className="text-brand hover:bg-secondary"
           onClick={() => setCartOpen(true)}
         >
-          View your cart →
+          {t("grid.viewCart")}
         </Button>
       </div>
     </section>

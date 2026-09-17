@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -24,6 +25,7 @@ function formatPrice(price: number, currency = "USD") {
 
 export function CartDrawer() {
   const { cart, cartOpen, setCartOpen, setCart, toast, user, setAuthOpen } = useStore();
+  const { t } = useLang();
 
   const updateQty = async (itemId: string, productId: string, qty: number, action: "increment" | "decrement") => {
     try {
@@ -52,12 +54,14 @@ export function CartDrawer() {
       <SheetContent className="flex w-full flex-col bg-white sm:max-w-md">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 text-brand-dark">
-            <ShoppingBag className="h-5 w-5 text-brand" /> Your cart
+            <ShoppingBag className="h-5 w-5 text-brand" /> {t("cart.title")}
           </SheetTitle>
           <SheetDescription>
             {cart.items.length === 0
-              ? "Browse the catalog and add items to start your order."
-              : `${cart.items.length} item${cart.items.length === 1 ? "" : "s"} ready for checkout.`}
+              ? t("cart.emptyHint")
+              : cart.items.length === 1
+                ? t("cart.itemsOne")
+                : t("cart.itemsOther", { n: cart.items.length })}
           </SheetDescription>
         </SheetHeader>
 
@@ -66,7 +70,7 @@ export function CartDrawer() {
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
               <ShoppingBag className="h-8 w-8 text-brand" />
             </div>
-            <p className="text-sm text-muted-foreground">Nothing here yet — find something you&apos;ll love.</p>
+            <p className="text-sm text-muted-foreground">{t("cart.emptyBody")}</p>
             <Button
               className="bg-brand hover:bg-brand-dark"
               onClick={() => {
@@ -74,7 +78,7 @@ export function CartDrawer() {
                 goToView("home");
               }}
             >
-              Start shopping
+              {t("cart.startShopping")}
             </Button>
           </div>
         ) : (
@@ -103,7 +107,7 @@ export function CartDrawer() {
                         size="icon"
                         className="h-7 w-7 flex-shrink-0 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                         onClick={() => remove(it.id)}
-                        aria-label={`Remove ${it.product.name} from cart`}
+                        aria-label={t("cart.removeAria", { name: it.product.name })}
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
@@ -149,23 +153,23 @@ export function CartDrawer() {
           <SheetFooter className="border-t border-[#e6e2d4] pt-4">
             <div className="flex flex-col gap-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-muted-foreground">{t("cart.subtotal")}</span>
                 <span className="text-foreground">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Shipping</span>
+                <span className="text-muted-foreground">{t("cart.shipping")}</span>
                 <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
-                  {shipping === 0 ? "Free" : formatPrice(shipping)}
+                  {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
                 </span>
               </div>
               <Separator className="my-1" />
               <div className="flex justify-between text-base font-semibold">
-                <span className="text-foreground">Total</span>
+                <span className="text-foreground">{t("cart.total")}</span>
                 <span className="text-brand">{formatPrice(total)}</span>
               </div>
               {shipping > 0 && (
                 <p className="text-xs text-muted-foreground">
-                  You&apos;re {formatPrice(75 - subtotal)} away from free shipping.
+                  {t("cart.freeAway", { amount: formatPrice(75 - subtotal) })}
                 </p>
               )}
             </div>
@@ -182,7 +186,7 @@ export function CartDrawer() {
                 }
               }}
             >
-              {user ? "Proceed to checkout" : "Sign in to check out"}
+              {user ? t("cart.proceed") : t("cart.signinCheckout")}
             </Button>
           </SheetFooter>
         )}

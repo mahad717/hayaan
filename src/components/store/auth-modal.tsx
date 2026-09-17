@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useStore } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
 import { createOAuthBrowserClient } from "@/lib/supabase/client";
 
 const INPUT_CLASS =
@@ -15,6 +16,7 @@ const INPUT_CLASS =
 
 export function AuthModal() {
   const { authOpen, setAuthOpen, setUser, setCart, toast, products } = useStore();
+  const { t } = useLang();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -43,11 +45,11 @@ export function AuthModal() {
       });
       const data = await res.json();
       if (!res.ok) {
-        toast(data.error ?? "Authentication failed", "error");
+        toast(data.error ?? t("au.toastFailed"), "error");
         return;
       }
       setUser(data.user);
-      toast(`Welcome, ${data.user.name.split(" ")[0]}!`, "success");
+      toast(t("au.toastWelcome", { name: data.user.name.split(" ")[0] }), "success");
       const cartRes = await fetch("/api/cart", { credentials: "include" });
       if (cartRes.ok) {
         const cartData = await cartRes.json();
@@ -56,7 +58,7 @@ export function AuthModal() {
       reset();
       setAuthOpen(false);
     } catch (err) {
-      toast("Network error. Try again.", "error");
+      toast(t("au.toastNetwork"), "error");
     } finally {
       setLoading(false);
     }
@@ -70,7 +72,7 @@ export function AuthModal() {
     try {
       const supabase = createOAuthBrowserClient();
       if (!supabase) {
-        toast("Google sign-in is not configured on this deployment.", "error");
+        toast(t("au.toastGoogleOff"), "error");
         setGoogleLoading(false);
         return;
       }
@@ -84,7 +86,7 @@ export function AuthModal() {
       }
       // Success: keep the spinner — the page is about to navigate away.
     } catch {
-      toast("Could not start Google sign-in.", "error");
+      toast(t("au.toastGoogleFail"), "error");
       setGoogleLoading(false);
     }
   };
@@ -94,25 +96,23 @@ export function AuthModal() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-semibold text-brand-dark">
-            {mode === "login" ? "Welcome back" : "Create your account"}
+            {mode === "login" ? t("au.welcomeBack") : t("au.createTitle")}
           </DialogTitle>
           <DialogDescription className="text-center">
-            {mode === "login"
-              ? "Sign in to track orders, sync your cart, and check out faster."
-              : "Join Hayaan Market — save your details, track your orders, and check out faster next time."}
+            {mode === "login" ? t("au.loginDesc") : t("au.signupDesc")}
           </DialogDescription>
         </DialogHeader>
 
         <Tabs value={mode} onValueChange={(v) => setMode(v as "login" | "signup")}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Sign in</TabsTrigger>
-            <TabsTrigger value="signup">Create account</TabsTrigger>
+            <TabsTrigger value="login">{t("au.tabSignin")}</TabsTrigger>
+            <TabsTrigger value="signup">{t("au.tabCreate")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login">
             <form onSubmit={submit} className="flex flex-col gap-4 pt-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email-login" className="text-foreground">Email</Label>
+                <Label htmlFor="email-login" className="text-foreground">{t("au.email")}</Label>
                 <Input
                   id="email-login"
                   type="email"
@@ -125,7 +125,7 @@ export function AuthModal() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="pwd-login" className="text-foreground">Password</Label>
+                <Label htmlFor="pwd-login" className="text-foreground">{t("au.password")}</Label>
                 <Input
                   id="pwd-login"
                   type="password"
@@ -137,7 +137,7 @@ export function AuthModal() {
                 />
               </div>
               <Button type="submit" disabled={loading} className="btn-accent mt-2">
-                {loading ? "Signing in…" : "Sign in"}
+                {loading ? t("au.signingIn") : t("au.tabSignin")}
               </Button>
             </form>
           </TabsContent>
@@ -145,7 +145,7 @@ export function AuthModal() {
           <TabsContent value="signup">
             <form onSubmit={submit} className="flex flex-col gap-4 pt-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="name-signup" className="text-foreground">Name</Label>
+                <Label htmlFor="name-signup" className="text-foreground">{t("au.name")}</Label>
                 <Input
                   id="name-signup"
                   required
@@ -157,7 +157,7 @@ export function AuthModal() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email-signup" className="text-foreground">Email</Label>
+                <Label htmlFor="email-signup" className="text-foreground">{t("au.email")}</Label>
                 <Input
                   id="email-signup"
                   type="email"
@@ -170,7 +170,7 @@ export function AuthModal() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="pwd-signup" className="text-foreground">Password</Label>
+                <Label htmlFor="pwd-signup" className="text-foreground">{t("au.password")}</Label>
                 <Input
                   id="pwd-signup"
                   type="password"
@@ -181,10 +181,10 @@ export function AuthModal() {
                   minLength={6}
                   className={INPUT_CLASS}
                 />
-                <p className="text-xs text-muted-foreground">At least 6 characters.</p>
+                <p className="text-xs text-muted-foreground">{t("au.minChars")}</p>
               </div>
               <Button type="submit" disabled={loading} className="btn-accent mt-2">
-                {loading ? "Creating account…" : "Create account"}
+                {loading ? t("au.creating") : t("au.tabCreate")}
               </Button>
             </form>
           </TabsContent>
@@ -192,7 +192,7 @@ export function AuthModal() {
 
         <div className="relative my-1 flex items-center gap-3">
           <span className="h-px flex-1 bg-border" />
-          <span className="text-xs text-muted-foreground">or</span>
+          <span className="text-xs text-muted-foreground">{t("au.or")}</span>
           <span className="h-px flex-1 bg-border" />
         </div>
 
@@ -213,15 +213,14 @@ export function AuthModal() {
               <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z" />
             </svg>
           )}
-          Continue with Google
+          {t("au.continueGoogle")}
         </Button>
 
         {products.length === 0 && (
           <div className="mt-2 rounded-md bg-[#fef1de] p-3 text-xs text-[#7a4a14]">
-            <p className="font-medium">Setting up for the first time?</p>
+            <p className="font-medium">{t("au.setupTitle")}</p>
             <p>
-              Close this dialog, tap <strong>“Seed now”</strong> on the orange
-              banner above, then sign in with the credentials shown there.
+              {t("au.setupBody")}
             </p>
           </div>
         )}

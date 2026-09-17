@@ -6,6 +6,7 @@
 
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
+import { useLang } from "@/components/store/language-provider";
 
 export function SifaloReturnActions({
   orderId,
@@ -16,6 +17,7 @@ export function SifaloReturnActions({
 }) {
   const [checking, setChecking] = useState(false);
   const [note, setNote] = useState<string | null>(null);
+  const { t } = useLang();
 
   const checkAgain = async () => {
     setChecking(true);
@@ -34,11 +36,11 @@ export function SifaloReturnActions({
         return;
       }
       setNote(
-        (data?.state === "pending" && "Still pending — the network hasn't approved it yet.") ||
-          (data?.error ?? "Still not confirmed. Give it a moment and try again."),
+        (data?.state === "pending" && t("sf.pendingNote")) ||
+          (data?.error ?? t("sf.notConfirmed")),
       );
     } catch {
-      setNote("Network error — please try again.");
+      setNote(t("ord.verifyNetwork"));
     } finally {
       setChecking(false);
     }
@@ -53,7 +55,7 @@ export function SifaloReturnActions({
         className="flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:opacity-60"
       >
         <RefreshCw className={`h-4 w-4 ${checking ? "animate-spin" : ""}`} />
-        {checking ? "Checking with Sifalo Pay…" : initialState === "pending" ? "Check payment again" : "Check now"}
+        {checking ? t("sf.checking") : initialState === "pending" ? t("sf.checkAgain") : t("sf.checkNow")}
       </button>
       {note && <p className="text-xs text-muted-foreground">{note}</p>}
     </div>

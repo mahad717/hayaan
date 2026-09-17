@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useStore } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
 import type { SafeUser } from "@/lib/types";
 
 // Field styling for the profile forms — mirrors the admin product form:
@@ -37,9 +38,10 @@ function toForm(u: SafeUser): ProfileForm {
 
 const EMPTY: ProfileForm = { name: "", phone: "", address: "", city: "", zip: "", country: "" };
 
-const Opt = () => (
-  <span className="text-xs font-normal text-muted-foreground"> (optional)</span>
-);
+const Opt = () => {
+  const { t } = useLang();
+  return <span className="text-xs font-normal text-muted-foreground"> {t("co.optional")}</span>;
+};
 
 /**
  * Customer profile — contact details + saved shipping address, editable.
@@ -48,6 +50,7 @@ const Opt = () => (
  */
 export function AccountView() {
   const { user, setUser, setView, setAuthOpen, toast, bootReady } = useStore();
+  const { t } = useLang();
   const [form, setForm] = useState<ProfileForm>(user ? toForm(user) : EMPTY);
   const [saving, setSaving] = useState(false);
 
@@ -57,7 +60,7 @@ export function AccountView() {
     return (
       <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
         <Loader2 className="h-8 w-8 animate-spin text-brand" />
-        <p className="text-sm text-muted-foreground">Loading your profile…</p>
+        <p className="text-sm text-muted-foreground">{t("acc.loading")}</p>
       </div>
     );
   }
@@ -66,11 +69,11 @@ export function AccountView() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
         <UserRound className="mx-auto h-12 w-12 text-brand" />
-        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">Sign in to view your profile</h1>
+        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">{t("acc.signinTitle")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Your contact details and saved shipping address live in your account.
+          {t("acc.signinBody")}
         </p>
-        <Button className="btn-accent mt-4" onClick={() => setAuthOpen(true)}>Sign in</Button>
+        <Button className="btn-accent mt-4" onClick={() => setAuthOpen(true)}>{t("header.signIn")}</Button>
       </div>
     );
   }
@@ -86,7 +89,7 @@ export function AccountView() {
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim()) {
-      toast("Name cannot be empty.", "error");
+      toast(t("acc.toastNameEmpty"), "error");
       return;
     }
     setSaving(true);
@@ -99,13 +102,13 @@ export function AccountView() {
       });
       const data = await res.json();
       if (!res.ok) {
-        toast(data.error ?? "Could not save your profile.", "error");
+        toast(data.error ?? t("acc.toastSaveFail"), "error");
         return;
       }
       setUser(data.user);
-      toast("Profile saved", "success");
+      toast(t("acc.toastSaved"), "success");
     } catch {
-      toast("Network error — try again.", "error");
+      toast(t("acc.toastNetwork"), "error");
     } finally {
       setSaving(false);
     }
@@ -114,7 +117,7 @@ export function AccountView() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
-        <ChevronLeft className="mr-1 h-4 w-4" /> Back to shop
+        <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
       </Button>
 
       {/* Identity card */}
@@ -128,7 +131,7 @@ export function AccountView() {
               <h1 className="truncate text-xl font-semibold tracking-tight text-brand-dark">{user.name}</h1>
               {user.role === "admin" && (
                 <Badge className="bg-brand/10 text-brand">
-                  <ShieldCheck className="mr-1 h-3 w-3" /> Admin
+                  <ShieldCheck className="mr-1 h-3 w-3" /> {t("header.admin")}
                 </Badge>
               )}
             </div>
@@ -150,12 +153,12 @@ export function AccountView() {
         <Card className="border-[#e6e2d4]">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base text-brand-dark">
-              <UserRound className="h-4 w-4 text-brand" /> Contact details
+              <UserRound className="h-4 w-4 text-brand" /> {t("acc.contact")}
             </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="grid gap-2">
-              <Label htmlFor="acc-name" className="whitespace-nowrap">Full name</Label>
+              <Label htmlFor="acc-name" className="whitespace-nowrap">{t("co.fullName")}</Label>
               <Input
                 id="acc-name"
                 required
@@ -167,7 +170,7 @@ export function AccountView() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="acc-phone" className="whitespace-nowrap">Phone <Opt /></Label>
+              <Label htmlFor="acc-phone" className="whitespace-nowrap">{t("co.phone")} <Opt /></Label>
               <Input
                 id="acc-phone"
                 type="tel"
@@ -179,7 +182,7 @@ export function AccountView() {
               />
             </div>
             <div className="grid gap-2 sm:col-span-2">
-              <Label htmlFor="acc-email">Email</Label>
+              <Label htmlFor="acc-email">{t("au.email")}</Label>
               <Input
                 id="acc-email"
                 type="email"
@@ -188,7 +191,7 @@ export function AccountView() {
                 autoComplete="email"
                 className="cursor-not-allowed bg-muted/50 text-muted-foreground"
               />
-              <p className="text-xs text-muted-foreground">Your sign-in email can&apos;t be changed here.</p>
+              <p className="text-xs text-muted-foreground">{t("acc.emailNote")}</p>
             </div>
           </CardContent>
         </Card>
@@ -197,15 +200,15 @@ export function AccountView() {
         <Card className="border-[#e6e2d4]">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base text-brand-dark">
-              <MapPin className="h-4 w-4 text-brand" /> Shipping address
+              <MapPin className="h-4 w-4 text-brand" /> {t("co.address")}
             </CardTitle>
             <p className="text-sm font-normal text-muted-foreground">
-              Saved for faster checkout — we&apos;ll prefill this at checkout.
+              {t("acc.addressNote")}
             </p>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="acc-address">Street address</Label>
+              <Label htmlFor="acc-address">{t("co.street")}</Label>
               <Input
                 id="acc-address"
                 value={form.address}
@@ -217,7 +220,7 @@ export function AccountView() {
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="grid gap-2">
-                <Label htmlFor="acc-city" className="whitespace-nowrap">City</Label>
+                <Label htmlFor="acc-city" className="whitespace-nowrap">{t("co.city")}</Label>
                 <Input
                   id="acc-city"
                   value={form.city}
@@ -228,7 +231,7 @@ export function AccountView() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="acc-zip" className="whitespace-nowrap">ZIP / Postal code <Opt /></Label>
+                <Label htmlFor="acc-zip" className="whitespace-nowrap">{t("co.zip")} <Opt /></Label>
                 <Input
                   id="acc-zip"
                   value={form.zip}
@@ -239,7 +242,7 @@ export function AccountView() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="acc-country" className="whitespace-nowrap">Country</Label>
+                <Label htmlFor="acc-country" className="whitespace-nowrap">{t("co.country")}</Label>
                 <Input
                   id="acc-country"
                   value={form.country}
@@ -251,17 +254,17 @@ export function AccountView() {
               </div>
             </div>
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Phone className="h-3 w-3" /> The courier may use your phone number to arrange delivery.
+              <Phone className="h-3 w-3" /> {t("acc.courierNote")}
             </p>
           </CardContent>
         </Card>
 
         <div className="flex justify-end gap-3">
           <Button type="button" variant="outline" onClick={() => setForm(toForm(user))} disabled={saving}>
-            Reset
+            {t("acc.reset")}
           </Button>
           <Button type="submit" className="btn-accent" disabled={saving}>
-            <Save className="mr-1.5 h-4 w-4" /> {saving ? "Saving…" : "Save profile"}
+            <Save className="mr-1.5 h-4 w-4" /> {saving ? t("acc.saving") : t("acc.save")}
           </Button>
         </div>
       </form>

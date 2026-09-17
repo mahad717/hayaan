@@ -1,8 +1,10 @@
 "use client";
 
 import { Instagram, Twitter, Mail } from "lucide-react";
+import { useLang } from "@/components/store/language-provider";
 
 export function Footer() {
+  const { t } = useLang();
   return (
     <footer className="mt-auto bg-brand-dark text-[#faf8f1]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -16,38 +18,36 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-3 text-sm opacity-70 font-original">
-              Everyday finds made easy to discover — useful products across
-              fashion, beauty, electronics, and home.
+              {t("ft.blurb")}
             </p>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Shop</h3>
+            <h3 className="text-sm font-semibold text-white">{t("ft.shop")}</h3>
             <ul className="mt-3 flex flex-col gap-2 text-sm opacity-70 font-original">
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Shop all products</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Featured picks</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Top rated</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Gift ideas</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.shopAll")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.featured")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.topRated")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.gifts")}</li>
               <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
                 <a href="/blog" className="inline-flex items-center gap-1">
-                  Blog — guides &amp; picks
+                  {t("ft.blog")}
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Support</h3>
+            <h3 className="text-sm font-semibold text-white">{t("ft.support")}</h3>
             <ul className="mt-3 flex flex-col gap-2 text-sm opacity-70 font-original">
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Help center</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Shipping info</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Track your order</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Contact us</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.help")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.shippingInfo")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.track")}</li>
+              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.contact")}</li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Stay in touch</h3>
+            <h3 className="text-sm font-semibold text-white">{t("ft.stay")}</h3>
             <p className="mt-3 text-sm opacity-70 font-original">
-              New finds, practical picks, and updates from the market — follow
-              along.
+              {t("ft.stayBlurb")}
             </p>
             <div className="mt-3 flex gap-2">
               <a
@@ -75,11 +75,11 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs opacity-60 font-original sm:flex-row">
-          <p>© {new Date().getFullYear()} Hayaan Market. All rights reserved.</p>
+          <p>{t("ft.rights", { year: new Date().getFullYear() })}</p>
           <div className="flex gap-4">
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Privacy</span>
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Terms</span>
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">Cookies</span>
+            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.privacy")}</span>
+            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.terms")}</span>
+            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.cookies")}</span>
           </div>
         </div>
       </div>

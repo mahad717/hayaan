@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { cookies } from "next/headers";
 import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { LangProvider } from "@/components/store/language-provider";
+import { LANG_COOKIE, isLang, type Lang } from "@/lib/i18n/dictionary";
 
 // Panton — the official Hayaan brand face (self-hosted, no external fetch).
 // Bold/Black are pinned to the brand display spots (logo, hero heading,
@@ -94,18 +97,27 @@ function OrganizationJsonLd() {
   );
 }
 
-export default function RootLayout({
+// Reading the language cookie makes the layout async/dynamic, but every
+// storefront route is already force-dynamic — cost is zero in practice.
+// The payoff: the SSR HTML (and <html lang>) comes out in the visitor's
+// chosen language on the FIRST byte, no client-side flash.
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const lang: Lang = isLang(cookieStore.get(LANG_COOKIE)?.value)
+    ? (cookieStore.get(LANG_COOKIE)!.value as Lang)
+    : "en";
+
   return (
     // Font variables MUST live on <html>: Tailwind's base layer resolves
     // --default-font-family (→ --font-sans) at the html/:root level.
     // On <body> they were invisible to that rule and the whole site fell
     // back to the system font.
     <html
-      lang="en"
+      lang={lang}
       suppressHydrationWarning
       className={`${panton.variable} ${geistMono.variable}`}
     >
@@ -122,12 +134,14 @@ export default function RootLayout({
             restores, and via a 10s failsafe so it can never stick. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){if(window.__hayaanTapFeedback)return;window.__hayaanTapFeedback=1;var ID="hayaan-nav-feedback";function hide(){var el=document.getElementById(ID);if(el)el.remove();var css=document.getElementById(ID+"-css");if(css)css.remove();}function show(){if(document.getElementById(ID))return;var st=document.createElement("style");st.id=ID+"-css";st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";document.head.appendChild(st);var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";var sp=document.createElement("div");sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";var lb=document.createElement("div");lb.textContent="Loading the shop…";lb.style.cssText="font-size:14px;color:#111827";ov.appendChild(sp);ov.appendChild(lb);document.body.appendChild(ov);var iv=setInterval(function(){if(location.pathname==="/"){clearInterval(iv);hide();}},120);setTimeout(function(){clearInterval(iv);hide();},10000);window.addEventListener("pageshow",function(ev){if(ev.persisted){clearInterval(iv);hide();}});}document.addEventListener("click",function(e){try{if(e.defaultPrevented)return;var t=e.target;var a=t&&t.closest?t.closest('a[href="/"]'):null;if(!a||a.target==="_blank")return;if(location.pathname==="/")return;setTimeout(function(){if(location.pathname!=="/")show();},100);}catch(err){}});})();`,
+            __html: `(function(){if(window.__hayaanTapFeedback)return;window.__hayaanTapFeedback=1;var ID="hayaan-nav-feedback";function hide(){var el=document.getElementById(ID);if(el)el.remove();var css=document.getElementById(ID+"-css");if(css)css.remove();}function show(){if(document.getElementById(ID))return;var st=document.createElement("style");st.id=ID+"-css";st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";document.head.appendChild(st);var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";var sp=document.createElement("div");sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";var lb=document.createElement("div");lb.textContent=${JSON.stringify(lang === "so" ? "Suuqa ayaa la keenayo…" : "Loading the shop…")};lb.style.cssText="font-size:14px;color:#111827";ov.appendChild(sp);ov.appendChild(lb);document.body.appendChild(ov);var iv=setInterval(function(){if(location.pathname==="/"){clearInterval(iv);hide();}},120);setTimeout(function(){clearInterval(iv);hide();},10000);window.addEventListener("pageshow",function(ev){if(ev.persisted){clearInterval(iv);hide();}});}document.addEventListener("click",function(e){try{if(e.defaultPrevented)return;var t=e.target;var a=t&&t.closest?t.closest('a[href="/"]'):null;if(!a||a.target==="_blank")return;if(location.pathname==="/")return;setTimeout(function(){if(location.pathname!=="/")show();},100);}catch(err){}});})();`,
           }}
         />
         <OrganizationJsonLd />
-        {children}
-        <Toaster />
+        <LangProvider initialLang={lang}>
+          {children}
+          <Toaster />
+        </LangProvider>
         {/* Google Analytics 4 — loads after hydration, never blocks rendering. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-HHYT03XHG4"

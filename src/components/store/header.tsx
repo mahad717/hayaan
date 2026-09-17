@@ -21,9 +21,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useStore, cartCount, goToView } from "@/hooks/use-store";
+import { LangToggle, useLang } from "@/components/store/language-provider";
 import { useState, useEffect } from "react";
 
 export function Header() {
+  const { t } = useLang();
   const {
     user,
     setAuthOpen,
@@ -95,9 +97,9 @@ export function Header() {
     <Input
       value={q}
       onChange={(e) => setQ(e.target.value)}
-      placeholder="Search products, categories, and more…"
+      placeholder={t("header.searchPlaceholder")}
       className="border-brand/40 bg-[#faf8f1] pl-9 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20 placeholder:text-muted-foreground/70"
-      aria-label="Search products"
+      aria-label={t("header.searchAria")}
     />
   );
 
@@ -141,7 +143,7 @@ export function Header() {
               onClick={goShop}
               className={view === "home" ? "" : "text-foreground/80 hover:text-brand"}
             >
-              Shop
+              {t("header.shop")}
             </Button>
             {user && (
               <Button
@@ -150,7 +152,7 @@ export function Header() {
                 onClick={() => goToView("orders")}
                 className={view === "orders" ? "" : "text-foreground/80 hover:text-brand"}
               >
-                <Package className="mr-1 h-4 w-4" /> Orders
+                <Package className="mr-1 h-4 w-4" /> {t("header.orders")}
               </Button>
             )}
             <Button
@@ -160,22 +162,25 @@ export function Header() {
               className={onBlogRoute ? "" : "text-foreground/80 hover:text-brand"}
             >
               <Link href="/blog">
-                <Newspaper className="mr-1 h-4 w-4" /> Blog
+                <Newspaper className="mr-1 h-4 w-4" /> {t("header.blog")}
               </Link>
             </Button>
             {user?.role === "admin" && (
               <Button asChild variant="ghost" size="sm" className="text-foreground/80 hover:text-brand">
                 <Link href="/admin">
-                  <LayoutGrid className="mr-1 h-4 w-4" /> Admin
+                  <LayoutGrid className="mr-1 h-4 w-4" /> {t("header.admin")}
                 </Link>
               </Button>
             )}
           </nav>
 
+          {/* Language switch — EN | SO, always one tap away */}
+          <LangToggle />
+
           {/* Account dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Account menu" className="text-brand hover:bg-secondary">
+              <Button variant="ghost" size="icon" aria-label={t("header.accountMenuAria")} className="text-brand hover:bg-secondary">
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
@@ -188,26 +193,26 @@ export function Header() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => goToView("account")}>
-                    <UserRound className="mr-2 h-4 w-4" /> My profile
+                    <UserRound className="mr-2 h-4 w-4" /> {t("header.myProfile")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => goToView("orders")}>
-                    <Package className="mr-2 h-4 w-4" /> My orders
+                    <Package className="mr-2 h-4 w-4" /> {t("header.myOrders")}
                   </DropdownMenuItem>
                   {user.role === "admin" && (
                     <DropdownMenuItem asChild>
                       <Link href="/admin">
-                        <LayoutGrid className="mr-2 h-4 w-4" /> Admin Dashboard
+                        <LayoutGrid className="mr-2 h-4 w-4" /> {t("header.adminDashboard")}
                       </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" /> Sign out
+                    <LogOut className="mr-2 h-4 w-4" /> {t("header.signOut")}
                   </DropdownMenuItem>
                 </>
               ) : (
                 <DropdownMenuItem onClick={() => setAuthOpen(true)}>
-                  <User className="mr-2 h-4 w-4" /> Sign in
+                  <User className="mr-2 h-4 w-4" /> {t("header.signIn")}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -219,13 +224,13 @@ export function Header() {
             size="icon"
             className="relative text-brand hover:bg-secondary"
             onClick={() => setCartOpen(true)}
-            aria-label={`Cart with ${cartCount(cart)} items`}
+            aria-label={t("header.cartAria", { n: cartCount(cart) })}
           >
             <ShoppingBag className="h-5 w-5" />
             {cartCount(cart) > 0 && (
               <span
                 className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-white shadow-sm ring-2 ring-white"
-                aria-label={`${cartCount(cart)} items in cart`}
+                aria-label={t("header.cartBadgeAria", { n: cartCount(cart) })}
               >
                 {cartCount(cart)}
               </span>
@@ -238,7 +243,7 @@ export function Header() {
             size="icon"
             className="text-brand hover:bg-secondary md:hidden"
             onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
+            aria-label={t("header.openMenuAria")}
           >
             <Menu className="h-5 w-5" />
           </Button>
@@ -267,18 +272,18 @@ export function Header() {
               {user ? (
                 <span className="block truncate">{user.name} · {user.email}</span>
               ) : (
-                "Everyday finds, one market"
+                t("header.tagline")
               )}
             </SheetDescription>
           </SheetHeader>
 
-          <nav className="flex flex-col gap-1 px-3" aria-label="Mobile navigation">
+          <nav className="flex flex-col gap-1 px-3" aria-label={t("header.mobileNavAria")}>
             <Button
               variant={view === "home" ? "secondary" : "ghost"}
               onClick={goShopFromMenu}
               className={view === "home" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
             >
-              <Store className="mr-2 h-4 w-4" /> Shop
+              <Store className="mr-2 h-4 w-4" /> {t("header.shop")}
             </Button>
             {user && (
               <Button
@@ -286,7 +291,7 @@ export function Header() {
                 onClick={menuAction(() => goToView("orders"))}
                 className={view === "orders" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
               >
-                <Package className="mr-2 h-4 w-4" /> Orders
+                <Package className="mr-2 h-4 w-4" /> {t("header.orders")}
               </Button>
             )}
             <Button
@@ -296,13 +301,13 @@ export function Header() {
               className={onBlogRoute ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
             >
               <Link href="/blog">
-                <Newspaper className="mr-2 h-4 w-4" /> Blog
+                <Newspaper className="mr-2 h-4 w-4" /> {t("header.blog")}
               </Link>
             </Button>
             {user?.role === "admin" && (
               <Button asChild variant="ghost" onClick={menuAction(() => {})} className="justify-start text-foreground/80 hover:text-brand">
                 <Link href="/admin">
-                  <LayoutGrid className="mr-2 h-4 w-4" /> Admin dashboard
+                  <LayoutGrid className="mr-2 h-4 w-4" /> {t("header.adminDashboard")}
                 </Link>
               </Button>
             )}
@@ -310,7 +315,7 @@ export function Header() {
 
           <div className="mx-3 border-t border-[#e6e2d4]" aria-hidden="true" />
 
-          <nav className="flex flex-col gap-1 px-3" aria-label="Mobile account">
+          <nav className="flex flex-col gap-1 px-3" aria-label={t("header.mobileAccountAria")}>
             {user ? (
               <>
                 <Button
@@ -318,14 +323,14 @@ export function Header() {
                   onClick={menuAction(() => goToView("account"))}
                   className="justify-start text-foreground/80 hover:text-brand"
                 >
-                  <UserRound className="mr-2 h-4 w-4" /> My profile
+                  <UserRound className="mr-2 h-4 w-4" /> {t("header.myProfile")}
                 </Button>
                 <Button
                   variant="ghost"
                   onClick={menuAction(handleLogout)}
                   className="justify-start text-destructive hover:text-destructive"
                 >
-                  <LogOut className="mr-2 h-4 w-4" /> Sign out
+                  <LogOut className="mr-2 h-4 w-4" /> {t("header.signOut")}
                 </Button>
               </>
             ) : (
@@ -334,7 +339,7 @@ export function Header() {
                 onClick={menuAction(() => setAuthOpen(true))}
                 className="justify-start text-foreground/80 hover:text-brand"
               >
-                <LogIn className="mr-2 h-4 w-4" /> Sign in
+                <LogIn className="mr-2 h-4 w-4" /> {t("header.signIn")}
               </Button>
             )}
           </nav>

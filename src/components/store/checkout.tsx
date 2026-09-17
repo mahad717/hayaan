@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
+import { useLang } from "@/components/store/language-provider";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -20,6 +21,7 @@ function formatPrice(price: number, currency = "USD") {
 
 export function Checkout() {
   const { cart, setCart, setView, toast, user, setAuthOpen, bootReady } = useStore();
+  const { t } = useLang();
   // Prefill from the saved profile (account view) so returning customers
   // don't retype their address.
   const [form, setForm] = useState({
@@ -90,9 +92,9 @@ export function Checkout() {
           <Wallet className="h-10 w-10 text-brand" />
         </div>
         <div>
-          <h1 className="text-xl font-semibold text-brand-dark sm:text-2xl">Redirecting to Sifalo Pay…</h1>
+          <h1 className="text-xl font-semibold text-brand-dark sm:text-2xl">{t("co.redirectTitle")}</h1>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
-            Taking you to the secure checkout to approve your payment. Please don&apos;t close or refresh this page.
+            {t("co.redirectBody")}
           </p>
         </div>
         <Loader2 className="h-6 w-6 animate-spin text-brand" />
@@ -102,7 +104,7 @@ export function Checkout() {
             className="border-brand text-brand hover:bg-brand hover:text-white"
             onClick={() => window.location.assign(redirectingTo)}
           >
-            Nothing happening? Click to continue
+            {t("co.stuck")}
           </Button>
         )}
       </div>
@@ -117,39 +119,39 @@ export function Checkout() {
         </div>
         <div>
           <h1 className="text-2xl font-semibold text-brand-dark sm:text-3xl">
-            Thank you for your order!
+            {t("co.thanks")}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Order reference{" "}
+            {t("co.orderRef")}{" "}
             <code className="rounded bg-secondary px-1.5 py-0.5 text-brand">{done.orderId.slice(0, 8).toUpperCase()}</code>
           </p>
         </div>
         <Card className="w-full max-w-md border-[#e6e2d4]">
           <CardHeader>
-            <CardTitle className="text-base text-brand-dark">Order summary</CardTitle>
+            <CardTitle className="text-base text-brand-dark">{t("co.summary")}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Total paid</span>
+              <span className="text-muted-foreground">{t("co.totalPaid")}</span>
               <span className="font-medium text-brand">{formatPrice(done.total)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Payment method</span>
+              <span className="text-muted-foreground">{t("co.payMethod")}</span>
               <span className="text-foreground">Sifalo Pay</span>
             </div>
             <Separator className="my-2" />
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Leaf className="h-3 w-3 text-brand" />
-              A confirmation email is on its way. You can track your order in the Orders tab.
+              {t("co.emailNote")}
             </p>
           </CardContent>
         </Card>
         <div className="flex gap-3">
           <Button variant="outline" className="border-brand text-brand hover:bg-brand hover:text-white" onClick={() => setView("orders")}>
-            View my orders
+            {t("co.viewOrders")}
           </Button>
           <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>
-            Continue shopping
+            {t("co.continueShopping")}
           </Button>
         </div>
       </div>
@@ -164,7 +166,7 @@ export function Checkout() {
     return (
       <div className="flex flex-col items-center gap-4 px-4 py-24 text-center">
         <Loader2 className="h-8 w-8 animate-spin text-brand" />
-        <p className="text-sm text-muted-foreground">Preparing checkout…</p>
+        <p className="text-sm text-muted-foreground">{t("co.preparing")}</p>
       </div>
     );
   }
@@ -172,11 +174,11 @@ export function Checkout() {
   if (!user) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-        <h1 className="text-2xl font-semibold text-brand-dark">Please sign in to check out</h1>
+        <h1 className="text-2xl font-semibold text-brand-dark">{t("co.signinTitle")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          We need your account so we can attach the order to you.
+          {t("co.signinBody")}
         </p>
-        <Button className="btn-accent mt-4" onClick={() => setAuthOpen(true)}>Sign in</Button>
+        <Button className="btn-accent mt-4" onClick={() => setAuthOpen(true)}>{t("header.signIn")}</Button>
       </div>
     );
   }
@@ -185,9 +187,9 @@ export function Checkout() {
     return (
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6">
         <ShoppingBag className="h-12 w-12 text-muted-foreground" />
-        <h1 className="text-2xl font-semibold text-brand-dark">Your cart is empty</h1>
-        <p className="text-sm text-muted-foreground">Add some items before checking out.</p>
-        <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>Browse products</Button>
+        <h1 className="text-2xl font-semibold text-brand-dark">{t("co.emptyTitle")}</h1>
+        <p className="text-sm text-muted-foreground">{t("co.emptyBody")}</p>
+        <Button className="bg-brand hover:bg-brand-dark" onClick={() => setView("home")}>{t("co.browse")}</Button>
       </div>
     );
   }
@@ -210,7 +212,7 @@ export function Checkout() {
       // Safety net: if navigation is blocked (rare), give the customer a
       // manual retry link instead of an infinite spinner.
       window.setTimeout(() => setStuck(true), 8000);
-      toast("Redirecting to Sifalo Pay…", "success");
+      toast(t("co.redirectTitle"), "success");
     } catch (err) {
       const msg = (err as Error).message;
       toast(msg, "error");
@@ -234,10 +236,10 @@ export function Checkout() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => setView("home")}>
-        <ChevronLeft className="mr-1 h-4 w-4" /> Continue shopping
+        <ChevronLeft className="mr-1 h-4 w-4" /> {t("co.continueShopping")}
       </Button>
 
-      <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">Checkout</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">{t("co.checkoutTitle")}</h1>
 
       <form onSubmit={submit} className="mt-6 grid gap-8 lg:grid-cols-[1fr_380px]">
         {/* Left column: forms */}
@@ -245,16 +247,16 @@ export function Checkout() {
           {/* Shipping */}
           <Card className="border-[#e6e2d4]">
             <CardHeader>
-              <CardTitle className="text-base text-brand-dark">Shipping address</CardTitle>
+              <CardTitle className="text-base text-brand-dark">{t("co.address")}</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
               {savedAddress && (
                 <p className="rounded-md bg-[#eef5ec] px-3 py-2 text-xs text-brand">
-                  Prefilled from your saved address — edit below if you need changes. Manage it from <strong>My profile</strong>.
+                  {t("co.prefilled")}
                 </p>
               )}
               <div className="grid gap-2">
-                <Label htmlFor="name" className="text-foreground">Full name</Label>
+                <Label htmlFor="name" className="text-foreground">{t("co.fullName")}</Label>
                 <Input
                   id="name"
                   required
@@ -265,7 +267,7 @@ export function Checkout() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="phone" className="text-foreground">Phone <span className="text-xs font-normal text-muted-foreground">(optional)</span></Label>
+                <Label htmlFor="phone" className="text-foreground">{t("co.phone")} <span className="text-xs font-normal text-muted-foreground">{t("co.optional")}</span></Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -277,7 +279,7 @@ export function Checkout() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="address" className="text-foreground">Street address</Label>
+                <Label htmlFor="address" className="text-foreground">{t("co.street")}</Label>
                 <Input
                   id="address"
                   required
@@ -290,7 +292,7 @@ export function Checkout() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="grid gap-2">
-                  <Label htmlFor="city" className="text-foreground">City</Label>
+                  <Label htmlFor="city" className="text-foreground">{t("co.city")}</Label>
                   <Input
                     id="city"
                     required
@@ -301,7 +303,7 @@ export function Checkout() {
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="zip" className="text-foreground">ZIP / Postal code</Label>
+                  <Label htmlFor="zip" className="text-foreground">{t("co.zip")}</Label>
                   <Input
                     id="zip"
                     required
@@ -313,7 +315,7 @@ export function Checkout() {
                 </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="country" className="text-foreground">Country</Label>
+                <Label htmlFor="country" className="text-foreground">{t("co.country")}</Label>
                 <Input
                   id="country"
                   required
@@ -330,7 +332,7 @@ export function Checkout() {
           <Card className="border-[#e6e2d4]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base text-brand-dark">
-                <CreditCard className="h-4 w-4 text-brand" /> Payment method
+                <CreditCard className="h-4 w-4 text-brand" /> {t("co.payMethod")}
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
@@ -347,10 +349,10 @@ export function Checkout() {
                     <div className="flex-1">
                       <p className="flex items-center gap-1.5 text-sm font-medium text-foreground">
                         <Wallet className="h-4 w-4 text-brand" /> Sifalo Pay
-                        <span className="rounded-full bg-brand/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">Recommended</span>
+                        <span className="rounded-full bg-brand/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">{t("co.recommended")}</span>
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Cards, EVC Plus, eDahab, Sahal &amp; 20+ more — you&apos;ll be redirected to a secure page to pay.
+                        {t("co.sifaloDesc")}
                       </p>
                     </div>
                   </label>
@@ -360,17 +362,15 @@ export function Checkout() {
               {sifaloEnabled !== false ? (
                 <div className="mt-2 grid gap-2 rounded-lg border border-brand/30 bg-[#eef5ec] p-4">
                   <p className="text-xs leading-relaxed text-brand-dark">
-                    <strong>How it works:</strong> you&apos;ll be redirected to Sifalo Pay&apos;s secure checkout to choose your
-                    payment method and approve the payment. You&apos;ll come right back here and your order will be
-                    confirmed automatically.
+                    {t("co.how")}
                   </p>
                   <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <Lock className="h-3 w-3" /> Processed by Sifalo Pay — your payment details never touch our servers.
+                    <Lock className="h-3 w-3" /> {t("co.processedBy")}
                   </p>
                 </div>
               ) : (
                 <div className="mt-2 rounded-lg border border-[#e6e2d4] bg-[#faf8f1] p-4 text-xs text-muted-foreground">
-                  Online payment is temporarily unavailable — please check back soon.
+                  {t("co.unavailable")}
                 </div>
               )}
             </CardContent>
@@ -381,7 +381,7 @@ export function Checkout() {
         <div className="lg:sticky lg:top-24 lg:self-start">
           <Card className="border-[#e6e2d4]">
             <CardHeader>
-              <CardTitle className="text-base text-brand-dark">Order summary</CardTitle>
+              <CardTitle className="text-base text-brand-dark">{t("co.summary")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <ul className="flex flex-col gap-3">
@@ -414,31 +414,31 @@ export function Checkout() {
               <Separator />
               <div className="flex flex-col gap-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="text-muted-foreground">{t("cart.subtotal")}</span>
                   <span className="text-foreground">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="text-muted-foreground">{t("cart.shipping")}</span>
                   <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
-                    {shipping === 0 ? "Free" : formatPrice(shipping)}
+                    {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tax (8%)</span>
+                  <span className="text-muted-foreground">{t("co.tax")}</span>
                   <span className="text-foreground">{formatPrice(tax)}</span>
                 </div>
                 <Separator className="my-1" />
                 <div className="flex justify-between text-base font-semibold">
-                  <span className="text-foreground">Total</span>
+                  <span className="text-foreground">{t("cart.total")}</span>
                   <span className="text-brand">{formatPrice(total)}</span>
                 </div>
               </div>
               {/* Pay button — Market Orange (the 10% accent) */}
               <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled !== true}>
-                {placing ? "Redirecting to Sifalo Pay…" : `Pay ${formatPrice(total)} with Sifalo Pay`}
+                {placing ? t("co.redirectTitle") : t("co.payButton", { amount: formatPrice(total) })}
               </Button>
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-                <Lock className="h-3 w-3" /> Secure checkout · Powered by Sifalo Pay
+                <Lock className="h-3 w-3" /> {t("co.secureNote")}
               </p>
             </CardContent>
           </Card>
