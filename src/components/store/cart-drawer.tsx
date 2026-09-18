@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { FREE_SHIPPING_THRESHOLD, districtFee } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -46,7 +47,12 @@ export function CartDrawer() {
   };
 
   const subtotal = cartTotal(cart);
-  const shipping = subtotal >= 75 ? 0 : 6.95;
+  // Estimate from the saved profile's district. Until we know a district the
+  // drawer says "calculated at checkout" instead of guessing a number —
+  // checkout is where the customer picks their exact district.
+  const savedFee = districtFee(user?.city);
+  const shippingKnown = subtotal >= FREE_SHIPPING_THRESHOLD || savedFee !== null;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : savedFee ?? 0;
   const total = subtotal + shipping;
 
   return (
@@ -158,18 +164,24 @@ export function CartDrawer() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t("cart.shipping")}</span>
-                <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
-                  {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
-                </span>
+                {!shippingKnown ? (
+                  <span className="text-xs text-muted-foreground">{t("cart.shippingCalc")}</span>
+                ) : (
+                  <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
+                    {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
+                  </span>
+                )}
               </div>
               <Separator className="my-1" />
-              <div className="flex justify-between text-base font-semibold">
-                <span className="text-foreground">{t("cart.total")}</span>
-                <span className="text-brand">{formatPrice(total)}</span>
-              </div>
-              {shipping > 0 && (
+              {shippingKnown && (
+                <div className="flex justify-between text-base font-semibold">
+                  <span className="text-foreground">{t("cart.total")}</span>
+                  <span className="text-brand">{formatPrice(total)}</span>
+                </div>
+              )}
+              {subtotal < FREE_SHIPPING_THRESHOLD && (
                 <p className="text-xs text-muted-foreground">
-                  {t("cart.freeAway", { amount: formatPrice(75 - subtotal) })}
+                  {t("cart.freeAway", { amount: formatPrice(FREE_SHIPPING_THRESHOLD - subtotal) })}
                 </p>
               )}
             </div>

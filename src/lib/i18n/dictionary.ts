@@ -111,6 +111,7 @@ const en = {
   "cart.free": "Free",
   "cart.total": "Total",
   "cart.freeAway": "You’re {amount} away from free shipping.",
+  "cart.shippingCalc": "Calculated at checkout",
   "cart.proceed": "Proceed to checkout",
   "cart.signinCheckout": "Sign in to check out",
 
@@ -145,6 +146,12 @@ const en = {
   "co.city": "City",
   "co.zip": "ZIP / Postal code",
   "co.country": "Country",
+  "co.district": "District",
+  "co.districtPlaceholder": "Select your district",
+  "co.districtOther": "Other city (outside Mogadishu)",
+  "co.districtHint": "Delivery is priced by district — free over $75.",
+  "co.pickDistrict": "Pick your district",
+  "co.pickDistrictToast": "Please choose your delivery district so we can bring your order.",
   "co.recommended": "Recommended",
   "co.sifaloDesc":
     "Cards, EVC Plus, eDahab, Sahal & 20+ more — you’ll be redirected to a secure page to pay.",
@@ -447,6 +454,7 @@ const so: Record<DictKey, string> = {
   "cart.free": "Bilaash",
   "cart.total": "Wadarta guud",
   "cart.freeAway": "{amount} ayaa ka hadhay gaadhitaan bilaash ah.",
+  "cart.shippingCalc": "Waa la xisaabin doonaa marka la bixinayo",
   "cart.proceed": "Sii wad bixinta",
   "cart.signinCheckout": "Soo gal si aad u bixiso",
 
@@ -481,6 +489,12 @@ const so: Record<DictKey, string> = {
   "co.city": "Magaalada",
   "co.zip": "Koodhka boostada",
   "co.country": "Wadanka",
+  "co.district": "Degmada",
+  "co.districtPlaceholder": "Dooro degmadaada",
+  "co.districtOther": "Magaalo kale (Muqdisho ka baxsan)",
+  "co.districtHint": "Gaadhitaanka waxaa go'aamiya degmada — $75 ka badan waa bilaash.",
+  "co.pickDistrict": "Dooro degmadaada",
+  "co.pickDistrictToast": "Fadlan dooro degmada si aan u soo gaadhinno dalabkaaga.",
   "co.recommended": "Loogu tala galay",
   "co.sifaloDesc":
     "Kaarka, EVC Plus, eDahab, Sahal iyo kuwo kaloo ka badan 20 — boggan ammaan ah ayaad la wareegaysaa si aad u bixiso.",

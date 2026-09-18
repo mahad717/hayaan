@@ -6,6 +6,7 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { verifySifaloPayment, type SifaloVerifyResult } from "@/lib/sifalo";
+import { computeShipping } from "@/lib/shipping";
 import {
   getProductCostMap,
   snapshotOrderItemCosts,
@@ -25,12 +26,13 @@ export interface ShippingInput {
 }
 
 /**
- * Mirror the checkout page's displayed total: product subtotal + flat shipping
- * (free over $75) + 8% tax. Charging exactly what the customer saw avoids
+ * Mirror the checkout page's displayed total: product subtotal + district-based
+ * shipping (Mogadishu districts from the owner's fee sheet, free over $75,
+ * flat fee elsewhere) + 8% tax. Charging exactly what the customer saw avoids
  * "why was I charged less/more than the screen showed" disputes.
  */
-export function computeCheckoutTotal(subtotal: number): { total: number; shipping: number; tax: number } {
-  const shipping = subtotal >= 75 ? 0 : 6.95;
+export function computeCheckoutTotal(subtotal: number, city?: string | null): { total: number; shipping: number; tax: number } {
+  const shipping = computeShipping(subtotal, city);
   const tax = subtotal * 0.08;
   return { total: Math.round((subtotal + shipping + tax) * 100) / 100, shipping, tax: Math.round(tax * 100) / 100 };
 }
@@ -60,7 +62,7 @@ export async function createPendingSifaloOrder(
     if (!items || items.length === 0) return { error: "Cart is empty.", status: 400 };
 
     const subtotal = items.reduce((sum, it) => sum + Number(it.product.price) * it.quantity, 0);
-    const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal);
+    const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal, shipping.city);
     // Receipt-level accounting columns (Task 49): what the customer was
     // actually asked to pay. If the accounting migration has not been applied
     // yet the columns don't exist — retry without them so checkout NEVER
@@ -142,7 +144,7 @@ export async function createPendingSifaloOrder(
   if (!cart || cart.items.length === 0) return { error: "Cart is empty.", status: 400 };
 
   const subtotal = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
-  const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal);
+  const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal, shipping.city);
   const order = await db.order.create({
     data: {
       userId,

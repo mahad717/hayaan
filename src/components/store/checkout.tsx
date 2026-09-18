@@ -7,9 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { MOGADISHU_DISTRICTS, findDistrict, computeShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -18,6 +20,9 @@ function formatPrice(price: number, currency = "USD") {
     return `$${price.toFixed(2)}`;
   }
 }
+
+// Sentinel for the district select: cities outside the priced Mogadishu list.
+const OTHER_CITY = "__other";
 
 export function Checkout() {
   const { cart, setCart, setView, toast, user, setAuthOpen, bootReady } = useStore();
@@ -45,6 +50,13 @@ export function Checkout() {
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
   const [stuck, setStuck] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
+  // District picker: a canonical district name, OTHER_CITY, or "" (nothing
+  // picked yet). form.city holds the free-text city for the OTHER_CITY path;
+  // the submitted city is the canonical district name (or the typed city).
+  const [districtChoice, setDistrictChoice] = useState<string>(() => {
+    const matched = findDistrict(user?.city);
+    return matched ? matched.name : user?.city ? OTHER_CITY : "";
+  });
 
   // Probe whether this deployment has merchant credentials. While unknown the
   // pay button stays disabled; when false we show an "unavailable" notice.
@@ -73,14 +85,39 @@ export function Checkout() {
       zip: f.zip || user.zip || "",
       country: f.country || user.country || "Somalia",
     }));
+    // Map the saved city onto the district picker: a priced district selects
+    // itself; anything else ("Mogadishu", "Kismayo", …) falls back to the
+    // Other-city path so the customer can still pick their exact district.
+    setDistrictChoice((choice) => {
+      if (choice) return choice;
+      const matched = findDistrict(user.city);
+      return matched ? matched.name : user.city ? OTHER_CITY : "";
+    });
   }, [user]);
 
   const savedAddress = !!(user?.address && user?.city);
 
   const subtotal = cartTotal(cart);
-  const shipping = subtotal >= 75 ? 0 : 6.95;
+  // District-based delivery: priced Mogadishu district → its fee; typed other
+  // city → flat outside fee; free over the threshold. While nothing is picked
+  // the summary shows a hint instead of a number (and Pay stays disabled).
+  const districtMatch = districtChoice && districtChoice !== OTHER_CITY ? findDistrict(districtChoice) : null;
+  const otherCityKnown = districtChoice === OTHER_CITY && form.city.trim().length > 0;
+  const shippingKnown = subtotal >= FREE_SHIPPING_THRESHOLD || !!districtMatch || otherCityKnown;
+  const shipping = computeShipping(subtotal, districtMatch?.name ?? (otherCityKnown ? form.city : ""));
   const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const total = subtotal + (shippingKnown ? shipping : 0) + tax;
+
+  const onDistrictChange = (value: string) => {
+    setDistrictChoice(value);
+    if (value === OTHER_CITY) {
+      // Keep any typed non-district city; clear a matched district name so the
+      // text field starts empty instead of showing a canonical district name.
+      setForm((f) => (findDistrict(f.city) ? { ...f, city: "" } : f));
+    } else {
+      setForm((f) => ({ ...f, city: value }));
+    }
+  };
 
   // Full-screen hand-off view: once we have a payment session we replace the
   // entire page so nothing (not even the cart badge clearing) can flash
@@ -196,12 +233,17 @@ export function Checkout() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!districtChoice || (districtChoice === OTHER_CITY && !form.city.trim())) {
+      toast(t("co.pickDistrictToast"), "error");
+      return;
+    }
     setPlacing(true);
     try {
       // Real money: create a pending order, then hand off to Sifalo Pay's
       // hosted checkout. The order status flips to paid on the return page
       // after server-side verification.
-      const payment = await startSifaloPayment(form);
+      const finalCity = districtChoice === OTHER_CITY ? form.city.trim() : districtChoice;
+      const payment = await startSifaloPayment({ ...form, city: finalCity });
       // Swap to the full-screen redirect view BEFORE navigating, and do NOT
       // touch the client cart here — the server already emptied it when the
       // order was created, and clearing it now would repaint the empty-cart
@@ -290,7 +332,27 @@ export function Checkout() {
                   className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-2">
+                <Label htmlFor="district" className="text-foreground">{t("co.district")}</Label>
+                <Select value={districtChoice || undefined} onValueChange={onDistrictChange}>
+                  <SelectTrigger
+                    id="district"
+                    className="w-full bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
+                  >
+                    <SelectValue placeholder={t("co.districtPlaceholder")} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {MOGADISHU_DISTRICTS.map((d) => (
+                      <SelectItem key={d.name} value={d.name}>
+                        {d.name} — ${d.fee.toFixed(2)}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value={OTHER_CITY}>{t("co.districtOther")}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">{t("co.districtHint")}</p>
+              </div>
+              {districtChoice === OTHER_CITY && (
                 <div className="grid gap-2">
                   <Label htmlFor="city" className="text-foreground">{t("co.city")}</Label>
                   <Input
@@ -299,9 +361,12 @@ export function Checkout() {
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                     autoComplete="address-level2"
+                    placeholder="Mogadishu"
                     className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                   />
                 </div>
+              )}
+              <div className="grid grid-cols-2 gap-3">
                 <div className="grid gap-2">
                   <Label htmlFor="zip" className="text-foreground">{t("co.zip")}</Label>
                   <Input
@@ -419,9 +484,13 @@ export function Checkout() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t("cart.shipping")}</span>
-                  <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
-                    {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
-                  </span>
+                  {!shippingKnown ? (
+                    <span className="text-xs text-muted-foreground">{t("co.pickDistrict")}</span>
+                  ) : (
+                    <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
+                      {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
+                    </span>
+                  )}
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t("co.tax")}</span>
@@ -434,7 +503,7 @@ export function Checkout() {
                 </div>
               </div>
               {/* Pay button — Market Orange (the 10% accent) */}
-              <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled !== true}>
+              <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled !== true || !shippingKnown}>
                 {placing ? t("co.redirectTitle") : t("co.payButton", { amount: formatPrice(total) })}
               </Button>
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
