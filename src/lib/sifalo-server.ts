@@ -28,13 +28,15 @@ export interface ShippingInput {
 /**
  * Mirror the checkout page's displayed total: product subtotal + district-based
  * shipping (Mogadishu districts from the owner's fee sheet, free over $75,
- * flat fee elsewhere) + 8% tax. Charging exactly what the customer saw avoids
- * "why was I charged less/more than the screen showed" disputes.
+ * flat fee elsewhere). No tax/VAT — the total is exactly subtotal + shipping.
+ * Charging exactly what the customer saw avoids "why was I charged less/more
+ * than the screen showed" disputes.
  */
 export function computeCheckoutTotal(subtotal: number, city?: string | null): { total: number; shipping: number; tax: number } {
   const shipping = computeShipping(subtotal, city);
-  const tax = subtotal * 0.08;
-  return { total: Math.round((subtotal + shipping + tax) * 100) / 100, shipping, tax: Math.round(tax * 100) / 100 };
+  // tax stays in the shape (order rows record tax_amount) but is always 0 —
+  // the store no longer charges VAT.
+  return { total: Math.round((subtotal + shipping) * 100) / 100, shipping, tax: 0 };
 }
 
 export interface CreatedOrder {

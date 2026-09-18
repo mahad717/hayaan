@@ -159,7 +159,6 @@ const en = {
     "How it works: you’ll be redirected to Sifalo Pay’s secure checkout to choose your payment method and approve the payment. You’ll come right back here and your order will be confirmed automatically.",
   "co.processedBy": "Processed by Sifalo Pay — your payment details never touch our servers.",
   "co.unavailable": "Online payment is temporarily unavailable — please check back soon.",
-  "co.tax": "Tax (8%)",
   "co.payButton": "Pay {amount} with Sifalo Pay",
   "co.secureNote": "Secure checkout · Powered by Sifalo Pay",
 
@@ -502,7 +501,6 @@ const so: Record<DictKey, string> = {
     "Sida ay u shaqeysaa: waxaad la wareegaysaa bixinta ammaan ah ee Sifalo Pay si aad ka doorato habka bixinta oo aad lacagta u ansixiso. Isla halkan ayaad ku noqon doontaa, dalabkaagana waa la xaqiijinayaa si toos ah.",
   "co.processedBy": "Waxaa maamula Sifalo Pay — faahfaahinta bixintaada ma gaadhaan serveradeena.",
   "co.unavailable": "Bixinta onlaynka ah hadda si ku meel gaadh ah uma helna — fadlan dib ugu soo noqo.",
-  "co.tax": "Canshuur (8%)",
   "co.payButton": "Bixi {amount} Sifalo Pay",
   "co.secureNote": "Bixin ammaan · Sifalo Pay",
 

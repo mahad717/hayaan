@@ -64,3 +64,4 @@ server.log
 
 # IM-gateway session uploads — never commit user-uploaded artifacts
 /upload/
+tool-results/

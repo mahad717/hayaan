@@ -105,8 +105,8 @@ export function Checkout() {
   const otherCityKnown = districtChoice === OTHER_CITY && form.city.trim().length > 0;
   const shippingKnown = subtotal >= FREE_SHIPPING_THRESHOLD || !!districtMatch || otherCityKnown;
   const shipping = computeShipping(subtotal, districtMatch?.name ?? (otherCityKnown ? form.city : ""));
-  const tax = subtotal * 0.08;
-  const total = subtotal + (shippingKnown ? shipping : 0) + tax;
+  // No tax/VAT: the total is exactly what the customer pays — subtotal + delivery.
+  const total = subtotal + (shippingKnown ? shipping : 0);
 
   const onDistrictChange = (value: string) => {
     setDistrictChoice(value);
@@ -491,10 +491,6 @@ export function Checkout() {
                       {shipping === 0 ? t("cart.free") : formatPrice(shipping)}
                     </span>
                   )}
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">{t("co.tax")}</span>
-                  <span className="text-foreground">{formatPrice(tax)}</span>
                 </div>
                 <Separator className="my-1" />
                 <div className="flex justify-between text-base font-semibold">
