@@ -27,6 +27,18 @@ const STATUS_STYLE: Record<string, string> = {
   lost: "bg-gray-100 text-gray-500",
 };
 
+const TYPE_LABEL: Record<string, string> = {
+  quote: "Quote",
+  deals: "Deal alert",
+  newsletter: "Newsletter",
+};
+
+const TYPE_STYLE: Record<string, string> = {
+  quote: "bg-[#fef1de] text-[#7a4a14]",
+  deals: "bg-teal-50 text-teal-700",
+  newsletter: "bg-secondary text-foreground/80",
+};
+
 function csvCell(value: string | null) {
   const s = value ?? "";
   return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
@@ -265,11 +277,9 @@ export function AdminLeads() {
                   </td>
                   <td className="px-4 py-3">
                     <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                        l.type === "quote" ? "bg-[#fef1de] text-[#7a4a14]" : "bg-secondary text-foreground/80"
-                      }`}
+                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${TYPE_STYLE[l.type] ?? "bg-gray-100 text-gray-500"}`}
                     >
-                      {l.type === "quote" ? "Quote" : "Newsletter"}
+                      {TYPE_LABEL[l.type] ?? l.type}
                     </span>
                   </td>
                   <td className="px-4 py-3">

@@ -14,7 +14,7 @@ import { getDb } from "@/lib/db";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 
-const LEAD_TYPES = new Set(["newsletter", "quote"]);
+const LEAD_TYPES = new Set(["newsletter", "quote", "deals"]);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MAX_LEN = { name: 120, email: 200, phone: 40, business: 160, message: 4000, source: 40 };
 
@@ -35,7 +35,9 @@ async function notifyLead(row: {
   const subject =
     row.type === "quote"
       ? `New bulk-quote request from ${row.name ?? "a buyer"}`
-      : `New newsletter signup${row.email ? ` — ${row.email}` : ""}`;
+      : row.type === "deals"
+        ? `New deal-alert signup — ${row.name ?? row.phone ?? row.email ?? "a shopper"}`
+        : `New newsletter signup${row.email ? ` — ${row.email}` : ""}`;
   const body = [
     `Type: ${row.type}`,
     row.name && `Name: ${row.name}`,

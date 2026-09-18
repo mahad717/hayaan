@@ -79,6 +79,11 @@ export function Footer() {
                 </a>
               </li>
               <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/deals" className="inline-flex items-center gap-1">
+                  {t("ft.dealAlerts")}
+                </a>
+              </li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
                 <a href={`mailto:${SUPPORT_EMAIL}`} className="inline-flex items-center gap-1">
                   {SUPPORT_EMAIL}
                 </a>
