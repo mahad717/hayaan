@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Copy, Download, Loader2, Trash2 } from "lucide-react";
+import { Copy, Download, Loader2, Trash2, UserPlus, X } from "lucide-react";
 import { useStore } from "@/hooks/use-store";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
 
@@ -16,6 +16,18 @@ type Lead = {
   source: string;
   status: string;
   createdAt: string;
+};
+
+// Blank manual-entry form (Task 64) — source defaults to "manual" server-side.
+const EMPTY_FORM = {
+  type: "newsletter",
+  name: "",
+  business: "",
+  phone: "",
+  email: "",
+  message: "",
+  source: "",
+  status: "new",
 };
 
 const STATUSES = ["new", "contacted", "won", "lost"] as const;
@@ -67,6 +79,15 @@ export function AdminLeads() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // Manual lead entry (Task 64): off-site leads — walk-ins, WhatsApp DMs,
+  // phone calls — join the same pipeline as storefront captures.
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const setField = (key: keyof typeof EMPTY_FORM) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -182,6 +203,53 @@ export function AdminLeads() {
     }
   };
 
+  // Manual entry submit — same reachability rule as the server: the lead must
+  // be reachable (email or phone). On success the row is prepended (newest
+  // first, matching the GET order) without a refetch round-trip.
+  const addLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = form.email.trim();
+    const phone = form.phone.trim();
+    if (!email && !phone) {
+      toast("Add a phone number or email — a lead must be reachable.", "error");
+      return;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      toast("That email address doesn't look right.", "error");
+      return;
+    }
+    setSaving(true);
+    try {
+      const res = await fetch("/api/admin/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          ...form,
+          name: form.name.trim() || null,
+          business: form.business.trim() || null,
+          phone: phone || null,
+          email: email || null,
+          message: form.message.trim() || null,
+          source: form.source.trim() || null,
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.lead) {
+        toast(data?.error ?? "Couldn't save the lead.", "error");
+        return;
+      }
+      setLeads((ls) => [data.lead as Lead, ...ls]);
+      setForm(EMPTY_FORM);
+      setShowForm(false);
+      toast("Lead added to the pipeline.", "success");
+    } catch {
+      toast("Network error while saving the lead.", "error");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground">
@@ -223,6 +291,14 @@ export function AdminLeads() {
           )}
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="flex items-center gap-1.5 rounded-md bg-brand px-3 py-1 text-xs font-medium text-white hover:bg-brand-dark"
+            title="Add a lead you collected off-site — walk-in, WhatsApp, phone call"
+          >
+            {showForm ? <X className="h-3.5 w-3.5" /> : <UserPlus className="h-3.5 w-3.5" />}
+            {showForm ? "Close" : "Add lead"}
+          </button>
           {leads.length > 0 && (
             <>
               <button
@@ -250,9 +326,128 @@ export function AdminLeads() {
         </div>
       </div>
 
+      {/* Manual lead entry (Task 64) — inline panel so off-site contacts
+          (walk-ins, WhatsApp DMs, phone calls) join the same pipeline. */}
+      {showForm && (
+        <form
+          onSubmit={addLead}
+          className="mb-4 rounded-xl border border-[#e6e2d4] bg-white p-4 shadow-sm"
+        >
+          <p className="text-sm font-semibold">Add a lead manually</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            For contacts collected off-site — walk-ins, WhatsApp DMs, phone calls. They get the same
+            status pipeline and are included in Export CSV and Copy phones.
+          </p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Type
+              <select
+                value={form.type}
+                onChange={setField("type")}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              >
+                <option value="newsletter">Newsletter</option>
+                <option value="deals">Deal alert</option>
+                <option value="quote">Quote</option>
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Name
+              <input
+                value={form.name}
+                onChange={setField("name")}
+                placeholder="Jane Doe"
+                maxLength={120}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Business
+              <input
+                value={form.business}
+                onChange={setField("business")}
+                placeholder="Optional"
+                maxLength={160}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Status
+              <select
+                value={form.status}
+                onChange={setField("status")}
+                className={`rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand ${STATUS_STYLE[form.status] ?? ""}`}
+              >
+                {STATUSES.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Phone / WhatsApp
+              <input
+                value={form.phone}
+                onChange={setField("phone")}
+                placeholder="+252 61 555 0000"
+                maxLength={40}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Email
+              <input
+                type="email"
+                value={form.email}
+                onChange={setField("email")}
+                placeholder="jane@example.com"
+                maxLength={200}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium">
+              Source
+              <input
+                value={form.source}
+                onChange={setField("source")}
+                placeholder="manual"
+                maxLength={40}
+                className="rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs font-medium sm:col-span-2 lg:col-span-1">
+              <span>
+                Message <span className="font-normal text-muted-foreground">(required for quotes)</span>
+              </span>
+              <textarea
+                value={form.message}
+                onChange={setField("message")}
+                placeholder="What do they want?"
+                maxLength={4000}
+                rows={1}
+                className="min-h-[36px] rounded-md border border-[#e6e2d4] bg-white px-2.5 py-1.5 text-sm font-normal outline-none focus:border-brand"
+              />
+            </label>
+          </div>
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="flex items-center gap-1.5 rounded-md bg-brand px-3.5 py-1.5 text-xs font-medium text-white hover:bg-brand-dark disabled:opacity-60"
+            >
+              {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />} Save lead
+            </button>
+            <span className="text-xs text-muted-foreground">Phone or email is required.</span>
+          </div>
+        </form>
+      )}
+
       {leads.length === 0 ? (
         <div className="rounded-xl border border-dashed border-[#e6e2d4] bg-white p-10 text-center text-sm text-muted-foreground">
-          No leads yet. Newsletter signups, popup joins, and bulk-quote requests will show up here.
+          No leads yet. Newsletter signups, popup joins, and bulk-quote requests will show up here —
+          or use <span className="font-medium">Add lead</span> to enter a contact you collected
+          off-site.
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-[#e6e2d4] bg-white shadow-sm">
