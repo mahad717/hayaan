@@ -1330,3 +1330,21 @@ Work Log:
 Stage Summary:
 - Task 61 fully closed: /deals capture -> Supabase leads (deals type) -> admin pipeline -> CSV/phones export. Giveaway launch is now unblocked owner-side.
 - Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC, RESEND_API_KEY.
+
+---
+Task ID: 62
+Agent: Super Z (main)
+Task: "I want to add my products to google merchant" (+ MC "Add product source" screenshot: file-feed URL step)
+
+Work Log:
+- Read the uploaded screenshot: user is on Merchant Center -> Add product source, "Add products from a file" + "Enter a link to your file" selected, daily 12:00 AM schedule, feed label required, countries Algeria/Angola/Argentina/+90, English, all marketing methods.
+- Audited catalog: 94 active products, absolute Supabase storage image URLs, USD prices, stock counts, SKUs, categories, plain-text descriptions; robots.txt allows all.
+- New route src/app/feeds/google-products.xml/route.ts (force-dynamic, like sitemap): RSS 2.0 + g: namespace; per item g:id, title(<=150), link(/product/slug), description(<=5000, tag-stripped), g:image_link + additional_image_link (up to 10), g:condition new, g:availability from stock, g:price = compareAt-or-price with g:sale_price when discounted, g:brand via conservative known-brand whitelist (28/94 matched: HP 7, SAMSUNG 7, APPLE 5, TP-LINK 4...), g:identifier_exists no (no GTIN/MPN in catalog), g:product_type = category name, g:custom_label_0 = category slug. DB failure -> 500 so MC keeps the last good feed (never wipes the catalog with an empty one). Cache-Control 1h.
+- eslint clean; next build pass; commit 00cb5c8 pushed (5d84e8d..00cb5c8) + verify-harness commit; deploy polled — feed live.
+- Validation: python ElementTree parse OK; 94 items; 0 items missing required attrs; sample item fields verified; product link 200; image URL 200. CDP: two timeouts on the XML DOM-tree render (slow for big feeds + stale chrome holding port) — fixed with pkill + view-source: render; screenshot download/task62-google-feed.png; 0 console exceptions.
+- Note: env has no Supabase keys locally; feed runs server-side in the Worker as designed. Og fallback image fixed to /og.png before deploy.
+
+Stage Summary:
+- hayaan.co/feeds/google-products.xml is live: paste it into the MC "Enter a link to your file" box, set feed label (e.g. hayaan-all), Continue; products auto-refresh every 24h.
+- Owner follow-ups in MC: website verify/claim, shipping settings for target countries, refund/return policy; brand field will improve matches (28 items auto-branded).
+- Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC, RESEND_API_KEY.
