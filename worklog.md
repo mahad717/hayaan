@@ -1348,3 +1348,24 @@ Stage Summary:
 - hayaan.co/feeds/google-products.xml is live: paste it into the MC "Enter a link to your file" box, set feed label (e.g. hayaan-all), Continue; products auto-refresh every 24h.
 - Owner follow-ups in MC: website verify/claim, shipping settings for target countries, refund/return policy; brand field will improve matches (28 items auto-branded).
 - Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC, RESEND_API_KEY.
+
+---
+Task ID: 63
+Agent: Super Z (main)
+Task: "We need to update how shipping fees are calculated. Here is the list of Mogadishu districts and there shipping fees" (shipping fees.docx: 20 districts, $1.50-$3.00)
+
+Work Log:
+- Parsed owner's shipping fees.docx (python-docx): 20 Mogadishu districts, fees $1.50 (Hodan/Waberi/Wadajir) to $3.00 (Daynile/Heliwa/Kahda/Gubadley/Darussalam/Garasbaaley).
+- New src/lib/shipping.ts: MOGADISHU_DISTRICTS table (canonical EN name stored as shipping_city + EN/SO aliases incl. Xamar Jabjab, Warta Nabada, Kaxda, Boondheere...), normalize() matcher (case/hyphen/diacritic-insensitive), computeShipping(): free >= $75 (keeps hero badge truthful), district fee, else flat $6.95 outside Mogadishu. FREE_SHIPPING_THRESHOLD=75, OUTSIDE_MOGADISHU_FEE=6.95.
+- sifalo-server.ts: computeCheckoutTotal(subtotal, city?) now uses computeShipping — Sifalo charge matches the district fee shown to the customer (Supabase + Prisma paths both pass shipping.city).
+- checkout.tsx: City text input -> district Select (20 districts labeled "Name — $X.XX" + "Other city (outside Mogadishu)" sentinel __other which reveals a free-text City input). Saved-profile city auto-maps to the district (or Other path). Summary: hint "Pick your district" until known, then live fee; Pay button disabled until shipping known; submit guard + toast; submitted city = canonical district name or typed other city.
+- cart-drawer.tsx: shipping row estimates from saved profile district; "Calculated at checkout" when unknown (Total row hidden then); free-shipping banner driven by shared threshold.
+- dictionary.ts EN+SO: co.district, co.districtPlaceholder, co.districtOther, co.districtHint, co.pickDistrict, co.pickDistrictToast, cart.shippingCalc.
+- Verification: bun scripts/verify-shipping-logic.ts ALL PASS (20 sheet fees, 14 aliases, casing, thresholds). eslint: only pre-existing react-hooks/set-state-in-effect on checkout (confirmed identical on HEAD version). next build pass; commit 95439cc pushed (b8315bf..95439cc); deploy live at poll 1 (chunk markers: Gubadley, "Other city (outside Mogadishu)", "Calculated at checkout").
+- Live CDP verify (scripts/verify-shipping-cdp.mjs, throwaway customer + $18 item): placeholder + hint + Pay disabled -> Hodan => $1.50 + Pay enabled -> Other city via wheel+click => City input, Pay disabled until typed, Kismayo => $6.95 + enabled -> saved profile city=Hodan reload => trigger "Hodan — $1.50" + $1.50 -> saved city=Kismayo reload => "Other city (outside Mogadishu)" + prefilled input + $6.95. 0 console exceptions. Screenshots download/task63-checkout-{placeholder,hodan,other,saved-hodan}.png.
+- Found (pre-existing, NOT this task): signup's public.users upsert doesn't always create the profile row, so a city-only PUT /api/account 500s ("null value in column name") — the real account view always sends name so customers are unaffected; flagged as follow-up. scripts/debug-account-city.mjs documents it.
+
+Stage Summary:
+- District-based delivery pricing is LIVE: customers pick their Mogadishu district at checkout, see the exact fee from the owner's sheet ($1.50-$3.00), free over $75 still applies, outside-Mogadishu stays $6.95, and Sifalo charges exactly what the summary shows. Server is authoritative (recomputes from shipping.city).
+- Probe data: ~7 throwaway accounts (task63.*@example.com, task63dbg.*@example.com) exist in Supabase Auth — safe to delete from dashboard.
+- Follow-ups: signup users-row upsert fix; accounting migration; 14 unpriced items; stock defaults; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
