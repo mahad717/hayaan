@@ -1312,3 +1312,21 @@ Stage Summary:
 - /deals is live on hayaan.co (EN/SO) as the giveaway + deal-alerts capture page; every free-channel push now has a segmented destination (deals lead type, interest-tagged messages, teal chip in admin, CSV export ready).
 - Owner to-dos: run 2026-09-18-deals-type.sql; then launch giveaway (prize + /deals link) across TikTok/FB groups/WhatsApp status; existing order customers are the seed list.
 - Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC.
+
+---
+Task ID: 61b
+Agent: Super Z (main)
+Task: "done" (owner ran 2026-09-18-deals-type.sql — re-verify deals pipeline end-to-end)
+
+Work Log:
+- Re-ran the live API suite after the owner ran the migration:
+  - POST /api/leads type=deals phone-only -> {ok:true} (leads_type_check now accepts 'deals')
+  - POST /api/leads type=deals full (name+phone+email+interest) -> {ok:true}
+  - POST type=newsletter regression -> {ok:true}
+  - contactless deals POST -> 400 "Leave your email or WhatsApp number..." (validation intact)
+- Probe row left in pipeline on purpose: "Verify Task61" (task61.probe@example.com, source verify-61) so the owner sees the teal "Deal alert" chip + Export CSV/Copy phones on real data; one-click delete when done.
+- No code changes this turn; no deploy needed.
+
+Stage Summary:
+- Task 61 fully closed: /deals capture -> Supabase leads (deals type) -> admin pipeline -> CSV/phones export. Giveaway launch is now unblocked owner-side.
+- Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC, RESEND_API_KEY.
