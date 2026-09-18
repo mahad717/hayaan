@@ -1369,3 +1369,36 @@ Stage Summary:
 - District-based delivery pricing is LIVE: customers pick their Mogadishu district at checkout, see the exact fee from the owner's sheet ($1.50-$3.00), free over $75 still applies, outside-Mogadishu stays $6.95, and Sifalo charges exactly what the summary shows. Server is authoritative (recomputes from shipping.city).
 - Probe data: ~7 throwaway accounts (task63.*@example.com, task63dbg.*@example.com) exist in Supabase Auth — safe to delete from dashboard.
 - Follow-ups: signup users-row upsert fix; accounting migration; 14 unpriced items; stock defaults; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
+
+---
+Task ID: 64-a
+Agent: Super Z (main)
+Task: "Now remove the tax vat" (checkout Tax (8%) row screenshot) — done in a prior session turn whose worklog append was lost to tool failures; recorded retroactively.
+
+Work Log:
+- checkout.tsx: removed subtotal*0.08 tax calc + the Tax (8%) summary row; total = subtotal + shipping.
+- sifalo-server.ts: computeCheckoutTotal no longer adds 8% — Sifalo charges exactly subtotal + district shipping; tax_amount recorded as 0 (schema untouched).
+- dictionary.ts: removed co.tax keys (EN "Tax (8%)" + SO "Canshuur (8%)").
+- Build pass; commit pushed (remote 746b2c5 after amend; local sandbox rebuilt mid-session causing a diverged-head hiccup resolved via reset --soft onto FETCH_HEAD).
+- Deploy verified: poll script confirmed no "Tax (8%)"/"Canshuur (8%)" strings across all 14 homepage-referenced chunks; $15 + $1.50 Hodan now totals $16.50 (was $17.70).
+- Note: final end-to-end checkout screenshot was skipped (tool failures); bundle-level verification sufficed.
+
+Stage Summary:
+- Store no longer charges VAT: displayed total == Sifalo charge == subtotal + shipping. Accounting tax ledger untouched (always 0 now).
+
+---
+Task ID: 64-b
+Agent: Super Z (main)
+Task: "Also, I want to be able to add leads manually" (admin Leads tab screenshot)
+
+Work Log:
+- POST /api/admin/leads (admin-gated via requireAdminUser): manual lead creation with type (newsletter|deals|quote), name, business, phone, email, message, source (default "manual"), status (default new). Same reachability rules as public capture (email or phone required; quotes need name+message); no Resend self-notify. Returns the created row for optimistic UI. Supabase + Prisma paths both implemented.
+- admin-leads.tsx: "Add lead" toolbar button (always visible, even at 0 leads) toggling an inline form panel (8 fields, brand-styled); client-side validation mirrors server; on success the row prepends to the table (newest-first) without a refetch; empty-state copy updated.
+- bun run build pass; commit 6b65070 pushed (746b2c5..6b65070, linear history restored after the sandbox rebuild).
+- Live verify: /admin references new chunk 0qqy30dkmdki2.js (200 on CDN, contains "Add a lead manually") — homepage-only chunk polling missed it because the admin chunk is route-split; unauthenticated POST /api/admin/leads on live -> 403 "Admin access required."
+- Local E2E (dev server, Prisma): login admin@shop.demo -> POST deals+phone-only -> {ok:true, source:"manual", status:"new"}; no-contact 400; bad-email 400; quote-without-message 400; GET list shows the lead; cleanup DELETE ok (no test rows left).
+- CDP visual check (scripts/verify-manual-leads-cdp.mjs): Leads tab -> Add lead -> form renders all 8 fields, controlled inputs work, 0 console exceptions. Screenshot download/task64-manual-lead-form.png.
+
+Stage Summary:
+- Owner can now enter off-site leads (walk-ins, WhatsApp DMs, phone calls) directly in Admin -> Leads; they join the same status pipeline and Export CSV / Copy phones outputs.
+- Follow-ups unchanged: signup users-row upsert fix; accounting migration; 14 unpriced items; stock defaults; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
