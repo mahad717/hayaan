@@ -1291,3 +1291,24 @@ Stage Summary:
 - Campaign loop closed: storefront captures leads -> Admin Leads -> one click to CSV (email tools) or phone list (WhatsApp tools).
 - Owner send-stack recommendation delivered: Zoho Campaigns for bulk email (sender support@hayaan.co), WhatsApp Business app broadcasts now / API tool later. No further code changes needed for campaigns.
 - Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC.
+
+---
+Task ID: 61
+Agent: Super Z (main)
+Task: "I need b2c leads for Hayaan Market, specifically an electronics audience 2000 email and phone numbers how can i get without spending in ads"
+
+Work Log:
+- Delivered the free-lead playbook (no purchased lists: Zoho AUP suspension + spam traps; no cold WhatsApp blasts: number ban) — see chat reply: giveaway via /deals, TikTok, FB groups, Telegram, WhatsApp status, seller cross-promos, influencer barter, existing order customers as seed.
+- Built the capture destination all free channels point to: /deals landing page (StoreShell, EN/SO via cookie, 3 benefit cards, phone-first form: name optional, phone required, email optional, interest select -> message "Interested in: <category>", honeypot + success card).
+- New client component src/components/store/deals-signup-form.tsx; page src/app/deals/page.tsx with metadata/OG/canonical.
+- /api/leads: LEAD_TYPES += "deals"; notifyLead subject for deal-alert signups (Resend, env-gated). Newsletter-branch validation fits (email or phone required).
+- admin-leads.tsx: TYPE_LABEL/TYPE_STYLE maps — deals shows teal "Deal alert" chip (fallback keeps unknown types visible).
+- footer.tsx: "Deal alerts" link (EN/SO ft.dealAlerts) in Support column; sitemap.ts: /deals entry (weekly, 0.7).
+- eslint clean on 7 files; next build pass; commit 7636e7a pushed (db70b84..7636e7a) + migration commit; deploy polled — form chunk 35foym1jmq2et.js live, /deals SSR serving.
+- Live verify: SSR EN markers all true; SO markers true (hayaan_lang=so); footer a[href='/deals'] present; 400 validation intact on contactless POST; CDP (scripts/verify-deals-cdp.mjs): EN+SO form render (7 option interest select), 0 console exceptions. Screenshots download/task61-deals-en.png, task61-deals-so.png.
+- BLOCKER found: Supabase leads_type_check CHECK constraint rejects type='deals' (500). Wrote src/lib/supabase/migrations/2026-09-18-deals-type.sql (drop + re-add constraint incl. 'deals', idempotent) — OWNER must run it in Supabase SQL editor; then deals POST regression will pass (re-verify on confirmation).
+
+Stage Summary:
+- /deals is live on hayaan.co (EN/SO) as the giveaway + deal-alerts capture page; every free-channel push now has a segmented destination (deals lead type, interest-tagged messages, teal chip in admin, CSV export ready).
+- Owner to-dos: run 2026-09-18-deals-type.sql; then launch giveaway (prize + /deals link) across TikTok/FB groups/WhatsApp status; existing order customers are the seed list.
+- Follow-ups unchanged: accounting migration, 14 unpriced items, stock defaults, Google provider (Task 43), Zoho DKIM+DMARC.
