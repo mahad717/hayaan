@@ -1402,3 +1402,24 @@ Work Log:
 Stage Summary:
 - Owner can now enter off-site leads (walk-ins, WhatsApp DMs, phone calls) directly in Admin -> Leads; they join the same status pipeline and Export CSV / Copy phones outputs.
 - Follow-ups unchanged: signup users-row upsert fix; accounting migration; 14 unpriced items; stock defaults; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
+
+---
+Task ID: 65
+Agent: Super Z (main)
+Task: "I want to add alibaba dropshipping"
+
+Work Log:
+- Schema: products.supplier_url + products.supplier_sku (migration 2026-09-18-dropshipping.sql for Supabase, prisma db push for local); unit cost stays in the product_costs side-car so accounting margin math is unchanged.
+- POST /api/admin/import-product (admin-gated, SSRF-guarded): fetches a supplier listing server-side (12s timeout, browser UA), extracts a draft from JSON-LD Product (incl. @graph), og:meta, itemprop price, and Shopify product:price:amount; images absolutized + deduped (max 10); graceful 422 with copy-paste guidance when the site blocks bots (verified 422 on a dataless page).
+- GET /api/admin/fulfillment (admin-gated): paid/shipped orders with per-item supplierUrl/supplierSku/cost (cost via getProductCostMap, best-effort) + customer shipping block; Supabase nested-select and Prisma include paths.
+- Admin UI: "Import from URL" toolbar button -> dialog -> prefilled Create form (listing price -> Product Cost, ~2.5x suggested retail, all editable); Supplier URL/SKU fields inside the Product Cost box; new Fulfillment tab (order cards: est. margin, per-item Open-listing link, one-click Copy supplier order text block with ship-to details, Mark shipped via the existing order-status API).
+- E2E (scripts/verify-dropshipping-e2e.mjs, 21 checks): 20 pass + 1 known-limitation (allbirds SPA exposes no price to plain fetch — price stays best-effort, owner sets it in the review step). Verified on a real Shopify listing: name + 6 images + supplierUrl + hostname; 403/400/422 guards; public API hides supplier fields; seeded paid order -> fulfillment shows cost 12.50 + supplier URL; mark shipped moves groups; delete guarded.
+- Two PRE-EXISTING bugs found & fixed during E2E: (1) POST /api/products 500 on duplicate slug — uniqueSlug() now appends -2/-3/rand, checking the active store; (2) DELETE /api/products/[id] raw 500 when orders reference the product — now 400 "referenced by existing orders… hide it instead"; admin remove() surfaces the message.
+- Builds pass; commits 0bb4a8a + 43ecd32 pushed; live deployment verified by content-hash chunk probe (34_k0e_c-tczh.js 200 on CDN — /admin HTML was CDN-cached so HTML-based polling showed stale chunks).
+- CDP screenshots: download/task65-import-dialog.png (dialog over catalog), download/task65-fulfillment-tab.png (probe order with supplier link/cost/margin + graceful "No supplier URL" rows). 0 console exceptions.
+- Local probe data cleaned (orders, products, costs).
+
+Stage Summary:
+- Dropshipping is LIVE end to end: paste an AliExpress/Alibaba URL -> review prefill -> product stores supplier link + cost; paid orders appear in Fulfillment with one-click supplier-order copy and Mark shipped. Owner must run src/lib/supabase/migrations/2026-09-18-dropshipping.sql in Supabase SQL editor to add the two columns (imports/fulfillment degrade gracefully until then — supplier fields just won't save).
+- Note: AliExpress/Alibaba sometimes block automated fetches; the importer fails gracefully and the manual Supplier URL field is always available.
+- Follow-ups: run dropshipping migration; accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
