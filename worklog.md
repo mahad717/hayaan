@@ -1423,3 +1423,24 @@ Stage Summary:
 - Dropshipping is LIVE end to end: paste an AliExpress/Alibaba URL -> review prefill -> product stores supplier link + cost; paid orders appear in Fulfillment with one-click supplier-order copy and Mark shipped. Owner must run src/lib/supabase/migrations/2026-09-18-dropshipping.sql in Supabase SQL editor to add the two columns (imports/fulfillment degrade gracefully until then — supplier fields just won't save).
 - Note: AliExpress/Alibaba sometimes block automated fetches; the importer fails gracefully and the manual Supplier URL field is always available.
 - Follow-ups: run dropshipping migration; accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
+
+---
+Task ID: 66
+Agent: Super Z (main)
+Task: "When I click fetch details, it loads, but it's doing nothing" (admin Import from URL, screenshot of the dialog with an Alibaba product URL)
+
+Work Log:
+- Root cause (two layers): (1) Alibaba serves datacenter fetchers an HTTP-200 anti-bot "punish" page (verified from sandbox: 200, 91KB, sd/punish/qrcode.min.js, ZERO og:title/JSON-LD/og:image — even Googlebot UA gets 403; AliExpress returns a 2.3KB JS shell). So /api/admin/import-product correctly returned 422 with a clear message — but (2) the UI surfaced that ONLY as a 4-second sonner toast while the owner stares at the centered dialog → reads as "loads, then nothing happens".
+- import-product API: added looksLikeChallenge() (punish/captcha/x5sec markers + dataless-page detection via the final no-data branch); 422 responses now include blocked:true + a targeted message naming the anti-bot block and pointing at the new manual shortcut.
+- admin-panel.tsx import dialog: failures now render a PERSISTENT inline red error panel (role=alert, AlertTriangle) instead of relying on the toast; panel includes a one-click "Add the product manually with this URL" button (importManually()) that closes the import dialog and opens the Create form with supplierUrl prefilled + first category selected; error clears on typing/success/new attempt; footer tip updated.
+- products POST/PUT (Supabase path): if the products table lacks supplier_url/supplier_sku (2026-09-18-dropshipping.sql not yet run — still unconfirmed on live), isMissingSupplierColumns() (new src/lib/supabase/missing-column.ts, PGRST204/message match) triggers a retry WITHOUT those columns so the product still saves instead of 400ing the whole write.
+- Task 65 gap fixed en route: POST/PUT product responses now include the admin-only supplierUrl/supplierSku via adminRowToProduct() (public GET still uses rowToProduct which omits them).
+- E2E (scripts/verify-import-fix-e2e.mjs): 13/13 — 403 guard; Alibaba URL → 422 blocked=true + actionable message; AliExpress → 422 blocked=true; allbirds Shopify listing → 200 draft (name+6 images+supplierUrl regression pass); create with supplierUrl persists; PUT supplierSku persists; cleanup delete OK.
+- CDP visual (scripts/verify-import-fix-cdp.mjs, fresh API login + cookie injection): paste Alibaba URL → Fetch details → inline red panel with the anti-bot message + fallback button (screenshot download/task66-import-inline-error.png); click fallback → Create product form opens with Supplier URL prefilled exactly (download/task66-manual-fallback.png). 0 console exceptions.
+- Build pass; commit d97baab pushed (43ecd32..d97baab, linear, remote verified ancestor first). Deploy: /admin?-cb HTML polling stayed stale ~20 min (known Workers incremental-cache behavior from Task 65), so verified by probing the content-hashed chunk 1qk5tq4i_ijyt.js directly on the CDN — HTTP 200 + marker "Add the product manually" present; live POST unauth → 403 "Admin access required." (route alive); homepage 200.
+- Note: local dev catalog contains ~5 "ACCT TEST Widget" rows from earlier local accounting tests — local Prisma store only, NOT on live (live shows 94).
+
+Stage Summary:
+- "Fetch details" can no longer fail silently: blocked imports show a persistent inline explanation inside the dialog and one click carries the supplier URL into a blank product form (fill name/price/images from the listing, save — fulfillment tab still links back to the listing).
+- Alibaba/AliExpress will USUALLY still block automated extraction (anti-bot; nothing code can do about that from a server fetch) — the importer remains fully functional for Shopify-style supplier sites, and the manual shortcut covers the blocked case.
+- Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run (saves now degrade gracefully without it); accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
