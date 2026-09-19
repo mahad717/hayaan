@@ -723,6 +723,7 @@ export const CATEGORY_SO: Record<string, string> = {
   "phones-wearables": "Teleefoonada & Saacadaha",
   "computers-tv-gaming": "Kombuyuutarada & TV-yada",
   "home-office": "Guryaha & Xafiisyada",
+  "health-supplements": "Caafimaad & Vitamiinada",
   electronics: "Elektirooniks",
   "home-living": "Guriga & Nolosha",
   apparel: "Dhar",

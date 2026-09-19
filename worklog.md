@@ -1461,3 +1461,23 @@ Stage Summary:
 - Profile -> Shipping address now has the District picker (no prices): customers set their district once in their profile and checkout prefills + prices it automatically. Other-city path preserved for non-Mogadishu customers.
 - Radix Select mount-time value-wipe quirk documented + guarded in account-view; checkout unaffected.
 - Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run; accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
+
+---
+Task ID: 68
+Agent: Super Z (main)
+Task: "Add a new Category for health supplements like vitamins"
+
+Work Log:
+- Data + i18n change, no schema/API code: storefront pills, admin product-form dropdown and the Google feed all read the categories table dynamically, so the new category needs (a) a DB row and (b) its Somali label in CATEGORY_SO.
+- src/lib/supabase/migrations/2026-09-20-health-supplements.sql (idempotent, begin/commit): inserts ('Health Supplements', 'health-supplements', 'Vitamins, minerals and everyday wellness supplements.') ON CONFLICT (slug) DO NOTHING. OWNER MUST RUN IT in the Supabase SQL editor (no local Supabase credentials; same flow as 2026-09-17-catalog-categories.sql).
+- dictionary.ts CATEGORY_SO: "health-supplements": "Caafimaad & Vitamiinada" so the Somali pill translates (English label comes from the DB row itself).
+- Local seed: scripts/seed-health-category.mjs upserted the category into the local Prisma SQLite catalog (dev DB now 5 categories: the legacy apparel/beauty/electronics/home-living + health-supplements).
+- E2E (scripts/verify-health-category-e2e.mjs) 10/10: /api/categories returns the row with correct name/slug/description + clean row shape; homepage SSR payload contains name + slug; 0 products assigned yet (expected empty pill); products API unaffected; Somali label present in the built client bundle (checked .next + .open-next chunk dirs).
+- CDP (scripts/verify-health-category-cdp.mjs) 9/9, 0 console exceptions: storefront pill renders and clicking shows the locale-aware "No products found" empty state (expected until products exist); Somali mode renders "Caafimaad & Vitamiinada" (plus "Dhar"/"Guriga & Nolosha" intact); /admin Create product category dropdown lists Health Supplements. First run had 2 bogus FAILs — script expected the LIVE category set (Power & Charging etc.) against the LOCAL legacy catalog; fixed the assertions, app itself was correct.
+- Screenshots: download/task68-storefront-pill.png (pill row), task68-empty-state.png, task68-somali-pill.png (Caafimaad & Vitamiinada), task68-admin-category-dropdown.png (dropdown open with Health Supplements).
+- bun run build pass. Committed and pushed; deploy verified via content-hashed chunk probe on the CDN (dictionary change visible) + live homepage 200 and /api/categories 200.
+
+Stage Summary:
+- "Health Supplements" (health-supplements, Somali: Caafimaad & Vitamiinada) is wired everywhere categories are consumed. LIVE STORE NEEDS ONE MANUAL STEP: paste src/lib/supabase/migrations/2026-09-20-health-supplements.sql into the Supabase SQL editor — the pill + admin dropdown option appear immediately after, and vitamin products can then be created/assigned via Admin -> New product -> Category.
+- Pill shows "No products found" until the first vitamin product is assigned (same behavior the old empty demo categories had before Task 52 removed them) — expected; owner will populate it.
+- Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run; accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
