@@ -11,6 +11,8 @@
  * after the owner edits a description in the admin).
  */
 
+import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
+
 export type Lang = "en" | "so";
 export const LANGS: readonly Lang[] = ["en", "so"];
 export const LANG_COOKIE = "hayaan_lang";
@@ -782,8 +784,12 @@ const DESC_MATCHERS: { re: RegExp; so: (n: string) => string }[] = EN_DESC_TEMPL
 /** Somali display text for a product description (fallback: stored text). */
 export function productDescription(desc: string, lang: Lang): string {
   if (lang !== "so") return desc;
+  // Task 69: formatted (HTML) descriptions still match the import-time
+  // templates via their stripped plain text; unmatched ones fall through
+  // and render as the stored (possibly formatted) description.
+  const plain = looksLikeHtml(desc) ? stripHtml(desc) : desc;
   for (const { re, so } of DESC_MATCHERS) {
-    const m = desc.match(re);
+    const m = plain.match(re);
     if (m?.[1]) return so(m[1]);
   }
   return desc;

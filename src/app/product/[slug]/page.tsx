@@ -5,6 +5,7 @@ import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { isLang, LANG_COOKIE, productDescription } from "@/lib/i18n/dictionary";
+import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 
 // SSR per request — catalog changes are visible immediately and crawlers
 // always see fresh content.
@@ -24,8 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? (cookieStore.get(LANG_COOKIE)!.value as "en" | "so")
     : "en";
   const soDesc = productDescription(product.description, lang);
+  // Meta tags need PLAIN text — strip formatting HTML if present.
+  const plainDesc = looksLikeHtml(soDesc) ? stripHtml(soDesc) : soDesc;
   const description =
-    soDesc.length > 157 ? `${soDesc.slice(0, 157)}…` : soDesc;
+    plainDesc.length > 157 ? `${plainDesc.slice(0, 157)}…` : plainDesc;
   const image = product.images[0];
 
   return {
@@ -61,7 +64,7 @@ export default async function ProductPage({ params }: Props) {
       {
         "@type": "Product",
         name: product.name,
-        description: product.description,
+        description: looksLikeHtml(product.description) ? stripHtml(product.description) : product.description,
         image: product.images,
         sku: product.sku ?? undefined,
         productID: product.id,

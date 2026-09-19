@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { RichTextEditor } from "@/components/store/rich-text-editor";
 import { useStore } from "@/hooks/use-store";
 import { AdminBlog } from "@/components/store/admin-blog";
 import { AdminAccounting } from "@/components/store/admin-accounting";
@@ -260,8 +261,8 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       supplierUrl: form.supplierUrl.trim() || null,
       supplierSku: form.supplierSku.trim() || null,
     };
-    if (!body.name || !body.price || !body.categoryId) {
-      toast("Name, price, and category are required.", "error");
+    if (!body.name || !body.description || !body.price || !body.categoryId) {
+      toast("Name, description, price, and category are required.", "error");
       return;
     }
     if (body.cost != null && (isNaN(body.cost) || body.cost < 0)) {
@@ -576,14 +577,13 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="p-desc">Description <Req /></Label>
-              <Textarea
+              <RichTextEditor
                 id="p-desc"
-                required
-                rows={3}
-                placeholder="Tell customers what makes this product special…"
-                className={FIELD_CLS}
+                key={editing?.id ?? "new"}
                 value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                onChange={(html) => setForm({ ...form, description: html })}
+                placeholder="Tell customers what makes this product special…"
+                ariaLabel="Product description"
               />
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

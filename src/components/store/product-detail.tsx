@@ -11,6 +11,7 @@ import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName, productDescription } from "@/lib/i18n/dictionary";
+import { looksLikeHtml, sanitizeRichText } from "@/lib/rich-text";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -226,9 +227,24 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             )}
           </div>
 
-          <p className="max-w-prose text-sm leading-relaxed text-muted-foreground font-original sm:text-base">
-            {productDescription(product.description, lang)}
-          </p>
+          {/* Task 69: formatted descriptions render as rich HTML (sanitized);
+              legacy plain-text descriptions render as before, line breaks kept. */}
+          {(() => {
+            const desc = productDescription(product.description, lang);
+            if (looksLikeHtml(desc)) {
+              return (
+                <div
+                  className="rich-description max-w-prose text-sm leading-relaxed text-muted-foreground font-original sm:text-base"
+                  dangerouslySetInnerHTML={{ __html: sanitizeRichText(desc) }}
+                />
+              );
+            }
+            return (
+              <p className="max-w-prose whitespace-pre-line text-sm leading-relaxed text-muted-foreground font-original sm:text-base">
+                {desc}
+              </p>
+            );
+          })()}
 
           {product.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">

@@ -5,6 +5,7 @@ import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/ser
 import { getCurrentUser } from "@/lib/current-user";
 import { upsertProductCost, isMissingAccountingSchema, accountingUnavailableResponse } from "@/lib/accounting";
 import { isMissingSupplierColumns } from "@/lib/supabase/missing-column";
+import { sanitizeRichText } from "@/lib/rich-text";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -113,6 +114,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
   const body = await req.json();
+  // Task 69: descriptions may carry formatting HTML from the rich-text editor.
+  // Allowlist-sanitize BEFORE persistence so nothing unsafe is ever stored.
+  if (typeof body.description === "string") body.description = sanitizeRichText(body.description);
   const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost, supplierUrl, supplierSku } = body;
   if (!name || !description || !price || !categoryId) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });

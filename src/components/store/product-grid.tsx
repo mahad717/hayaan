@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { Category, Product } from "@/lib/types";
+import { stripHtml } from "@/lib/rich-text";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName } from "@/lib/i18n/dictionary";
 
@@ -84,7 +85,7 @@ export function ProductGrid({
     let out = displayProducts.filter((p) => {
       if (activeCategory !== "all" && p.categoryId !== activeCategory) return false;
       if (q) {
-        const hay = `${p.name} ${p.description} ${p.tags.join(" ")} ${p.category?.name ?? ""}`.toLowerCase();
+        const hay = `${p.name} ${stripHtml(p.description)} ${p.tags.join(" ")} ${p.category?.name ?? ""}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;

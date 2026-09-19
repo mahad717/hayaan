@@ -4,6 +4,7 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { isMissingSupplierColumns } from "@/lib/supabase/missing-column";
+import { sanitizeRichText } from "@/lib/rich-text";
 import {
   upsertProductCost,
   deleteProductCost,
@@ -75,6 +76,8 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
   const body = await req.json();
+  // Task 69: sanitize rich-text description updates before persistence.
+  if (typeof body.description === "string") body.description = sanitizeRichText(body.description);
 
   // Confidential cost updates (Task 49): validate, audit old → new, then
   // persist in the RLS-locked side-car. Never touches the public product row.

@@ -265,3 +265,82 @@
     background-color: var(--hayaan-accent-soft) !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Task 69 — rich product descriptions.
+   .rich-description: sanitized admin HTML rendered on the product page.
+   .rich-editor: the admin contentEditable surface (placeholder + content). */
+.rich-description p {
+  margin: 0.5em 0;
+}
+.rich-description p:first-child {
+  margin-top: 0;
+}
+.rich-description p:last-child {
+  margin-bottom: 0;
+}
+.rich-description ul,
+.rich-description ol {
+  margin: 0.5em 0;
+  padding-left: 1.5rem;
+}
+.rich-description ul {
+  list-style: disc outside;
+}
+.rich-description ol {
+  list-style: decimal outside;
+}
+.rich-description li {
+  margin: 0.2em 0;
+}
+.rich-description li::marker {
+  color: var(--primary);
+}
+.rich-description b,
+.rich-description strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+.rich-description u {
+  text-underline-offset: 2px;
+}
+.rich-description h3,
+.rich-description h4 {
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0.8em 0 0.2em;
+}
+.rich-description h3 {
+  font-size: 1.05em;
+}
+.rich-description h3:first-child,
+.rich-description h4:first-child {
+  margin-top: 0;
+}
+
+/* Admin editor surface */
+.rich-editor:focus {
+  outline: none;
+}
+.rich-editor[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted-foreground);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.rich-editor ul,
+.rich-editor ol {
+  margin: 0.25em 0;
+  padding-left: 1.5rem;
+}
+.rich-editor ul {
+  list-style: disc outside;
+}
+.rich-editor ol {
+  list-style: decimal outside;
+}
+.rich-editor h3 {
+  font-weight: 600;
+  font-size: 1.05em;
+  margin: 0.4em 0 0.2em;
+}

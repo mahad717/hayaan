@@ -19,6 +19,7 @@
 import { NextResponse } from "next/server";
 
 import { listActiveProducts } from "@/lib/products-server";
+import { stripHtml } from "@/lib/rich-text";
 import type { Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -69,7 +70,7 @@ function price(v: number, currency: string): string {
 
 function productToItem(p: Product): string {
   const title = xmlEscape(cleanText(p.name, 150));
-  const description = xmlEscape(cleanText(p.description || p.name, 5000));
+  const description = xmlEscape(cleanText(stripHtml(p.description) || p.name, 5000));
   const link = xmlEscape(`${BASE}/product/${encodeURIComponent(p.slug)}`);
   const availability = p.stock > 0 ? "in_stock" : "out_of_stock";
   const currency = (p.currency || "USD").toUpperCase();
