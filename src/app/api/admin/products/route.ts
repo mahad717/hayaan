@@ -11,6 +11,14 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { requireAdminUser, isMissingAccountingSchema, accountingUnavailableResponse } from "@/lib/accounting";
 
+/** Supplier sourcing fields (Task 65) — admin-only, same confidentiality as cost. */
+function supplierFields(row: { supplier_url?: string | null; supplier_sku?: string | null; supplierUrl?: string | null; supplierSku?: string | null }) {
+  return {
+    supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
+    supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
+  };
+}
+
 export async function GET(req: NextRequest) {
   const admin = await requireAdminUser(req);
   if (!admin) return NextResponse.json({ error: "Admin access required." }, { status: 403 });
@@ -59,6 +67,7 @@ export async function GET(req: NextRequest) {
           : undefined,
         // Confidential — admin only, never present on public payloads.
         cost: costs.has(row.id) ? costs.get(row.id) ?? null : null,
+        ...supplierFields(row),
       })),
     });
   }
@@ -90,6 +99,7 @@ export async function GET(req: NextRequest) {
         ? { id: p.category.id, name: p.category.name, slug: p.category.slug, description: p.category.description ?? null }
         : undefined,
       cost: costMap.has(p.id) ? costMap.get(p.id) ?? null : null,
+      ...supplierFields(p),
     })),
   });
 }

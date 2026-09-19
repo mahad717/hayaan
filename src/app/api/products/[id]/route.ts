@@ -114,6 +114,8 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     if (body.featured !== undefined) update.featured = body.featured;
     if (body.isActive !== undefined) update.is_active = body.isActive;
     if (body.categoryId !== undefined) update.category_id = body.categoryId;
+    if (body.supplierUrl !== undefined) update.supplier_url = body.supplierUrl;
+    if (body.supplierSku !== undefined) update.supplier_sku = body.supplierSku;
     const { data, error } = await supabase
       .from("products")
       .update(update)
@@ -136,6 +138,8 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
       ...(body.featured !== undefined ? { featured: body.featured } : {}),
       ...(body.isActive !== undefined ? { isActive: body.isActive } : {}),
       ...(body.categoryId !== undefined ? { categoryId: body.categoryId } : {}),
+      ...(body.supplierUrl !== undefined ? { supplierUrl: body.supplierUrl } : {}),
+      ...(body.supplierSku !== undefined ? { supplierSku: body.supplierSku } : {}),
     },
     include: { category: true },
   });

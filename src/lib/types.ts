@@ -43,6 +43,10 @@ export interface Product {
   isActive: boolean;
   categoryId: string;
   category?: Category;
+  // Dropshipping sourcing (Task 65) — admin-only fields; the public product
+  // API never maps them, so customers never see supplier data.
+  supplierUrl?: string | null;
+  supplierSku?: string | null;
 }
 
 export interface CartItem {

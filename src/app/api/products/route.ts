@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Admin access required." }, { status: 403 });
   }
   const body = await req.json();
-  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost } = body;
+  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost, supplierUrl, supplierSku } = body;
   if (!name || !description || !price || !categoryId) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
   }
@@ -116,6 +116,10 @@ export async function POST(req: NextRequest) {
         tags: tags ?? [],
         featured: featured ?? false,
         category_id: categoryId,
+        // Dropshipping sourcing (Task 65) — supplier-only fields on the product
+        // row; the public GET maps a fixed field list, so these never leak.
+        supplier_url: supplierUrl ?? null,
+        supplier_sku: supplierSku ?? null,
       })
       .select("*, category:categories(*)")
       .single();
@@ -146,6 +150,8 @@ export async function POST(req: NextRequest) {
       tags: JSON.stringify(tags ?? []),
       featured: featured ?? false,
       categoryId,
+      supplierUrl: supplierUrl ?? null,
+      supplierSku: supplierSku ?? null,
     },
     include: { category: true },
   });

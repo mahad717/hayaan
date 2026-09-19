@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users, Truck, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ import { AdminAccounting } from "@/components/store/admin-accounting";
 import { AdminReconciliation } from "@/components/store/admin-reconciliation";
 import { AdminProfit } from "@/components/store/admin-profit";
 import { AdminLeads } from "@/components/store/admin-leads";
+import { AdminFulfillment } from "@/components/store/admin-fulfillment";
 import type { Product, SafeUser } from "@/lib/types";
 
 /** Product as served by the admin-only /api/admin/products (adds cost). */
@@ -72,6 +73,8 @@ interface FormState {
   tags: string;
   featured: boolean;
   isActive: boolean;
+  supplierUrl: string;
+  supplierSku: string;
 }
 
 const EMPTY: FormState = {
@@ -86,6 +89,8 @@ const EMPTY: FormState = {
   tags: "",
   featured: false,
   isActive: true,
+  supplierUrl: "",
+  supplierSku: "",
 };
 
 /**
@@ -103,12 +108,17 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   // depth on top of the public API never returning cost).
   const [products, setLocalProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"catalog" | "leads" | "accounting" | "reconciliation" | "profitability">("catalog");
+  const [tab, setTab] = useState<"catalog" | "fulfillment" | "leads" | "accounting" | "reconciliation" | "profitability">("catalog");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<AdminProduct | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [uploading, setUploading] = useState(false);
   const [costWarning, setCostWarning] = useState<string | null>(null);
+  // Supplier URL import (Task 65): paste an Alibaba / AliExpress listing,
+  // server extracts a draft, the Create form opens prefilled.
+  const [importOpen, setImportOpen] = useState(false);
+  const [importUrl, setImportUrl] = useState("");
+  const [importing, setImporting] = useState(false);
 
   // The images textarea holds one URL per line; the uploader appends to it,
   // so pasted URLs and uploaded files coexist in the same list.
@@ -223,6 +233,8 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       tags: p.tags.join(", "),
       featured: p.featured,
       isActive: p.isActive,
+      supplierUrl: p.supplierUrl ?? "",
+      supplierSku: p.supplierSku ?? "",
     });
     setDialogOpen(true);
   };
@@ -243,6 +255,9 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       tags: form.tags.split(",").map((s) => s.trim()).filter(Boolean),
       featured: form.featured,
       isActive: form.isActive,
+      // Dropshipping sourcing (Task 65) — empty field clears it.
+      supplierUrl: form.supplierUrl.trim() || null,
+      supplierSku: form.supplierSku.trim() || null,
     };
     if (!body.name || !body.price || !body.categoryId) {
       toast("Name, price, and category are required.", "error");
@@ -289,6 +304,56 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
     }
   };
 
+  // Fetch the supplier listing server-side and open the Create form prefilled
+  // with the extracted draft. The listing price is the SUPPLIER price, so it
+  // prefills Product Cost, with a ~2.5x retail suggestion in Price — both are
+  // editable before saving.
+  const runImport = async () => {
+    if (!importUrl.trim()) {
+      toast("Paste a supplier product URL first.", "error");
+      return;
+    }
+    setImporting(true);
+    try {
+      const res = await fetch("/api/admin/import-product", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ url: importUrl.trim() }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.draft) {
+        toast(data?.error ?? "Import failed.", "error");
+        return;
+      }
+      const d = data.draft as {
+        name: string; description: string; price: string | number;
+        images: string[]; supplierUrl: string; source: string;
+      };
+      const supplierCost = Number(d.price) || 0;
+      const suggestedRetail = supplierCost > 0 ? Math.ceil(supplierCost * 2.5) - 0.01 : 0;
+      setEditing(null);
+      setForm({
+        ...EMPTY,
+        name: d.name,
+        description: d.description,
+        price: suggestedRetail > 0 ? suggestedRetail.toFixed(2) : "",
+        cost: supplierCost > 0 ? supplierCost.toFixed(2) : "",
+        categoryId: categories[0]?.id ?? "",
+        images: d.images.join("\n"),
+        supplierUrl: d.supplierUrl,
+      });
+      setImportOpen(false);
+      setImportUrl("");
+      setDialogOpen(true);
+      toast(`Draft from ${d.source} — review the details, set your price, then save.`, "success");
+    } catch {
+      toast("Network error while importing.", "error");
+    } finally {
+      setImporting(false);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
@@ -297,9 +362,14 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
           <p className="mt-1 text-sm text-muted-foreground">Manage your catalog, pricing, and inventory.</p>
         </div>
         {tab === "catalog" && (
-          <Button onClick={openNew} className="btn-accent">
-            <Plus className="mr-1 h-4 w-4" /> New product
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => setImportOpen(true)} variant="outline" className="border-brand text-brand hover:bg-brand hover:text-white">
+              <Link2 className="mr-1 h-4 w-4" /> Import from URL
+            </Button>
+            <Button onClick={openNew} className="btn-accent">
+              <Plus className="mr-1 h-4 w-4" /> New product
+            </Button>
+          </div>
         )}
       </div>
 
@@ -309,6 +379,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       <div className="mb-6 flex flex-wrap gap-2 border-b border-[#e6e2d4] pb-3">
         {([
           ["catalog", "Catalog", Package],
+          ["fulfillment", "Fulfillment", Truck],
           ["leads", "Leads", Users],
           ["accounting", "Accounting", Calculator],
           ["reconciliation", "Reconciliation", Scale],
@@ -330,6 +401,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
         ))}
       </div>
 
+      {tab === "fulfillment" && <AdminFulfillment />}
       {tab === "leads" && <AdminLeads />}
       {tab === "accounting" && <AdminAccounting />}
       {tab === "reconciliation" && <AdminReconciliation />}
@@ -569,6 +641,34 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
               <p className="text-xs text-muted-foreground">
                 The amount this product costs Hayaan Market to purchase from the supplier. Confidential — never shown to customers. Used to calculate gross profit (selling price − product cost) and frozen per order at sale time.
               </p>
+              {/* Dropshipping sourcing (Task 65) — where this item ships from. */}
+              <div className="mt-1 grid gap-2 sm:grid-cols-2">
+                <div className="grid gap-1">
+                  <Label htmlFor="p-supplier-url" className="whitespace-nowrap">Supplier URL <Opt /></Label>
+                  <Input
+                    id="p-supplier-url"
+                    type="url"
+                    placeholder="https://www.aliexpress.com/item/…"
+                    className={FIELD_CLS}
+                    value={form.supplierUrl}
+                    onChange={(e) => setForm({ ...form, supplierUrl: e.target.value })}
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <Label htmlFor="p-supplier-sku" className="whitespace-nowrap">Supplier SKU / variant <Opt /></Label>
+                  <Input
+                    id="p-supplier-sku"
+                    placeholder="e.g. 1005006123456789-black"
+                    className={FIELD_CLS}
+                    value={form.supplierSku}
+                    onChange={(e) => setForm({ ...form, supplierSku: e.target.value })}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Dropshipping? Paste the Alibaba / AliExpress listing here — paid orders then show an
+                Open-listing link in the Fulfillment tab. Admin-only, never shown to customers.
+              </p>
             </div>
             <div className="grid gap-2">
               <Label>Product images <Opt /></Label>
@@ -654,6 +754,51 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
           <DialogFooter className="shrink-0 border-t border-brand/15 bg-background px-6 py-3">
             <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
             <Button type="submit" form="product-form" className="btn-accent">{editing ? "Save changes" : "Create product"}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Supplier URL import (Task 65) — paste an Alibaba / AliExpress listing
+          and the server extracts a draft that prefills the Create form. */}
+      <Dialog open={importOpen} onOpenChange={setImportOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Import from supplier URL</DialogTitle>
+            <DialogDescription>
+              Paste an Alibaba / AliExpress (or any) product page — we fill in the name,
+              description, images, and supplier cost. You review everything and set your retail
+              price before saving.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-3 py-2">
+            <div className="grid gap-2">
+              <Label htmlFor="import-url">Product page URL</Label>
+              <Input
+                id="import-url"
+                type="url"
+                placeholder="https://www.aliexpress.com/item/1005006123456789.html"
+                className={FIELD_CLS}
+                value={importUrl}
+                onChange={(e) => setImportUrl(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    runImport();
+                  }
+                }}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Some supplier sites block automated access — if the import fails, create the product
+              manually and paste the URL into the Supplier URL field instead.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setImportOpen(false)}>Cancel</Button>
+            <Button type="button" onClick={runImport} disabled={importing} className="btn-accent">
+              {importing ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Link2 className="mr-1 h-4 w-4" />}
+              {importing ? "Fetching…" : "Fetch details"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

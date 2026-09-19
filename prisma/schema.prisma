@@ -55,6 +55,8 @@ model Product {
   tags        String?  // JSON array of tags
   featured    Boolean  @default(false)
   isActive    Boolean  @default(true)
+  supplierUrl String?  @map("supplier_url") // dropshipping source listing (Task 65)
+  supplierSku String?  @map("supplier_sku")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
