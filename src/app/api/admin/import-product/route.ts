@@ -139,6 +139,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Alibaba / AliExpress (and similar) serve datacenter fetchers an HTTP-200
+  // anti-bot "punish" page — a challenge shell with ZERO product data in it.
+  // Detect the known markers (and dataless pages generally) so the owner gets
+  // a diagnosis instead of a generic "couldn't find product data".
+  function looksLikeChallenge(html: string): boolean {
+    if (/sd\/punish|punish\/qrcode|x5sec|captcha|verify you are human|are you a robot/i.test(html)) return true;
+    return false;
+  }
+
   // --- Extract a draft -----------------------------------------------------
   let name = cleanText(metaContent(html, "og:title"), 200);
   let description = cleanText(metaContent(html, "og:description")) ?? cleanText(metaContent(html, "description"));
@@ -184,10 +193,14 @@ export async function POST(req: NextRequest) {
   images = [...new Set(images)].filter(Boolean).slice(0, MAX_IMAGES);
 
   if (!name && images.length === 0 && price == null) {
+    const blocked = looksLikeChallenge(html) || html.length < 5_000;
+    const host = target.hostname.replace(/^www\./, "");
     return NextResponse.json(
       {
-        error:
-          "Fetched the page but couldn't find product data in it. Create the product manually and paste the URL into the Supplier URL field.",
+        blocked,
+        error: blocked
+          ? `${host} blocked the automated fetch with an anti-bot challenge, so there is nothing to extract. Use "Add the product manually" below — the product form will open with this supplier URL already filled in.`
+          : "Fetched the page but couldn't find product data in it. Use \"Add the product manually\" below, or copy the details into the product form yourself.",
       },
       { status: 422 },
     );

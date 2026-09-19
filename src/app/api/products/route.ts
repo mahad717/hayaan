@@ -4,6 +4,7 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { upsertProductCost, isMissingAccountingSchema, accountingUnavailableResponse } from "@/lib/accounting";
+import { isMissingSupplierColumns } from "@/lib/supabase/missing-column";
 import type { Product } from "@/lib/types";
 
 function rowToProduct(row: any): Product {
@@ -31,6 +32,18 @@ function rowToProduct(row: any): Product {
     category: row.category
       ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
       : undefined,
+  };
+}
+
+/**
+ * Admin-only create response — same shape plus the confidential supplier
+ * sourcing fields (the public GET uses plain rowToProduct, which omits them).
+ */
+function adminRowToProduct(row: any): Product {
+  return {
+    ...rowToProduct(row),
+    supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
+    supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
   };
 }
 
@@ -120,7 +133,7 @@ export async function POST(req: NextRequest) {
       const { data } = await supabase.from("products").select("id").eq("slug", s).limit(1);
       return !!data && data.length > 0;
     });
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("products")
       .insert({
         name,
@@ -142,6 +155,28 @@ export async function POST(req: NextRequest) {
       })
       .select("*, category:categories(*)")
       .single();
+    if (error && isMissingSupplierColumns(error)) {
+      // Supplier columns not migrated yet — save the product without them
+      // rather than failing the whole create.
+      ({ data, error } = await supabase
+        .from("products")
+        .insert({
+          name,
+          slug,
+          description,
+          price,
+          compare_at: compareAt ?? null,
+          currency: currency ?? "USD",
+          sku: sku ?? null,
+          stock: stock ?? 0,
+          images: images ?? [],
+          tags: tags ?? [],
+          featured: featured ?? false,
+          category_id: categoryId,
+        })
+        .select("*, category:categories(*)")
+        .single());
+    }
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     if (costValue != null) {
       try {
@@ -153,7 +188,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: err.message }, { status: 400 });
       }
     }
-    return NextResponse.json({ product: rowToProduct(data) });
+    return NextResponse.json({ product: adminRowToProduct(data) });
   }
   const product = await (await getDb()).product.create({
     data: {
@@ -186,5 +221,5 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: err.message }, { status: 400 });
     }
   }
-  return NextResponse.json({ product: rowToProduct(product) });
+  return NextResponse.json({ product: adminRowToProduct(product) });
 }

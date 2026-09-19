@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users, Truck, Link2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users, Truck, Link2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -119,6 +119,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   const [importOpen, setImportOpen] = useState(false);
   const [importUrl, setImportUrl] = useState("");
   const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
 
   // The images textarea holds one URL per line; the uploader appends to it,
   // so pasted URLs and uploaded files coexist in the same list.
@@ -309,11 +310,30 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
   // with the extracted draft. The listing price is the SUPPLIER price, so it
   // prefills Product Cost, with a ~2.5x retail suggestion in Price — both are
   // editable before saving.
+  // Manual fallback for blocked imports (Alibaba anti-bot etc.): open a blank
+  // Create form with just the supplier URL prefilled so the owner can fill in
+  // the rest from the listing they already have open.
+  const importManually = () => {
+    const url = importUrl.trim();
+    setEditing(null);
+    setForm({
+      ...EMPTY,
+      supplierUrl: url,
+      categoryId: categories[0]?.id ?? "",
+    });
+    setImportOpen(false);
+    setImportUrl("");
+    setImportError(null);
+    setDialogOpen(true);
+    if (url) toast("Supplier URL added to a new product — fill in the details from the listing.", "success");
+  };
+
   const runImport = async () => {
     if (!importUrl.trim()) {
-      toast("Paste a supplier product URL first.", "error");
+      setImportError("Paste a supplier product URL first.");
       return;
     }
+    setImportError(null);
     setImporting(true);
     try {
       const res = await fetch("/api/admin/import-product", {
@@ -324,7 +344,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.draft) {
-        toast(data?.error ?? "Import failed.", "error");
+        // Surface the failure INLINE in the dialog — a toast alone disappears
+        // after 4s while the owner is staring at this dialog, which read as
+        // "fetch does nothing".
+        setImportError(data?.error ?? "Import failed.");
         return;
       }
       const d = data.draft as {
@@ -349,7 +372,7 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       setDialogOpen(true);
       toast(`Draft from ${d.source} — review the details, set your price, then save.`, "success");
     } catch {
-      toast("Network error while importing.", "error");
+      setImportError("Network error while importing. Check your connection and try again.");
     } finally {
       setImporting(false);
     }
@@ -780,7 +803,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 placeholder="https://www.aliexpress.com/item/1005006123456789.html"
                 className={FIELD_CLS}
                 value={importUrl}
-                onChange={(e) => setImportUrl(e.target.value)}
+                onChange={(e) => {
+                  setImportUrl(e.target.value);
+                  if (importError) setImportError(null);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -789,9 +815,31 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 }}
               />
             </div>
+            {importError && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+              >
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
+                <div className="min-w-0">
+                  <p>{importError}</p>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={importManually}
+                    className="mt-2 border-red-300 text-red-800 hover:bg-red-100"
+                  >
+                    <Plus className="mr-1 h-4 w-4" />
+                    Add the product manually with this URL
+                  </Button>
+                </div>
+              </div>
+            )}
             <p className="text-xs text-muted-foreground">
-              Some supplier sites block automated access — if the import fails, create the product
-              manually and paste the URL into the Supplier URL field instead.
+              Tip: Alibaba and AliExpress usually block automated fetching. If it fails, use the
+              "Add the product manually" shortcut — your URL is carried into the product form
+              (Supplier URL) automatically.
             </p>
           </div>
           <DialogFooter>

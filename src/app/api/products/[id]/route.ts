@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
+import { isMissingSupplierColumns } from "@/lib/supabase/missing-column";
 import {
   upsertProductCost,
   deleteProductCost,
@@ -34,6 +35,18 @@ function rowToProduct(row: any): Product {
     category: row.category
       ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
       : undefined,
+  };
+}
+
+/**
+ * Admin-only PUT response — same shape plus the confidential supplier
+ * sourcing fields (the public GET uses plain rowToProduct, which omits them).
+ */
+function adminRowToProduct(row: any): Product {
+  return {
+    ...rowToProduct(row),
+    supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
+    supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
   };
 }
 
@@ -116,14 +129,26 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     if (body.categoryId !== undefined) update.category_id = body.categoryId;
     if (body.supplierUrl !== undefined) update.supplier_url = body.supplierUrl;
     if (body.supplierSku !== undefined) update.supplier_sku = body.supplierSku;
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("products")
       .update(update)
       .eq("id", id)
       .select("*, category:categories(*)")
       .single();
+    if (error && isMissingSupplierColumns(error)) {
+      // Supplier columns not migrated yet — update everything else and drop
+      // the supplier fields instead of failing the whole save.
+      delete update.supplier_url;
+      delete update.supplier_sku;
+      ({ data, error } = await supabase
+        .from("products")
+        .update(update)
+        .eq("id", id)
+        .select("*, category:categories(*)")
+        .single());
+    }
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-    return NextResponse.json({ product: rowToProduct(data) });
+    return NextResponse.json({ product: adminRowToProduct(data) });
   }
   const updated = await (await getDb()).product.update({
     where: { id },
@@ -143,7 +168,7 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     },
     include: { category: true },
   });
-  return NextResponse.json({ product: rowToProduct(updated) });
+  return NextResponse.json({ product: adminRowToProduct(updated) });
 }
 
 export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
