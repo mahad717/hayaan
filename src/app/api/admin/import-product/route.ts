@@ -166,10 +166,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // itemprop price fallback (common on Alibaba listing pages)
+  // itemprop price fallback (common on Alibaba listing pages) and Shopify's
+  // og product price meta
   if (price == null) {
-    const ip = html.match(/itemprop=["']price["'][^>]*content=["']([\d.,]+)["']/i)
-      ?? html.match(/content=["']([\d.,]+)["'][^>]*itemprop=["']price["']/i);
+    const candidates = [
+      html.match(/itemprop=["']price["'][^>]*content=["']([\d.,]+)["']/i),
+      html.match(/content=["']([\d.,]+)["'][^>]*itemprop=["']price["']/i),
+      html.match(/property=["']product:price:amount["'][^>]*content=["']([\d.,]+)["']/i),
+      html.match(/content=["']([\d.,]+)["'][^>]*property=["']product:price:amount["']/i),
+    ];
+    const ip = candidates.find(Boolean);
     const n = ip ? Number(ip[1].replace(/,/g, "")) : NaN;
     if (Number.isFinite(n) && n > 0) price = n;
   }

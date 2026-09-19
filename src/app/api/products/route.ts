@@ -34,6 +34,21 @@ function rowToProduct(row: any): Product {
   };
 }
 
+/**
+ * Slug from the product name with collision handling (Task 65): dropshipping
+ * imports commonly produce same-named items, and a duplicate slug 500s on the
+ * unique constraint. Appends -2, -3… (then a random tail) until free.
+ * `exists(slug)` checks the ACTIVE store (Supabase or Prisma).
+ */
+async function uniqueSlug(base: string, exists: (slug: string) => Promise<boolean>): Promise<string> {
+  const root = base.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") || "product";
+  let candidate = root;
+  for (let i = 2; ; i++) {
+    if (!(await exists(candidate))) return candidate;
+    candidate = i <= 4 ? `${root}-${i}` : `${root}-${Math.random().toString(36).slice(2, 7)}`;
+  }
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.toLowerCase();
@@ -101,11 +116,15 @@ export async function POST(req: NextRequest) {
   }
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
+    const slug = await uniqueSlug(String(name), async (s) => {
+      const { data } = await supabase.from("products").select("id").eq("slug", s).limit(1);
+      return !!data && data.length > 0;
+    });
     const { data, error } = await supabase
       .from("products")
       .insert({
         name,
-        slug: name.toLowerCase().replace(/\s+/g, "-"),
+        slug,
         description,
         price,
         compare_at: compareAt ?? null,
@@ -139,7 +158,9 @@ export async function POST(req: NextRequest) {
   const product = await (await getDb()).product.create({
     data: {
       name,
-      slug: name.toLowerCase().replace(/\s+/g, "-"),
+      slug: await uniqueSlug(String(name), async (s) => {
+        return !!(await (await getDb()).product.findUnique({ where: { slug: s }, select: { id: true } }));
+      }),
       description,
       price,
       compareAt,

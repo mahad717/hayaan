@@ -155,9 +155,31 @@ export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: stri
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
     const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+    if (error) {
+      // Order items / cart rows still reference this product — deleting would
+      // break order history, so tell the owner to hide it instead.
+      const fk = /foreign key|referenced|still exists/i.test(error.message);
+      return NextResponse.json(
+        {
+          error: fk
+            ? "This product is referenced by existing orders or carts and can't be deleted. Hide it (turn off \"Visible in store\") instead."
+            : error.message,
+        },
+        { status: 400 },
+      );
+    }
     return NextResponse.json({ ok: true });
   }
-  await (await getDb()).product.delete({ where: { id } });
+  try {
+    await (await getDb()).product.delete({ where: { id } });
+  } catch (err: any) {
+    if (/Foreign key constraint|P2003/i.test(String(err?.message ?? err))) {
+      return NextResponse.json(
+        { error: "This product is referenced by existing orders or carts and can't be deleted. Hide it (turn off \"Visible in store\") instead." },
+        { status: 400 },
+      );
+    }
+    return NextResponse.json({ error: err?.message ?? "Delete failed" }, { status: 400 });
+  }
   return NextResponse.json({ ok: true });
 }

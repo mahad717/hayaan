@@ -296,11 +296,12 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       method: "DELETE",
       credentials: "include",
     });
+    const data = await res.json().catch(() => null);
     if (res.ok) {
       toast("Product deleted", "success");
       reload();
     } else {
-      toast("Delete failed", "error");
+      toast(data?.error ?? "Delete failed", "error");
     }
   };
 
