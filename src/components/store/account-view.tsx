@@ -11,6 +11,7 @@ import { useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MOGADISHU_DISTRICTS, findDistrict } from "@/lib/shipping";
+import { SOMALIA_CITIES, isSomaliaCity } from "@/lib/somalia";
 import type { SafeUser } from "@/lib/types";
 
 // Field styling for the profile forms — mirrors the admin product form:
@@ -40,15 +41,25 @@ function toForm(u: SafeUser): ProfileForm {
 
 const EMPTY: ProfileForm = { name: "", phone: "", address: "", city: "", zip: "", country: "" };
 
-// Sentinel for the district select: cities outside the priced Mogadishu list
-// (same convention as checkout — the saved `city` stays a plain string).
+// Sentinels for the two pickers (Task 71): the CITY select covers Somalia's
+// major cities plus a not-listed escape; the DISTRICT select (Mogadishu only)
+// keeps an "other area" escape so unlisted Mogadishu neighborhoods still
+// check out at the outside-Mogadishu flat fee. Storage is unchanged: the
+// saved `city` holds a canonical district name (Mogadishu -> priced district
+// fee), a canonical city name, or free text (outside-Mogadishu flat fee).
+const MOGADISHU_CITY = "Mogadishu";
 const OTHER_CITY = "__other";
+const OTHER_AREA = "__other_area";
 
-/** Map a saved city onto the district picker: a priced district selects that
- * district; any other non-empty city takes the Other-city path; empty = none. */
-function choiceFromCity(city: string | null | undefined): string {
-  if (!city) return "";
-  return findDistrict(city)?.name ?? OTHER_CITY;
+/** Map a saved city onto the city + district pickers: a priced district
+ * selects Mogadishu + that district; a known big city selects itself; any
+ * other non-empty city takes the not-listed path; empty = no selection. */
+function savedAddressPickers(city: string | null | undefined): { cityChoice: string; districtChoice: string } {
+  if (!city) return { cityChoice: "", districtChoice: "" };
+  const matched = findDistrict(city);
+  if (matched) return { cityChoice: MOGADISHU_CITY, districtChoice: matched.name };
+  if (isSomaliaCity(city)) return { cityChoice: city, districtChoice: "" };
+  return { cityChoice: OTHER_CITY, districtChoice: "" };
 }
 
 const Opt = () => {
@@ -63,33 +74,53 @@ const Opt = () => {
  */
 export function AccountView() {
   const { user, setUser, setView, setAuthOpen, toast, bootReady } = useStore();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [form, setForm] = useState<ProfileForm>(user ? toForm(user) : EMPTY);
   const [saving, setSaving] = useState(false);
-  // District picker state: a canonical district name, OTHER_CITY, or "" (no
-  // selection yet). The saved value is ALWAYS form.city — picking a district
-  // writes its canonical name into city, so checkout's saved-city mapping and
-  // the shipping calculation keep working with zero schema changes.
-  const [districtChoice, setDistrictChoice] = useState<string>(() => choiceFromCity(user?.city));
+  // City + district picker state (Task 71). The saved value is ALWAYS
+  // form.city — picking a district writes its canonical name, a big city
+  // writes its canonical name, so checkout's saved-city mapping and the
+  // shipping calculation keep working with zero schema changes.
+  const [cityChoice, setCityChoice] = useState<string>(() => savedAddressPickers(user?.city).cityChoice);
+  const [districtChoice, setDistrictChoice] = useState<string>(() => savedAddressPickers(user?.city).districtChoice);
 
   // Late bootstrap (deep link to /?view=account): user arrives after mount,
-  // so sync the form + picker once the profile is actually available.
+  // so sync the form + pickers once the profile is actually available.
   useEffect(() => {
     if (!user) return;
     setForm(toForm(user));
-    setDistrictChoice(choiceFromCity(user.city));
+    const pickers = savedAddressPickers(user.city);
+    setCityChoice(pickers.cityChoice);
+    setDistrictChoice(pickers.districtChoice);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, user?.city]);
 
-  const onDistrictChange = (value: string) => {
+  // Somali display label for a canonical city name (storage stays English).
+  const cityDisplay = (value: string) =>
+    lang === "so" ? SOMALIA_CITIES.find((c) => c.name === value)?.so ?? value : value;
+
+  const onCityChange = (value: string) => {
     // Radix fires onValueChange("") once at mount when the controlled value is
-    // set before any item has registered (content closed) — ignore those or
-    // the saved district gets wiped right after it prefills.
+    // set before any item has registered — ignore those or saved values wipe.
+    if (!value) return;
+    setCityChoice(value);
+    setDistrictChoice("");
+    if (value === OTHER_CITY) {
+      // Keep a typed custom place; clear anything we matched to a picker so
+      // the text field starts empty instead of echoing a canonical name.
+      setForm((f) => (findDistrict(f.city) || isSomaliaCity(f.city) ? { ...f, city: "" } : f));
+    } else if (value === MOGADISHU_CITY) {
+      // District becomes the required value — it writes form.city on pick.
+      setForm((f) => (findDistrict(f.city) ? f : { ...f, city: "" }));
+    } else {
+      setForm((f) => (f.city === value ? f : { ...f, city: value }));
+    }
+  };
+
+  const onDistrictChange = (value: string) => {
     if (!value) return;
     setDistrictChoice(value);
-    if (value === OTHER_CITY) {
-      // Keep any typed non-district city; clear a matched district name so
-      // the text field starts empty instead of showing a canonical name.
+    if (value === OTHER_AREA) {
       setForm((f) => (findDistrict(f.city) ? { ...f, city: "" } : f));
     } else {
       setForm((f) => (f.city === value ? f : { ...f, city: value }));
@@ -99,7 +130,9 @@ export function AccountView() {
   const resetForm = () => {
     if (!user) return;
     setForm(toForm(user));
-    setDistrictChoice(choiceFromCity(user.city));
+    const pickers = savedAddressPickers(user.city);
+    setCityChoice(pickers.cityChoice);
+    setDistrictChoice(pickers.districtChoice);
   };
 
   if (!bootReady && !user) {
@@ -138,6 +171,25 @@ export function AccountView() {
     e.preventDefault();
     if (!form.name.trim()) {
       toast(t("acc.toastNameEmpty"), "error");
+      return;
+    }
+    // Task 71: city is required; district is required for Mogadishu
+    // deliveries (shipping is priced per district there). The "not listed"
+    // escapes fall back to the free-text fields.
+    if (!cityChoice) {
+      toast(t("acc.toastCityRequired"), "error");
+      return;
+    }
+    if (cityChoice === OTHER_CITY && !form.city.trim()) {
+      toast(t("acc.toastCityRequired"), "error");
+      return;
+    }
+    if (cityChoice === MOGADISHU_CITY && !districtChoice) {
+      toast(t("acc.toastDistrictRequired"), "error");
+      return;
+    }
+    if (cityChoice === MOGADISHU_CITY && districtChoice === OTHER_AREA && !form.city.trim()) {
+      toast(t("acc.toastAreaRequired"), "error");
       return;
     }
     setSaving(true);
@@ -266,37 +318,65 @@ export function AccountView() {
                 className={FIELD_CLS}
               />
             </div>
-            {/* District picker — same 20 Mogadishu districts as checkout, but
-                without the per-district prices (pricing only matters at
-                checkout). Selecting one stores the canonical district name in
-                the saved city, so checkout prefills and prices it correctly. */}
-            <div className="grid gap-2">
-              <Label htmlFor="acc-district" className="whitespace-nowrap">{t("co.district")} <Opt /></Label>
-              <Select value={districtChoice || undefined} onValueChange={onDistrictChange}>
-                <SelectTrigger
-                  id="acc-district"
-                  className={`w-full ${FIELD_CLS}`}
-                >
-                  {/* Explicit children — radix can't resolve the selected item's
-                      text until the (closed) content has mounted, so a bare
-                      SelectValue would render empty for saved profiles. */}
-                  <SelectValue placeholder={t("co.districtPlaceholder")}>
-                    {districtChoice === OTHER_CITY
-                      ? t("co.districtOther")
-                      : districtChoice || undefined}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="max-h-72">
-                  {MOGADISHU_DISTRICTS.map((d) => (
-                    <SelectItem key={d.name} value={d.name}>
-                      {d.name}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value={OTHER_CITY}>{t("co.districtOther")}</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* City picker (Task 71) — Somalia's major cities, required.
+                Selecting Mogadishu reveals the required district picker; the
+                canonical city/district name lands in the saved city so
+                checkout prefills and prices it exactly as before. */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-2">
+                <Label htmlFor="acc-city-select" className="whitespace-nowrap">{t("co.city")}</Label>
+                <Select value={cityChoice || undefined} onValueChange={onCityChange}>
+                  <SelectTrigger id="acc-city-select" className={`w-full ${FIELD_CLS}`}>
+                    {/* Explicit children — radix can't resolve the selected item's
+                        text until the (closed) content has mounted, so a bare
+                        SelectValue would render empty for saved profiles. */}
+                    <SelectValue key={cityChoice || "none"} placeholder={t("co.cityPlaceholder")}>
+                      {cityChoice === OTHER_CITY
+                        ? t("co.cityOther")
+                        : cityChoice
+                          ? cityDisplay(cityChoice)
+                          : undefined}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {SOMALIA_CITIES.map((c) => (
+                      <SelectItem key={c.name} value={c.name}>
+                        {lang === "so" ? c.so : c.name}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value={OTHER_CITY}>{t("co.cityOther")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {/* District picker (Mogadishu only) — same 20 districts as
+                  checkout, without per-district prices (pricing only matters
+                  at checkout). Required: Mogadishu deliveries are priced per
+                  district. "Other area" keeps unlisted neighborhoods working
+                  at the outside-Mogadishu flat fee. */}
+              {cityChoice === MOGADISHU_CITY && (
+                <div className="grid gap-2">
+                  <Label htmlFor="acc-district" className="whitespace-nowrap">{t("co.district")}</Label>
+                  <Select value={districtChoice || undefined} onValueChange={onDistrictChange}>
+                    <SelectTrigger id="acc-district" className={`w-full ${FIELD_CLS}`}>
+                      <SelectValue key={districtChoice || "none"} placeholder={t("co.districtPlaceholder")}>
+                        {districtChoice === OTHER_AREA
+                          ? t("co.areaOther")
+                          : districtChoice || undefined}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      {MOGADISHU_DISTRICTS.map((d) => (
+                        <SelectItem key={d.name} value={d.name}>
+                          {d.name}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value={OTHER_AREA}>{t("co.areaOther")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
-            {districtChoice === OTHER_CITY && (
+            {cityChoice === OTHER_CITY && (
               <div className="grid gap-2">
                 <Label htmlFor="acc-city" className="whitespace-nowrap">{t("co.city")}</Label>
                 <Input
@@ -304,7 +384,20 @@ export function AccountView() {
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
                   autoComplete="address-level2"
-                  placeholder="Mogadishu"
+                  placeholder={t("co.cityTypePlaceholder")}
+                  className={FIELD_CLS}
+                />
+              </div>
+            )}
+            {cityChoice === MOGADISHU_CITY && districtChoice === OTHER_AREA && (
+              <div className="grid gap-2">
+                <Label htmlFor="acc-area" className="whitespace-nowrap">{t("co.area")}</Label>
+                <Input
+                  id="acc-area"
+                  value={form.city}
+                  onChange={(e) => setForm({ ...form, city: e.target.value })}
+                  autoComplete="address-level3"
+                  placeholder={t("co.areaPlaceholder")}
                   className={FIELD_CLS}
                 />
               </div>

@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { LangProvider } from "@/components/store/language-provider";
 import { WhatsAppNumberProvider } from "@/components/store/whatsapp-number";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
@@ -174,7 +175,11 @@ export default async function RootLayout({
         <LangProvider initialLang={lang}>
           <WhatsAppNumberProvider number={waNumber}>
             {children}
+            {/* Radix toasts (legacy ui/toast consumers) + sonner toasts — the
+                store's toast() calls sonner's API, and without this mount
+                every success/error toast site-wide rendered NOTHING. */}
             <Toaster />
+            <SonnerToaster position="top-center" richColors closeButton />
           </WhatsAppNumberProvider>
         </LangProvider>
         {/* Google Analytics 4 — loads after hydration, never blocks rendering. */}
