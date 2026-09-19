@@ -135,12 +135,22 @@ const insertParagraph = () => evalJS(`document.execCommand("insertParagraph")`);
 // --- 1. open the Create dialog ----------------------------------------------
 await send("Page.navigate", { url: `${BASE}/admin` });
 check("admin renders", await waitFor(`[...document.querySelectorAll("button")].some(b => b.textContent.includes("New product"))`));
+// openCreate pre-selects categories[0] at open time; the categories fetch is
+// async client-side, so give it a beat or the save validation blocks (flaky
+// race seen in Task 70 — toast expires before the failure is observable).
+await sleep(2000);
 let dialogOpen = false;
 for (let i = 0; i < 15 && !dialogOpen; i++) {
   await evalJS(`[...document.querySelectorAll("button")].find(b => b.textContent.includes("New product"))?.click()`).catch(() => {});
-  dialogOpen = await waitFor(`!!document.querySelector("#p-name")`, 3000, 400);
+  // dialog is only usable once the category select carries a real value
+  dialogOpen = await waitFor(`!!document.querySelector("#p-name") && document.querySelector("#p-cat")?.textContent?.trim() && document.querySelector("#p-cat")?.textContent?.trim() !== "Pick a category…"`, 3000, 400);
+  if (!dialogOpen) {
+    // close the half-initialized dialog and retry
+    await evalJS(`[...document.querySelectorAll("[role='dialog'] button")].find(b => b.textContent.trim() === "Cancel")?.click()`).catch(() => {});
+    await sleep(1200);
+  }
 }
-check("create dialog opens", dialogOpen);
+check("create dialog opens (category preselected)", dialogOpen);
 
 // fill name + price
 check("name field set", (await fillInput("#p-name", NAME)) === NAME);

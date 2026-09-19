@@ -42,6 +42,95 @@ type Props = {
 
 const blankHtml = (html: string) => html.replace(/<[^>]*>/g, "").replace(/&nbsp;|\s/g, "") === "";
 
+// --- Task 70: deterministic list conversion -----------------------------------
+// document.execCommand('insert(Unordered|Ordered)List') is UNRELIABLE for the
+// "select existing text -> make it a list" flow: Chrome nests the <ul> inside
+// the surrounding <p> (invalid HTML), leaves the first selected line as
+// paragraph text, and fragments the selection into multiple lists on toggle
+// (reproduced + confirmed against the owner's live stored description). These
+// helpers convert whole selected lines into ONE clean top-level list instead.
+
+/** Split an element's children into inline runs separated by <br> (dropping the brs and blank runs). */
+function splitRunsOnBr(el: Element): Node[][] {
+  const runs: Node[][] = [[]];
+  for (const n of Array.from(el.childNodes)) {
+    if (n.nodeName === "BR") {
+      runs.push([]);
+      continue;
+    }
+    runs[runs.length - 1].push(n);
+  }
+  return runs.filter((run) =>
+    run.some((n) =>
+      n.nodeType === Node.ELEMENT_NODE
+        ? (n as Element).tagName !== "BR"
+        : (n.textContent ?? "").trim() !== "",
+    ),
+  );
+}
+
+/**
+ * The "block unit" a selection endpoint lives in: an <li> when inside a list,
+ * otherwise the direct child of the editor root (p / div / h3 / h4 / ul / ol).
+ * Returns null when the endpoint sits somewhere we don't do surgery (bare
+ * text directly in the root, outside the editor) — callers fall back to
+ * execCommand for those.
+ */
+function unitFor(node: Node, root: HTMLElement): Element | null {
+  let el = node.nodeType === Node.TEXT_NODE ? node.parentElement : (node as Element);
+  if (!el || !root.contains(el)) return null;
+  const li = el.closest("li");
+  if (li && root.contains(li)) return li;
+  while (el.parentElement && el.parentElement !== root) el = el.parentElement;
+  return el && el !== root ? el : null;
+}
+
+/**
+ * Ordered block units intersecting the selection, at whole-line granularity:
+ * partially selected paragraphs are taken whole (standard WYSIWYG behavior);
+ * for top-level lists only the intersecting <li> items are taken.
+ */
+function selectedUnits(root: HTMLElement, range: Range): Element[] | null {
+  const startEl = unitFor(range.startContainer, root);
+  const endEl = unitFor(range.endContainer, root);
+  if (!startEl || !endEl) return null;
+  const units: Element[] = [];
+  for (const child of Array.from(root.children)) {
+    if (child.tagName === "UL" || child.tagName === "OL") {
+      for (const li of Array.from(child.children)) {
+        if (li === startEl || li === endEl || range.intersectsNode(li)) units.push(li);
+      }
+    } else if (child === startEl || child === endEl || range.intersectsNode(child)) {
+      units.push(child);
+    }
+  }
+  return units.length ? units : null;
+}
+
+/** Remove a node and prune the list ancestor it leaves empty. */
+function removeUnit(el: Element) {
+  const parent = el.parentElement;
+  el.remove();
+  if (parent && (parent.tagName === "UL" || parent.tagName === "OL") && parent.childElementCount === 0) {
+    parent.remove();
+  }
+}
+
+function restoreSelectionAround(list: HTMLUListElement | HTMLOListElement, collapsed: boolean) {
+  const sel = document.getSelection();
+  if (!sel || !list.firstChild) return;
+  const range = document.createRange();
+  if (collapsed) {
+    range.setStart(list.firstChild, 0);
+    range.collapse(true);
+  } else {
+    range.setStartBefore(list.firstChild);
+    range.setEndAfter(list.lastChild ?? list.firstChild);
+  }
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
 export function RichTextEditor({ value, onChange, id, placeholder, ariaLabel }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState({ bold: false, italic: false, underline: false, ul: false, ol: false, h3: false });
@@ -110,6 +199,76 @@ export function RichTextEditor({ value, onChange, id, placeholder, ariaLabel }: 
     cmd("formatBlock", isH3 ? "<p>" : "<h3>");
   }, [cmd]);
 
+  // Deterministic bullet/numbered toggle (Task 70): converts the selected
+  // lines into ONE top-level <ul>/<ol>, switches kinds in place, and unwraps
+  // back to paragraphs when toggled off. Falls back to execCommand only for
+  // selections we can't map to clean block units (bare text in root etc.).
+  const toggleList = useCallback(
+    (kind: "ul" | "ol") => {
+      const root = ref.current;
+      if (!root) return;
+      root.focus();
+      const sel = document.getSelection();
+      if (!sel || sel.rangeCount === 0) return;
+      const range = sel.getRangeAt(0);
+      if (!root.contains(range.commonAncestorContainer)) return;
+
+      const units = selectedUnits(root, range);
+      if (!units) {
+        try {
+          document.execCommand(kind === "ul" ? "insertUnorderedList" : "insertOrderedList", false);
+        } catch {
+          /* older browsers */
+        }
+        emit();
+        return;
+      }
+
+      const collapsed = range.collapsed;
+
+      // Toggle OFF: every selected unit is an <li> of this list kind.
+      const allLi = units.every((el) => el.tagName === "LI");
+      const kinds = new Set(
+        units.map((el) => el.parentElement?.tagName?.toLowerCase() ?? ""),
+      );
+      if (allLi && kinds.size === 1 && kinds.has(kind)) {
+        for (const li of units) {
+          const list = li.parentElement!;
+          for (const run of splitRunsOnBr(li)) {
+            const p = document.createElement("p");
+            run.forEach((n) => p.appendChild(n));
+            list.parentNode?.insertBefore(p, list);
+          }
+          removeUnit(li);
+        }
+        emit();
+        return;
+      }
+
+      // Convert (or switch kind): gather lines from every selected unit.
+      const lines: Node[][] = [];
+      for (const unit of units) lines.push(...splitRunsOnBr(unit));
+      const list = document.createElement(kind);
+      for (const run of lines) {
+        const li = document.createElement("li");
+        run.forEach((n) => li.appendChild(n));
+        list.appendChild(li);
+      }
+      if (list.childElementCount === 0) list.appendChild(document.createElement("li"));
+
+      // Insert before the first unit's top-level owner, then remove originals.
+      const first = units[0];
+      let owner: Element = first;
+      while (owner.parentElement && owner.parentElement !== root) owner = owner.parentElement;
+      owner.parentElement?.insertBefore(list, owner) ?? root.appendChild(list);
+      for (const unit of units) removeUnit(unit);
+
+      restoreSelectionAround(list, collapsed);
+      emit();
+    },
+    [emit],
+  );
+
   const clearFormatting = useCallback(() => {
     cmd("removeFormat");
     cmd("formatBlock", "<p>");
@@ -140,8 +299,8 @@ export function RichTextEditor({ value, onChange, id, placeholder, ariaLabel }: 
         {btn("italic", "Italic (Ctrl+I)", Italic, () => cmd("italic"))}
         {btn("underline", "Underline (Ctrl+U)", Underline, () => cmd("underline"))}
         <span className="mx-1 h-5 w-px bg-[#e6e2d4]" aria-hidden />
-        {btn("ul", "Bullet list", List, () => cmd("insertUnorderedList"))}
-        {btn("ol", "Numbered list", ListOrdered, () => cmd("insertOrderedList"))}
+        {btn("ul", "Bullet list", List, () => toggleList("ul"))}
+        {btn("ol", "Numbered list", ListOrdered, () => toggleList("ol"))}
         <span className="mx-1 h-5 w-px bg-[#e6e2d4]" aria-hidden />
         {btn("h3", "Section heading", Heading3, toggleHeading)}
         <span className="mx-1 h-5 w-px bg-[#e6e2d4]" aria-hidden />
