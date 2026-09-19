@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, Mail, MapPin, Phone, Save, ShieldCheck, UserRound, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MOGADISHU_DISTRICTS, findDistrict } from "@/lib/shipping";
 import type { SafeUser } from "@/lib/types";
 
 // Field styling for the profile forms — mirrors the admin product form:
@@ -38,6 +40,17 @@ function toForm(u: SafeUser): ProfileForm {
 
 const EMPTY: ProfileForm = { name: "", phone: "", address: "", city: "", zip: "", country: "" };
 
+// Sentinel for the district select: cities outside the priced Mogadishu list
+// (same convention as checkout — the saved `city` stays a plain string).
+const OTHER_CITY = "__other";
+
+/** Map a saved city onto the district picker: a priced district selects that
+ * district; any other non-empty city takes the Other-city path; empty = none. */
+function choiceFromCity(city: string | null | undefined): string {
+  if (!city) return "";
+  return findDistrict(city)?.name ?? OTHER_CITY;
+}
+
 const Opt = () => {
   const { t } = useLang();
   return <span className="text-xs font-normal text-muted-foreground"> {t("co.optional")}</span>;
@@ -53,6 +66,41 @@ export function AccountView() {
   const { t } = useLang();
   const [form, setForm] = useState<ProfileForm>(user ? toForm(user) : EMPTY);
   const [saving, setSaving] = useState(false);
+  // District picker state: a canonical district name, OTHER_CITY, or "" (no
+  // selection yet). The saved value is ALWAYS form.city — picking a district
+  // writes its canonical name into city, so checkout's saved-city mapping and
+  // the shipping calculation keep working with zero schema changes.
+  const [districtChoice, setDistrictChoice] = useState<string>(() => choiceFromCity(user?.city));
+
+  // Late bootstrap (deep link to /?view=account): user arrives after mount,
+  // so sync the form + picker once the profile is actually available.
+  useEffect(() => {
+    if (!user) return;
+    setForm(toForm(user));
+    setDistrictChoice(choiceFromCity(user.city));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, user?.city]);
+
+  const onDistrictChange = (value: string) => {
+    // Radix fires onValueChange("") once at mount when the controlled value is
+    // set before any item has registered (content closed) — ignore those or
+    // the saved district gets wiped right after it prefills.
+    if (!value) return;
+    setDistrictChoice(value);
+    if (value === OTHER_CITY) {
+      // Keep any typed non-district city; clear a matched district name so
+      // the text field starts empty instead of showing a canonical name.
+      setForm((f) => (findDistrict(f.city) ? { ...f, city: "" } : f));
+    } else {
+      setForm((f) => (f.city === value ? f : { ...f, city: value }));
+    }
+  };
+
+  const resetForm = () => {
+    if (!user) return;
+    setForm(toForm(user));
+    setDistrictChoice(choiceFromCity(user.city));
+  };
 
   if (!bootReady && !user) {
     // Deep link (e.g. /?view=account) — bootstrap still in flight. Neutral
@@ -218,7 +266,37 @@ export function AccountView() {
                 className={FIELD_CLS}
               />
             </div>
-            <div className="grid gap-4 sm:grid-cols-3">
+            {/* District picker — same 20 Mogadishu districts as checkout, but
+                without the per-district prices (pricing only matters at
+                checkout). Selecting one stores the canonical district name in
+                the saved city, so checkout prefills and prices it correctly. */}
+            <div className="grid gap-2">
+              <Label htmlFor="acc-district" className="whitespace-nowrap">{t("co.district")} <Opt /></Label>
+              <Select value={districtChoice || undefined} onValueChange={onDistrictChange}>
+                <SelectTrigger
+                  id="acc-district"
+                  className={`w-full ${FIELD_CLS}`}
+                >
+                  {/* Explicit children — radix can't resolve the selected item's
+                      text until the (closed) content has mounted, so a bare
+                      SelectValue would render empty for saved profiles. */}
+                  <SelectValue placeholder={t("co.districtPlaceholder")}>
+                    {districtChoice === OTHER_CITY
+                      ? t("co.districtOther")
+                      : districtChoice || undefined}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {MOGADISHU_DISTRICTS.map((d) => (
+                    <SelectItem key={d.name} value={d.name}>
+                      {d.name}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value={OTHER_CITY}>{t("co.districtOther")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {districtChoice === OTHER_CITY && (
               <div className="grid gap-2">
                 <Label htmlFor="acc-city" className="whitespace-nowrap">{t("co.city")}</Label>
                 <Input
@@ -230,6 +308,8 @@ export function AccountView() {
                   className={FIELD_CLS}
                 />
               </div>
+            )}
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="acc-zip" className="whitespace-nowrap">{t("co.zip")} <Opt /></Label>
                 <Input
@@ -260,7 +340,7 @@ export function AccountView() {
         </Card>
 
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="outline" onClick={() => setForm(toForm(user))} disabled={saving}>
+          <Button type="button" variant="outline" onClick={resetForm} disabled={saving}>
             {t("acc.reset")}
           </Button>
           <Button type="submit" className="btn-accent" disabled={saving}>
