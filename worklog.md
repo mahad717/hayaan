@@ -1444,3 +1444,20 @@ Stage Summary:
 - "Fetch details" can no longer fail silently: blocked imports show a persistent inline explanation inside the dialog and one click carries the supplier URL into a blank product form (fill name/price/images from the listing, save — fulfillment tab still links back to the listing).
 - Alibaba/AliExpress will USUALLY still block automated extraction (anti-bot; nothing code can do about that from a server fetch) — the importer remains fully functional for Shopify-style supplier sites, and the manual shortcut covers the blocked case.
 - Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run (saves now degrade gracefully without it); accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
+
+---
+Task ID: 67
+Agent: Super Z (main)
+Task: "We need to add this district choosing field to the my profile shipping address, without the price only in the profile" (screenshot of checkout's District select)
+
+Work Log:
+- account-view.tsx: added a District select to the Saved shipping address card (between Street address and ZIP/Country) — same 20 Mogadishu districts + "Other city (outside Mogadishu)" sentinel as checkout, but labels are the bare district name (NO "$X.XX") and there is NO pricing hint, per the owner's request. City free-text input now only appears on the Other-city path (mirrors checkout); ZIP/Country moved to a 2-col row.
+- Zero schema/API change: picking a district writes the canonical district name into the existing `city` profile field, so checkout's saved-city auto-mapping ("Hodan — $1.50") and computeShipping keep working untouched. choiceFromCity() maps any saved city back onto the picker (priced district -> that district; any other city -> Other-city path with the input filled). Reset button resets the picker too; a user effect syncs the form + picker after late bootstrap (deep links).
+- BUG FOUND & FIXED (cost most of the session): Radix Select fires onValueChange("") at mount when the controlled value is set before any SelectItem has registered (content never opened) — the saved district was wiped from both picker state AND form.city right after prefill, so reloads showed "Select your district" again. Diagnosed via fiber inspection (Select root value prop literally "") + console tracing (effect set "Hodan" then two onDistrictChange("") calls reset it). Fix: ignore empty onValueChange in onDistrictChange, and render explicit SelectValue children (districtChoice / translated "Other city") so the saved value displays without needing registered items. Checkout verified UNAFFECTED (same pattern but empirically prefills "Hodan — $1.50" after reload).
+- CDP verify (scripts/verify-profile-district-cdp.mjs): 19/19 — 21 options, NO "$" in any label, no pricing hint, Hodan hides city input, Other city reveals it, save+reload preselects Other/Kismayo and Hodan correctly, API persists both paths, cleanup restored original profile, 0 console exceptions. Screenshot download/task67-profile-district.png (District: Hodan, no price hint).
+- Local probe data cleaned (profile city restored, cart cleared). bun run build pass; commit 780b1f5 pushed (e27f2b6..780b1f5); deploy verified via homepage chunk probe (2fmqkpmzdzqdm.js contains the acc-district marker, HTTP 200 on CDN); live homepage 200, /api/account unauth 401.
+
+Stage Summary:
+- Profile -> Shipping address now has the District picker (no prices): customers set their district once in their profile and checkout prefills + prices it automatically. Other-city path preserved for non-Mogadishu customers.
+- Radix Select mount-time value-wipe quirk documented + guarded in account-view; checkout unaffected.
+- Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run; accounting migration; 14 unpriced items; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY.
