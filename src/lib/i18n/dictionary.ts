@@ -54,7 +54,7 @@ const en = {
   "hero.ctaShop": "Start shopping",
   "hero.ctaCategories": "Browse categories",
   "hero.reassure1": "Delivered to your door",
-  "hero.reassure2": "Secure payment via Sifalo Pay",
+  "hero.reassure2": "Secure payment via EVC Plus, Edahab & Card",
   "hero.reassure3": "Track every order",
   "hero.payYourWay": "Pay your way",
   "hero.payMethods": "cards, EVC Plus, eDahab & more",
@@ -93,7 +93,7 @@ const en = {
   "catpage.count": "{n} products",
   "catpage.countOne": "1 product",
   "catpage.browse": "Browse other categories",
-  "catpage.shopFrom": "Shop {name} online in Somalia — delivered to your door with secure Sifalo Pay checkout.",
+  "catpage.shopFrom": "Shop {name} online in Somalia — delivered to your door with secure EVC Plus, Edahab & card checkout.",
   "catpage.inStockOnly": "Looking for something specific? The full catalog with search and filters is in the shop.",
   "pdp.reviews": "{n} reviews",
   "pdp.sku": "SKU {sku}",
@@ -125,7 +125,7 @@ const en = {
 
   // Checkout
   "co.checkoutTitle": "Checkout",
-  "co.redirectTitle": "Redirecting to Sifalo Pay…",
+  "co.redirectTitle": "Redirecting to secure checkout…",
   "co.redirectBody":
     "Taking you to the secure checkout to approve your payment. Please don’t close or refresh this page.",
   "co.stuck": "Nothing happening? Click to continue",
@@ -170,11 +170,11 @@ const en = {
   "co.sifaloDesc":
     "Cards, EVC Plus, eDahab, Sahal & 20+ more — you’ll be redirected to a secure page to pay.",
   "co.how":
-    "How it works: you’ll be redirected to Sifalo Pay’s secure checkout to choose your payment method and approve the payment. You’ll come right back here and your order will be confirmed automatically.",
-  "co.processedBy": "Processed by Sifalo Pay — your payment details never touch our servers.",
+    "How it works: you’ll be redirected to a secure checkout to pay with EVC Plus, Edahab, or card and approve the payment. You’ll come right back here and your order will be confirmed automatically.",
+  "co.processedBy": "Processed by our secure payment partner — your payment details never touch our servers.",
   "co.unavailable": "Online payment is temporarily unavailable — please check back soon.",
-  "co.payButton": "Pay {amount} with Sifalo Pay",
-  "co.secureNote": "Secure checkout · Powered by Sifalo Pay",
+  "co.payButton": "Pay {amount} securely",
+  "co.secureNote": "Secure checkout · EVC Plus, Edahab & Card",
 
   // Auth modal
   "au.welcomeBack": "Welcome back",
@@ -250,7 +250,7 @@ const en = {
   "ord.verifyPaid": "Payment confirmed — thank you!",
   "ord.verifyPending": "Still pending approval by the payment network.",
   "ord.verifyFailed": "The payment failed or was declined.",
-  "ord.verifyError": "Could not check with Sifalo Pay right now.",
+  "ord.verifyError": "Could not verify your payment right now.",
   "ord.verifyNetwork": "Network error — please try again.",
 
   // Footer
@@ -380,7 +380,7 @@ const en = {
   "sf.backRetry": "Back to store to retry",
   "sf.checkNow": "Check now",
   "sf.checkAgain": "Check payment again",
-  "sf.checking": "Checking with Sifalo Pay…",
+  "sf.checking": "Checking your payment…",
   "sf.pendingNote": "Still pending — the network hasn’t approved it yet.",
   "sf.notConfirmed": "Still not confirmed. Give it a moment and try again.",
 } as const;
@@ -418,7 +418,7 @@ const so: Record<DictKey, string> = {
   "hero.ctaShop": "Bilow iibsiga",
   "hero.ctaCategories": "Daawo qaybaha",
   "hero.reassure1": "Waa la keenaa albaabkaaga",
-  "hero.reassure2": "Bixin ammaan oo Sifalo Pay ah",
+  "hero.reassure2": "Bixin ammaan oo EVC Plus, Edahab & Kaar ah",
   "hero.reassure3": "La soco dalab kasta",
   "hero.payYourWay": "Bixi sidii aad rabto",
   "hero.payMethods": "kaarka, EVC Plus, eDahab iyo kuwo kale",
@@ -457,7 +457,7 @@ const so: Record<DictKey, string> = {
   "catpage.count": "{n} alaab",
   "catpage.countOne": "1 alaab",
   "catpage.browse": "Dalxo qaybaha kale",
-  "catpage.shopFrom": "Iibso {name} onlayn ee Soomaaliya — laguuga keeno albaabka adiga, oo lacag bixin amni leh oo Sifalo Pay ah.",
+  "catpage.shopFrom": "Iibso {name} onlayn ee Soomaaliya — laguuga keeno albaabka adiga, oo lacag bixin amni leh oo EVC Plus, Edahab & kaar ah.",
   "catpage.inStockOnly": "Wax gaar ah raadaysaa? Dhammaan catalog-ka oo leh raadin iyo shaandhooyin ayaa suuqa ku jira.",
   "pdp.reviews": "{n} faallo",
   "pdp.sku": "SKU {sku}",
@@ -489,7 +489,7 @@ const so: Record<DictKey, string> = {
 
   // Checkout
   "co.checkoutTitle": "Bixinta",
-  "co.redirectTitle": "La wareejinayo Sifalo Pay…",
+  "co.redirectTitle": "La wareejinayo bixin ammaan…",
   "co.redirectBody":
     "Waxaan kula wareejinaynaa bixinta ammaan ah si aad u ansixiso lacagta. Fadlan ha xirin ama ha cusbooneysiin boggaan.",
   "co.stuck": "Waxba ma socda? Guji si aad u sii wadato",
@@ -534,11 +534,11 @@ const so: Record<DictKey, string> = {
   "co.sifaloDesc":
     "Kaarka, EVC Plus, eDahab, Sahal iyo kuwo kaloo ka badan 20 — boggan ammaan ah ayaad la wareegaysaa si aad u bixiso.",
   "co.how":
-    "Sida ay u shaqeysaa: waxaad la wareegaysaa bixinta ammaan ah ee Sifalo Pay si aad ka doorato habka bixinta oo aad lacagta u ansixiso. Isla halkan ayaad ku noqon doontaa, dalabkaagana waa la xaqiijinayaa si toos ah.",
-  "co.processedBy": "Waxaa maamula Sifalo Pay — faahfaahinta bixintaada ma gaadhaan serveradeena.",
+    "Sida ay u shaqeysaa: waxaad la wareegaysaa bixin ammaan ah si aad lacagta ku bixiso EVC Plus, Edahab, ama kaar, oo aad lacagta u ansixiso. Isla halkan ayaad ku noqon doontaa, dalabkaagana waa la xaqiijinayaa si toos ah.",
+  "co.processedBy": "Waxaa maamula shurak bixin ammaan — faahfaahinta bixintaada ma gaadhaan serveradeena.",
   "co.unavailable": "Bixinta onlaynka ah hadda si ku meel gaadh ah uma helna — fadlan dib ugu soo noqo.",
-  "co.payButton": "Bixi {amount} Sifalo Pay",
-  "co.secureNote": "Bixin ammaan · Sifalo Pay",
+  "co.payButton": "Bixi {amount} si ammaan",
+  "co.secureNote": "Bixin ammaan · EVC Plus, Edahab & Kaar",
 
   // Auth modal
   "au.welcomeBack": "Soo dhawoow",
@@ -615,7 +615,7 @@ const so: Record<DictKey, string> = {
   "ord.verifyPaid": "Bixinta waa la xaqiijiyay — waad ku mahadsan tahay!",
   "ord.verifyPending": "Weli waa sugaya ansixinta shabakada bixinta.",
   "ord.verifyFailed": "Bixintu way fashilantay ama waa la diiday.",
-  "ord.verifyError": "Hadda Sifalo Pay lama xaqiijin karo.",
+  "ord.verifyError": "Hadda lacagta lama xaqiijin karo.",
   "ord.verifyNetwork": "Dhib shabakad — fadlan isku day mar kale.",
 
   // Footer
@@ -745,7 +745,7 @@ const so: Record<DictKey, string> = {
   "sf.backRetry": "Ku noqo suuqa, isku day mar kale",
   "sf.checkNow": "Xaqiiji hadda",
   "sf.checkAgain": "Xaqiiji bixinta mar kale",
-  "sf.checking": "Sifalo Pay ayaa la xaqiijinayo…",
+  "sf.checking": "Bixinta ayaa la xaqiijinayo…",
   "sf.pendingNote": "Weli sugaya — shabakadu weli ma ansixisin.",
   "sf.notConfirmed": "Weli lama xaqiijin. Sug wax yar, isku day mar kale.",
 };

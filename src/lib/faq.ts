@@ -7,7 +7,8 @@
 // Every answer is grounded in verified store facts only:
 //   - shipping: district fees $1.50–$3.00, free ≥ $75, $6.95 flat outside
 //     Mogadishu (src/lib/shipping.ts, owner's Sep 2026 fee sheet)
-//   - payment: Sifalo Pay is the only method, USD, no VAT
+//   - payment: secure hosted checkout (Sifalo Pay is the processor); the
+//     customer-facing methods are EVC Plus, Edahab and card — USD, no VAT
 //     (src/components/store/checkout.tsx, src/lib/sifalo-server.ts)
 //   - bulk orders: /quote B2B request page (Task 57)
 //   - support: WhatsApp +252 61 599 0144 / support@hayaan.co (footer)
@@ -23,11 +24,11 @@ export const SUPPORT_WHATSAPP = "+252 61 599 0144";
 export const SITE_FAQS: FaqEntry[] = [
   {
     q: "What is Hayaan Market?",
-    a: "Hayaan Market (hayaan.co) is a Somali online marketplace. You can buy electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, pay securely through Sifalo Pay, and get your order delivered to your door.",
+    a: "Hayaan Market (hayaan.co) is a Somali online marketplace. You can buy electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, pay securely through EVC Plus, Edahab, and Card, and get your order delivered to your door.",
   },
   {
     q: "How do I order from Hayaan Market?",
-    a: "Browse the catalog, add items to your cart, then check out with your name, phone number and delivery district. You pay through Sifalo Pay's secure checkout and the order is delivered to your address. Offices, schools and hotels can also send a bulk request at hayaan.co/quote.",
+    a: "Browse the catalog, add items to your cart, then check out with your name, phone number and delivery district. You pay securely through EVC Plus, Edahab, or Card and the order is delivered to your address. Offices, schools and hotels can also send a bulk request at hayaan.co/quote.",
   },
   {
     q: "How much does delivery cost in Mogadishu?",
@@ -43,7 +44,7 @@ export const SITE_FAQS: FaqEntry[] = [
   },
   {
     q: "How do I pay?",
-    a: "All orders are paid securely through Sifalo Pay. Prices are in US dollars and no VAT is charged — the total you confirm at checkout (product price plus the shown delivery fee) is exactly what you pay.",
+    a: "All orders are paid securely through EVC Plus, Edahab, or Card. Prices are in US dollars and no VAT is charged — the total you confirm at checkout (product price plus the shown delivery fee) is exactly what you pay.",
   },
   {
     q: "Can I buy in bulk for my office, school or shop?",
@@ -79,7 +80,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
     },
     {
       q: "What is the cheapest smartphone price in Somalia?",
-      a: "Budget Android phones on hayaan.co start around $118. Every listing shows the exact USD price, so you can compare models side by side before paying through Sifalo Pay.",
+      a: "Budget Android phones on hayaan.co start around $118. Every listing shows the exact USD price, so you can compare models side by side before paying with EVC Plus, Edahab, or Card.",
     },
     {
       q: "Do phone prices include delivery?",
@@ -89,7 +90,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
   "health-supplements": [
     {
       q: "Where can I buy vitamins and supplements online in Somalia?",
-      a: "Hayaan Market's Health Supplements section ships multivitamins and wellness products across Mogadishu and Somalia — fixed USD prices, secure Sifalo Pay checkout and door delivery.",
+      a: "Hayaan Market's Health Supplements section ships multivitamins and wellness products across Mogadishu and Somalia — fixed USD prices, secure EVC Plus / Edahab / card checkout and door delivery.",
     },
     {
       q: "How do I pick a good multivitamin?",
@@ -138,7 +139,7 @@ export const GENERIC_CATEGORY_FAQS: FaqEntry[] = [
   },
   {
     q: "How do I pay for my order?",
-    a: "Through Sifalo Pay, securely, in US dollars. The total (product price plus the delivery fee shown at checkout) is confirmed before you pay, and no VAT is charged.",
+    a: "With EVC Plus, Edahab, or Card — securely, in US dollars. The total (product price plus the delivery fee shown at checkout) is confirmed before you pay, and no VAT is charged.",
   },
 ];
 

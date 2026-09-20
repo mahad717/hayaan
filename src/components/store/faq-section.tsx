@@ -21,7 +21,9 @@ export function FaqSection({
       <h2 id="faq-heading" className="text-lg font-semibold text-brand-dark">
         {title}
       </h2>
-      <div className="mt-4 grid gap-3 md:grid-cols-2">
+      {/* items-start: without it, grid rows stretch to the tallest card, so
+          opening one question visually "expanded" its parallel card too. */}
+      <div className="mt-4 grid items-start gap-3 md:grid-cols-2">
         {faqs.map((f) => (
           <details
             key={f.q}

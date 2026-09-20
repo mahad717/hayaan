@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     default: "Hayaan Market — Everything You Need, All in One Market.",
     template: "%s — Hayaan Market",
   },
-  description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home at Hayaan Market — secure checkout via Sifalo Pay, delivered to your door.",
+  description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home at Hayaan Market — secure checkout via EVC Plus, Edahab, and card, delivered to your door.",
   keywords: ["Hayaan Market", "online marketplace", "online shopping", "ecommerce", "Somalia", "apparel", "beauty", "electronics", "home & living"],
   authors: [{ name: "Hayaan Market" }],
   icons: {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Hayaan Market — Everything You Need, All in One Market.",
-    description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home — secure checkout via Sifalo Pay, delivered to your door.",
+    description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home — secure checkout via EVC Plus, Edahab, and card, delivered to your door.",
     url: "https://hayaan.co",
     siteName: "Hayaan Market",
     type: "website",

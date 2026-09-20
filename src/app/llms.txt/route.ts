@@ -11,9 +11,9 @@ export const dynamic = "force-static";
 export function GET() {
   const body = `# Hayaan Market
 
-> Hayaan Market (hayaan.co) is a Somali online marketplace: electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, paid securely through Sifalo Pay and delivered to your door in Mogadishu or anywhere in Somalia.
+> Hayaan Market (hayaan.co) is a Somali online marketplace: electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, paid securely through EVC Plus, Edahab, or card and delivered to your door in Mogadishu or anywhere in Somalia.
 
-Hayaan Market serves customers across Somalia. Prices are listed in US dollars with no VAT; every listing shows the exact price and stock before ordering. Delivery inside Mogadishu is priced per district ($1.50-$3.00), is free on orders of $75 or more, and costs a flat $6.95 anywhere else in the country. Payment runs through Sifalo Pay's secure checkout. Bulk requests (offices, schools, hotels, shops) are handled via the /quote page. Support: WhatsApp ${WHATSAPP} or support@hayaan.co.
+Hayaan Market serves customers across Somalia. Prices are listed in US dollars with no VAT; every listing shows the exact price and stock before ordering. Delivery inside Mogadishu is priced per district ($1.50-$3.00), is free on orders of $75 or more, and costs a flat $6.95 anywhere else in the country. Payment runs through a secure hosted checkout — pay with EVC Plus, Edahab, or card. Bulk requests (offices, schools, hotels, shops) are handled via the /quote page. Support: WhatsApp ${WHATSAPP} or support@hayaan.co.
 
 ## Categories
 
@@ -43,7 +43,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 
 - Prices: USD, no VAT.
 - Delivery: Mogadishu districts $1.50-$3.00 (20 districts priced); free over $75 subtotal; flat $6.95 elsewhere in Somalia.
-- Payment: Sifalo Pay only (secure hosted checkout).
+- Payment: EVC Plus, Edahab, or card via a secure hosted checkout.
 - Support: WhatsApp ${WHATSAPP}, support@hayaan.co.
 `;
 

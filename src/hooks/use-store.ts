@@ -234,7 +234,7 @@ export async function startSifaloPayment(
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error ?? "Could not start the Sifalo Pay checkout");
+    throw new Error(err.error ?? "Could not start the checkout");
   }
   return res.json();
 }

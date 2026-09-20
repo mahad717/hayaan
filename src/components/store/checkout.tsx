@@ -174,7 +174,7 @@ export function Checkout() {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t("co.payMethod")}</span>
-              <span className="text-foreground">Sifalo Pay</span>
+              <span className="text-foreground">EVC Plus · Edahab · Card</span>
             </div>
             <Separator className="my-2" />
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -413,7 +413,7 @@ export function Checkout() {
                     <RadioGroupItem value="sifalo" className="text-brand" />
                     <div className="flex-1">
                       <p className="flex items-center gap-1.5 text-sm font-medium text-foreground">
-                        <Wallet className="h-4 w-4 text-brand" /> Sifalo Pay
+                        <Wallet className="h-4 w-4 text-brand" /> EVC Plus · Edahab · Card
                         <span className="rounded-full bg-brand/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">{t("co.recommended")}</span>
                       </p>
                       <p className="text-xs text-muted-foreground">

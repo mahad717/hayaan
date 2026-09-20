@@ -31,7 +31,7 @@ const post1 = {
   excerpt:
     "TVs, laptops, consoles and sound gear — where to find them online in Somalia, what they really cost, and how to order without getting burned.",
   quickAnswer:
-    "You can buy electronics online in Somalia from Hayaan Market (hayaan.co): smart TVs from $450, MacBooks from about $1,530, PS5 consoles and projectors, all at fixed USD prices paid through Sifalo Pay and delivered to your district in Mogadishu ($1.50–$3, free over $75) or nationwide for a flat $6.95.",
+    "You can buy electronics online in Somalia from Hayaan Market (hayaan.co): smart TVs from $450, MacBooks from about $1,530, PS5 consoles and projectors, all at fixed USD prices paid securely via EVC Plus, Edahab, or card and delivered to your district in Mogadishu ($1.50–$3, free over $75) or nationwide for a flat $6.95.",
   faqs: [
     {
       q: "Where can I buy electronics online in Somalia?",
@@ -43,7 +43,7 @@ const post1 = {
     },
     {
       q: "Is it safe to pay for electronics online in Somalia?",
-      a: "Paying through Sifalo Pay gives both sides a record of the transaction, and every Hayaan listing states the exact model, price and stock up front.",
+      a: "Paying with EVC Plus, Edahab, or card in our secure hosted checkout gives both sides a record of the transaction, and every Hayaan listing states the exact model, price and stock up front.",
     },
     {
       q: "How is delivery charged for electronics?",
@@ -74,7 +74,7 @@ If a deal looks too good to be true — a "new" iPhone at half the market price 
 
 - **Confirm the model number**, not just the brand name. "Samsung TV" is not a spec sheet; the exact model tells you the panel, year, and features.
 - **Ask about the condition policy.** New-sealed, refurbished, and open-box are different products at different prices.
-- **Use a payment method with a receipt.** Sifalo Pay gives both sides a record of the transaction — avoid informal transfers for large orders.
+- **Use a payment method with a receipt.** EVC Plus, Edahab and card payments through the secure checkout give both sides a record of the transaction — avoid informal transfers for large orders.
 - **Check delivery terms before checkout.** In Mogadishu, delivery is priced by district; elsewhere in Somalia it's a flat fee, and orders over $75 ship free.
 - **Keep your order number.** It's your reference for support, warranty questions, and follow-up purchases.
 
@@ -84,7 +84,7 @@ If a deal looks too good to be true — a "new" iPhone at half the market price 
 
 Buying from a WhatsApp contact means trusting a photo. Buying from a storefront means the listing, the price, the stock count, and the checkout are all written down — and the seller has a reputation to protect. Hayaan Market keeps every product page consistent: exact name, real photos, price in dollars, stock status, and a support email you can actually reach.
 
-It also means your money moves through [Sifalo Pay](https://sifalo.com), Somalia's payment network — not through a personal wallet that can vanish.
+It also means your money moves through a secure hosted checkout — pay with EVC Plus, Edahab, or card — not through a personal wallet that can vanish.
 
 ## Ready to browse?
 
@@ -98,7 +98,7 @@ const post2 = {
   excerpt:
     "iPhone or Galaxy, physical SIM or eSIM, $118 or $1,550 — a plain-language guide to ordering a phone online in Somalia with confidence.",
   quickAnswer:
-    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships up to about $990–$1,550. Check the exact model and band support, pay through Sifalo Pay, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
+    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships up to about $990–$1,550. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
   faqs: [
     {
       q: "Can I buy an iPhone or Samsung online in Somalia?",
@@ -114,7 +114,7 @@ const post2 = {
     },
     {
       q: "How do I pay for a phone ordered online?",
-      a: "Through Sifalo Pay at checkout — prices are in USD, there is no VAT, and the delivery fee is shown before you confirm.",
+      a: "With EVC Plus, Edahab, or card at checkout — prices are in USD, there is no VAT, and the delivery fee is shown before you confirm.",
     },
   ],
   content: `Phones are personal — and buying one online in Somalia should not feel like a gamble. Between flagship iPhones, Samsung's Galaxy A series, and smartwatches that cost less than a case-and-screen bundle used to, there is now a genuine choice at every budget. Here's how to pick the right one and order it safely.
@@ -142,7 +142,7 @@ A phone listed well below the market price usually means one of three things: it
 1. Open the product page and read the **full name and specs** — model, size, connectivity.
 2. Add to cart and choose your quantity; sign in with your email so your order history stays with you.
 3. At checkout, pick your **district** for the exact delivery fee (Mogadishu districts are priced individually; outside the capital it is a flat $6.95, and orders over $75 ship free).
-4. Pay with **Sifalo Pay** and keep the confirmation — it is your receipt.
+4. Pay with **EVC Plus, Edahab, or card** and keep the confirmation — it is your receipt.
 5. If you need several phones for a shop, family, or organization, skip the line and request a [bulk quote](https://hayaan.co/quote) instead.
 
 > Tip: pair a new phone with audio from the [power & audio](https://hayaan.co/category/power-charging-audio) shelf — wired [EarPods USB-C at $4](https://hayaan.co/product/headphone-earpods-usb-c-wired) or the outdoor speaker at $70 — and you cross the free-shipping line in one order.
@@ -161,11 +161,11 @@ const post3 = {
   excerpt:
     "Multivitamins, immunity blends and daily essentials — how to judge a supplement listing before you order, and what a good one looks like.",
   quickAnswer:
-    "You can buy vitamins and supplements online in Somalia from Hayaan Market's Health Supplements section. Judge a listing by its label (nutrients and dose per serving), servings per bottle, and whether it shows the exact USD price and stock — then pay through Sifalo Pay and get door delivery in Mogadishu ($1.50–$3, free over $75) or nationwide ($6.95).",
+    "You can buy vitamins and supplements online in Somalia from Hayaan Market's Health Supplements section. Judge a listing by its label (nutrients and dose per serving), servings per bottle, and whether it shows the exact USD price and stock — then pay with EVC Plus, Edahab, or card and get door delivery in Mogadishu ($1.50–$3, free over $75) or nationwide ($6.95).",
   faqs: [
     {
       q: "Where can I buy multivitamins online in Somalia?",
-      a: "Hayaan Market's Health Supplements section ships multivitamins and wellness products across Somalia with fixed USD prices and Sifalo Pay checkout.",
+      a: "Hayaan Market's Health Supplements section ships multivitamins and wellness products across Somalia with fixed USD prices and secure EVC Plus, Edahab, or card checkout.",
     },
     {
       q: "How do I know a supplement listing is good?",
@@ -193,7 +193,7 @@ Listings that hide behind phrases like "immunity booster" without naming actives
 1. **Named actives and amounts.** Vitamin D3 and vitamin B12 on the label beats a "proprietary blend" every time.
 2. **Sealed condition on arrival.** Note the seal when the bottle reaches you, and report anything off the same day.
 3. **Realistic prices.** A daily multivitamin in the $5–$10 range is normal. Supplements priced like prescription medicine need prescription-level evidence.
-4. **A seller with a record.** Order history, a support email, and a payment receipt via [Sifalo Pay](https://sifalo.com) mean accountability if anything goes wrong.
+4. **A seller with a record.** Order history, a support email, and a payment receipt from the secure checkout (EVC Plus, Edahab, or card) mean accountability if anything goes wrong.
 
 > Supplements support a healthy routine — they do not replace one. If you are pregnant, managing a condition, or giving supplements to children, ask a doctor first.
 
@@ -276,7 +276,7 @@ For schools, hotels, and offices buying several of everything, skip the cart ent
 3. **Stabilizer or backup power** — protect everything above.
 4. **One order, one delivery** — bundle the cart over $75.
 
-Work from home in Somalia used to mean making do. Now it means a single afternoon of browsing, a secure [Sifalo Pay](https://sifalo.com) payment, and a box at your door — the same week you decided to get serious.`,
+Work from home in Somalia used to mean making do. Now it means a single afternoon of browsing, a secure EVC Plus, Edahab, or card payment, and a box at your door — the same week you decided to get serious.`,
 };
 
 const post5 = {
@@ -284,9 +284,9 @@ const post5 = {
   slug: "online-shopping-in-somalia-how-it-works",
   title: "Online Shopping in Somalia: How Delivery, Payment and Support Actually Work",
   excerpt:
-    "The no-surprises guide to ordering from Hayaan Market — district delivery fees, Sifalo Pay, free shipping over $75, and what happens after you click Pay.",
+    "The no-surprises guide to ordering from Hayaan Market — district delivery fees, EVC Plus / Edahab / card payment, free shipping over $75, and what happens after you click Pay.",
   quickAnswer:
-    "Online shopping in Somalia works like this: browse a storefront with listed USD prices, add to cart, choose your delivery district ($1.50–$3 in Mogadishu, free over $75, $6.95 nationwide), pay through Sifalo Pay's secure checkout, and track the order until it arrives. Support is reachable at support@hayaan.co and WhatsApp for any question about an order.",
+    "Online shopping in Somalia works like this: browse a storefront with listed USD prices, add to cart, choose your delivery district ($1.50–$3 in Mogadishu, free over $75, $6.95 nationwide), pay securely with EVC Plus, Edahab, or card, and track the order until it arrives. Support is reachable at support@hayaan.co and WhatsApp for any question about an order.",
   howtoSteps: [
     {
       name: "Browse and pick a product",
@@ -301,8 +301,8 @@ const post5 = {
       text: "At checkout, pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee. Orders of $75 or more ship free.",
     },
     {
-      name: "Pay with Sifalo Pay",
-      text: "Approve the total (product price plus the shown delivery fee — no VAT) through Sifalo Pay's secure hosted checkout, which records the transaction for both sides.",
+      name: "Pay with EVC Plus, Edahab, or card",
+      text: "Approve the total (product price plus the shown delivery fee — no VAT) in the secure hosted checkout — pay with EVC Plus, Edahab, or card — which records the transaction for both sides.",
     },
     {
       name: "Track and receive your order",
@@ -312,11 +312,11 @@ const post5 = {
   faqs: [
     {
       q: "Does online shopping work in Somalia?",
-      a: "Yes — Hayaan Market runs the full flow in writing: listed USD prices, cart checkout, district-based delivery fees and Sifalo Pay payment, with order tracking and email support.",
+      a: "Yes — Hayaan Market runs the full flow in writing: listed USD prices, cart checkout, district-based delivery fees and secure EVC Plus, Edahab, or card payment, with order tracking and email support.",
     },
     {
-      q: "Is Sifalo Pay safe for online orders?",
-      a: "Sifalo Pay is Somalia's payment network; it gives both buyer and seller a record of every transaction, unlike informal transfers.",
+      q: "Is paying online safe in Somalia?",
+      a: "Yes. Payments run through a secure hosted checkout — you can pay with EVC Plus, Edahab, or card — and both buyer and seller keep a record of every transaction, unlike informal transfers.",
     },
     {
       q: "How much is delivery in Mogadishu?",
@@ -329,9 +329,9 @@ const post5 = {
   ],
   content: `Most questions Somalis ask about online shopping are really the same four: **Can I trust the payment? Where does it deliver? What does it cost? And who do I call when something is wrong?** Here are straight answers for Hayaan Market — the same rules that run at checkout, written down.
 
-## Paying: Sifalo Pay, not a stranger's wallet
+## Paying: EVC Plus, Edahab or card — not a stranger's wallet
 
-Every order goes through [Sifalo Pay](https://sifalo.com), Somalia's payment network. You confirm the order in the checkout, approve the charge, and both you and the store keep a receipt of the same transaction. Nothing moves through personal wallets or informal transfers — which is exactly what you want when the parcel is a $1,290 TV or a $6 bottle of vitamins.
+Every order goes through a secure hosted checkout. You confirm the order in the checkout, approve the charge with EVC Plus, Edahab, or card, and both you and the store keep a receipt of the same transaction. Nothing moves through personal wallets or informal transfers — which is exactly what you want when the parcel is a $1,290 TV or a $6 bottle of vitamins.
 
 Prices are shown in dollars on every listing, and the total you approve at checkout — products plus your district's delivery fee — is the total you pay. There is no tax line and no surprise at the door.
 
@@ -357,7 +357,7 @@ If you are buying for an organization, the [bulk quote](https://hayaan.co/quote)
 
 1. **Browse** the [shop](https://hayaan.co/) — every card is a real product page with real photos and stock counts.
 2. **Add to cart** and sign in with your email, so your order history stays yours.
-3. **Checkout**: pick your district, see the delivery fee, approve the total with Sifalo Pay.
+3. **Checkout**: pick your district, see the delivery fee, approve the total with EVC Plus, Edahab, or card.
 4. **Track** under Orders until the parcel is in your hands.
 5. **Write to support** for anything that does not match the page.
 

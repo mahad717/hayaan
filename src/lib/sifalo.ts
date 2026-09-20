@@ -94,7 +94,7 @@ export async function initiateSifaloCheckout(
 ): Promise<SifaloInitiateResult> {
   const cfg = getSifaloConfig();
   if (!cfg.username || !cfg.password) {
-    return { ok: false, error: "Sifalo Pay is not configured (missing API credentials)." };
+    return { ok: false, error: "Payments are not configured (missing API credentials)." };
   }
   if (!cfg.returnUrlBase) {
     return { ok: false, error: "SIFALO_RETURN_URL_BASE is not set — cannot build the payment return URL." };
@@ -115,7 +115,7 @@ export async function initiateSifaloCheckout(
       (typeof data.response === "string" && data.response) ||
       (typeof data.message === "string" && data.message) ||
       `gateway returned HTTP ${status}`;
-    return { ok: false, error: `Sifalo Pay could not start the payment: ${detail}` };
+    return { ok: false, error: `The payment could not be started: ${detail}` };
   }
 
   const redirectUrl = `${CHECKOUT_PAGE_URL}?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}`;
@@ -188,7 +188,7 @@ export async function verifySifaloPayment(
 ): Promise<SifaloVerifyResult> {
   const cfg = getSifaloConfig();
   if (!cfg.username || !cfg.password) {
-    return { state: "unknown", message: "Sifalo Pay is not configured on the server." };
+    return { state: "unknown", message: "Payments are not configured on the server." };
   }
 
   const body: Record<string, string> = {};

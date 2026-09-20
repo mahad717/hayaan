@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const description =
     category.description?.trim() ||
-    `Shop ${category.name} online at Hayaan Market — curated picks, delivery across Somalia, secure Sifalo Pay checkout.`;
+    `Shop ${category.name} online at Hayaan Market — curated picks, delivery across Somalia, secure EVC Plus, Edahab & card checkout.`;
   const metaDescription =
     description.length > 157 ? `${description.slice(0, 157).trimEnd()}…` : description;
 

@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
   if (!isSifaloConfigured()) {
     return NextResponse.json(
-      { error: "Sifalo Pay is not configured on this deployment." },
+      { error: "Payments are not configured on this deployment." },
       { status: 503 },
     );
   }
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     // The pending order remains — verify.php can still match it later via
     // order_id if the charge somehow went through despite this error.
     return NextResponse.json(
-      { error: payment.error ?? "Could not start the Sifalo Pay checkout." },
+      { error: payment.error ?? "Could not start the checkout." },
       { status: 502 },
     );
   }

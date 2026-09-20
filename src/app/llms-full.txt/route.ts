@@ -23,7 +23,7 @@ export async function GET() {
   const lines: string[] = [
     "# Hayaan Market — full product catalog",
     "",
-    `Machine-readable catalog of every active listing on hayaan.co. Prices in USD, no VAT. Delivery: Mogadishu districts $1.50-$3.00, free over $75, flat $6.95 elsewhere in Somalia. Payment via Sifalo Pay. Support: WhatsApp ${WHATSAPP} / support@hayaan.co.`,
+    `Machine-readable catalog of every active listing on hayaan.co. Prices in USD, no VAT. Delivery: Mogadishu districts $1.50-$3.00, free over $75, flat $6.95 elsewhere in Somalia. Payment: EVC Plus, Edahab, or card via a secure hosted checkout. Support: WhatsApp ${WHATSAPP} / support@hayaan.co.`,
     "",
   ];
 
