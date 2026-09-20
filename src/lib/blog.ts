@@ -12,6 +12,7 @@
 
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
+import { SEO_POSTS } from "@/lib/blog-seo-posts";
 import type { BlogPost, BlogStatus } from "@/lib/types";
 
 export function slugify(input: string): string {
@@ -52,6 +53,20 @@ export function isMissingTableError(err: { message?: string; code?: string }): b
   );
 }
 
+/** Merge code-shipped SEO guides with DB posts: DB wins on slug collision,
+ *  newest published first. Owner-created posts always outrank the shipped
+ *  guides in the reader's eyes — both are just blog posts on /blog. */
+function mergeSeoPosts(dbPosts: BlogPost[], limit: number): BlogPost[] {
+  const dbSlugs = new Set(dbPosts.map((p) => p.slug));
+  const extra = SEO_POSTS.filter((p) => !dbSlugs.has(p.slug));
+  return [...dbPosts, ...extra]
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime(),
+    )
+    .slice(0, limit);
+}
+
 export async function listPublishedPosts(limit = 50): Promise<{ posts: BlogPost[]; tableMissing: boolean }> {
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
@@ -62,10 +77,10 @@ export async function listPublishedPosts(limit = 50): Promise<{ posts: BlogPost[
       .order("published_at", { ascending: false })
       .limit(limit);
     if (error) {
-      if (isMissingTableError(error)) return { posts: [], tableMissing: true };
+      if (isMissingTableError(error)) return { posts: mergeSeoPosts([], limit), tableMissing: true };
       throw new Error(error.message);
     }
-    return { posts: (data ?? []).map(rowToPost), tableMissing: false };
+    return { posts: mergeSeoPosts((data ?? []).map(rowToPost), limit), tableMissing: false };
   }
 
   try {
@@ -74,7 +89,7 @@ export async function listPublishedPosts(limit = 50): Promise<{ posts: BlogPost[
       orderBy: { publishedAt: "desc" },
       take: limit,
     });
-    return { posts: posts.map(rowToPost), tableMissing: false };
+    return { posts: mergeSeoPosts(posts.map(rowToPost), limit), tableMissing: false };
   } catch (err: any) {
     if (isMissingTableError(err)) return { posts: [], tableMissing: true };
     throw err;
@@ -91,19 +106,23 @@ export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | n
       .eq("status", "published")
       .maybeSingle();
     if (error) {
-      if (isMissingTableError(error)) return null;
+      if (isMissingTableError(error)) return SEO_POSTS.find((p) => p.slug === slug) ?? null;
       throw new Error(error.message);
     }
-    return data ? rowToPost(data) : null;
+    if (data) return rowToPost(data);
+    // DB miss — fall back to the shipped SEO guides (owner copy with the
+    // same slug always wins above).
+    return SEO_POSTS.find((p) => p.slug === slug) ?? null;
   }
 
   try {
     const post = await (await getDb()).blogPost.findFirst({
       where: { slug, status: "published" },
     });
-    return post ? rowToPost(post) : null;
+    if (post) return rowToPost(post);
+    return SEO_POSTS.find((p) => p.slug === slug) ?? null;
   } catch (err: any) {
-    if (isMissingTableError(err)) return null;
+    if (isMissingTableError(err)) return SEO_POSTS.find((p) => p.slug === slug) ?? null;
     throw err;
   }
 }

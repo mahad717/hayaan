@@ -5,6 +5,7 @@
 
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
+import { CATEGORY_SEO_DESCRIPTIONS } from "@/lib/category-seo";
 import type { Category, Product } from "@/lib/types";
 
 export function rowToProduct(row: any): Product {
@@ -99,9 +100,16 @@ export async function listCategories(): Promise<Category[]> {
   }));
 }
 
-/** One category by slug (for /category/[slug] landing pages). */
+/** One category by slug (for /category/[slug] landing pages). The stored DB
+ *  description wins; the code-level SEO fallback fills the gap so every live
+ *  category page carries real indexable copy. */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const decoded = decodeURIComponent(slug);
+  const withSeoFallback = (c: Category): Category => ({
+    ...c,
+    description: c.description?.trim() || CATEGORY_SEO_DESCRIPTIONS[c.slug] || null,
+  });
+
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
     const { data, error } = await supabase
@@ -111,13 +119,13 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
       .maybeSingle();
     if (error) throw new Error(error.message);
     return data
-      ? { id: data.id, name: data.name, slug: data.slug, description: data.description ?? null }
+      ? withSeoFallback({ id: data.id, name: data.name, slug: data.slug, description: data.description ?? null })
       : null;
   }
 
   const category = await (await getDb()).category.findFirst({ where: { slug: decoded } });
   return category
-    ? { id: category.id, name: category.name, slug: category.slug, description: category.description ?? null }
+    ? withSeoFallback({ id: category.id, name: category.name, slug: category.slug, description: category.description ?? null })
     : null;
 }
 

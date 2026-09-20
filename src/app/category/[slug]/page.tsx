@@ -42,14 +42,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     category.description?.trim() ||
     `Shop ${category.name} online at Hayaan Market — curated picks, delivery across Somalia, secure Sifalo Pay checkout.`;
+  const metaDescription =
+    description.length > 157 ? `${description.slice(0, 157).trimEnd()}…` : description;
 
   return {
     title: `${category.name} — shop online in Somalia`,
-    description,
+    description: metaDescription,
     alternates: { canonical: `/category/${category.slug}` },
     openGraph: {
       title: `${category.name} — Hayaan Market`,
-      description,
+      description: metaDescription,
       url: `/category/${category.slug}`,
       type: "website",
       locale: lang === "so" ? "so_SO" : "en_US",
@@ -57,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: `${category.name} — Hayaan Market`,
-      description,
+      description: metaDescription,
     },
   };
 }
@@ -137,9 +139,15 @@ export default async function CategoryPage({ params }: Props) {
           <h1 className="text-3xl font-black font-panton tracking-tight text-brand-dark sm:text-4xl">
             {name}
           </h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">
-            {t("catpage.shopFrom", { name })}
-          </p>
+          {/* Owner-authored category description (SEO content) wins over the
+              generic blurb; both render in the visitor's language path. */}
+          {category.description?.trim() ? (
+            <p className="mt-2 max-w-3xl text-muted-foreground">{category.description}</p>
+          ) : (
+            <p className="mt-2 max-w-2xl text-muted-foreground">
+              {t("catpage.shopFrom", { name })}
+            </p>
+          )}
           <p className="mt-1 text-sm text-muted-foreground">
             {products.length === 1
               ? t("catpage.countOne")
