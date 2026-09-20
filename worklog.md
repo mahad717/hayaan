@@ -1593,3 +1593,20 @@ Work Log:
 Stage Summary:
 - The owner's admin access is now self-service: sign in with Continue with Google using gabeyre80@gmail.com and /admin opens (allowlist + DB row both say admin); optionally set a password from Profile -> Password to also sign in with email+password. Every Google customer also gets a proper users row now. Live E2E proved the password setter end-to-end against Supabase.
 - Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; signup users-row upsert for PASSWORD signups (Google path fixed here); Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
+
+---
+Task ID: 75
+Agent: Super Z (main)
+Task: "i mean, I want to see the blog post in my admin dashboard that's why i'm sending you admin credentials" (+ owner credentials for gabeyre80@gmail.com)
+
+Work Log:
+- Screenshot review: owner IS in /admin as gabeyre80@gmail.com (Task 74 Google allowlist works; name "Mohamed Gabyre" came from their Google profile) but "Blog posts (1)" showed only their DB post — the five Task 73 SEO guides ship WITH THE CODE and listAllPosts() (admin GET) read only blog_posts rows, so the owner never saw them in the dashboard.
+- Fix (3 files): (1) lib/blog.ts mergeAdminPosts() — admin listing now merges unshadowed SEO_POSTS (same DB-slug-wins rule as the public blog) and tags every post source:"db"|"shipped"; shipped guides also show when the table is missing (setup banner unchanged); sorted by updatedAt desc. (2) types.ts BlogPost.source?: "db"|"shipped". (3) admin-blog.tsx — "Built-in" badge on shipped rows, NO delete button (no DB row behind them), edit opens a prefilled copy-on-save flow: editor is prefilled with the guide's full content, saving POSTs a new DB row with the same slug (uniqueSlug keeps it — not in DB), which then shadows the built-in version on /blog and in this list; dialog shows an explainer banner + "Save my copy" button; no DB write happens until they save.
+- Commit c9968a6 pushed linear (e1b9baa..c9968a6). Deploy LIVE at poll 6 (~90s), chunk marker 27jtdiygfdhs7.js ("Edit built-in guide").
+- LIVE verify with the OWNER'S credentials (scripts/verify-admin-blog-live.mjs) 13/13: email+password login works (200, role=admin — confirms the owner set their password via the Task 74 profile card and email sign-in is live); GET /api/admin/blog returns 6 posts = their DB post + 5 source:"shipped" guides with full content (3186 chars first); CDP pass: /admin renders, blog table has 6 rows with 5 Built-in badges, zero console exceptions. Screenshot download/task75-live-admin-blog.png shows the full admin dashboard with Blog posts (6).
+- Security note: owner credentials were used only for read-only verification (login + GET); nothing was modified on their account or data.
+
+Stage Summary:
+- The owner's admin dashboard now shows all 6 blog posts: their own + the 5 built-in SEO guides (badged "Built-in", viewable on /blog, editable via copy-on-save, not deletable). Owner edit path: pencil icon -> edit -> "Save my copy" -> their DB copy takes over the same URL.
+- Confirmed en route: owner's email+password login works end-to-end (they used the Task 74 password setter successfully).
+- Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; password-signup users-row upsert; Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
