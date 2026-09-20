@@ -100,15 +100,21 @@ export async function listCategories(): Promise<Category[]> {
   }));
 }
 
-/** One category by slug (for /category/[slug] landing pages). The stored DB
- *  description wins; the code-level SEO fallback fills the gap so every live
- *  category page carries real indexable copy. */
+/** One category by slug (for /category/[slug] landing pages).
+ *
+ *  Description precedence: a SUBSTANTIAL owner-authored DB description
+ *  (>= 80 chars) wins outright. Short DB stubs (seed-era labels like
+ *  "Laptops, printers, TVs, gaming and accessories.") are replaced by the
+ *  keyword-targeted SEO fallback — the owner asked for exactly this in
+ *  Task 73 and can still override anything longer via
+ *  PATCH /api/admin/categories/[id]. */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const decoded = decodeURIComponent(slug);
-  const withSeoFallback = (c: Category): Category => ({
-    ...c,
-    description: c.description?.trim() || CATEGORY_SEO_DESCRIPTIONS[c.slug] || null,
-  });
+  const withSeoFallback = (c: Category): Category => {
+    const db = c.description?.trim() ?? "";
+    const description = db.length >= 80 ? db : CATEGORY_SEO_DESCRIPTIONS[c.slug] || db || null;
+    return { ...c, description };
+  };
 
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
