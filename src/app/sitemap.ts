@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
-import { listActiveProductSlugs } from "@/lib/products-server";
+import {
+  listActiveProductSlugs,
+  listCategories,
+} from "@/lib/products-server";
 import { listPublishedPosts } from "@/lib/blog";
 
 // Evaluated per-request (runtime) so the product/blog listings come from the
@@ -14,6 +17,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/blog`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/deals`, changeFrequency: "weekly", priority: 0.7 },
   ];
+
+  try {
+    const categories = await listCategories();
+    for (const c of categories) {
+      entries.push({
+        url: `${base}/category/${c.slug}`,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      });
+    }
+  } catch {
+    // Categories unavailable — ship the static entries rather than a 500.
+  }
 
   try {
     const products = await listActiveProductSlugs();

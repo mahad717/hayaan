@@ -188,9 +188,18 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
         <div className="flex flex-col gap-5">
           <div>
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">
-                {product.category ? categoryName(product.category.name, product.category.slug, lang) : "—"}
-              </span>
+              {/* Category links to its crawlable landing page — internal
+                  linking + matches the PDP BreadcrumbList structured data. */}
+              {product.category ? (
+                <Link
+                  href={`/category/${product.category.slug}`}
+                  className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a] transition hover:underline"
+                >
+                  {categoryName(product.category.name, product.category.slug, lang)}
+                </Link>
+              ) : (
+                <span className="text-xs font-medium uppercase tracking-wide text-[#3f7d4a]">—</span>
+              )}
               {product.featured && (
                 <Badge variant="secondary" className="bg-secondary text-brand">
                   {t("card.featured")}

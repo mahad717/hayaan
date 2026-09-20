@@ -89,6 +89,12 @@ const en = {
   // Product detail
   "pdp.back": "Back to shop",
   "pdp.unrated": "Unrated",
+  // Category landing pages (/category/[slug])
+  "catpage.count": "{n} products",
+  "catpage.countOne": "1 product",
+  "catpage.browse": "Browse other categories",
+  "catpage.shopFrom": "Shop {name} online in Somalia — delivered to your door with secure Sifalo Pay checkout.",
+  "catpage.inStockOnly": "Looking for something specific? The full catalog with search and filters is in the shop.",
   "pdp.reviews": "{n} reviews",
   "pdp.sku": "SKU {sku}",
   "pdp.save": "Save {p}%",
@@ -440,6 +446,12 @@ const so: Record<DictKey, string> = {
   // Product detail
   "pdp.back": "Ku noqo suuqa",
   "pdp.unrated": "Weli lama qiimeyn",
+  // Category landing pages (/category/[slug])
+  "catpage.count": "{n} alaab",
+  "catpage.countOne": "1 alaab",
+  "catpage.browse": "Dalxo qaybaha kale",
+  "catpage.shopFrom": "Iibso {name} onlayn ee Soomaaliya — laguuga keeno albaabka adiga, oo lacag bixin amni leh oo Sifalo Pay ah.",
+  "catpage.inStockOnly": "Wax gaar ah raadaysaa? Dhammaan catalog-ka oo leh raadin iyo shaandhooyin ayaa suuqa ku jira.",
   "pdp.reviews": "{n} faallo",
   "pdp.sku": "SKU {sku}",
   "pdp.save": "Ku badbaadi {p}%",

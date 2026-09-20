@@ -49,10 +49,36 @@ export default async function Page({
   }
 
   return (
-    <StorefrontApp
-      viewParam={viewParam}
-      initialProducts={initialProducts}
-      initialCategories={initialCategories}
+    <>
+      <CatalogItemList products={initialProducts ?? []} />
+      <StorefrontApp
+        viewParam={viewParam}
+        initialProducts={initialProducts}
+        initialCategories={initialCategories}
+      />
+    </>
+  );
+}
+
+/** Catalog ItemList so crawlers see the full product graph from the landing
+ *  page (products are already in the SSR HTML — this names the URLs). */
+function CatalogItemList({ products }: { products: Product[] }) {
+  if (products.length === 0) return null;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: p.name,
+      url: `https://hayaan.co/product/${p.slug}`,
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
 }

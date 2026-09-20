@@ -99,7 +99,56 @@ export async function listCategories(): Promise<Category[]> {
   }));
 }
 
-/** All active products (id + slug + updated), for sitemap generation. */
+/** One category by slug (for /category/[slug] landing pages). */
+export async function getCategoryBySlug(slug: string): Promise<Category | null> {
+  const decoded = decodeURIComponent(slug);
+  if (isSupabaseServerEnabled) {
+    const supabase = createServiceClient()!;
+    const { data, error } = await supabase
+      .from("categories")
+      .select("*")
+      .eq("slug", decoded)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return data
+      ? { id: data.id, name: data.name, slug: data.slug, description: data.description ?? null }
+      : null;
+  }
+
+  const category = await (await getDb()).category.findFirst({ where: { slug: decoded } });
+  return category
+    ? { id: category.id, name: category.name, slug: category.slug, description: category.description ?? null }
+    : null;
+}
+
+/** Active products in one category, newest-first — mirrors the storefront
+ *  grid order so /category/[slug] pages show the same cards. */
+export async function listProductsByCategorySlug(slug: string, limit = 100): Promise<Product[]> {
+  const decoded = decodeURIComponent(slug);
+  if (isSupabaseServerEnabled) {
+    const supabase = createServiceClient()!;
+    const { data, error } = await supabase
+      .from("products")
+      .select("*, category:categories!inner(id, name, slug, description)")
+      .eq("is_active", true)
+      .eq("categories.slug", decoded)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map(rowToProduct);
+  }
+
+  const products = await (await getDb()).product.findMany({
+    where: { isActive: true, category: { slug: decoded } },
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+  });
+  return products.map(rowToProduct);
+}
+
+/** All active product+category slugs (with names) for sitemap + category
+ *  hub generation. */
 export async function listActiveProductSlugs(): Promise<Array<{ slug: string; updatedAt: Date | string }>> {
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;

@@ -1,17 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Instagram, Twitter, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
 import { useStore } from "@/hooks/use-store";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
+import { categoryName } from "@/lib/i18n/dictionary";
+
+type FooterCategory = { id: string; name: string; slug: string };
 
 export function Footer() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { toast } = useStore();
   const [nlEmail, setNlEmail] = useState("");
   const [nlBusy, setNlBusy] = useState(false);
   const [nlDone, setNlDone] = useState(false);
+  // Real crawlable links to the /category/[slug] landing pages (SEO Task 72).
+  // Fetched once; failure keeps the footer on its static entries only.
+  const [cats, setCats] = useState<FooterCategory[]>([]);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/categories")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        const list = Array.isArray(data) ? data : (data?.categories ?? []);
+        if (!alive || !Array.isArray(list)) return;
+        setCats(list.slice(0, 7).map((c: any) => ({ id: c.id, name: c.name, slug: c.slug })));
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   // Footer newsletter (Task 57 lead engine) — one field, zero friction.
   const subscribe = async (e: React.FormEvent) => {
@@ -56,10 +77,18 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-white">{t("ft.shop")}</h3>
             <ul className="mt-3 flex flex-col gap-2 text-sm opacity-70 font-original">
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.shopAll")}</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.featured")}</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.topRated")}</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.gifts")}</li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/" className="inline-flex items-center gap-1">
+                  {t("ft.shopAll")}
+                </a>
+              </li>
+              {cats.map((c) => (
+                <li key={c.id} className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                  <a href={`/category/${c.slug}`} className="inline-flex items-center gap-1">
+                    {categoryName(c.name, c.slug, lang)}
+                  </a>
+                </li>
+              ))}
               <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
                 <a href="/blog" className="inline-flex items-center gap-1">
                   {t("ft.blog")}

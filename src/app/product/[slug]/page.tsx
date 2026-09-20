@@ -35,10 +35,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: product.name,
     description,
     alternates: { canonical: `/product/${product.slug}` },
+    other: {
+      // Facebook/WhatsApp catalog signals — read alongside og:type=product.
+      "product:price:amount": product.price.toFixed(2),
+      "product:price:currency": product.currency,
+    },
     openGraph: {
       title: product.name,
       description,
       url: `/product/${product.slug}`,
+      // NOTE: Next rejects openGraph.type "product" at runtime (Next 16
+      // validates the OG type union) — so og:type stays "website" and the
+      // product signals ride on the product:price:* meta tags above, which
+      // Facebook/WhatsApp/pinterest parsers read from name= or property=.
       type: "website",
       locale: lang === "so" ? "so_SO" : "en_US",
       images: image ? [{ url: image, alt: product.name }] : undefined,
@@ -93,7 +102,7 @@ export default async function ProductPage({ params }: Props) {
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: "https://hayaan.co" },
           ...(product.category
-            ? [{ "@type": "ListItem", position: 2, name: product.category.name, item: `https://hayaan.co/#${product.category.slug}` }]
+            ? [{ "@type": "ListItem", position: 2, name: product.category.name, item: `https://hayaan.co/category/${product.category.slug}` }]
             : []),
           { "@type": "ListItem", position: product.category ? 3 : 2, name: product.name, item: `https://hayaan.co/product/${product.slug}` },
         ],
