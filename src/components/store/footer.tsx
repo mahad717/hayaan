@@ -5,6 +5,7 @@ import { Instagram, Twitter, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
 import { useStore } from "@/hooks/use-store";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
+import { SITE_FAQS } from "@/lib/faq";
 import { categoryName } from "@/lib/i18n/dictionary";
 
 type FooterCategory = { id: string; name: string; slug: string };
@@ -61,6 +62,31 @@ export function Footer() {
   return (
     <footer className="mt-auto bg-brand-dark text-[#faf8f1]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        {/* AEO (Task 77): site-wide buyer questions with real answers —
+            visible everywhere, matching the homepage's FAQPage structured
+            data. Somali toggle uses the same language switch as the rest of
+            the footer. */}
+        <section aria-labelledby="footer-faq" className="mb-10">
+          <h2 id="footer-faq" className="text-base font-semibold text-white">
+            {t("ft.faqTitle")}
+          </h2>
+          <div className="mt-4 grid gap-2 md:grid-cols-2">
+            {SITE_FAQS.map((f) => (
+              <details
+                key={f.q}
+                className="rounded-xl border border-white/15 bg-white/5 p-4 open:bg-white/10"
+              >
+                <summary className="cursor-pointer list-none text-sm font-semibold text-white marker:hidden">
+                  <span className="mr-1 text-[#f9c27d] group-open:hidden" aria-hidden>
+                    +
+                  </span>
+                  {f.q}
+                </summary>
+                <p className="mt-2 text-sm leading-relaxed text-[#faf8f1]/75">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2">

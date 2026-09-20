@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ChevronLeft, Newspaper } from "lucide-react";
 import { getPublishedPostBySlug } from "@/lib/blog";
 import { MarkdownContent } from "@/lib/markdown";
+import { faqPageJsonLd } from "@/lib/faq";
+import { FaqSection } from "@/components/store/faq-section";
 import { StoreShell } from "@/components/store/store-shell";
 
 export const dynamic = "force-dynamic";
@@ -53,21 +55,43 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getPublishedPostBySlug(slug).catch(() => null);
   if (!post) notFound();
 
+  const SITE_POST_URL = `https://hayaan.co/blog/${post.slug}`;
+  // AEO (Task 77): BlogPosting + (when the guide defines them) FAQPage and
+  // HowTo nodes. Every node mirrors content that is visibly on the page.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt || post.content.slice(0, 157),
-    image: post.coverImage ? [post.coverImage] : undefined,
-    datePublished: post.publishedAt ?? undefined,
-    dateModified: post.updatedAt ?? undefined,
-    author: { "@type": "Organization", name: post.authorName },
-    publisher: {
-      "@type": "Organization",
-      name: "Hayaan Market",
-      logo: { "@type": "ImageObject", url: "https://hayaan.co/hayaan-logo-green.svg" },
-    },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://hayaan.co/blog/${post.slug}` },
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.excerpt || post.content.slice(0, 157),
+        image: post.coverImage ? [post.coverImage] : undefined,
+        datePublished: post.publishedAt ?? undefined,
+        dateModified: post.updatedAt ?? undefined,
+        author: { "@type": "Organization", name: post.authorName },
+        publisher: {
+          "@type": "Organization",
+          name: "Hayaan Market",
+          logo: { "@type": "ImageObject", url: "https://hayaan.co/hayaan-logo-green.svg" },
+        },
+        mainEntityOfPage: { "@type": "WebPage", "@id": SITE_POST_URL },
+      },
+      ...(post.faqs?.length ? [faqPageJsonLd(post.faqs, SITE_POST_URL)] : []),
+      ...(post.howtoSteps?.length
+        ? [
+            {
+              "@type": "HowTo",
+              name: post.title,
+              step: post.howtoSteps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                name: s.name,
+                text: s.text,
+              })),
+            },
+          ]
+        : []),
+    ],
   };
 
   return (
@@ -112,9 +136,24 @@ export default async function BlogPostPage({ params }: Props) {
           </p>
         )}
 
+        {/* AEO (Task 77): the direct, quotable answer answer engines extract
+            for "buy X in Somalia" prompts — 40-60 words, above the fold. */}
+        {post.quickAnswer && (
+          <div className="mt-6 rounded-2xl border border-[#e6e2d4] bg-[#faf8f1] p-5">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-[#3f7d4a]">
+              Quick answer
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-foreground">{post.quickAnswer}</p>
+          </div>
+        )}
+
         <div className="mt-8">
           <MarkdownContent source={post.content} />
         </div>
+
+        {post.faqs?.length ? (
+          <FaqSection faqs={post.faqs} className="mt-10 border-t border-[#e6e2d4] pt-8" />
+        ) : null}
 
         <footer className="mt-12 rounded-2xl bg-[#f3f7f1] p-6 text-center">
           <h2 className="text-lg font-bold text-brand-dark">Ready to shop the story?</h2>

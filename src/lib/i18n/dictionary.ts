@@ -274,6 +274,7 @@ const en = {
   "ft.terms": "Terms",
   "ft.cookies": "Cookies",
   "ft.bulkOrders": "Bulk orders & quotes",
+  "ft.faqTitle": "Frequently asked questions — ordering, delivery & payment",
 
   // Lead engine — newsletter / offer popup / quote page / WhatsApp (Task 57)
   "lead.popupTitle": "New arrivals & deals — before anyone else",
@@ -638,6 +639,7 @@ const so: Record<DictKey, string> = {
   "ft.terms": "Shuruudaha",
   "ft.cookies": "Cookies",
   "ft.bulkOrders": "Dalabyo waaweyn & qiimayn",
+  "ft.faqTitle": "Su'aalaha badan la isweydiiyo — dalabka, gaadiidka & lacag-bixinta",
 
   // Lead engine — newsletter / offer popup / quote page / WhatsApp (Task 57)
   "lead.popupTitle": "Alaab cusub & faa'iidooyin — ka hor qof kasta",

@@ -1,5 +1,6 @@
 import { StorefrontApp } from "@/components/store/storefront-app";
 import { listActiveProducts, listCategories } from "@/lib/products-server";
+import { SITE_FAQS, faqPageJsonLd } from "@/lib/faq";
 import type { Category, Product } from "@/lib/types";
 
 // Awaiting searchParams makes this route render dynamically per request, so
@@ -51,6 +52,18 @@ export default async function Page({
   return (
     <>
       <CatalogItemList products={initialProducts ?? []} />
+      {/* AEO (Task 77): FAQPage structured data for the site-wide questions.
+          The matching VISIBLE answers render in the footer FAQ block, so
+          markup and page content agree as answer engines expect. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            ...faqPageJsonLd(SITE_FAQS, "https://hayaan.co"),
+          }),
+        }}
+      />
       <StorefrontApp
         viewParam={viewParam}
         initialProducts={initialProducts}

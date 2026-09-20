@@ -30,6 +30,26 @@ const post1 = {
   title: "Where to Buy Electronics Online in Somalia: The 2026 Buyer's Guide",
   excerpt:
     "TVs, laptops, consoles and sound gear — where to find them online in Somalia, what they really cost, and how to order without getting burned.",
+  quickAnswer:
+    "You can buy electronics online in Somalia from Hayaan Market (hayaan.co): smart TVs from $450, MacBooks from about $1,530, PS5 consoles and projectors, all at fixed USD prices paid through Sifalo Pay and delivered to your district in Mogadishu ($1.50–$3, free over $75) or nationwide for a flat $6.95.",
+  faqs: [
+    {
+      q: "Where can I buy electronics online in Somalia?",
+      a: "Hayaan Market (hayaan.co) sells TVs, laptops, consoles and projectors online with fixed USD prices and door delivery across Mogadishu and Somalia.",
+    },
+    {
+      q: "How much does a TV or laptop cost online in Somalia?",
+      a: "Smart TVs run from about $450 (43-inch LG) to $2,350 (85-inch Samsung); MacBooks from about $1,530. Every listing shows the exact price before you order.",
+    },
+    {
+      q: "Is it safe to pay for electronics online in Somalia?",
+      a: "Paying through Sifalo Pay gives both sides a record of the transaction, and every Hayaan listing states the exact model, price and stock up front.",
+    },
+    {
+      q: "How is delivery charged for electronics?",
+      a: "Mogadishu delivery is priced by district ($1.50–$3.00), orders over $75 ship free, and anywhere else in Somalia is a flat $6.95.",
+    },
+  ],
   content: `Electronics are the number-one reason Somalis shop online. A genuine [Samsung 85-inch smart TV](https://hayaan.co/product/tv-samsung-85-inch-smart) or a sealed MacBook is hard to find at a fair price in local shops — and travelling to buy one is expensive. Buying online flips that around: you compare models side by side, pay securely from your phone, and the product comes to your door.
 
 This guide walks through what you can actually buy online in Somalia right now, what it should cost, and the checks that separate a good order from a bad one.
@@ -77,6 +97,26 @@ const post2 = {
   title: "How to Buy Phones Online in Somalia (and What to Check Before You Pay)",
   excerpt:
     "iPhone or Galaxy, physical SIM or eSIM, $118 or $1,550 — a plain-language guide to ordering a phone online in Somalia with confidence.",
+  quickAnswer:
+    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships up to about $990–$1,550. Check the exact model and band support, pay through Sifalo Pay, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
+  faqs: [
+    {
+      q: "Can I buy an iPhone or Samsung online in Somalia?",
+      a: "Yes — Hayaan Market lists iPhones and Galaxy phones with fixed USD prices, real photos and stock counts, delivered to your door.",
+    },
+    {
+      q: "What is the cheapest way to buy a phone online in Somalia?",
+      a: "Budget models like the Galaxy A16 (around $118) are the entry point; ordering from a storefront with listed prices avoids the haggling and uncertainty of social-media sellers.",
+    },
+    {
+      q: "Do phones bought online work with Somali SIM cards?",
+      a: "Check the listing for physical-SIM or eSIM support before ordering — the guide's model-number check tells you exactly what the phone supports.",
+    },
+    {
+      q: "How do I pay for a phone ordered online?",
+      a: "Through Sifalo Pay at checkout — prices are in USD, there is no VAT, and the delivery fee is shown before you confirm.",
+    },
+  ],
   content: `Phones are personal — and buying one online in Somalia should not feel like a gamble. Between flagship iPhones, Samsung's Galaxy A series, and smartwatches that cost less than a case-and-screen bundle used to, there is now a genuine choice at every budget. Here's how to pick the right one and order it safely.
 
 ## Know your budget tiers before you browse
@@ -120,6 +160,26 @@ const post3 = {
   title: "Buying Health Supplements Online in Somalia: What to Look For",
   excerpt:
     "Multivitamins, immunity blends and daily essentials — how to judge a supplement listing before you order, and what a good one looks like.",
+  quickAnswer:
+    "You can buy vitamins and supplements online in Somalia from Hayaan Market's Health Supplements section. Judge a listing by its label (nutrients and dose per serving), servings per bottle, and whether it shows the exact USD price and stock — then pay through Sifalo Pay and get door delivery in Mogadishu ($1.50–$3, free over $75) or nationwide ($6.95).",
+  faqs: [
+    {
+      q: "Where can I buy multivitamins online in Somalia?",
+      a: "Hayaan Market's Health Supplements section ships multivitamins and wellness products across Somalia with fixed USD prices and Sifalo Pay checkout.",
+    },
+    {
+      q: "How do I know a supplement listing is good?",
+      a: "Read the label: nutrients and dose per serving, servings per container, and a listing that shows the exact price, stock and product photos.",
+    },
+    {
+      q: "Can I order supplements in bulk for a gym or office?",
+      a: "Yes — send a bulk request at hayaan.co/quote and the team follows up with a tailored offer for larger quantities.",
+    },
+    {
+      q: "How much is delivery for supplements?",
+      a: "$1.50–$3.00 inside Mogadishu depending on your district, free on orders of $75 or more, and a flat $6.95 anywhere else in Somalia.",
+    },
+  ],
   content: `Health supplements are one of the fastest-growing searches in Somali online shopping — and also the category where quality questions matter most. When you cannot hold the bottle before paying, the listing itself has to do the convincing. Here is how to read one like a pro.
 
 ## What a trustworthy supplement listing shows
@@ -163,6 +223,26 @@ const post4 = {
   title: "Setting Up a Home Office in Somalia: The Essential Shopping List",
   excerpt:
     "Printer, toner, light, microphone: the practical equipment list for working and studying from home in Somalia — with real prices and one-cart ordering.",
+  quickAnswer:
+    "To set up a home office in Somalia, order the essentials in one cart from Hayaan Market's Home & Office section: printer and matching toner, laptop, desk light and microphone — all at fixed USD prices. Pick the printer first and match its toner so one order reaches the $75 free-shipping threshold; delivery in Mogadishu is $1.50–$3 per district, $6.95 elsewhere.",
+  faqs: [
+    {
+      q: "Where can I buy a printer online in Somalia?",
+      a: "Hayaan Market's Home & Office section lists printers and their matching toner cartridges with fixed USD prices and door delivery.",
+    },
+    {
+      q: "How do I choose a printer and toner?",
+      a: "Pick the printer first, then match its exact toner model — both are listed so you can add them to one cart and hit the $75 free-shipping threshold in a single order.",
+    },
+    {
+      q: "What do I need for working from home in Somalia?",
+      a: "The essentials are a laptop, printer and toner, a desk light and a microphone — the guide walks through each in the order worth buying.",
+    },
+    {
+      q: "Can schools or offices order a full setup?",
+      a: "Yes — use the bulk quote form at hayaan.co/quote for larger orders; quantity pricing usually beats listed totals.",
+    },
+  ],
   content: `Remote work, freelancing, tutoring, and small businesses have turned Somali homes into offices. The good news: you no longer need to travel or piece together gear from three different shops. One category covers it. Here is the equipment that matters, in the order you should buy it.
 
 ## Start with output: a printer you can actually feed
@@ -205,6 +285,48 @@ const post5 = {
   title: "Online Shopping in Somalia: How Delivery, Payment and Support Actually Work",
   excerpt:
     "The no-surprises guide to ordering from Hayaan Market — district delivery fees, Sifalo Pay, free shipping over $75, and what happens after you click Pay.",
+  quickAnswer:
+    "Online shopping in Somalia works like this: browse a storefront with listed USD prices, add to cart, choose your delivery district ($1.50–$3 in Mogadishu, free over $75, $6.95 nationwide), pay through Sifalo Pay's secure checkout, and track the order until it arrives. Support is reachable at support@hayaan.co and WhatsApp for any question about an order.",
+  howtoSteps: [
+    {
+      name: "Browse and pick a product",
+      text: "Open the shop — every listing shows the exact product name, real photos, USD price and stock count, so you know precisely what you are ordering.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add the items you need to the cart and sign in with your email so the order history stays attached to your account.",
+    },
+    {
+      name: "Choose your delivery district",
+      text: "At checkout, pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee. Orders of $75 or more ship free.",
+    },
+    {
+      name: "Pay with Sifalo Pay",
+      text: "Approve the total (product price plus the shown delivery fee — no VAT) through Sifalo Pay's secure hosted checkout, which records the transaction for both sides.",
+    },
+    {
+      name: "Track and receive your order",
+      text: "Follow the order under Orders until the parcel reaches your address; write to support@hayaan.co with your order number if anything does not match the page.",
+    },
+  ],
+  faqs: [
+    {
+      q: "Does online shopping work in Somalia?",
+      a: "Yes — Hayaan Market runs the full flow in writing: listed USD prices, cart checkout, district-based delivery fees and Sifalo Pay payment, with order tracking and email support.",
+    },
+    {
+      q: "Is Sifalo Pay safe for online orders?",
+      a: "Sifalo Pay is Somalia's payment network; it gives both buyer and seller a record of every transaction, unlike informal transfers.",
+    },
+    {
+      q: "How much is delivery in Mogadishu?",
+      a: "Per district: from $1.50 (Hodan, Waberi, Wadajir) to $3.00 (Daynile, Kahda, Gubadley, Darussalam, Garasbaaley) — shown at checkout before you pay, and free on orders over $75.",
+    },
+    {
+      q: "Who do I contact if something is wrong with my order?",
+      a: "Email support@hayaan.co with your order number — every order has a record and a path to a human.",
+    },
+  ],
   content: `Most questions Somalis ask about online shopping are really the same four: **Can I trust the payment? Where does it deliver? What does it cost? And who do I call when something is wrong?** Here are straight answers for Hayaan Market — the same rules that run at checkout, written down.
 
 ## Paying: Sifalo Pay, not a stranger's wallet

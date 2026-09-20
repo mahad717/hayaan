@@ -122,4 +122,13 @@ export interface BlogPost {
    *  "shipped" = code-shipped SEO guide (Task 73; admin can copy it into
    *  the DB by saving an edit). Absent on older API consumers. */
   source?: "db" | "shipped";
+  /** AEO (Task 77): 40-60 word direct answer rendered above the content —
+   *  the "quick answer" pattern answer engines quote verbatim. */
+  quickAnswer?: string;
+  /** AEO (Task 77): buyer questions rendered as a visible FAQ block and
+   *  emitted as FAQPage structured data on the post page. */
+  faqs?: Array<{ q: string; a: string }>;
+  /** AEO (Task 77): ordered steps for HowTo structured data (procedural
+   *  guides like "how online shopping works"). */
+  howtoSteps?: Array<{ name: string; text: string }>;
 }

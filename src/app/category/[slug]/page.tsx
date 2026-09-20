@@ -17,6 +17,8 @@ import {
   translate,
   type DictKey,
 } from "@/lib/i18n/dictionary";
+import { categoryFaqsFor, faqPageJsonLd } from "@/lib/faq";
+import { FaqSection } from "@/components/store/faq-section";
 
 // SSR per request — catalog changes appear immediately and crawlers always
 // see fresh category listings.
@@ -82,6 +84,8 @@ export default async function CategoryPage({ params }: Props) {
   const name = categoryName(category.name, category.slug, lang);
   const others = allCategories.filter((c) => c.slug !== category.slug);
 
+  const faqs = categoryFaqsFor(category.slug);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -114,6 +118,9 @@ export default async function CategoryPage({ params }: Props) {
           },
         ],
       },
+      // AEO (Task 77): per-category Q&A — the visible copy renders below the
+      // product grid via <FaqSection>, so markup matches page content.
+      faqPageJsonLd(faqs, `${SITE}/category/${category.slug}`),
     ],
   };
 
@@ -164,6 +171,11 @@ export default async function CategoryPage({ params }: Props) {
         ) : (
           <p className="mt-8 text-muted-foreground">{t("catpage.inStockOnly")}</p>
         )}
+
+        {/* AEO (Task 77): buyer questions for this category ("where can I
+            buy X online in Somalia"-style prompts), answered with the store's
+            real delivery/payment facts. */}
+        <FaqSection faqs={faqs} className="mt-12" />
 
         {others.length > 0 && (
           <section className="mt-12 border-t border-[#e6e2d4] pt-8">
