@@ -1610,3 +1610,18 @@ Stage Summary:
 - The owner's admin dashboard now shows all 6 blog posts: their own + the 5 built-in SEO guides (badged "Built-in", viewable on /blog, editable via copy-on-save, not deletable). Owner edit path: pencil icon -> edit -> "Save my copy" -> their DB copy takes over the same URL.
 - Confirmed en route: owner's email+password login works end-to-end (they used the Task 74 password setter successfully).
 - Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; password-signup users-row upsert; Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
+
+---
+Task ID: 75-b
+Agent: Super Z (main)
+Task: Owner supplied Supabase project URL + anon key ("you will need in the future")
+
+Work Log:
+- Owner sent: project URL https://mqyhgyakhfhuctnvezby.supabase.co + anon key (public-by-design, RLS-protected).
+- Stored BOTH in .env as NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY (.env is gitignored, verified via git check-ignore) — local sandbox previously had zero Supabase env vars, which blocked any direct Supabase probing in earlier tasks.
+- Verified the key live: GET /rest/v1/categories -> 200 (all 5 categories); GET /rest/v1/blog_posts -> 200 (owner's DB post "Sida Loo Doorto Laptop-ka Kugu Habboon" visible); POST /auth/v1/token with bad creds -> 400 invalid_credentials (endpoint reachable, shape correct).
+- Production already has these as Worker secrets (live auth works), so NO code/wrangler change needed — this purely unlocks sandbox-side Supabase reads + password-grant logins for future verification scripts.
+
+Stage Summary:
+- Future agents: anon-key REST reads (categories, products, blog_posts) and password-grant auth (owner creds) now work from the sandbox via .env. SUPABASE_SERVICE_ROLE_KEY is still NOT available locally — admin writes from the sandbox remain impossible unless the owner supplies it or approves SQL run in the dashboard.
+- Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; password-signup users-row upsert; Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
