@@ -13,16 +13,19 @@ import { cookies } from "next/headers";
 import type { User as SupabaseAuthUser } from "@supabase/supabase-js";
 import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
 import { getUserFromRequest, getSupabaseUserById } from "@/lib/auth-session";
+import { isOwnerAdmin } from "@/lib/admin-emails";
 import type { SafeUser } from "@/lib/types";
 
 function mapSupabaseUser(u: SupabaseAuthUser): SafeUser {
   const name = (u.user_metadata?.name as string | undefined) ?? u.email!.split("@")[0];
   const role = (u.user_metadata?.role as string | undefined) ?? "customer";
+  // Owner allowlist (Google identity required — see src/lib/admin-emails.ts):
+  // the metadata fallback must grant admin to the owner's Google login too.
   return {
     id: u.id,
     email: u.email!,
     name,
-    role: role === "admin" ? "admin" : "customer",
+    role: isOwnerAdmin(u.email, u) || role === "admin" ? "admin" : "customer",
   };
 }
 

@@ -11,6 +11,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
+import { isOwnerAdmin } from "@/lib/admin-emails";
 import type { SafeUser } from "@/lib/types";
 
 const COOKIE_NAME = "shop_session";
@@ -47,22 +48,36 @@ export function readSessionCookie(req: Request): string | null {
  * Resolve a Supabase auth user id to an app profile. Reads public.users
  * first (service role — RLS-free), and falls back to the auth user's
  * user_metadata when the profile row has not been synced yet.
+ *
+ * The auth user is fetched in parallel too (cheap GoTrue lookup) so the
+ * owner-allowlist can require a GOOGLE identity before granting admin —
+ * this runs on BOTH paths (profile row and metadata fallback), covering
+ * /admin page guard, /api/auth/me, and every admin API route.
  */
 export async function getSupabaseUserById(userId: string): Promise<SafeUser | null> {
   const supabase = createServiceClient();
   if (!supabase) return null;
 
-  const { data: profile } = await supabase
-    .from("users")
-    .select("id, email, name, role, phone, address, city, zip, country")
-    .eq("id", userId)
-    .maybeSingle();
+  const [{ data: profile }, { data: authData }] = await Promise.all([
+    supabase
+      .from("users")
+      .select("id, email, name, role, phone, address, city, zip, country")
+      .eq("id", userId)
+      .maybeSingle(),
+    supabase.auth.admin.getUserById(userId),
+  ]);
+  const authUser = authData?.user ?? null;
+  // Owner allowlist: verified auth email + Google-linked identity => admin,
+  // regardless of what the profile row / metadata says.
+  const ownerAdmin = isOwnerAdmin(authUser?.email, authUser);
+
   if (profile) {
+    const role = ownerAdmin || profile.role === "admin" ? "admin" : "customer";
     return {
       id: profile.id,
       email: profile.email,
       name: profile.name ?? profile.email.split("@")[0],
-      role: profile.role === "admin" ? "admin" : "customer",
+      role,
       phone: profile.phone,
       address: profile.address,
       city: profile.city,
@@ -71,12 +86,12 @@ export async function getSupabaseUserById(userId: string): Promise<SafeUser | nu
     };
   }
 
-  const { data, error } = await supabase.auth.admin.getUserById(userId);
-  if (error || !data.user?.email) return null;
-  const u = data.user;
+  if (!authUser?.email) return null;
+  const u = authUser;
   const name = (u.user_metadata?.name as string | undefined) ?? u.email.split("@")[0];
-  const role = (u.user_metadata?.role as string | undefined) ?? "customer";
-  return { id: u.id, email: u.email, name, role: role === "admin" ? "admin" : "customer" };
+  const metaRole = (u.user_metadata?.role as string | undefined) ?? "customer";
+  const role = ownerAdmin || metaRole === "admin" ? "admin" : "customer";
+  return { id: u.id, email: u.email, name, role };
 }
 
 export async function getUserFromRequest(req: Request): Promise<SafeUser | null> {

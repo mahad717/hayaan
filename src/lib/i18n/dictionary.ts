@@ -219,6 +219,12 @@ const en = {
   "acc.toastSaveFail": "Could not save your profile.",
   "acc.toastSaved": "Profile saved",
   "acc.toastNetwork": "Network error — try again.",
+  "acc.passwordTitle": "Password",
+  "acc.passwordNote": "Set a password to sign in with your email and password — handy if you signed up with Google.",
+  "acc.passwordNew": "New password",
+  "acc.passwordConfirm": "Confirm password",
+  "acc.passwordMismatch": "Passwords do not match.",
+  "acc.passwordSaved": "Password set — you can now sign in with your email and password.",
 
   // Orders
   "ord.loading": "Loading your orders…",
@@ -577,6 +583,12 @@ const so: Record<DictKey, string> = {
   "acc.toastSaveFail": "Profaylka lama kaydin.",
   "acc.toastSaved": "Profaylka waa la kaydiyay",
   "acc.toastNetwork": "Dhib shabakad — isku day mar kale.",
+  "acc.passwordTitle": "Furaha",
+  "acc.passwordNote": "Deji furaha si aad u galo emailkaaga iyo furaha — waxaa lama dega haddii aad akoonkaaga Google ku sameysay.",
+  "acc.passwordNew": "Furaha cusub",
+  "acc.passwordConfirm": "Xaqiiji furaha",
+  "acc.passwordMismatch": "Furayaashu isku mid ma aha.",
+  "acc.passwordSaved": "Furaha waa la dejiyay — hadda waxaad ku gali kartaa emailkaaga iyo furaha.",
 
   // Orders
   "ord.loading": "Dalabyadaaga ayaa la keenayo…",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronLeft, Mail, MapPin, Phone, Save, ShieldCheck, UserRound, Loader2 } from "lucide-react";
+import { ChevronLeft, KeyRound, Mail, MapPin, Phone, Save, ShieldCheck, UserRound, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -77,6 +77,11 @@ export function AccountView() {
   const { t, lang } = useLang();
   const [form, setForm] = useState<ProfileForm>(user ? toForm(user) : EMPTY);
   const [saving, setSaving] = useState(false);
+  // Password card state (set/change password — works for Google sign-ins
+  // that have no password yet, and for password users changing theirs).
+  const [pwd, setPwd] = useState("");
+  const [pwd2, setPwd2] = useState("");
+  const [pwdSaving, setPwdSaving] = useState(false);
   // City + district picker state (Task 71). The saved value is ALWAYS
   // form.city — picking a district writes its canonical name, a big city
   // writes its canonical name, so checkout's saved-city mapping and the
@@ -211,6 +216,39 @@ export function AccountView() {
       toast(t("acc.toastNetwork"), "error");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const savePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pwd.length < 6) {
+      toast(t("au.minChars"), "error");
+      return;
+    }
+    if (pwd !== pwd2) {
+      toast(t("acc.passwordMismatch"), "error");
+      return;
+    }
+    setPwdSaving(true);
+    try {
+      const res = await fetch("/api/auth/password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ password: pwd }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast(data.error ?? t("acc.toastSaveFail"), "error");
+        return;
+      }
+      setPwd("");
+      setPwd2("");
+      toast(t("acc.passwordSaved"), "success");
+    } catch {
+      toast(t("acc.toastNetwork"), "error");
+    } finally {
+      setPwdSaving(false);
     }
   };
 
@@ -440,6 +478,55 @@ export function AccountView() {
             <Save className="mr-1.5 h-4 w-4" /> {saving ? t("acc.saving") : t("acc.save")}
           </Button>
         </div>
+      </form>
+
+      {/* Password — own <form> (nested forms are invalid HTML). Signing in
+          with Google creates a passwordless account; this sets one so
+          email + password sign-in works too. Password users change theirs. */}
+      <form onSubmit={savePassword} className="mt-6">
+        <Card className="border-[#e6e2d4]">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base text-brand-dark">
+              <KeyRound className="h-4 w-4 text-brand" /> {t("acc.passwordTitle")}
+            </CardTitle>
+            <p className="text-sm font-normal text-muted-foreground">{t("acc.passwordNote")}</p>
+          </CardHeader>
+          <CardContent className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="acc-pwd" className="whitespace-nowrap">{t("acc.passwordNew")}</Label>
+              <Input
+                id="acc-pwd"
+                type="password"
+                required
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                autoComplete="new-password"
+                minLength={6}
+                className={FIELD_CLS}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="acc-pwd2" className="whitespace-nowrap">{t("acc.passwordConfirm")}</Label>
+              <Input
+                id="acc-pwd2"
+                type="password"
+                required
+                value={pwd2}
+                onChange={(e) => setPwd2(e.target.value)}
+                autoComplete="new-password"
+                minLength={6}
+                className={FIELD_CLS}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground sm:col-span-2">{t("au.minChars")}</p>
+            <div className="flex justify-end sm:col-span-2">
+              <Button type="submit" className="btn-accent" disabled={pwdSaving}>
+                <KeyRound className="mr-1.5 h-4 w-4" />
+                {pwdSaving ? t("acc.saving") : t("acc.passwordTitle")}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </form>
     </div>
   );

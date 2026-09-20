@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServerClient } from "@/lib/supabase/server";
 import { setAuthCookie } from "@/lib/auth-session";
+import { isAdminEmail } from "@/lib/admin-emails";
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,8 +32,9 @@ export async function POST(req: NextRequest) {
         const raw = error?.message ?? "Invalid credentials.";
         let hint = "";
         if (/invalid login credentials/i.test(raw)) {
-          hint =
-            ' No account matches. If you never clicked "Seed now", the demo admin does not exist yet — seed first, then sign in.';
+          hint = isAdminEmail(email)
+            ? " This is the owner email — open the sign-in dialog and use Continue with Google, then set a password from your profile page."
+            : ' No account matches. If you never clicked "Seed now", the demo admin does not exist yet — seed first, then sign in.';
         } else if (/email not confirmed/i.test(raw)) {
           hint = " This user exists but is unconfirmed. Open Supabase, Authentication > Users, confirm the email, then try again.";
         } else if (/rate limit|too many/i.test(raw)) {
