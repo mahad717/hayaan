@@ -1645,3 +1645,27 @@ Work Log:
 Stage Summary:
 - Sandbox now has full admin read/write over live Supabase (auth admin + REST) via .env; future tasks no longer need owner-side SQL pastes for data ops (DDL still needs dashboard/DB password, but all 9 migrations are applied so none pending).
 - Remaining open follow-ups: Zoho DKIM+DMARC DNS, RESEND_API_KEY, Somali translation pass, optional stock/photo enrichment, customer@shop.demo cleanup decision.
+
+---
+Task ID: 77
+Agent: Super Z (main)
+Task: "can you also optimize for me Answer Engine Optimization (AEO)" + uploaded AEO.docx (Ahrefs AEO course notes)
+
+Work Log:
+- Doc distilled to the deployable subset: AI-crawler access, LLM-readable content, Q&A/FAQ content with matching schema, quick-answer formatting. Off-site items (brand gap analysis, publisher mentions, YouTube, GA4 filters) documented for the owner in the final chat report.
+- robots.ts: explicit allow-list group for 12 AI crawlers (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, Applebot-extended, meta-externalagent, YouBot) — same /admin /api /payment disallow as "*".
+- NEW /llms.txt (static, llmstxt.org format): brand summary blockquote, store facts (USD, no VAT, district fees $1.50-$3, free >= $75, $6.95 nationwide, Sifalo Pay, /quote, WhatsApp support), 5 category links, 5 guide links, policies.
+- NEW /llms-full.txt (force-dynamic): EVERY active product as "[name](url) — $price, stock, SKU" grouped by category + buyer guides (102 bullets live) — lets LLMs answer "how much is X in Somalia" with real listings. Cached s-maxage=3600.
+- NEW src/lib/faq.ts: 8 site-wide Q&As + 3 per-category Q&As x 5 categories + generic fallback, every answer grounded in verified facts (shipping.ts fees, checkout's Sifalo-only, /quote, footer contacts) + faqPageJsonLd() helper.
+- Visible FAQ surfaces (markup always matches visible copy, per Google FAQ guidelines): (a) sitewide dark-theme FAQ accordion in footer (dictionary key ft.faqTitle EN+SO); (b) category pages FAQ section below the grid + FAQPage node appended to the @graph; (c) blog guides: NEW "Quick answer" 40-60-word direct-answer box above content + FAQ section below content.
+- types.ts BlogPost: optional quickAnswer / faqs / howtoSteps. blog-seo-posts.ts: all 5 guides got quickAnswer + 4 FAQs; the how-online-shopping-works guide also got 5 HowTo steps. Blog page JSON-LD now a @graph: BlogPosting + FAQPage + HowTo (when present).
+- PDP Product schema audited — already complete (price, currency, availability, condition, seller, brand, guarded aggregateRating); untouched.
+- Local build clean (/llms.txt static ○, /llms-full.txt dynamic ƒ, /robots.txt static ○); local smoke test: robots lists 12 crawlers, llms-full 102 bullets, FAQPage on home+category, HowTo+FAQPage+Quick answer on posts.
+- Commit f59942c pushed linear (744eee4..f59942c). Deploy LIVE at poll 4 (~60s) via new-URL probe /llms.txt 404→200.
+- LIVE verify (scripts/verify-aeo-live.mjs): 37/37 PASS — robots (7 checks), llms.txt (5), llms-full (5), home FAQPage+visible (4), category (4), posts HowTo/FAQPage/Quick answer (5), regressions sitemap/PDP/blog index (5).
+- Screenshots: download/task77-live-category-faq.png (category FAQ + footer FAQ), task77-live-footer-faq.png (footer FAQ with open answer), task77-live-blog-quick-answer.png (guide quick-answer box).
+
+Stage Summary:
+- hayaan.co is now AEO-ready end to end: AI crawlers explicitly welcome, machine-readable brand+catalog index (llms.txt / llms-full.txt), and question-shaped content with matching FAQPage/HowTo schema on the pages that matter for "buy X in Somalia" prompts. Homepage FAQPage schema mirrors the visible footer FAQ.
+- Owner-side AEO follow-ups (from the course doc, not codeable here): GA4 AI-referral channel group; run the brand-gap prompt pack in ChatGPT/Perplexity/AI Overviews; pursue third-party mentions (Tier 3: Wikipedia/Reddit/YouTube, local directories); resubmit sitemap in Search Console so the FAQ-enriched pages are re-crawled.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
