@@ -118,4 +118,8 @@ export interface BlogPost {
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  /** Where the post lives: "db" = blog_posts table (fully editable),
+   *  "shipped" = code-shipped SEO guide (Task 73; admin can copy it into
+   *  the DB by saving an edit). Absent on older API consumers. */
+  source?: "db" | "shipped";
 }

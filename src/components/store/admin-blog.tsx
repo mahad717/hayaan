@@ -62,6 +62,10 @@ export function AdminBlog() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<BlogPost | null>(null);
+  // A code-shipped guide being edited: the editor is prefilled from the
+  // shipped content, but saving POSTs a new DB row (same slug) which then
+  // shadows the built-in version everywhere — that's the copy-on-save flow.
+  const [editingShipped, setEditingShipped] = useState<BlogPost | null>(null);
   const [form, setForm] = useState<PostForm>(EMPTY_FORM);
   const [slugTouched, setSlugTouched] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -91,13 +95,16 @@ export function AdminBlog() {
 
   const openNew = () => {
     setEditing(null);
+    setEditingShipped(null);
     setForm(EMPTY_FORM);
     setSlugTouched(false);
     setDialogOpen(true);
   };
 
   const openEdit = (post: BlogPost) => {
-    setEditing(post);
+    const shipped = post.source === "shipped";
+    setEditing(shipped ? null : post);
+    setEditingShipped(shipped ? post : null);
     setForm({
       title: post.title,
       slug: post.slug,
@@ -257,12 +264,19 @@ export function AdminBlog() {
                       <p className="text-xs text-muted-foreground">/blog/{post.slug}</p>
                     </td>
                     <td className="py-3 pr-4">
-                      <Badge
-                        variant="secondary"
-                        className={post.status === "published" ? "bg-secondary text-brand" : "bg-[#fef1de] text-[#7a4a14]"}
-                      >
-                        {post.status}
-                      </Badge>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <Badge
+                          variant="secondary"
+                          className={post.status === "published" ? "bg-secondary text-brand" : "bg-[#fef1de] text-[#7a4a14]"}
+                        >
+                          {post.status}
+                        </Badge>
+                        {post.source === "shipped" && (
+                          <Badge variant="secondary" className="bg-brand/10 text-brand" title="Ships with the site — save an edit to copy it into your blog table">
+                            Built-in
+                          </Badge>
+                        )}
+                      </div>
                     </td>
                     <td className="py-3 pr-4 text-xs text-muted-foreground">{formatDate(post.updatedAt)}</td>
                     <td className="py-3">
@@ -277,9 +291,11 @@ export function AdminBlog() {
                         <Button variant="ghost" size="icon" className="h-8 w-8 text-brand" onClick={() => openEdit(post)} aria-label={`Edit ${post.title}`}>
                           <Pencil className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => remove(post)} aria-label={`Delete ${post.title}`}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        {post.source !== "shipped" && (
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => remove(post)} aria-label={`Delete ${post.title}`}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -294,11 +310,20 @@ export function AdminBlog() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="text-brand-dark">{editing ? "Edit blog post" : "New blog post"}</DialogTitle>
+            <DialogTitle className="text-brand-dark">
+              {editing ? "Edit blog post" : editingShipped ? "Edit built-in guide" : "New blog post"}
+            </DialogTitle>
             <DialogDescription>
               Content supports simple markdown: ## headings, - lists, **bold**, *italic*, [links](url), &gt; quotes.
             </DialogDescription>
           </DialogHeader>
+          {editingShipped && (
+            <p className="rounded-md bg-[#fef1de] p-3 text-xs leading-relaxed text-[#7a4a14]">
+              This guide ships with the site. Saving creates your own copy in the blog table with the
+              same URL — from then on your copy is what visitors read, and it is fully editable and
+              deletable. (No copy is made until you save.)
+            </p>
+          )}
           <form onSubmit={save} className="grid gap-4">
             <div className="grid gap-1.5">
               <Label htmlFor="bp-title">Title <span className="text-[#f28c28]">*</span></Label>
@@ -414,7 +439,7 @@ export function AdminBlog() {
               </Button>
               <Button type="submit" disabled={saving} className="btn-accent">
                 {saving && <Loader2 className="mr-1 h-4 w-4 animate-spin" />}
-                {editing ? "Save changes" : form.status === "published" ? "Publish post" : "Save draft"}
+                {editing ? "Save changes" : editingShipped ? "Save my copy" : form.status === "published" ? "Publish post" : "Save draft"}
               </Button>
             </DialogFooter>
           </form>

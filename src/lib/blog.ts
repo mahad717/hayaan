@@ -127,6 +127,22 @@ export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | n
   }
 }
 
+/** Admin listing — every status, newest activity first, PLUS the code-shipped
+ *  SEO guides so the owner can actually see (and edit) them from the admin
+ *  dashboard. Same shadow rule as the public blog: a DB post with the same
+ *  slug wins, so a saved copy of a guide replaces it in this list too. */
+function mergeAdminPosts(dbPosts: BlogPost[]): BlogPost[] {
+  const db = dbPosts.map((p) => ({ ...p, source: "db" as const }));
+  const dbSlugs = new Set(db.map((p) => p.slug));
+  const shipped = SEO_POSTS.filter((p) => !dbSlugs.has(p.slug)).map((p) => ({
+    ...p,
+    source: "shipped" as const,
+  }));
+  return [...db, ...shipped].sort(
+    (a, b) => new Date(b.updatedAt ?? b.publishedAt ?? 0).getTime() - new Date(a.updatedAt ?? a.publishedAt ?? 0).getTime(),
+  );
+}
+
 /** Admin listing — every status, newest activity first. */
 export async function listAllPosts(): Promise<{ posts: BlogPost[]; tableMissing: boolean }> {
   if (isSupabaseServerEnabled) {
@@ -137,10 +153,12 @@ export async function listAllPosts(): Promise<{ posts: BlogPost[]; tableMissing:
       .order("updated_at", { ascending: false })
       .limit(200);
     if (error) {
-      if (isMissingTableError(error)) return { posts: [], tableMissing: true };
+      // Shipped guides still show so the owner sees the blog content even
+      // before the setup SQL runs (POST copies fail with the 409 hint).
+      if (isMissingTableError(error)) return { posts: mergeAdminPosts([]), tableMissing: true };
       throw new Error(error.message);
     }
-    return { posts: (data ?? []).map(rowToPost), tableMissing: false };
+    return { posts: mergeAdminPosts((data ?? []).map(rowToPost)), tableMissing: false };
   }
 
   try {
@@ -148,9 +166,9 @@ export async function listAllPosts(): Promise<{ posts: BlogPost[]; tableMissing:
       orderBy: { updatedAt: "desc" },
       take: 200,
     });
-    return { posts: posts.map(rowToPost), tableMissing: false };
+    return { posts: mergeAdminPosts(posts.map(rowToPost)), tableMissing: false };
   } catch (err: any) {
-    if (isMissingTableError(err)) return { posts: [], tableMissing: true };
+    if (isMissingTableError(err)) return { posts: mergeAdminPosts([]), tableMissing: true };
     throw err;
   }
 }
