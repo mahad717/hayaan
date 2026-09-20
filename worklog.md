@@ -1669,3 +1669,21 @@ Stage Summary:
 - hayaan.co is now AEO-ready end to end: AI crawlers explicitly welcome, machine-readable brand+catalog index (llms.txt / llms-full.txt), and question-shaped content with matching FAQPage/HowTo schema on the pages that matter for "buy X in Somalia" prompts. Homepage FAQPage schema mirrors the visible footer FAQ.
 - Owner-side AEO follow-ups (from the course doc, not codeable here): GA4 AI-referral channel group; run the brand-gap prompt pack in ChatGPT/Perplexity/AI Overviews; pursue third-party mentions (Tier 3: Wikipedia/Reddit/YouTube, local directories); resubmit sitemap in Search Console so the FAQ-enriched pages are re-crawled.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
+
+---
+Task ID: 78
+Agent: Super Z (main)
+Task: User-reported UI bug — "the FAQ is in the footer wrong position" (screenshots provided)
+
+Work Log:
+- Root cause: Task 77 embedded the site-wide FAQ block INSIDE footer.tsx, so it rendered site-wide directly above the footer link columns on every page (home, product, checkout, category, blog).
+- Fix (commit 6cf747e): removed the FAQ block from footer.tsx (and its SITE_FAQS import); moved the site-wide Q&A into the homepage content flow — a FaqSection rendered in StorefrontApp's home view right after the product grid, light-themed, with the same bilingual title key (ft.faqTitle). Homepage FAQPage JSON-LD in page.tsx still matches visible content on the same page; category pages and blog guides keep their own in-content FAQs; comments updated to reflect the new location.
+- bun run build OK (all routes compile). Linear-history check (FETCH_HEAD ancestor of HEAD) passed; pushed 17ea8e6..6cf747e; Cloudflare deploy confirmed via content-hash chunk marker (new chunks appeared on poll #4).
+- Live verification (fresh HTML, cache-busted): homepage has exactly 1 FaqSection inside <main> and 0 FAQ inside <footer>; FAQPage JSON-LD still present on homepage/category/guides; footer-faq remnant gone on home + category + guide pages.
+- DOM assertions via agent-browser: homepage faq-heading inMain=true inFooter=false; category faqInMain=true faqInFooter=false footerHasFaqText=false.
+- Evidence screenshots saved to download/: task78-homepage-faq-in-content.png, task78-homepage-footer-clean.png, task78-category-footer-clean.png.
+- Tooling notes for future tasks: on this chrome build, main-thread CDP commands (Runtime.evaluate/DOM.getDocument) hang while the SPA hydrates — settle ~20s after load event first, then evaluate returns in ms; Emulation.setDeviceMetricsOverride makes Page.captureScreenshot fail with "Internal error"; agent-browser CLI is the reliable path for live screenshots.
+
+Stage Summary:
+- Site-wide buyer FAQ no longer renders inside the footer on every page; it is now a proper homepage content section (only on the home view), keeping FAQPage schema/visible-content agreement. Footer restored to columns-only layout site-wide.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
