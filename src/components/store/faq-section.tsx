@@ -1,7 +1,8 @@
 // Visible FAQ block for AEO (Task 77). Server-renderable (no client hooks):
 // answer engines and crawlers see the full question/answer text in the HTML,
 // which is what FAQPage structured data requires (markup must match visible
-// content). Used by the footer (site-wide), category pages and blog guides.
+// content). Used by the homepage (site-wide Q&A), category pages and blog
+// guides.
 
 import type { FaqEntry } from "@/lib/faq";
 

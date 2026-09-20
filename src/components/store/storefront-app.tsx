@@ -14,6 +14,8 @@ import { AccountView } from "@/components/store/account-view";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
 import { Footer } from "@/components/store/footer";
+import { FaqSection } from "@/components/store/faq-section";
+import { SITE_FAQS } from "@/lib/faq";
 import { LeadPopup } from "@/components/store/lead-popup";
 import { WhatsAppButton } from "@/components/store/whatsapp-button";
 import { useLang } from "@/components/store/language-provider";
@@ -125,6 +127,7 @@ export function StorefrontApp({
 
   // Session (user + cart) bootstrap — shared with the SSR route shells.
   useStoreBootstrap();
+  const { t } = useLang();
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -137,6 +140,17 @@ export function StorefrontApp({
               document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
             }} />
             <ProductGrid initialProducts={initialProducts} initialCategories={initialCategories} />
+            {/* AEO (Task 77, repositioned): the site-wide buyer questions live
+                here in the homepage content flow — not inside the footer, where
+                they rendered on every page directly above the link columns.
+                This keeps the homepage FAQPage JSON-LD matched with visible
+                answers on the same page. Static markup, so SSR HTML carries the
+                full Q&A text for crawlers and answer engines. */}
+            <FaqSection
+              faqs={SITE_FAQS}
+              title={t("ft.faqTitle")}
+              className="mx-auto max-w-7xl px-4 pb-16 sm:px-6"
+            />
           </>
         )}
         {view === "product" && <ProductDetail />}

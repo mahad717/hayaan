@@ -53,8 +53,9 @@ export default async function Page({
     <>
       <CatalogItemList products={initialProducts ?? []} />
       {/* AEO (Task 77): FAQPage structured data for the site-wide questions.
-          The matching VISIBLE answers render in the footer FAQ block, so
-          markup and page content agree as answer engines expect. */}
+          The matching VISIBLE answers render in the homepage FAQ section
+          (below the catalog, inside StorefrontApp's home view), so markup
+          and page content agree as answer engines expect. */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
