@@ -1625,3 +1625,23 @@ Work Log:
 Stage Summary:
 - Future agents: anon-key REST reads (categories, products, blog_posts) and password-grant auth (owner creds) now work from the sandbox via .env. SUPABASE_SERVICE_ROLE_KEY is still NOT available locally — admin writes from the sandbox remain impossible unless the owner supplies it or approves SQL run in the dashboard.
 - Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; password-signup users-row upsert; Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
+
+---
+Task ID: 76
+Agent: Super Z (main)
+Task: Owner supplied SUPABASE_SERVICE_ROLE_KEY after Task 75-b offer ("fix unpriced items / accounting migration directly")
+
+Work Log:
+- Key stored ONLY in gitignored .env as SUPABASE_SERVICE_ROLE_KEY (exact name src reads). Never echoed into repo, worklog, or commits. No code/wrangler change needed (production already has it as a Worker secret).
+- scripts/task76-probe.mjs (read-only audit with the key): 13 auth users, ZERO orphans (every auth user has a public.users row); migration status probed via REST column/table checks.
+- STALE FOLLOW-UPS CLOSED — all three long-standing "owner action required" items are already resolved on live:
+  (1) 2026-09-11-accounting.sql APPLIED: orders has discount/tax/shipping/refund columns; product_costs (has live unit_cost rows), order_item_costs, payments, accounting_audit, inventory_movements, ledger_entries all exist. (Earlier probe "42703" was my wrong column guess — product_costs PK is product_id, not id.)
+  (2) 14 unpriced Sanguni items RESOLVED: catalog source has 0 unpriced dicts; production has 96 products, 0 missing/zero price.
+  (3) password-signup users-row upsert ALREADY IN CODE (signup route upserts public.users since the Supabase branch) — zero orphans confirms it.
+  Also confirmed applied: profile-address, sifalo-payments, deals-type, dropshipping, catalog-categories, leads, blog-posts, health-supplements migrations. ALL 9 migrations are live.
+- scripts/task76-cleanup.mjs (guarded: KEEP set + per-account orders check + dry-run default): deleted 10 order-free test accounts (hayaan.task74 + 8 task63 + 2 task63dbg) with their carts/cart_items/users rows/auth users. customer@shop.demo KEPT (holds 29 Task 49-56 test orders that populate the admin Orders tab — owner can delete later if wanted). gabeyre80@gmail.com (owner) and baashaalecade@gmail.com (real customer) untouched.
+- Post-check: exactly 3 auth users remain. SECURITY: anon key gets 401 permission-denied on product_costs AND payments while service key reads 200 — the RLS deny-all design on cost data is verified live.
+
+Stage Summary:
+- Sandbox now has full admin read/write over live Supabase (auth admin + REST) via .env; future tasks no longer need owner-side SQL pastes for data ops (DDL still needs dashboard/DB password, but all 9 migrations are applied so none pending).
+- Remaining open follow-ups: Zoho DKIM+DMARC DNS, RESEND_API_KEY, Somali translation pass, optional stock/photo enrichment, customer@shop.demo cleanup decision.
