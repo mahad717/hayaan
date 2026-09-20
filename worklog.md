@@ -1522,3 +1522,29 @@ Stage Summary:
 - Selecting existing lines and clicking Bullet/Numbered now reliably produces ONE clean list (all highlighted lines become items, bullets visibly indented), clicking again removes it, and switching bullet<->numbered keeps a single list. The owner's multivitamin product already displays correctly on the live PDP; opening it in Admin -> Edit shows the healed structure too (prefill runs the sanitizer), and Saving once rewrites the stored HTML clean for good.
 - No schema/API changes; sanitizer hardening is backward compatible (idempotent, no-op on well-formed descriptions).
 - Follow-ups unchanged: run 2026-09-18-dropshipping.sql if not yet run; accounting migration; signup users-row upsert fix; Google provider (Task 43); Zoho DKIM+DMARC; RESEND_API_KEY. (Health Supplements SQL from Task 68 appears RUN on live — the multivitamin product shows the HEALTH SUPPLEMENTS breadcrumb.)
+
+---
+Task ID: 72
+Agent: Super Z (main)
+Task: "can we further improve seo" — SEO hardening pass over the storefront
+
+Work Log:
+- Audit of live site + code found 6 gaps: (1) stale public/robots.txt SHADOWED the dynamic robots.ts on Cloudflare static assets — live robots.txt had NO Disallow for /admin,/api,/payment and NO Sitemap line; (2) zero crawlable category URLs (BreadcrumbList JSON-LD pointed at #hash dead ends); (3) PDP og meta lacked product signals; (4) footer "Shop" column was dead unlinked text (Featured/Top rated/Gifts were cursor-pointer spans); (5) default Next 404 (unbranded, double title); (6) no ItemList JSON-LD on the homepage catalog.
+- DELETED public/robots.txt — the dynamic src/app/robots.ts (Disallow /admin,/api,/payment + Sitemap: line) now actually serves. This is the root-cause fix for why Task 28's robots never went live.
+- products-server.ts: getCategoryBySlug + listProductsByCategorySlug (Supabase categories!inner filter + Prisma where category.slug), both decodeURIComponent'd.
+- NEW /category/[slug] SSR page (force-dynamic): generateMetadata (title "{Category} — shop online in Somalia", description from DB or generated, canonical, OG/Twitter), JSON-LD @graph CollectionPage + ItemList (position/name/url per product) + BreadcrumbList, visible "Shop > {Category}" breadcrumb nav, H1, catpage.shopFrom blurb, product count, full SSR ProductCard grid, "Browse other categories" pill links to every other category, notFound for unknown slugs, cookie-lang SSR (EN/SO via CATEGORY_SO).
+- PDP: visible category label is now a real Link to /category/{slug}; JSON-LD BreadcrumbList item URL #slug -> /category/slug; added product:price:amount + product:price:currency meta via metadata.other. NOTE: Next 16 THROWS "Invalid OpenGraph type: product" at runtime (found in dev.log — head metadata was silently dropped) so og:type stays "website"; the price meta carries the product signal (FB/WhatsApp parsers accept name= or property=).
+- Homepage: CatalogItemList JSON-LD (position/name/url per SSR product) rendered from page.tsx.
+- Footer: dead items replaced with real links — "Shop all products" -> /, plus up to 7 category links -> /category/{slug} (client fetch of /api/categories, graceful fallback to static entries on failure; first version missed the {categories:[...]} wrapper, fixed).
+- sitemap.ts: /category/[slug] entries (priority 0.7 weekly) added before products.
+- NEW not-found.tsx: branded "This page wandered off the map" 404 with Back to the shop / Current deals / Shopping guides recovery links, robots noindex.
+- dictionary.ts: catpage.count/countOne/browse/shopFrom/inStockOnly keys (EN + SO in sync).
+- E2E (scripts/verify-seo-e2e.mjs) 34/34 local: robots 4 checks, category page 10, unknown category 404, PDP meta 6, homepage ItemList 2, branded 404 4, sitemap 2.
+- CDP visual (scripts/verify-seo-cdp.mjs) local: category page (h1/9 cards/3 pills/ItemList+Breadcrumb LD/visible breadcrumb/title), PDP (/category/apparel link), 404 (headline + 3 recovery links) — 0 console exceptions. Screenshots download/task72-{category-apparel,pdp-category-link,branded-404}.png.
+- Build pass; remote had Task 71 commit 5545404 landed between sessions -> rebased (fcfc775), linear verified, push 5545404..fcfc775.
+- Deploy: content-hash chunk 0semlxi287im_.js probed, LIVE at poll 6 (~90s). Live verify (scripts/verify-seo-live.mjs) 20/21 — the 1 "FAIL" is an assertion artifact ("Computers & TV" HTML-escapes to &amp; in <title>; title is correct). Live CDP screenshots: download/task72-live-category-apparel.png (Computers & TV page, 22 SSR products), task72-live-pdp-category-link.png (multivitamines PDP -> /category/health-supplements), task72-live-branded-404.png.
+
+Stage Summary:
+- SEO pass LIVE: crawlable /category/[slug] landing pages with ItemList+BreadcrumbList structured data are deployed for all 5 live categories; robots.txt now actually blocks /admin,/api,/payment from crawlers and declares the sitemap (this had silently regressed); PDP breadcrumbs (visible + JSON-LD) point at real category URLs; product:price meta exposed for share/catalog scrapers; homepage ships an ItemList over the catalog; footer gives every page crawlable category links; 404s are branded with recovery paths.
+- Owner follow-ups worth knowing: submit https://hayaan.co/sitemap.xml + the category URLs in Google Search Console for faster re-crawl; og:type=product is unsupported by Next 16 metadata (price meta covers the gap).
+- Follow-ups unchanged: accounting migration 2026-09-11; 14 unpriced items; Google provider (Task 43); signup users-row upsert fix; Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
