@@ -1687,3 +1687,25 @@ Work Log:
 Stage Summary:
 - Site-wide buyer FAQ no longer renders inside the footer on every page; it is now a proper homepage content section (only on the home view), keeping FAQPage schema/visible-content agreement. Footer restored to columns-only layout site-wide.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
+
+---
+Task ID: 79
+Agent: Super Z (main)
+Task: (a) FAQ bug — expanding a question also visually expands the parallel one; (b) replace "pay securely through Sifalo Pay" copy with "pay securely through EVC Plus, Edahab, and Card" everywhere
+
+Work Log:
+- Root cause of the expand bug: CSS grid default align-items:stretch — the closed sibling card stretched to the opened card's row height and looked expanded. Fixed with items-start on the FaqSection grid (covers homepage, category pages, blog guides).
+- Payment copy sweep (commit 508bdde), customer-facing only:
+  * faq.ts: all 6 Sifalo Pay answer mentions -> EVC Plus, Edahab, and/or Card (FAQPage JSON-LD follows the same data).
+  * dictionary.ts EN+SO: hero.reassure2, catpage.shopFrom, co.redirectTitle ("Redirecting to secure checkout…"), co.how, co.processedBy ("our secure payment partner"), co.payButton ("Pay {amount} securely"), co.secureNote ("Secure checkout · EVC Plus, Edahab & Card"), ord.verifyError, sf.checking.
+  * checkout.tsx: order-summary pay method + payment option label -> "EVC Plus · Edahab · Card".
+  * Neutralized processor-named error strings (use-store, sifalo.ts, api/payments/sifalo route).
+  * SEO surfaces: layout meta+OG, category-seo.ts (5 descriptions), category page fallback meta, llms.txt (3 spots incl. Policies), llms-full.txt.
+  * blog-seo-posts.ts: ~18 mentions across all five guides; FAQ "Is Sifalo Pay safe for online orders?" -> "Is paying online safe in Somalia?"; HowTo step renamed.
+  * Sifalo references intentionally kept in code comments, API internals, route paths and /api/diag (technical health endpoint).
+- Build OK; linear push 3232ae4..508bdde; deploy confirmed via chunk marker (poll #5).
+- Live verification: homepage HTML has 15x EVC Plus / 0x Sifalo Pay; FAQPage JSON-LD carries the new answer text; llms.txt + llms-full.txt updated; blog guide 30x EVC Plus / 0x Sifalo Pay; category meta shows "secure EVC Plus, Edahab & card checkout"; computed grid align-items=flex-start live; expanded-question screenshot shows sibling no longer stretched (download/task79-faq-expand-fix.png).
+
+Stage Summary:
+- FAQ cards keep natural heights when one is opened; payment messaging now leads with EVC Plus, Edahab, and Card everywhere the customer looks (storefront, checkout, SEO/AEO surfaces, guides) while the Sifalo processor stays invisible behind the secure hosted checkout.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
