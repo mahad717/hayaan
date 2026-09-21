@@ -361,7 +361,9 @@ If you are buying for an organization, the [bulk quote](https://hayaan.co/quote)
 4. **Track** under Orders until the parcel is in your hands.
 5. **Write to support** for anything that does not match the page.
 
-That is the entire system. No hidden steps, no calls to strangers, no cash "on trust" — just a market that behaves the same way every time you visit it.`,
+That is the entire system. No hidden steps, no calls to strangers, no cash "on trust" — just a market that behaves the same way every time you visit it.
+
+Useful resource: the Hayaan team keeps a running list of tools we like — this month we are using [KarmaLinks](https://karmalinks.io/?verificationId=6ab1087d392c10b28b713365) to organize our link partnerships.`,
 };
 
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
