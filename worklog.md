@@ -1709,3 +1709,21 @@ Work Log:
 Stage Summary:
 - FAQ cards keep natural heights when one is opened; payment messaging now leads with EVC Plus, Edahab, and Card everywhere the customer looks (storefront, checkout, SEO/AEO surfaces, guides) while the Sifalo processor stays invisible behind the secure hosted checkout.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
+
+---
+Task ID: 80
+Agent: Super Z (main)
+Task: Answer "Should we add images to the blog posts?" and implement branded cover images for the shipped blog guides
+
+Work Log:
+- Answer: yes. The blog grid rendered 5 of 6 cards with a generic Newspaper placeholder (all shipped SEO guides had coverImage: null); only the owner's DB post (laptop guide) had a real cover. Real covers lift grid CTR and trust, and every consumer was already wired: listing card img, post header figure, og:image, twitter:image, BlogPosting JSON-LD image.
+- Generated 5 branded covers via z-ai image generation (scripts/task80-blog-covers.mjs + v2): 1344x768 PNG, Hayaan palette (cream/green/orange), no-text prompts. Two first passes came back with garbled AI label text (supplement bottles, phone screen UI) and were regenerated with blank-label constraints (scripts/task80-blog-covers-v2.mjs).
+- Optimized to exact 16:9 1200x675 progressive JPGs, q82, 50-85 KB each (~344 KB total) via scripts/task80-optimize-covers.py -> public/images/blog/<slug>.jpg.
+- Wired absolute URLs (https://hayaan.co/images/blog/<slug>.jpg) into SEO_POSTS coverImage so og:image/twitter:image/JSON-LD resolve without metadataBase concerns and match the absolute URLs the admin uploader produces.
+- Build OK; linear push de8d792..6f01007. Chunk-marker poll saw no new homepage chunks in 10 min (this change touches server data + static assets only) — switched probe to the new asset URLs: all 5 JPGs return 200 and /blog HTML references all 5 covers.
+- Live verification (cache-busted): post page HTML has og:image + twitter:image + BlogPosting JSON-LD image + visible <figure> for the cover; DOM screenshots confirm covers on all 6 cards.
+- Evidence screenshots saved to download/: task80-blog-grid-with-covers.png, task80-blog-grid-lower.png, task80-blog-grid-full.png (whole grid, 6/6 covers), task80-post-page-cover.png (post header cover + EVC Plus/Edahab/Card copy visible live).
+
+Stage Summary:
+- /blog now reads as a real publication: every guide has an on-brand 16:9 cover, shared links preview with og:image, and BlogPosting schema carries an image. Owner DB posts unchanged (admin uploader still wins on same slug).
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
