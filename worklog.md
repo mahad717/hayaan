@@ -1727,3 +1727,18 @@ Work Log:
 Stage Summary:
 - /blog now reads as a real publication: every guide has an on-brand 16:9 cover, shared links preview with og:image, and BlogPosting schema carries an image. Owner DB posts unchanged (admin uploader still wins on same slug).
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
+
+---
+Task ID: 81
+Agent: Super Z (main)
+Task: Add KarmaLinks domain-verification backlink to a blog post (https://karmalinks.io/?verificationId=...) per owner request
+
+Work Log:
+- Added a natural closing "Useful resource" paragraph to the online-shopping guide (blog-seo-posts.ts, slug online-shopping-in-somalia-how-it-works): anchor text "KarmaLinks" -> https://karmalinks.io/?verificationId=6ab1087d392c10b28b713365. Markdown-lite renderer emits a followed server-side <a href> (rel="noopener noreferrer", no nofollow) — satisfies backlink verifiers.
+- Build OK; linear push c2dfce2..188517b. Cloudflare Workers Builds check-run: completed/success, Version c54a6964, started 17:20:54Z.
+- DEPLOY PROMOTION STALL: 50 min after build start, live edge still served the previous version (Task 80 covers present, backlink absent; response is cache-control: no-store so this is the worker code, not CDN cache). Re-triggered with empty commit b1ae6b4 -> Version 260753f3, check-run success at 17:48:22Z; still not promoted by 18:11Z. Both versions uploaded successfully but never reached the edge — platform-side stall, needs owner dashboard check (Workers & Pages -> hayaan -> Builds/Deployments, retry or promote latest).
+- Verification URL to use on KarmaLinks once live: https://hayaan.co/blog/online-shopping-in-somalia-how-it-works
+
+Stage Summary:
+- Backlink is in the codebase and built into two uploaded worker versions; blocked only on Cloudflare deployment promotion. Re-probe the post URL and, when the anchor appears, submit the URL on KarmaLinks. No other content changed.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
