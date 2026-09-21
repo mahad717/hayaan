@@ -364,15 +364,18 @@ If you are buying for an organization, the [bulk quote](https://hayaan.co/quote)
 That is the entire system. No hidden steps, no calls to strangers, no cash "on trust" — just a market that behaves the same way every time you visit it.`,
 };
 
-/** Published-at stamps — staggered weekly so the /blog index reads naturally. */
+/** Published-at stamps — staggered weekly so the /blog index reads naturally.
+ *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
+ *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
+ *  without metadataBase rounding-trips. */
 const publishedAt = (iso: string) => iso;
 
 export const SEO_POSTS: BlogPost[] = [
-  { ...post1, coverImage: null, authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-08-24T09:00:00.000Z"), createdAt: "2026-08-24T09:00:00.000Z", updatedAt: "2026-08-24T09:00:00.000Z" },
-  { ...post2, coverImage: null, authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-01T09:00:00.000Z"), createdAt: "2026-09-01T09:00:00.000Z", updatedAt: "2026-09-01T09:00:00.000Z" },
-  { ...post3, coverImage: null, authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-08T09:00:00.000Z"), createdAt: "2026-09-08T09:00:00.000Z", updatedAt: "2026-09-08T09:00:00.000Z" },
-  { ...post4, coverImage: null, authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-14T09:00:00.000Z"), createdAt: "2026-09-14T09:00:00.000Z", updatedAt: "2026-09-14T09:00:00.000Z" },
-  { ...post5, coverImage: null, authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-19T09:00:00.000Z"), createdAt: "2026-09-19T09:00:00.000Z", updatedAt: "2026-09-19T09:00:00.000Z" },
+  { ...post1, coverImage: "https://hayaan.co/images/blog/where-to-buy-electronics-online-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-08-24T09:00:00.000Z"), createdAt: "2026-08-24T09:00:00.000Z", updatedAt: "2026-08-24T09:00:00.000Z" },
+  { ...post2, coverImage: "https://hayaan.co/images/blog/how-to-buy-phones-online-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-01T09:00:00.000Z"), createdAt: "2026-09-01T09:00:00.000Z", updatedAt: "2026-09-01T09:00:00.000Z" },
+  { ...post3, coverImage: "https://hayaan.co/images/blog/buying-health-supplements-online-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-08T09:00:00.000Z"), createdAt: "2026-09-08T09:00:00.000Z", updatedAt: "2026-09-08T09:00:00.000Z" },
+  { ...post4, coverImage: "https://hayaan.co/images/blog/setting-up-a-home-office-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-14T09:00:00.000Z"), createdAt: "2026-09-14T09:00:00.000Z", updatedAt: "2026-09-14T09:00:00.000Z" },
+  { ...post5, coverImage: "https://hayaan.co/images/blog/online-shopping-in-somalia-how-it-works.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-09-19T09:00:00.000Z"), createdAt: "2026-09-19T09:00:00.000Z", updatedAt: "2026-09-19T09:00:00.000Z" },
 ];
 
 
