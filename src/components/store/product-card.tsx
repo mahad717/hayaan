@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Star, Plus, Check, ShoppingBag } from "lucide-react";
+import { Download, Star, Plus, Check, ShoppingBag } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -78,11 +78,20 @@ export function ProductCard({ product }: { product: Product }) {
           loading="lazy"
         />
 
-        {/* Sale badge — Market Orange (the 10% accent) */}
-        {discount > 0 && (
-          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[#f28c28] px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
-            -{discount}%
-          </span>
+        {/* Sale + Digital badges — stacked top-left (Market Orange sale, sage digital) */}
+        {(discount > 0 || product.productType === "digital") && (
+          <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
+            {discount > 0 && (
+              <span className="flex items-center gap-1 rounded-full bg-[#f28c28] px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
+                -{discount}%
+              </span>
+            )}
+            {product.productType === "digital" && (
+              <span className="flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-brand shadow-sm">
+                <Download className="h-3 w-3" aria-hidden /> {t("card.digital")}
+              </span>
+            )}
+          </div>
         )}
 
         {/* Featured badge — subtle, green-tinted */}

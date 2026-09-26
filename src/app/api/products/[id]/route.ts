@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
-import { isMissingSupplierColumns } from "@/lib/supabase/missing-column";
+import { isMissingSupplierColumns, isMissingDigitalColumns } from "@/lib/supabase/missing-column";
 import { sanitizeRichText } from "@/lib/rich-text";
 import {
   upsertProductCost,
@@ -32,6 +32,8 @@ function rowToProduct(row: any): Product {
     tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
     featured: row.featured,
     isActive: row.isActive,
+    // Digital delivery (Task 82) — public shape carries the type only.
+    productType: (row.productType ?? row.product_type ?? "physical") === "digital" ? "digital" : "physical",
     categoryId: row.categoryId ?? row.category_id,
     category: row.category
       ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
@@ -41,11 +43,14 @@ function rowToProduct(row: any): Product {
 
 /**
  * Admin-only PUT response — same shape plus the confidential supplier
- * sourcing fields (the public GET uses plain rowToProduct, which omits them).
+ * sourcing fields and digital delivery fields (the public GET uses plain
+ * rowToProduct, which omits them).
  */
 function adminRowToProduct(row: any): Product {
   return {
     ...rowToProduct(row),
+    digitalUrl: row.digital_url ?? row.digitalUrl ?? null,
+    digitalInstructions: row.digital_instructions ?? row.digitalInstructions ?? null,
     supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
     supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
   };
@@ -117,6 +122,15 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
       await auditChange({ actor: user, entity: "product", entityId: id, field: "price", oldValue: oldPrice, newValue: Number(body.price) });
     }
   }
+  // Digital delivery (Task 82): switching a product to digital requires a
+  // download link — the admin form always sends one for digital saves.
+  const newType = body.productType === "digital" ? "digital" : body.productType === "physical" ? "physical" : undefined;
+  if (newType === "digital" && !body.digitalUrl) {
+    return NextResponse.json(
+      { error: "A digital product needs a download link — upload the file or paste its URL first." },
+      { status: 400 },
+    );
+  }
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
     const update: Record<string, unknown> = {};
@@ -132,6 +146,11 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     if (body.categoryId !== undefined) update.category_id = body.categoryId;
     if (body.supplierUrl !== undefined) update.supplier_url = body.supplierUrl;
     if (body.supplierSku !== undefined) update.supplier_sku = body.supplierSku;
+    // Digital delivery fields (Task 82). Saving a PHYSICAL product always
+    // clears any digital leftovers so the type and the deliverable agree.
+    if (newType !== undefined) update.product_type = newType;
+    if (body.digitalUrl !== undefined) update.digital_url = body.digitalUrl || null;
+    if (body.digitalInstructions !== undefined) update.digital_instructions = body.digitalInstructions || null;
     let { data, error } = await supabase
       .from("products")
       .update(update)
@@ -149,6 +168,26 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
         .eq("id", id)
         .select("*, category:categories(*)")
         .single());
+    }
+    if (error && isMissingDigitalColumns(error)) {
+      // Digital columns not migrated yet (2026-09-21-digital-products.sql) —
+      // save without the digital fields instead of failing the whole update.
+      delete update.product_type;
+      delete update.digital_url;
+      delete update.digital_instructions;
+      ({ data, error } = await supabase
+        .from("products")
+        .update(update)
+        .eq("id", id)
+        .select("*, category:categories(*)")
+        .single());
+      if (!error) {
+        return NextResponse.json({
+          product: adminRowToProduct(data),
+          digitalDropped: true,
+          hint: "Digital columns are not migrated yet — the product saved WITHOUT its digital fields. Run src/lib/supabase/migrations/2026-09-21-digital-products.sql in the Supabase SQL editor, then edit this product.",
+        });
+      }
     }
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ product: adminRowToProduct(data) });
@@ -168,6 +207,9 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
       ...(body.categoryId !== undefined ? { categoryId: body.categoryId } : {}),
       ...(body.supplierUrl !== undefined ? { supplierUrl: body.supplierUrl } : {}),
       ...(body.supplierSku !== undefined ? { supplierSku: body.supplierSku } : {}),
+      ...(newType !== undefined ? { productType: newType } : {}),
+      ...(body.digitalUrl !== undefined ? { digitalUrl: body.digitalUrl || null } : {}),
+      ...(body.digitalInstructions !== undefined ? { digitalInstructions: body.digitalInstructions || null } : {}),
     },
     include: { category: true },
   });

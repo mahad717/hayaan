@@ -25,6 +25,10 @@ function rowToProduct(row: any): Product {
     tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
     featured: row.featured,
     isActive: row.isActive ?? row.is_active,
+    // Digital delivery (Task 82): public payload carries ONLY the type —
+    // digitalUrl/digitalInstructions stay server-side (gated download API).
+    // Pre-migration rows have no product_type → physical (safe default).
+    productType: (row.productType ?? row.product_type ?? "physical") === "digital" ? "digital" : "physical",
     // Supabase rows are snake_case (category_id); Prisma rows are camelCase.
     // Without the fallback every product's categoryId came back undefined and
     // the storefront's category pills filtered EVERYTHING out ("No products
@@ -38,11 +42,14 @@ function rowToProduct(row: any): Product {
 
 /**
  * Admin-only create response — same shape plus the confidential supplier
- * sourcing fields (the public GET uses plain rowToProduct, which omits them).
+ * sourcing fields and the digital delivery fields (the public GET uses plain
+ * rowToProduct, which omits them).
  */
 function adminRowToProduct(row: any): Product {
   return {
     ...rowToProduct(row),
+    digitalUrl: row.digital_url ?? row.digitalUrl ?? null,
+    digitalInstructions: row.digital_instructions ?? row.digitalInstructions ?? null,
     supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
     supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
   };
@@ -117,9 +124,19 @@ export async function POST(req: NextRequest) {
   // Task 69: descriptions may carry formatting HTML from the rich-text editor.
   // Allowlist-sanitize BEFORE persistence so nothing unsafe is ever stored.
   if (typeof body.description === "string") body.description = sanitizeRichText(body.description);
-  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost, supplierUrl, supplierSku } = body;
+  const { name, description, price, compareAt, currency, sku, stock, images, tags, categoryId, featured, cost, supplierUrl, supplierSku, productType, digitalUrl, digitalInstructions } = body;
   if (!name || !description || !price || !categoryId) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  }
+  // Digital delivery (Task 82): a digital product must have something to
+  // deliver — an uploaded private-storage file ("sb://bucket/path") or an
+  // external https link.
+  const type = productType === "digital" ? "digital" : "physical";
+  if (type === "digital" && !digitalUrl) {
+    return NextResponse.json(
+      { error: "A digital product needs a download link — upload the file or paste its URL first." },
+      { status: 400 },
+    );
   }
   // Confidential supplier cost (Task 49). Validated server-side: >= 0, and
   // stored in the RLS-locked product_costs side-car — never on the product
@@ -137,6 +154,10 @@ export async function POST(req: NextRequest) {
       const { data } = await supabase.from("products").select("id").eq("slug", s).limit(1);
       return !!data && data.length > 0;
     });
+    const digitalColumns = {
+      product_type: type,
+      ...(type === "digital" ? { digital_url: digitalUrl, digital_instructions: digitalInstructions ?? null } : {}),
+    };
     let { data, error } = await supabase
       .from("products")
       .insert({
@@ -156,6 +177,7 @@ export async function POST(req: NextRequest) {
         // row; the public GET maps a fixed field list, so these never leak.
         supplier_url: supplierUrl ?? null,
         supplier_sku: supplierSku ?? null,
+        ...digitalColumns,
       })
       .select("*, category:categories(*)")
       .single();
@@ -177,9 +199,41 @@ export async function POST(req: NextRequest) {
           tags: tags ?? [],
           featured: featured ?? false,
           category_id: categoryId,
+          ...digitalColumns,
         })
         .select("*, category:categories(*)")
         .single());
+    }
+    if (error && isMissingDigitalColumns(error)) {
+      // Digital columns not migrated yet (2026-09-21-digital-products.sql) —
+      // save the product as physical instead of failing the whole create.
+      ({ data, error } = await supabase
+        .from("products")
+        .insert({
+          name,
+          slug,
+          description,
+          price,
+          compare_at: compareAt ?? null,
+          currency: currency ?? "USD",
+          sku: sku ?? null,
+          stock: stock ?? 0,
+          images: images ?? [],
+          tags: tags ?? [],
+          featured: featured ?? false,
+          category_id: categoryId,
+          supplier_url: supplierUrl ?? null,
+          supplier_sku: supplierSku ?? null,
+        })
+        .select("*, category:categories(*)")
+        .single());
+      if (!error) {
+        return NextResponse.json({
+          product: adminRowToProduct(data),
+          digitalDropped: true,
+          hint: "Digital columns are not migrated yet — the product saved WITHOUT its digital fields. Run src/lib/supabase/migrations/2026-09-21-digital-products.sql in the Supabase SQL editor, then edit this product.",
+        });
+      }
     }
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     if (costValue != null) {
@@ -212,6 +266,8 @@ export async function POST(req: NextRequest) {
       categoryId,
       supplierUrl: supplierUrl ?? null,
       supplierSku: supplierSku ?? null,
+      productType: type,
+      ...(type === "digital" ? { digitalUrl, digitalInstructions: digitalInstructions ?? null } : {}),
     },
     include: { category: true },
   });

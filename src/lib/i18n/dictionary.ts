@@ -77,6 +77,7 @@ const en = {
 
   // Product card
   "card.featured": "Featured",
+  "card.digital": "Digital",
   "card.add": "Add to cart",
   "card.added": "Added",
   "card.new": "New",
@@ -104,6 +105,8 @@ const en = {
   "pdp.qtyMinus": "Decrease quantity",
   "pdp.qtyPlus": "Increase quantity",
   "pdp.buyNow": "Buy now",
+  "pdp.digitalInstant": "Instant digital delivery — download right after payment",
+  "pdp.digitalReassure": "Instant download — no delivery wait",
   "pdp.imgAria": "View image {n}",
 
   // Cart drawer
@@ -175,6 +178,13 @@ const en = {
   "co.unavailable": "Online payment is temporarily unavailable — please check back soon.",
   "co.payButton": "Pay {amount} securely",
   "co.secureNote": "Secure checkout · EVC Plus, Edahab & Card",
+  // Digital delivery (Task 82)
+  "co.digitalTitle": "Digital delivery",
+  "co.digitalBody": "Nothing to ship — your files are ready to download in Orders the moment your payment is confirmed.",
+  "co.digitalNameNote": "We only need your name (and optionally a phone number) for the receipt.",
+  "co.digitalChip": "Digital",
+  "co.digitalDrawerNote": "Instant download — your files unlock in Orders after payment.",
+  "co.noShipping": "No delivery — instant download",
 
   // Auth modal
   "au.welcomeBack": "Welcome back",
@@ -238,6 +248,11 @@ const en = {
   "ord.orderLabel": "Order {ref}",
   "ord.qty": "Qty {n}",
   "ord.shipTo": "Shipping to",
+  "ord.download": "Download",
+  "ord.digitalLocked": "Unlocks after payment",
+  "ord.digitalOnlyTitle": "Digital order — nothing to ship",
+  "ord.digitalReady": "Your files are ready — use the Download buttons above. They stay available here forever.",
+  "ord.digitalPending": "Your download buttons unlock as soon as payment is confirmed.",
   "ord.payment": "Payment",
   "ord.payStatus": "Payment {status}",
   "ord.checkStatus": "Check payment status",
@@ -441,6 +456,7 @@ const so: Record<DictKey, string> = {
 
   // Product card
   "card.featured": "La muujiyay",
+  "card.digital": "Dijitaal",
   "card.add": "Ku dar gaadhiga",
   "card.added": "La daray",
   "card.new": "Cusub",
@@ -468,6 +484,8 @@ const so: Record<DictKey, string> = {
   "pdp.qtyMinus": "Yaree tirada",
   "pdp.qtyPlus": "Kordhi tirada",
   "pdp.buyNow": "Iibso hadda",
+  "pdp.digitalInstant": "Gudbin dijitaal oo degdeg ah — soo deji bixinta kaddib",
+  "pdp.digitalReassure": "Soo deji degdeg ah — sugitaan gaadhitaan ma jiro",
   "pdp.imgAria": "Fiiri sawirka {n}",
 
   // Cart drawer
@@ -539,6 +557,13 @@ const so: Record<DictKey, string> = {
   "co.unavailable": "Bixinta onlaynka ah hadda si ku meel gaadh ah uma helna — fadlan dib ugu soo noqo.",
   "co.payButton": "Bixi {amount} si ammaan",
   "co.secureNote": "Bixin ammaan · EVC Plus, Edahab & Kaar",
+  // Gudbinta dijitaalka (Task 82)
+  "co.digitalTitle": "Gudbinta dijitaalka",
+  "co.digitalBody": "Wax la soo dirin ma jiro — faylashaaga way diyaar yihiin in laga soo dejiyo bogga Dalabyada marka bixintaadu la xaqiijinto.",
+  "co.digitalNameNote": "Waxaan u baaghanahay magacaaga (iyo telefoon si ikhtiyaari ah) riqeehda.",
+  "co.digitalChip": "Dijitaal",
+  "co.digitalDrawerNote": "Soo deji degdeg ah — faylashaagu way furmayaan bogga Dalabyada bixinta kaddib.",
+  "co.noShipping": "Gaadhitaan lama baahna — soo deji degdeg ah",
 
   // Auth modal
   "au.welcomeBack": "Soo dhawoow",
@@ -603,6 +628,11 @@ const so: Record<DictKey, string> = {
   "ord.orderLabel": "Dalab {ref}",
   "ord.qty": "Tiro {n}",
   "ord.shipTo": "La soo dirayaa",
+  "ord.download": "Soo deji",
+  "ord.digitalLocked": "Waxay furmayso bixinta kaddib",
+  "ord.digitalOnlyTitle": "Dalab dijitaal ah — wax la soo dirin ma jiro",
+  "ord.digitalReady": "Faylashaagu way diyaar yihiin — isticmaal badhamka Soo deji kore. Halkan ayaan kuugu jiri doonaan weligeeyba.",
+  "ord.digitalPending": "Badhamka soo dejintu way furmayaan marka bixinta la xaqiijiyo.",
   "ord.payment": "Bixinta",
   "ord.payStatus": "Bixinta: {status}",
   "ord.checkStatus": "Xaqiiji xaaladda bixinta",

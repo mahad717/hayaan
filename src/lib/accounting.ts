@@ -517,7 +517,7 @@ export async function buildSaleLines(
     if (!supabase) return { lines, subtotalCents };
     const { data: items } = await supabase
       .from("order_items")
-      .select("id, product_id, price, quantity")
+      .select("id, product_id, price, quantity, product:products(product_type)")
       .eq("order_id", orderId);
     const itemIds = (items ?? []).map((i: any) => i.id);
     const snaps = new Map<string, number>();
@@ -533,6 +533,7 @@ export async function buildSaleLines(
         productId: it.product_id,
         quantity: it.quantity,
         unitCost: snaps.has(it.id) ? snaps.get(it.id) ?? null : null,
+        isDigital: (it.product as any)?.product_type === "digital",
       });
       subtotalCents += toCents(it.price) * it.quantity;
     }
@@ -541,7 +542,7 @@ export async function buildSaleLines(
   const db = await getDb();
   const items = await db.orderItem.findMany({
     where: { orderId },
-    select: { id: true, productId: true, price: true, quantity: true },
+    select: { id: true, productId: true, price: true, quantity: true, product: { select: { productType: true } } },
   });
   const itemIds = items.map((i) => i.id);
   const snaps = new Map<string, number>();
@@ -557,6 +558,7 @@ export async function buildSaleLines(
       productId: it.productId,
       quantity: it.quantity,
       unitCost: snaps.has(it.id) ? snaps.get(it.id) ?? null : null,
+      isDigital: it.product.productType === "digital",
     });
     subtotalCents += toCents(it.price) * it.quantity;
   }
@@ -567,6 +569,9 @@ export interface SaleAccountingLine {
   productId: string;
   quantity: number;
   unitCost: number | null; // snapshot; null = cost unknown (historical)
+  // Digital items (Task 82) book revenue/COGS but skip the physical inventory
+  // chain — no stock decrement, no inventory movement.
+  isDigital?: boolean;
 }
 
 export async function applySaleAccounting(params: {
@@ -585,16 +590,20 @@ export async function applySaleAccounting(params: {
 
   // 1) Inventory: decrement + movement per line (movement carries the cost
   //    snapshot so the audit chain is per-unit, not just per-order).
+  //    Digital lines (Task 82) skip the physical inventory chain entirely —
+  //    there is no stock to decrement and no movement to audit.
   let cogsCents = 0;
   for (const line of params.lines) {
-    await decrementStock(line.productId, line.quantity);
-    await insertMovement({
-      productId: line.productId,
-      orderId: params.orderId,
-      movementType: "sale",
-      quantityDelta: -line.quantity,
-      unitCost: line.unitCost,
-    });
+    if (!line.isDigital) {
+      await decrementStock(line.productId, line.quantity);
+      await insertMovement({
+        productId: line.productId,
+        orderId: params.orderId,
+        movementType: "sale",
+        quantityDelta: -line.quantity,
+        unitCost: line.unitCost,
+      });
+    }
     if (line.unitCost != null) cogsCents += toCents(line.unitCost) * line.quantity;
   }
 

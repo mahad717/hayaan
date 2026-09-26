@@ -83,3 +83,38 @@ export function computeShipping(subtotal: number, city: string | null | undefine
   if (subtotal >= FREE_SHIPPING_THRESHOLD) return 0;
   return districtFee(city) ?? OUTSIDE_MOGADISHU_FEE;
 }
+
+// --- Digital-aware shipping (Task 82) -------------------------------------
+
+export interface CartShippingItem {
+  productType?: string | null; // "physical" (default) | "digital"
+  price: number;
+  quantity: number;
+}
+
+/** True when the cart holds at least one physical item (default when the
+ *  product_type column is missing — pre-migration rows are physical). */
+export function hasPhysicalItems(items: CartShippingItem[]): boolean {
+  return items.some((it) => (it.productType ?? "physical") !== "digital");
+}
+
+/** Subtotal of PHYSICAL items only — digital goods never count toward the
+ *  free-shipping threshold (a $90 ebook cart still pays district delivery
+ *  for a $10 cable in a mixed cart; digital-only carts pay nothing). */
+export function physicalSubtotal(items: CartShippingItem[]): number {
+  return items
+    .filter((it) => (it.productType ?? "physical") !== "digital")
+    .reduce((sum, it) => sum + it.price * it.quantity, 0);
+}
+
+/**
+ * Cart-level shipping: digital-only carts ship free (no address needed);
+ * mixed/physical carts are charged on the physical subtotal exactly like the
+ * pre-digital rules. Used by the cart drawer estimate, the checkout summary
+ * AND the Sifalo order creator (authoritative charge) so the displayed and
+ * charged amounts can never drift apart.
+ */
+export function computeCartShipping(items: CartShippingItem[], city: string | null | undefined): number {
+  if (!hasPhysicalItems(items)) return 0;
+  return computeShipping(physicalSubtotal(items), city);
+}

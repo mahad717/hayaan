@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Package, ChevronLeft, RefreshCw, Clock3, XCircle, Loader2 } from "lucide-react";
+import { Download, Package, ChevronLeft, RefreshCw, Clock3, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,12 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
   delivered: "bg-[#3f7d4a]/15 text-[#3f7d4a]",
   cancelled: "bg-destructive/10 text-destructive",
 };
+
+// Payment collected → digital downloads unlock (gateway state counts too:
+// a Sifalo order can be paid while still awaiting the status flip).
+function orderIsCollected(o: Order): boolean {
+  return ["paid", "shipped", "delivered"].includes(o.status) || o.paymentStatus === "paid";
+}
 
 export function OrdersView() {
   const { user, setView, setAuthOpen, bootReady } = useStore();
@@ -170,12 +176,38 @@ export function OrdersView() {
                       <div className="flex-1">
                         <p className="font-medium leading-tight">{it.name}</p>
                         <p className="text-xs text-muted-foreground">{t("ord.qty", { n: it.quantity })}</p>
+                        {it.isDigital && it.digitalInstructions && (
+                          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{it.digitalInstructions}</p>
+                        )}
                       </div>
+                      {it.isDigital && orderIsCollected(o) && (
+                        <a
+                          href={`/api/digital/download?item=${encodeURIComponent(it.id)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-dark"
+                        >
+                          <Download className="h-3.5 w-3.5" /> {t("ord.download")}
+                        </a>
+                      )}
+                      {it.isDigital && !orderIsCollected(o) && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#fef1de] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#c87b1f]">
+                          <Clock3 className="h-3 w-3" /> {t("ord.digitalLocked")}
+                        </span>
+                      )}
                       <span className="text-sm">{formatPrice(it.price * it.quantity, o.currency)}</span>
                     </li>
                   ))}
                 </ul>
                 <Separator />
+                {o.items.length > 0 && o.items.every((it) => it.isDigital) ? (
+                  <div className="rounded-lg border border-brand/25 bg-[#eef5ec] px-4 py-3 text-xs leading-relaxed text-brand-dark">
+                    <p className="flex items-center gap-1.5 font-semibold">
+                      <Download className="h-3.5 w-3.5" /> {t("ord.digitalOnlyTitle")}
+                    </p>
+                    <p className="mt-1">{orderIsCollected(o) ? t("ord.digitalReady") : t("ord.digitalPending")}</p>
+                  </div>
+                ) : (
                 <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground">
                   <div>
                     <p className="font-medium text-foreground">{t("ord.shipTo")}</p>
@@ -220,6 +252,7 @@ export function OrdersView() {
                     </div>
                   </div>
                 </div>
+                )}
               </CardContent>
             </Card>
           ))}

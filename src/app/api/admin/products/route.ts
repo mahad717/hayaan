@@ -11,11 +11,16 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { requireAdminUser, isMissingAccountingSchema, accountingUnavailableResponse } from "@/lib/accounting";
 
-/** Supplier sourcing fields (Task 65) — admin-only, same confidentiality as cost. */
-function supplierFields(row: { supplier_url?: string | null; supplier_sku?: string | null; supplierUrl?: string | null; supplierSku?: string | null }) {
+/** Supplier sourcing (Task 65) + digital delivery (Task 82) fields — admin-only, same confidentiality as cost. */
+function supplierFields(row: {
+  supplier_url?: string | null; supplier_sku?: string | null; supplierUrl?: string | null; supplierSku?: string | null;
+  digital_url?: string | null; digital_instructions?: string | null; digitalUrl?: string | null; digitalInstructions?: string | null;
+}) {
   return {
     supplierUrl: row.supplier_url ?? row.supplierUrl ?? null,
     supplierSku: row.supplier_sku ?? row.supplierSku ?? null,
+    digitalUrl: row.digital_url ?? row.digitalUrl ?? null,
+    digitalInstructions: row.digital_instructions ?? row.digitalInstructions ?? null,
   };
 }
 
@@ -61,6 +66,7 @@ export async function GET(req: NextRequest) {
         tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
         featured: row.featured,
         isActive: row.is_active,
+        productType: (row.product_type ?? "physical") === "digital" ? "digital" : "physical",
         categoryId: row.category_id,
         category: row.category
           ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
@@ -94,6 +100,7 @@ export async function GET(req: NextRequest) {
       tags: p.tags ? JSON.parse(p.tags) : [],
       featured: p.featured,
       isActive: p.isActive,
+      productType: p.productType === "digital" ? "digital" : "physical",
       categoryId: p.categoryId,
       category: p.category
         ? { id: p.category.id, name: p.category.name, slug: p.category.slug, description: p.category.description ?? null }

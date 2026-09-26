@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
+import { ChevronLeft, Download, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -209,6 +209,11 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             <h1 className="mt-2 text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">
               {product.name}
             </h1>
+            {product.productType === "digital" && (
+              <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#eef5ec] px-3 py-1.5 text-xs font-semibold text-brand">
+                <Download className="h-3.5 w-3.5" aria-hidden /> {t("pdp.digitalInstant")}
+              </p>
+            )}
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
               <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
               <span aria-label={product.rating ? t("card.ratedAria", { r: product.rating }) : t("pdp.unrated")}>
@@ -265,21 +270,23 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             </div>
           )}
 
-          <div className="flex items-center gap-2 text-sm">
-            <span
-              className={cn(
-                "h-2 w-2 rounded-full",
-                product.stock > 0 ? "bg-[#3f7d4a]" : "bg-destructive",
-              )}
-            />
-            <span className="text-muted-foreground">
-              {product.stock > 5
-                ? t("pdp.stock", { n: product.stock })
-                : product.stock > 0
-                  ? t("pdp.lowStock", { n: product.stock })
-                  : t("pdp.out")}
-            </span>
-          </div>
+          {product.productType !== "digital" && (
+            <div className="flex items-center gap-2 text-sm">
+              <span
+                className={cn(
+                  "h-2 w-2 rounded-full",
+                  product.stock > 0 ? "bg-[#3f7d4a]" : "bg-destructive",
+                )}
+              />
+              <span className="text-muted-foreground">
+                {product.stock > 5
+                  ? t("pdp.stock", { n: product.stock })
+                  : product.stock > 0
+                    ? t("pdp.lowStock", { n: product.stock })
+                    : t("pdp.out")}
+              </span>
+            </div>
+          )}
 
           {/* Quantity + actions */}
           <div className="flex flex-wrap items-center gap-3">
@@ -330,12 +337,19 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             </Button>
           </div>
 
-          {/* Reassurance row */}
+          {/* Reassurance row — digital products swap the delivery promise */}
           <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm font-original sm:grid-cols-3">
-            <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 text-brand" />
-              {t("hero.badge")}
-            </div>
+            {product.productType === "digital" ? (
+              <div className="flex items-center gap-2">
+                <Download className="h-4 w-4 text-brand" />
+                {t("pdp.digitalReassure")}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Truck className="h-4 w-4 text-brand" />
+                {t("hero.badge")}
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-brand" />
               {t("hero.reassure2")}

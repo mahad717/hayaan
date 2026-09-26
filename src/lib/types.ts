@@ -25,6 +25,8 @@ export interface Category {
   description?: string | null;
 }
 
+export type ProductType = "physical" | "digital";
+
 export interface Product {
   id: string;
   name: string;
@@ -43,6 +45,16 @@ export interface Product {
   isActive: boolean;
   categoryId: string;
   category?: Category;
+  // Digital delivery (Task 82): digital products skip shipping entirely and
+  // unlock a download link once the order is paid. The public product API
+  // maps ONLY productType — digitalUrl/digitalInstructions never leave the
+  // server except through the gated /api/digital/download endpoint.
+  productType: ProductType;
+  // Admin-only fields (same confidentiality model as supplier data): the
+  // download URL can be an external https link or an "sb://<bucket>/<path>"
+  // reference to a private Supabase Storage object (signed at download time).
+  digitalUrl?: string | null;
+  digitalInstructions?: string | null;
   // Dropshipping sourcing (Task 65) — admin-only fields; the public product
   // API never maps them, so customers never see supplier data.
   supplierUrl?: string | null;
@@ -70,6 +82,11 @@ export interface OrderItem {
   price: number;
   quantity: number;
   image?: string | null;
+  // True when the snapshot product was a digital download (drives the
+  // Download button in Orders). Resolved server-side via a product join —
+  // the download URL itself is never on the order item.
+  isDigital?: boolean;
+  digitalInstructions?: string | null;
 }
 
 export interface Order {

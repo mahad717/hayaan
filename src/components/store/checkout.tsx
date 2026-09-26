@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronLeft, CreditCard, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
+import { ChevronLeft, CreditCard, Download, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
-import { MOGADISHU_DISTRICTS, findDistrict, computeShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
+import { MOGADISHU_DISTRICTS, findDistrict, computeShipping, computeCartShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -98,13 +98,19 @@ export function Checkout() {
   const savedAddress = !!(user?.address && user?.city);
 
   const subtotal = cartTotal(cart);
+  // Digital delivery (Task 82): a cart with ONLY digital products needs no
+  // address, no district, and no delivery fee — files unlock in Orders the
+  // moment payment is confirmed.
+  const digitalOnly = cart.items.length > 0 && cart.items.every((it) => it.product.productType === "digital");
   // District-based delivery: priced Mogadishu district → its fee; typed other
   // city → flat outside fee; free over the threshold. While nothing is picked
   // the summary shows a hint instead of a number (and Pay stays disabled).
   const districtMatch = districtChoice && districtChoice !== OTHER_CITY ? findDistrict(districtChoice) : null;
   const otherCityKnown = districtChoice === OTHER_CITY && form.city.trim().length > 0;
-  const shippingKnown = subtotal >= FREE_SHIPPING_THRESHOLD || !!districtMatch || otherCityKnown;
-  const shipping = computeShipping(subtotal, districtMatch?.name ?? (otherCityKnown ? form.city : ""));
+  // Mixed carts are charged on the PHYSICAL subtotal only (computeCartShipping),
+  // matching the Sifalo order creator exactly.
+  const shippingKnown = digitalOnly || subtotal >= FREE_SHIPPING_THRESHOLD || !!districtMatch || otherCityKnown;
+  const shipping = digitalOnly ? 0 : computeCartShipping(cart.items, districtMatch?.name ?? (otherCityKnown ? form.city : ""));
   // No tax/VAT: the total is exactly what the customer pays — subtotal + delivery.
   const total = subtotal + (shippingKnown ? shipping : 0);
 
@@ -233,7 +239,7 @@ export function Checkout() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!districtChoice || (districtChoice === OTHER_CITY && !form.city.trim())) {
+    if (!digitalOnly && (!districtChoice || (districtChoice === OTHER_CITY && !form.city.trim()))) {
       toast(t("co.pickDistrictToast"), "error");
       return;
     }
@@ -241,9 +247,24 @@ export function Checkout() {
     try {
       // Real money: create a pending order, then hand off to Sifalo Pay's
       // hosted checkout. The order status flips to paid on the return page
-      // after server-side verification.
-      const finalCity = districtChoice === OTHER_CITY ? form.city.trim() : districtChoice;
-      const payment = await startSifaloPayment({ ...form, city: finalCity });
+      // after server-side verification. Digital-only carts record delivery
+      // placeholders — nothing physical ships.
+      const finalCity = digitalOnly
+        ? form.city.trim() || "Digital"
+        : districtChoice === OTHER_CITY
+          ? form.city.trim()
+          : districtChoice;
+      const payment = await startSifaloPayment({
+        ...form,
+        city: finalCity,
+        ...(digitalOnly
+          ? {
+              address: form.address.trim() || "Digital delivery — no shipping",
+              zip: form.zip.trim() || "0000",
+              country: form.country.trim() || "Somalia",
+            }
+          : {}),
+      });
       // Swap to the full-screen redirect view BEFORE navigating, and do NOT
       // touch the client cart here — the server already emptied it when the
       // order was created, and clearing it now would repaint the empty-cart
@@ -286,7 +307,20 @@ export function Checkout() {
       <form onSubmit={submit} className="mt-6 grid gap-8 lg:grid-cols-[1fr_380px]">
         {/* Left column: forms */}
         <div className="flex flex-col gap-6">
-          {/* Shipping */}
+          {/* Digital-only carts: no delivery form — show what happens instead. */}
+          {digitalOnly ? (
+            <Card className="border-brand/30 bg-[#eef5ec]">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base text-brand-dark">
+                  <Download className="h-4 w-4 text-brand" /> {t("co.digitalTitle")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm leading-relaxed text-brand-dark">{t("co.digitalBody")}</p>
+                <p className="mt-3 text-xs text-muted-foreground">{t("co.digitalNameNote")}</p>
+              </CardContent>
+            </Card>
+          ) : (
           <Card className="border-[#e6e2d4]">
             <CardHeader>
               <CardTitle className="text-base text-brand-dark">{t("co.address")}</CardTitle>
@@ -392,6 +426,7 @@ export function Checkout() {
               </div>
             </CardContent>
           </Card>
+          )}
 
           {/* Payment */}
           <Card className="border-[#e6e2d4]">
@@ -466,8 +501,13 @@ export function Checkout() {
                     </div>
                     <div className="flex-1">
                       <p className="line-clamp-2 text-xs font-medium leading-tight text-foreground">{it.product.name}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">
+                      <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                         {formatPrice(it.product.price, it.product.currency)}
+                        {it.product.productType === "digital" && (
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-[#eef5ec] px-1.5 py-0.5 text-[10px] font-semibold text-brand">
+                            <Download className="h-2.5 w-2.5" /> {t("co.digitalChip")}
+                          </span>
+                        )}
                       </p>
                     </div>
                     <span className="text-xs font-medium text-brand">
@@ -484,7 +524,9 @@ export function Checkout() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t("cart.shipping")}</span>
-                  {!shippingKnown ? (
+                  {digitalOnly ? (
+                    <span className="font-medium text-[#3f7d4a]">{t("co.noShipping")}</span>
+                  ) : !shippingKnown ? (
                     <span className="text-xs text-muted-foreground">{t("co.pickDistrict")}</span>
                   ) : (
                     <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>

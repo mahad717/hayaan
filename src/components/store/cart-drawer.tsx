@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
-import { FREE_SHIPPING_THRESHOLD, districtFee } from "@/lib/shipping";
+import { FREE_SHIPPING_THRESHOLD, computeCartShipping, districtFee, physicalSubtotal } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -47,12 +47,16 @@ export function CartDrawer() {
   };
 
   const subtotal = cartTotal(cart);
+  // Digital-aware estimate (Task 82): digital-only carts need no delivery at
+  // all; mixed carts estimate from the saved district on the PHYSICAL
+  // subtotal (checkout is where the exact fee is confirmed).
+  const digitalOnly = cart.items.length > 0 && cart.items.every((it) => it.product.productType === "digital");
   // Estimate from the saved profile's district. Until we know a district the
   // drawer says "calculated at checkout" instead of guessing a number —
   // checkout is where the customer picks their exact district.
   const savedFee = districtFee(user?.city);
-  const shippingKnown = subtotal >= FREE_SHIPPING_THRESHOLD || savedFee !== null;
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : savedFee ?? 0;
+  const shippingKnown = digitalOnly || subtotal >= FREE_SHIPPING_THRESHOLD || savedFee !== null;
+  const shipping = digitalOnly ? 0 : subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : computeCartShipping(cart.items, user?.city);
   const total = subtotal + shipping;
 
   return (
@@ -120,6 +124,11 @@ export function CartDrawer() {
                     </div>
                     <p className="text-xs text-muted-foreground">
                       {formatPrice(it.product.price, it.product.currency)}
+                      {it.product.productType === "digital" && (
+                        <span className="ml-1.5 inline-flex items-center gap-0.5 rounded-full bg-[#eef5ec] px-1.5 py-0.5 text-[10px] font-semibold text-brand">
+                          {t("co.digitalChip")}
+                        </span>
+                      )}
                     </p>
                     <div className="mt-1 flex items-center justify-between gap-2">
                       <div className="flex items-center rounded-md border border-[#e6e2d4]">
@@ -164,7 +173,9 @@ export function CartDrawer() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t("cart.shipping")}</span>
-                {!shippingKnown ? (
+                {digitalOnly ? (
+                  <span className="font-medium text-[#3f7d4a]">{t("co.noShipping")}</span>
+                ) : !shippingKnown ? (
                   <span className="text-xs text-muted-foreground">{t("cart.shippingCalc")}</span>
                 ) : (
                   <span className={shipping === 0 ? "font-medium text-[#3f7d4a]" : "text-foreground"}>
@@ -179,10 +190,14 @@ export function CartDrawer() {
                   <span className="text-brand">{formatPrice(total)}</span>
                 </div>
               )}
-              {subtotal < FREE_SHIPPING_THRESHOLD && (
-                <p className="text-xs text-muted-foreground">
-                  {t("cart.freeAway", { amount: formatPrice(FREE_SHIPPING_THRESHOLD - subtotal) })}
-                </p>
+              {digitalOnly ? (
+                <p className="text-xs text-[#3f7d4a]">{t("co.digitalDrawerNote")}</p>
+              ) : (
+                subtotal < FREE_SHIPPING_THRESHOLD && (
+                  <p className="text-xs text-muted-foreground">
+                    {t("cart.freeAway", { amount: formatPrice(FREE_SHIPPING_THRESHOLD - physicalSubtotal(cart.items)) })}
+                  </p>
+                )
               )}
             </div>
             {/* Checkout — Market Orange (the 10% accent) */}

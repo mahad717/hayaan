@@ -57,6 +57,11 @@ model Product {
   isActive    Boolean  @default(true)
   supplierUrl String?  @map("supplier_url") // dropshipping source listing (Task 65)
   supplierSku String?  @map("supplier_sku")
+  // Digital delivery (Task 82). digitalUrl holds an external https URL or an
+  // "sb://<bucket>/<path>" private-storage reference resolved per download.
+  productType String   @default("physical") @map("product_type") // physical | digital
+  digitalUrl  String?  @map("digital_url")
+  digitalInstructions String? @map("digital_instructions")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

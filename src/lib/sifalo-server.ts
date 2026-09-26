@@ -6,7 +6,7 @@ import { getDb } from "@/lib/db";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { verifySifaloPayment, type SifaloVerifyResult } from "@/lib/sifalo";
-import { computeShipping } from "@/lib/shipping";
+import { computeShipping, computeCartShipping, hasPhysicalItems, type CartShippingItem } from "@/lib/shipping";
 import {
   getProductCostMap,
   snapshotOrderItemCosts,
@@ -25,6 +25,15 @@ export interface ShippingInput {
   country: string;
 }
 
+/** Order-row placeholders for digital-only carts — nothing physical ships, so
+ *  the address columns carry a clear marker instead of blocking checkout. */
+export const DIGITAL_SHIPPING_PLACEHOLDER = {
+  address: "Digital delivery — no shipping",
+  city: "Digital",
+  zip: "0000",
+  country: "Somalia",
+} as const;
+
 /**
  * Mirror the checkout page's displayed total: product subtotal + district-based
  * shipping (Mogadishu districts from the owner's fee sheet, free over $75,
@@ -36,6 +45,17 @@ export function computeCheckoutTotal(subtotal: number, city?: string | null): { 
   const shipping = computeShipping(subtotal, city);
   // tax stays in the shape (order rows record tax_amount) but is always 0 —
   // the store no longer charges VAT.
+  return { total: Math.round((subtotal + shipping) * 100) / 100, shipping, tax: 0 };
+}
+
+/** Cart-aware variant (Task 82): shipping is computed on the PHYSICAL
+ *  subtotal only — digital-only carts are charged exactly the subtotal. */
+export function computeCartCheckoutTotal(
+  items: CartShippingItem[],
+  city?: string | null,
+): { total: number; shipping: number; tax: number } {
+  const subtotal = items.reduce((sum, it) => sum + it.price * it.quantity, 0);
+  const shipping = computeCartShipping(items, city);
   return { total: Math.round((subtotal + shipping) * 100) / 100, shipping, tax: 0 };
 }
 
@@ -63,8 +83,32 @@ export async function createPendingSifaloOrder(
       .eq("cart_id", cart.data.id);
     if (!items || items.length === 0) return { error: "Cart is empty.", status: 400 };
 
-    const subtotal = items.reduce((sum, it) => sum + Number(it.product.price) * it.quantity, 0);
-    const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal, shipping.city);
+    // Digital-aware shipping (Task 82): the charge is computed on the
+    // PHYSICAL subtotal only; a digital-only cart pays no delivery at all
+    // and never needs an address.
+    const shippingItems: CartShippingItem[] = items.map((it: any) => ({
+      productType: it.product?.product_type ?? "physical",
+      price: Number(it.product?.price ?? 0),
+      quantity: it.quantity,
+    }));
+    const digitalOnly = !hasPhysicalItems(shippingItems);
+    if (!digitalOnly && (!shipping.address?.trim() || !shipping.city?.trim() || !shipping.zip?.trim() || !shipping.country?.trim())) {
+      return {
+        error: "Please complete your shipping details so we know where to deliver.",
+        status: 400,
+      };
+    }
+    const finalShipping = digitalOnly
+      ? {
+          ...shipping,
+          address: shipping.address?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.address,
+          city: shipping.city?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.city,
+          zip: shipping.zip?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.zip,
+          country: shipping.country?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.country,
+        }
+      : shipping;
+
+    const { total, shipping: shippingFee, tax: taxAmt } = computeCartCheckoutTotal(shippingItems, finalShipping.city);
     // Receipt-level accounting columns (Task 49): what the customer was
     // actually asked to pay. If the accounting migration has not been applied
     // yet the columns don't exist — retry without them so checkout NEVER
@@ -74,12 +118,12 @@ export async function createPendingSifaloOrder(
       status: "pending",
       total_amount: total,
       currency: "USD",
-      shipping_name: shipping.name,
-      shipping_phone: shipping.phone?.trim() || null,
-      shipping_address: shipping.address,
-      shipping_city: shipping.city,
-      shipping_zip: shipping.zip,
-      shipping_country: shipping.country,
+      shipping_name: finalShipping.name,
+      shipping_phone: finalShipping.phone?.trim() || null,
+      shipping_address: finalShipping.address,
+      shipping_city: finalShipping.city,
+      shipping_zip: finalShipping.zip,
+      shipping_country: finalShipping.country,
       payment_method: "sifalo",
       payment_status: "pending",
     };
@@ -145,20 +189,38 @@ export async function createPendingSifaloOrder(
   });
   if (!cart || cart.items.length === 0) return { error: "Cart is empty.", status: 400 };
 
-  const subtotal = cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
-  const { total, shipping: shippingFee, tax: taxAmt } = computeCheckoutTotal(subtotal, shipping.city);
+  const shippingItems: CartShippingItem[] = cart.items.map((it) => ({
+    productType: it.product.productType,
+    price: it.product.price,
+    quantity: it.quantity,
+  }));
+  const digitalOnly = !hasPhysicalItems(shippingItems);
+  if (!digitalOnly && (!shipping.address?.trim() || !shipping.city?.trim() || !shipping.zip?.trim() || !shipping.country?.trim())) {
+    return { error: "Please complete your shipping details so we know where to deliver.", status: 400 };
+  }
+  const finalShipping = digitalOnly
+    ? {
+        ...shipping,
+        address: shipping.address?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.address,
+        city: shipping.city?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.city,
+        zip: shipping.zip?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.zip,
+        country: shipping.country?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.country,
+      }
+    : shipping;
+
+  const { total, shipping: shippingFee, tax: taxAmt } = computeCartCheckoutTotal(shippingItems, finalShipping.city);
   const order = await db.order.create({
     data: {
       userId,
       status: "pending",
       totalAmount: total,
       currency: "USD",
-      shippingName: shipping.name,
-      shippingPhone: shipping.phone?.trim() || null,
-      shippingAddress: shipping.address,
-      shippingCity: shipping.city,
-      shippingZip: shipping.zip,
-      shippingCountry: shipping.country,
+      shippingName: finalShipping.name,
+      shippingPhone: finalShipping.phone?.trim() || null,
+      shippingAddress: finalShipping.address,
+      shippingCity: finalShipping.city,
+      shippingZip: finalShipping.zip,
+      shippingCountry: finalShipping.country,
       paymentMethod: "sifalo",
       paymentStatus: "pending",
       shippingCost: shippingFee,

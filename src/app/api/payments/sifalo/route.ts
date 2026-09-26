@@ -47,8 +47,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
   const shipping = body.shipping;
-  if (!shipping?.name || !shipping?.address || !shipping?.city || !shipping?.zip || !shipping?.country) {
-    return NextResponse.json({ error: "Please complete your shipping details so we know where to deliver." }, { status: 400 });
+  // Only the name is validated here — the REST of the address requirement is
+  // cart-dependent (Task 82): digital-only carts need no delivery address at
+  // all. createPendingSifaloOrder checks the cart and enforces the fields a
+  // physical delivery actually requires.
+  if (!shipping?.name?.trim()) {
+    return NextResponse.json({ error: "Please add your full name so we can record the order." }, { status: 400 });
   }
 
   const created = await createPendingSifaloOrder(user.id, shipping);

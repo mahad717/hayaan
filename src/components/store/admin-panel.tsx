@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users, Truck, Link2, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, ImagePlus, Loader2, Calculator, Scale, TrendingUp, Users, Truck, Link2, AlertTriangle, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -76,6 +76,10 @@ interface FormState {
   isActive: boolean;
   supplierUrl: string;
   supplierSku: string;
+  // Digital delivery (Task 82)
+  productType: "physical" | "digital";
+  digitalUrl: string;
+  digitalInstructions: string;
 }
 
 const EMPTY: FormState = {
@@ -92,6 +96,9 @@ const EMPTY: FormState = {
   isActive: true,
   supplierUrl: "",
   supplierSku: "",
+  productType: "physical",
+  digitalUrl: "",
+  digitalInstructions: "",
 };
 
 /**
@@ -155,6 +162,31 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
         images: [...f.images.split("\n").map((s) => s.trim()).filter(Boolean), ...added].join("\n"),
       }));
       toast(added.length === 1 ? "Image uploaded" : `${added.length} images uploaded`, "success");
+    }
+    setUploading(false);
+  };
+
+  // Digital file upload (Task 82): any file type up to 50 MB into the PRIVATE
+  // digital-files bucket. The response is an sb:// reference stored on
+  // digital_url — buyers get short-lived signed links, never the raw object.
+  const uploadDigitalFile = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("kind", "digital");
+    try {
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd, credentials: "include" });
+      const data = await res.json().catch(() => ({} as { error?: string; url?: string }));
+      if (!res.ok || !data.url) {
+        toast(data.error ?? `Upload failed for ${file.name}`, "error");
+      } else {
+        setForm((f) => ({ ...f, digitalUrl: data.url }));
+        toast("File uploaded — buyers get a secure, expiring link.", "success");
+      }
+    } catch {
+      toast(`Upload failed for ${file.name}`, "error");
     }
     setUploading(false);
   };
@@ -237,6 +269,9 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       isActive: p.isActive,
       supplierUrl: p.supplierUrl ?? "",
       supplierSku: p.supplierSku ?? "",
+      productType: p.productType === "digital" ? "digital" : "physical",
+      digitalUrl: p.digitalUrl ?? "",
+      digitalInstructions: p.digitalInstructions ?? "",
     });
     setDialogOpen(true);
   };
@@ -260,6 +295,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
       // Dropshipping sourcing (Task 65) — empty field clears it.
       supplierUrl: form.supplierUrl.trim() || null,
       supplierSku: form.supplierSku.trim() || null,
+      // Digital delivery (Task 82) — switching to digital requires a link.
+      productType: form.productType,
+      digitalUrl: form.productType === "digital" ? form.digitalUrl.trim() || null : null,
+      digitalInstructions: form.productType === "digital" ? form.digitalInstructions.trim() || null : null,
     };
     if (!body.name || !body.description || !body.price || !body.categoryId) {
       toast("Name, description, price, and category are required.", "error");
@@ -267,6 +306,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
     }
     if (body.cost != null && (isNaN(body.cost) || body.cost < 0)) {
       toast("Product cost must be zero or greater.", "error");
+      return;
+    }
+    if (body.productType === "digital" && !body.digitalUrl) {
+      toast("A digital product needs a download link — upload the file or paste its URL first.", "error");
       return;
     }
     try {
@@ -284,7 +327,13 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
         toast(data.error ?? "Save failed", "error");
         return;
       }
-      toast(editing ? "Product updated" : "Product created", "success");
+      if (data.digitalDropped) {
+        // Migration 2026-09-21-digital-products.sql hasn't run yet — the
+        // product saved as physical without its digital fields.
+        toast(data.hint ?? "Saved, but the digital fields need the migration first.", "error");
+      } else {
+        toast(editing ? "Product updated" : "Product created", "success");
+      }
       setDialogOpen(false);
       reload();
     } catch (err) {
@@ -495,7 +544,12 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                             )}
                           </div>
                           <div>
-                            <p className="font-medium leading-tight">{p.name}</p>
+                            <p className="font-medium leading-tight">
+                              {p.name}
+                              {p.productType === "digital" && (
+                                <Badge variant="secondary" className="ml-1.5 bg-[#eef5ec] text-brand">Digital</Badge>
+                              )}
+                            </p>
                             <p className="text-xs text-muted-foreground">{p.sku ?? "—"}</p>
                           </div>
                         </div>
@@ -647,6 +701,85 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 </Select>
               </div>
             </div>
+            {/* Digital delivery (Task 82) — what kind of product is this? */}
+            <div className="grid gap-2 rounded-lg border border-brand/25 bg-brand/5 px-4 py-3">
+              <Label>Product type</Label>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  ["physical", "Physical — ships to the customer"],
+                  ["digital", "Digital — instant download"],
+                ] as const).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setForm({ ...form, productType: value })}
+                    aria-pressed={form.productType === value}
+                    className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
+                      form.productType === value
+                        ? "border-brand bg-brand text-white shadow-sm"
+                        : "border-[#e6e2d4] bg-white text-foreground/80 hover:border-brand/50 hover:text-brand"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {form.productType === "digital" ? (
+                <div className="mt-1 grid gap-2">
+                  <div className="grid gap-1">
+                    <Label htmlFor="p-digital-url">Download link <Req /></Label>
+                    <Input
+                      id="p-digital-url"
+                      type="text"
+                      placeholder="Upload a file below, or paste https://…"
+                      className={FIELD_CLS}
+                      value={form.digitalUrl}
+                      onChange={(e) => setForm({ ...form, digitalUrl: e.target.value })}
+                    />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <label
+                      className={`inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-brand/50 bg-[#faf8f1] px-3 py-2 text-xs font-semibold text-brand transition hover:bg-secondary ${
+                        uploading ? "pointer-events-none opacity-60" : ""
+                      }`}
+                    >
+                      <input
+                        type="file"
+                        className="hidden"
+                        disabled={uploading}
+                        onChange={(e) => {
+                          uploadDigitalFile(e.target.files);
+                          e.currentTarget.value = ""; // allow re-picking the same file
+                        }}
+                      />
+                      {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+                      {uploading ? "Uploading…" : "Upload file (up to 50 MB)"}
+                    </label>
+                    <span className="text-xs text-muted-foreground">
+                      Stored privately — buyers get a secure link that expires in 5 minutes.
+                    </span>
+                  </div>
+                  <div className="grid gap-1">
+                    <Label htmlFor="p-digital-instructions">Buyer instructions <Opt /></Label>
+                    <Textarea
+                      id="p-digital-instructions"
+                      rows={2}
+                      placeholder="Shown next to the Download button, e.g. 'Your ebook in PDF + EPUB. License key: inside the file.'"
+                      className={FIELD_CLS}
+                      value={form.digitalInstructions}
+                      onChange={(e) => setForm({ ...form, digitalInstructions: e.target.value })}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Digital products skip checkout delivery entirely — no district, no delivery fee. Downloads unlock in the buyer's Orders as soon as payment is confirmed.
+                  </p>
+                </div>
+              ) : (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Physical products ship to the buyer — checkout collects the delivery district and its fee.
+                </p>
+              )}
+            </div>
             <div className="grid gap-2 rounded-lg border border-brand/25 bg-brand/5 px-4 py-3">
               <Label htmlFor="p-cost" className="whitespace-nowrap">Product Cost <span className="text-xs font-normal text-muted-foreground">/ Qiimaha Shaygu Noogu Fadhiyo</span> <Opt /></Label>
               <div className="relative">
@@ -665,7 +798,10 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
               <p className="text-xs text-muted-foreground">
                 The amount this product costs Hayaan Market to purchase from the supplier. Confidential — never shown to customers. Used to calculate gross profit (selling price − product cost) and frozen per order at sale time.
               </p>
-              {/* Dropshipping sourcing (Task 65) — where this item ships from. */}
+              {/* Dropshipping sourcing (Task 65) — where this item ships from.
+                  Digital products have no supplier shipment, so hide it. */}
+              {form.productType !== "digital" && (
+              <>
               <div className="mt-1 grid gap-2 sm:grid-cols-2">
                 <div className="grid gap-1">
                   <Label htmlFor="p-supplier-url" className="whitespace-nowrap">Supplier URL <Opt /></Label>
@@ -693,6 +829,8 @@ export function AdminPanel({ user: serverUser }: { user?: SafeUser }) {
                 Dropshipping? Paste the Alibaba / AliExpress listing here — paid orders then show an
                 Open-listing link in the Fulfillment tab. Admin-only, never shown to customers.
               </p>
+              </>
+              )}
             </div>
             <div className="grid gap-2">
               <Label>Product images <Opt /></Label>
