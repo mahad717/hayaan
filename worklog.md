@@ -1742,3 +1742,25 @@ Work Log:
 Stage Summary:
 - Backlink is in the codebase and built into two uploaded worker versions; blocked only on Cloudflare deployment promotion. Re-probe the post URL and, when the anchor appears, submit the URL on KarmaLinks. No other content changed.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
+
+---
+Task ID: 82
+Agent: Super Z (main)
+Task: Add a way to sell digital products (owner request) + restore lost /api/admin/upload route found missing from the tree
+
+Work Log:
+- Data model: products.product_type ('physical' default | 'digital'), digital_url (external https OR "sb://<bucket>/<path>" private-storage ref), digital_instructions. Migration src/lib/supabase/migrations/2026-09-21-digital-products.sql (idempotent, CHECK constraint, index) — OWNER MUST RUN IT in the Supabase SQL editor (DDL not possible via service key; same flow as the 9 previous migrations). Prisma mirror + db push done; isMissingDigitalColumns graceful degradation mirrors the supplier-columns pattern (saves as physical + digitalDropped hint until SQL runs).
+- Public safety: public product payloads carry ONLY productType — digitalUrl never leaves the server; order_items stay URL-free (customers can SELECT their own order_items via RLS). The ONLY path to a deliverable is the new gated GET /api/digital/download?item=<id>: session ownership + payment collected (status paid/shipped/delivered OR payment_status paid) + product still digital, then 302 to the https link, or a 5-minute signed URL for private Storage objects.
+- Shipping (authoritative + display share one helper): computeCartShipping in lib/shipping.ts — digital-only carts pay NO delivery and need no address (order rows record "Digital delivery — no shipping" placeholders); mixed carts are charged on the PHYSICAL subtotal only (digital goods never count toward free-shipping-over-$75). Wired into checkout.tsx, cart-drawer.tsx estimate, createPendingSifaloOrder (computeCartCheckoutTotal) and demo /api/orders. /api/payments/sifalo now validates name only — address requirements enforced cart-aware server-side.
+- Accounting: SaleAccountingLine.isDigital — digital lines book revenue/COGS but SKIP stock decrement + inventory movement (buildSaleLines joins product_type).
+- Admin: product form gains a Physical/Digital toggle with download-link field, 50 MB private file upload (kind=digital → private "digital-files" bucket, auto-created) and buyer instructions; catalog table shows a Digital badge; supplier fields hidden for digital; digitalDropped responses surface the migration hint.
+- Storefront: Digital badge on cards + PDP instant-delivery pill (stock line hidden for digital); digital-only checkout replaces the address form with a "Digital delivery" card; cart/summary show "No delivery — instant download"; Orders view shows per-item Download buttons (locked chip until paid) and replaces the ship-to block for all-digital orders; EN+SO strings added.
+- RESTORED /api/admin/upload (was lost from the tree again in the session-recovery mixup — admin image AND blog-cover uploads would 404 on the next deploy) and extended it with the digital mode.
+- Fixed post-build: SSR products-server.ts mapping also needed productType (PDP badge verified live after).
+- Local end-to-end verification (sandbox .env reset → local SQLite path, zero prod pollution): digital product create (admin) → cart carries type → digital-only order WITHOUT address succeeds (total = subtotal, placeholders recorded) → orders payload has isDigital + instructions → download 302s to the file → 401 unauthenticated → mixed cart without address 400 → mixed with Hodan address ok, item flags correct; shipping math unit-checked (7/7 assertions incl. threshold-on-physical-subtotal).
+- Deployment: pushed linearly cf9910d..7437d97(+fix). Cloudflare promotion STILL STALLED since Sep 21 — build 31a365bd (today) uploaded + check-run success but edge unchanged; 4 versions now pending promotion. Owner dashboard action required (Workers & Pages → hayaan → Deployments → promote/retry); the KarmaLinks backlink (Task 81) rides the same promotion.
+- Evidence screenshots in download/: task82-pdp-digital.png, task82-admin-digital-form.png, task82-admin-digital-fields.png, task82-checkout-digital.png.
+
+Stage Summary:
+- Hayaan Market can sell digital products end to end: owner marks a product Digital (upload ≤50 MB private file or paste a link), buyers check out with no address/no fee, and downloads unlock in Orders after payment — with gated 5-minute signed links, inventory-safe accounting, and bilingual UI. PENDING OWNER: (1) run 2026-09-21-digital-products.sql in Supabase SQL editor; (2) promote/retry the Cloudflare deployment (also unblocks the KarmaLinks verification backlink).
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision.
