@@ -25,6 +25,9 @@ export function rowToProduct(row: any): Product {
     tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
     featured: row.featured,
     isActive: row.isActive ?? row.is_active,
+    // Digital delivery (Task 82) — SSR PDP needs the type for the badge,
+    // instant-delivery promise, and offer schema.
+    productType: (row.productType ?? row.product_type ?? "physical") === "digital" ? "digital" : "physical",
     categoryId: row.categoryId ?? row.category_id,
     category: row.category
       ? { id: row.category.id, name: row.category.name, slug: row.category.slug, description: row.category.description ?? null }
