@@ -13,7 +13,7 @@ curl -s -X POST "$BASE/api/seed" -H "Content-Type: application/json" -d '{}' | h
 
 echo "== login admin@shop.demo =="
 curl -s -c $CJ -X POST "$BASE/api/auth/login" -H "Content-Type: application/json" \
-  -d '{"email":"admin@shop.demo","password":"admin123"}' | head -c 200; echo
+  -d '{"email":"admin@hayaan.demo","password":"admin123"}' | head -c 200; echo
 
 echo "== session check =="
 ROLE=$(curl -s -b $CJ "$BASE/api/auth/me" | python3 -c "import sys,json; print(json.load(sys.stdin).get('user',{}).get('role',''))")

@@ -8,7 +8,7 @@
 //     outside Next.js with plain `bun`.
 //
 // Keep the demo credentials in sync with scripts/seed-supabase.ts:
-//   admin@shop.demo / admin123  (role: admin)
+//   admin@hayaan.demo / admin123  (role: admin)
 
 export interface SeedCategory {
   name: string;
@@ -32,8 +32,12 @@ export interface SeedProduct {
   category_slug: string;
 }
 
+// DO NOT revert this to admin@shop.demo: a soft-deleted auth user still owns
+// that email in Supabase (invisible to listUsers, but the uniqueness check
+// keeps it taken), so createUser for it fails with "already registered"
+// forever. admin@hayaan.demo is the fresh, working demo-admin identity.
 export const SEED_ADMIN = {
-  email: "admin@shop.demo",
+  email: "admin@hayaan.demo",
   password: "admin123",
   name: "Store Admin",
 } as const;

@@ -188,7 +188,7 @@ interface SeedBody {
 }
 
 // Seeds demo products + categories and BOTH demo accounts
-// (admin@shop.demo / admin123 and customer@shop.demo / customer123).
+// (admin@hayaan.demo / admin123 and customer@shop.demo / customer123).
 // Safe to call on an already-populated catalog — product seeding is skipped
 // and only the demo accounts are (re-)asserted.
 export async function POST(req: Request) {

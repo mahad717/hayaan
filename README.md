@@ -31,7 +31,7 @@ bun run dev
 
 # 4. Seed the demo catalog + admin user
 curl -X POST http://localhost:3000/api/seed
-# → Admin: admin@shop.demo / admin123
+# → Admin: admin@hayaan.demo / admin123
 
 # 5. Open http://localhost:3000 (or the preview panel in this sandbox)
 ```
@@ -163,7 +163,7 @@ This upserts 4 categories + 12 demo products and creates both demo logins:
 
 | Email | Password | Role |
 | --- | --- | --- |
-| `admin@shop.demo` | `admin123` | admin |
+| `admin@hayaan.demo` | `admin123` | admin |
 | `customer@shop.demo` | `customer123` | customer |
 
 The customer account ships with a saved Mogadishu shipping address so the
@@ -183,7 +183,7 @@ it skips products and only re-asserts the two demo logins.
 ### 3. Point Cloudflare at Supabase
 
 Set the build-time and runtime variables listed in the deploy section below,
-redeploy, then sign in as `admin@shop.demo` and click **Admin**. You should
+redeploy, then sign in as `admin@hayaan.demo` and click **Admin**. You should
 see the dedicated admin chrome (dark topbar, Dashboard badge, product
 manager) instead of the storefront.
 
