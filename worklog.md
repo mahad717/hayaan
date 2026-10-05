@@ -1786,3 +1786,19 @@ Stage Summary:
 - Demo admin is now admin@hayaan.demo / admin123 (old admin@shop.demo email is permanently burned by a soft-deleted ghost row); seed endpoint fixed and diagnosable; /api/admin/upload restored to the tree before the next deploy could 404 it.
 - Task 81 KarmaLinks backlink finally live (it was a DB-row shadow, not a deploy stall). Owner can now submit the guide URL on KarmaLinks. Tasks 81/82 code is confirmed promoted.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe test user).
+---
+Task ID: 84
+Agent: Super Z (main)
+Task: Center the PS5 Pro product images (owner flagged main gallery image as badly positioned on the live PDP)
+
+Work Log:
+- Root cause: both ps5-pro-2tb-*.jpg source photos were top-heavy — measured content bboxes showed the console shot had 5px top vs 322px bottom whitespace (horizontally it was fine, L=274/R=275); the box shot had ~45% of the frame as empty gray below the content. The PDP gallery renders aspect-square + object-cover, so the bottom dead space displayed as a big blank band with the product pushed to the top.
+- Rebuilt BOTH images from the kept 2240px Task 83 sources (download/task83/{pro-2-clean,pro-1-clean}.jpg): content bbox detected vs each image's own background (median border color, threshold 14), LANCZOS-resized and pasted dead-centered on a 1400x1400 canvas filled with that same background (console shot: white 255,255,255 std 0.1; box shot: 242,245,250 std 1.7 — both uniform, no visible seam).
+- Caught a naming trap: Task 83's source filenames are inverted vs the published gallery order (pro-2-clean is the console+controller shot, pro-1-clean is the box shot). First run swapped the two gallery slots; corrected mapping and re-verified visually. Published order kept: -1 = console shot, -2 = box shot.
+- Verified output symmetry: image 1 margins L=R=174, T=B=110; image 2 L=R=110, T=B=426/427. Same filenames kept — asset responses are cache-control: public, max-age=0, must-revalidate with content-hash etags, so no DB change or cache-busting needed.
+- Deployed: linear push 44c9967..d68cd2a; edge etag flipped 0f890290 -> 9c80aafa on the poll probe. Live PDP verified with agent-browser: main image and image 2 both render dead-centered (evidence task84-pdp-pro-centered.png, task84-pdp-pro-image2.png in download/). Note: while probing thumbnails an accidental click on the language pill switched that browser profile to Somali — session-local storage only, no server state touched.
+- Slim image checked and left as-is (content already well centered).
+
+Stage Summary:
+- PS5 Pro gallery now shows both photos perfectly centered on the PDP; no code changes, image assets only. The old top-heavy whitespace is gone from both the main view and thumbnails.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe test user).
