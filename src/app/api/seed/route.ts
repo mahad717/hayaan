@@ -70,24 +70,30 @@ async function ensureDemoUsers(supabase: SupabaseClient): Promise<ReturnType<typ
 
   for (const acc of DEMO_ACCOUNTS) {
     const foundId = byEmail.get(acc.email.toLowerCase());
-    const userId = foundId
-      ? (
-        await supabase.auth.admin.updateUserById(foundId, {
-          password: acc.password,
-          email_confirm: true,
-          user_metadata: { name: acc.name, role: acc.role },
-        })
-      ).data?.user?.id
-      : (
-        await supabase.auth.admin.createUser({
-          email: acc.email,
-          password: acc.password,
-          email_confirm: true,
-          user_metadata: { name: acc.name, role: acc.role },
-        })
-      ).data?.user?.id;
-
-    if (!userId) return jsonError(`Failed to create the ${acc.role} user ${acc.email}.`, 500);
+    let userId: string | null | undefined = null;
+    if (foundId) {
+      const upd = await supabase.auth.admin.updateUserById(foundId, {
+        password: acc.password,
+        email_confirm: true,
+        user_metadata: { name: acc.name, role: acc.role },
+      });
+      userId = upd.data?.user?.id;
+      if (!userId) return jsonError(`Failed to update the ${acc.role} user ${acc.email}: ${upd.error?.message ?? "unknown error"}`, 500);
+    } else {
+      const created = await supabase.auth.admin.createUser({
+        email: acc.email,
+        password: acc.password,
+        email_confirm: true,
+        user_metadata: { name: acc.name, role: acc.role },
+      });
+      userId = created.data?.user?.id;
+      if (!userId) {
+        return jsonError(
+          `Failed to create the ${acc.role} user ${acc.email}: ${created.error?.message ?? "unknown error"}`,
+          500,
+        );
+      }
+    }
 
     // Only fill the demo address when the profile row doesn't have one yet.
     let currentAddress: string | null = null;
