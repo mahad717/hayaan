@@ -31,18 +31,48 @@ const DEMO_ACCOUNTS: DemoAccountSpec[] = [
 ];
 
 /**
+ * List ALL auth users, paginating past GoTrue's default page (50 rows).
+ * The demo accounts were created months ago; on projects with more than one
+ * page of signups a bare `listUsers()` never sees them, so the seed tried to
+ * `createUser` an email that ALREADY existed and failed with "Failed to
+ * create the admin user" forever. Page size caps at GoTrue's max (1000);
+ * loop pages until a short page comes back.
+ */
+async function listAllAuthUsers(supabase: SupabaseClient): Promise<
+  { users: Array<{ id: string; email?: string | null }>; error: string | null }
+> {
+  const all: Array<{ id: string; email?: string | null }> = [];
+  const perPage = 1000;
+  for (let page = 1; page <= 10; page++) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage });
+    if (error) return { users: all, error: error.message };
+    const rows = data?.users ?? [];
+    all.push(...rows);
+    if (rows.length < perPage) break;
+  }
+  return { users: all, error: null };
+}
+
+/**
  * Ensure both demo accounts exist in Supabase Auth + public.users.
  * Idempotent: existing users get their password/metadata re-asserted, and the
  * customer's saved address is only written when the profile row has none yet
  * (so a user-cleared address is not resurrected by a re-seed).
  */
 async function ensureDemoUsers(supabase: SupabaseClient): Promise<ReturnType<typeof jsonError> | null> {
+  const listed = await listAllAuthUsers(supabase);
+  if (listed.error) {
+    return jsonError(`Could not list auth users while seeding: ${listed.error}`, 500);
+  }
+  const byEmail = new Map(
+    listed.users.filter((u) => u.email).map((u) => [u.email!.toLowerCase(), u.id] as const),
+  );
+
   for (const acc of DEMO_ACCOUNTS) {
-    const { data: existing } = await supabase.auth.admin.listUsers();
-    const found = existing?.users?.find((u) => u.email === acc.email);
-    const userId = found
+    const foundId = byEmail.get(acc.email.toLowerCase());
+    const userId = foundId
       ? (
-        await supabase.auth.admin.updateUserById(found.id, {
+        await supabase.auth.admin.updateUserById(foundId, {
           password: acc.password,
           email_confirm: true,
           user_metadata: { name: acc.name, role: acc.role },

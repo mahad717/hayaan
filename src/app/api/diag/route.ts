@@ -54,7 +54,9 @@ export async function GET() {
 
   const [{ count, error: prodErr }, { data: users, error: usersErr }] = await Promise.all([
     supabase.from("products").select("id", { count: "exact", head: true }),
-    supabase.auth.admin.listUsers(),
+    // perPage 1000: a bare listUsers() caps at GoTrue's 50-row default page,
+    // which reported the demo admin "missing" once the project had 50+ signups.
+    supabase.auth.admin.listUsers({ page: 1, perPage: 1000 }),
   ]);
 
   const adminExists = Boolean(users?.users?.some((u) => u.email === SEED_ADMIN.email));
