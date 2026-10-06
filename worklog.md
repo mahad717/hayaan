@@ -1802,3 +1802,22 @@ Work Log:
 Stage Summary:
 - PS5 Pro gallery now shows both photos perfectly centered on the PDP; no code changes, image assets only. The old top-heavy whitespace is gone from both the main view and thumbnails.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe test user).
+---
+Task ID: 85
+Agent: Super Z (main)
+Task: Add product ratings & comments (customer reviews) to the store
+
+Work Log:
+- Data model: product_reviews side-car table (product_id/user_id/author_name/rating 1-5/comment/verified_purchase/status approved|hidden; UNIQUE(product_id,user_id), RLS deny-all like leads — service-role APIs only). Migration src/lib/supabase/migrations/2026-10-05-product-reviews.sql (idempotent, also backfills aggregates); Prisma Review mirror + db push. OWNER MUST RUN THE SQL in the Supabase SQL editor (same as all 10 prior migrations) — until then everything degrades gracefully.
+- Aggregates denormalized: every review write recomputes avg/count over approved reviews and updates products.rating/review_count — so product cards, the PDP header, sort-by-rating, and the Product JSON-LD aggregateRating (star rich results) light up with zero read-time joins.
+- APIs: GET/POST/DELETE /api/products/[id]/reviews (public list+summary+myReview; auth-required post with rating validation, 2000-char cap, one-review-per-user upsert; author delete) + GET /api/admin/reviews (queue with product context) + PATCH/DELETE /api/admin/reviews/[id] (hide/approve/delete; hidden reviews stay visible to their author but never count in aggregates). Verified-purchase flag computed from paid orders containing the product at write time.
+- Storefront: new Stars/StarInput components (fractional fill via clipped overlay); PDP "Ratings & reviews" section (summary card + distribution bars, write/edit form gated by the auth modal, verified-purchase badges, list); header rating row is now a smooth-scroll link when reviews exist; EN+SO strings (reviews.*). Product cards show the rating automatically.
+- Admin: new "Reviews" tab (stats, hidden-review toggle, per-review hide/approve/delete with product links); pre-migration state shows the run-the-SQL hint.
+- Fixed a latent bug on the way: all three rowToProduct mappers read row.reviewCount but the Supabase column is review_count — the count was always undefined in prod. Now mapped.
+- RESTORED /api/admin/upload AGAIN — it was deleted from the tree during this session's recovery (caught in the git status right before push; restored from d982ea3 with the digital-file mode intact and deployed).
+- Verification: local E2E 22/22 (scripts/task85-local-e2e.sh) covering 401 guard, post, upsert-edit, aggregate denormalization onto the product row, admin hide/approve/delete, author self-delete, invalid rating 400, customer 403 on admin APIs. Live: deployed linearly 927f84e..6e2f358 (fast promote), /api/products/[id]/reviews returns the designed 200 unavailable payload pre-migration, admin Reviews tab shows the hint (task85-admin-reviews-hint.png), PDP renders intact with the section hidden (task85-pdp-live.png). Admin session for browser checks via demo admin + cookie injection (newsletter popup "No thanks" dismissed).
+- Post-migration behavior (once owner runs the SQL): reviews appear immediately — no redeploy needed, the code path is already live.
+
+Stage Summary:
+- Ratings & comments are fully built and deployed: customers (signed in) can star-rate and comment on any product, verified purchases are badged, admins moderate from a new dashboard tab, and all rating surfaces (cards, PDP, sort, JSON-LD) update automatically. Storefront stays clean until the owner runs ONE migration: src/lib/supabase/migrations/2026-10-05-product-reviews.sql in the Supabase SQL editor.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe, t85-reviewer test users).
