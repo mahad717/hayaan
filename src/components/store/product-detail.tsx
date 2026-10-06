@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName, productDescription } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, sanitizeRichText } from "@/lib/rich-text";
+import { ProductReviews } from "@/components/store/product-reviews";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -60,6 +61,12 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
       useStore.getState().setProductsLoaded(true);
     })();
   }, [initialProduct]);
+
+  // Rating row → smooth-scrolls to the reviews section (only when reviews
+  // exist; otherwise the row stays a plain label).
+  const scrollToReviews = () => {
+    document.getElementById("pdp-reviews")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const product = initialProduct ?? selectedProduct;
   if (!product) {
@@ -214,12 +221,27 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                 <Download className="h-3.5 w-3.5" aria-hidden /> {t("pdp.digitalInstant")}
               </p>
             )}
-            <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-              <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
-              <span aria-label={product.rating ? t("card.ratedAria", { r: product.rating }) : t("pdp.unrated")}>
-                {product.rating || t("pdp.unrated")}
-              </span>
-              {product.reviewCount > 0 && <span>· {t("pdp.reviews", { n: product.reviewCount })}</span>}
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+              {product.rating > 0 && product.reviewCount > 0 ? (
+                <button
+                  type="button"
+                  onClick={scrollToReviews}
+                  className="group/star flex items-center gap-1.5 rounded-md transition hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f28c28]"
+                  aria-label={t("reviews.jumpAria", { n: product.reviewCount })}
+                >
+                  <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
+                  <span aria-label={t("card.ratedAria", { r: product.rating })}>{product.rating.toFixed(1)}</span>
+                  <span className="group-hover/star:underline">· {t("pdp.reviews", { n: product.reviewCount })}</span>
+                </button>
+              ) : (
+                <span
+                  className="flex items-center gap-1.5"
+                  aria-label={t("pdp.unrated")}
+                >
+                  <Star className="h-4 w-4 fill-[#f9c27d] text-[#f9c27d]" aria-hidden />
+                  {t("pdp.unrated")}
+                </span>
+              )}
               <span>· {t("pdp.sku", { sku: product.sku ?? "—" })}</span>
             </div>
           </div>
@@ -361,6 +383,10 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           </div>
         </div>
       </div>
+
+      {/* Ratings & comments (Task 85) — full-width section below the buy
+          box; hides itself entirely until the reviews migration is run. */}
+      <ProductReviews productId={product.id} />
     </div>
   );
 }

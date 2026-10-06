@@ -75,6 +75,31 @@ export interface Cart {
 
 export type OrderStatus = "pending" | "paid" | "shipped" | "delivered" | "cancelled";
 
+// Customer product review (Task 85). Public payload — the reviewer's user id
+// rides along ONLY in the author's own view (ownership checks); the public
+// list maps it out. Server shape shared by the PDP, the review APIs, and the
+// admin moderation queue.
+export interface ProductReview {
+  id: string;
+  productId: string;
+  rating: number; // 1..5
+  authorName: string;
+  comment: string;
+  verifiedPurchase: boolean;
+  status: "approved" | "hidden";
+  createdAt: string;
+  updatedAt: string;
+  /** Present only on "my review" responses (same user requesting). */
+  userId?: string;
+}
+
+export interface ReviewSummary {
+  average: number; // 1 decimal, 0 when no reviews
+  count: number;
+  /** Count per star 1..5 (approved only) — drives the PDP distribution bars. */
+  distribution?: Record<string, number>;
+}
+
 export interface OrderItem {
   id: string;
   productId: string;

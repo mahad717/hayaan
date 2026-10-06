@@ -276,6 +276,29 @@ model AccountingAudit {
   @@index([createdAt])
 }
 
+// Customer star ratings + comments (Task 85). SIDE-CAR table keyed by plain
+// ids (no Prisma relations) — same pattern as ProductCost: the existing
+// Product model is untouched, and in Supabase the table is RLS deny-all with
+// reads/writes only through service-role API routes. Aggregates are
+// denormalized back onto Product.rating / Product.reviewCount on every write.
+model Review {
+  id               String   @id @default(cuid())
+  productId        String   @map("product_id")
+  userId           String   @map("user_id")
+  authorName       String   @default("") @map("author_name") // display name snapshot at review time
+  rating           Int // 1..5
+  comment          String   @default("")
+  verifiedPurchase Boolean  @default(false) @map("verified_purchase")
+  status           String   @default("approved") // approved | hidden (admin moderation)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@unique([productId, userId])
+  @@index([productId, status, createdAt])
+  @@index([status, createdAt])
+  @@map("product_reviews")
+}
+
 // Lead capture (Task 57) — newsletter signups + bulk-quote requests.
 // Supabase table: leads (RLS deny-all; API routes use the service role).
 model Lead {

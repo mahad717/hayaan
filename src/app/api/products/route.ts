@@ -19,8 +19,10 @@ function rowToProduct(row: any): Product {
     currency: row.currency ?? "USD",
     sku: row.sku ?? null,
     stock: row.stock,
-    rating: row.rating,
-    reviewCount: row.reviewCount,
+    rating: Number(row.rating ?? 0),
+    // Supabase column is snake_case review_count — the old mapping read only
+    // row.reviewCount, which is undefined on every prod row (Task 85).
+    reviewCount: Number(row.reviewCount ?? row.review_count ?? 0),
     images: Array.isArray(row.images) ? row.images : JSON.parse(row.images || "[]"),
     tags: Array.isArray(row.tags) ? row.tags : JSON.parse(row.tags || "[]"),
     featured: row.featured,
