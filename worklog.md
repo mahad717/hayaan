@@ -1821,3 +1821,27 @@ Work Log:
 Stage Summary:
 - Ratings & comments are fully built and deployed: customers (signed in) can star-rate and comment on any product, verified purchases are badged, admins moderate from a new dashboard tab, and all rating surfaces (cards, PDP, sort, JSON-LD) update automatically. Storefront stays clean until the owner runs ONE migration: src/lib/supabase/migrations/2026-10-05-product-reviews.sql in the Supabase SQL editor.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe, t85-reviewer test users).
+---
+Task ID: 86
+Agent: Super Z (main)
+Task: Make blog posts for SEO and AEO (owner request: "Today, make blog posts for seo and AEO")
+
+Work Log:
+- Slate: 4 new code-shipped guides in blog-seo-posts.ts (posts 6-9), each targeting a NEW keyword cluster not covered by the 5 existing guides, all prices verified against the live catalog via /api/products on publish day:
+  * ps5-price-in-somalia - "PS5 Price in Somalia (2026)": Digital Slim $720 vs Pro 2TB $1,180; HowTo (5 steps) + 5 FAQs.
+  * iphone-price-in-somalia - "iPhone Price in Somalia (2026)": full ladder $990-$1,550, physical-SIM guidance; 5 FAQs.
+  * how-to-pay-online-in-somalia - "How to Pay Online in Somalia": EVC Plus / Edahab / Card through secure hosted checkout; HowTo (5 steps) + 5 FAQs; safety checklist; digital-product instant-download note.
+  * best-smartwatches-online-in-somalia - "Best Smartwatches (2026)": $55-$440 ladder; pairing rule (Apple Watch needs iPhone); 5 FAQs.
+- AEO recipe (Task 77 pattern) on every post: quotable 40-60 word quickAnswer box, question-shaped H2s, FAQs mirroring visible content, published as BlogPosting+FAQPage(+HowTo) JSON-LD by the existing post page. Staggered publishedAt 2026-10-10 so the /blog index reads naturally.
+- Shipping-rule accuracy: verified src/lib/shipping.ts before writing - subtotal >= $75 = free delivery NATIONWIDE (threshold check precedes district lookup), Mogadishu districts $1.50-$3, flat $6.95 elsewhere. PS5/iPhone/watch orders always ship free; copy reflects this.
+- BUG CAUGHT: product slugs contain parentheses (iphone-17-(physical-sim)) and the markdown-lite link regex ([^\s)]+) truncates hrefs at the first ")" - raw-paren links would 404. Fixed with %28/%29 percent-encoding in content; verified live: both encoded and raw forms return 200 on the PDP (Next decodes params before slug lookup).
+- Covers: 4 branded 1200x675 progressive JPGs (35-77 KB) via scripts/task86-blog-covers{,-v2,-v3}.mjs + task86-optimize-covers.py. Visual QA rejected v1 twice (PS5 cover drew an Xbox; iPhone cover drew Samsung-branded phones) - regenerated with silhouette/angle steering prompts; final picks: PS5=v2, iPhone=v3 (v2 had garbled screen text), pay+watch=v1. Raw sources committed alongside (same pattern as Task 80).
+- llms.txt: 4 new entries under "Buyer guides (blog)" (llms-full.txt auto-enumerates).
+- Restored /api/admin/upload AGAIN (deleted from the working tree by session recovery before commit - 3rd time); also removed a stray untracked public/robots.txt that would have shadowed the AEO-aware src/app/robots.ts.
+- Build OK (next build + OpenNext bundle). Linear-history check passed; pushed 1adbf56..74ff845. Deploy promoted FAST (poll #3, ~2 min via new-cover-asset probe).
+- Live verification (cache-busted): all 4 post pages 200 with correct <title>, Quick answer box, FAQPage JSON-LD; HowTo JSON-LD exactly on the 2 procedural guides; og:image -> new covers; /blog lists all 4 cards with covers; sitemap.xml + llms.txt carry the 4 slugs; JSON-LD parses (BlogPosting image + FAQ 5 + HowTo 5); encoded product links intact in live HTML.
+- Evidence screenshots in download/: task86-blog-grid.png (9/9 cards), task86-post-{ps5,iphone}-*.png, task86-post-payments-faq.png (FAQ accordion + CTA visible).
+
+Stage Summary:
+- The blog now runs 9 code-shipped SEO/AEO guides + the owner's DB posts: 4 new money-keyword guides (PS5 price, iPhone price, online payments, smartwatches) are live at hayaan.co/blog with quick answers, FAQ/HowTo structured data, and on-brand covers. No DB changes, no migration needed - guides ship with the app and remain owner-editable via the slug-shadow mechanism.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe, t85-reviewer test users). Blog post (if owner wants): submit new guides to KarmaLinks-style backlink partners / Google Search Console indexing.
