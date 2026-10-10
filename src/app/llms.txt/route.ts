@@ -30,6 +30,10 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Buying Health Supplements Online in Somalia](${SITE}/blog/buying-health-supplements-online-in-somalia): how to read labels and choose a good multivitamin.
 - [Setting Up a Home Office in Somalia](${SITE}/blog/setting-up-a-home-office-in-somalia): the essential shopping list, printer + toner pairing included.
 - [Online Shopping in Somalia: How It Works](${SITE}/blog/online-shopping-in-somalia-how-it-works): delivery, payment and support explained step by step.
+- [PS5 Price in Somalia](${SITE}/blog/ps5-price-in-somalia): PlayStation 5 Digital Slim ($720) vs Pro 2TB ($1,180), which edition to buy, and how to order one.
+- [iPhone Price in Somalia](${SITE}/blog/iphone-price-in-somalia): every current iPhone from $990 (iPhone 17) to $1,550 (17 Pro Max), physical-SIM notes included.
+- [How to Pay Online in Somalia](${SITE}/blog/how-to-pay-online-in-somalia): EVC Plus, Edahab and card through a secure checkout, step by step.
+- [Best Smartwatches to Buy Online in Somalia](${SITE}/blog/best-smartwatches-online-in-somalia): Apple Watch, Galaxy Watch, Huawei and Amazfit from $55 to $440, matched to your phone.
 
 ## Key pages
 
