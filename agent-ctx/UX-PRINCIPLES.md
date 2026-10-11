@@ -97,6 +97,20 @@ and document it — consistent convention beats cleverness.
 - Lead popup timing itself (18s) is a business lever — Norman would prefer
   engagement-triggered; owner's call, left as-is.
 
+**Case study from this task (the paradox of technology, live):** while
+verifying the checkout hints we caught a REAL display bug — `/api/cart`
+items carried the price only under `product`, the client shipping helper
+read top-level `it.price` → NaN → **every cart ≥$75 showed a $6.95 delivery
+fee at checkout while the server charged the correct amount** (the cart
+drawer looked right only because it short-circuits the free-shipping case
+before calling the helper; `ignoreBuildErrors: true` hid the type
+mismatch). Fixed in 1af6aa3 (shape-tolerant helpers + payload carries
+price/productType; verified with bun across old/new/digital/mixed shapes).
+Lesson: when a capability (digital-aware shipping) is added, its silent
+failure mode showed up as a *wrong number next to the pay button* — exactly
+where conceptual-model accuracy matters most. Keep the displayed total and
+the charged total provably identical (same helper, same shape).
+
 **Rule for every new PR:** each user-visible action ships with (a) a
 signifier, (b) immediate feedback, (c) a defined failure path with recoverable
 copy, and (d) EN + SO strings. If any is missing, the task is not done.

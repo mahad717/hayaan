@@ -1910,3 +1910,26 @@ Work Log:
 
 Stage Summary:
 - Norman's DOET is now the project's standing UX standard, persisted at agent-ctx/UX-PRINCIPLES.md with book-verified quotes and a Hayaan mapping table; future tasks must design/review against it. Wishlist heart flow identified as the in-repo reference implementation of the principles.
+---
+Task ID: 90
+Agent: Super Z (main)
+Task: Apply Norman's "Design of Everyday Things" principles — fix the 5 flagged UX items (PDP delivery preview, checkout error states, constraint-first validation, EN+SO signifiers, lead-popup timing).
+
+Work Log:
+- Dictionary: added 17 keys (pdp.delivery* x6, co.payErr*/co.err*/co.pay* x7, lead.popupSending) each with a curated Somali pair; TS Record<DictKey,string> keeps SO complete at build time.
+- PDP delivery preview (product-detail.tsx): district picker (20 priced districts + Other-city) with the exact fee, "Delivery to Hodan: $1.50" style line, free-over-$75 note; defaults to the shopper's saved district once the session resolves (SSR-safe: starts empty, fills client-side); physical products only; uses the same MOGADISHU_DISTRICTS table as checkout and the Sifalo order creator, so the number can never drift.
+- Checkout (checkout.tsx): inline categorized failure panel next to the pay button (network / cart-consumed-draft / declined-generic), auto-scrolled into view, dismissible, role=alert; disabled pay button now explains itself (spinner + "Checking payment availability…" during the Sifalo probe, "Pick your delivery district above to enable payment." when the total is unknown); success path clears the panel; OTHER_CITY sentinel moved to lib/shipping so PDP and checkout share one convention.
+- Lead popup (lead-popup.tsx): never stacks over an open auth modal, cart drawer, or checkout/orders view — postpones 30s and retries up to 4x before giving up for the visit; CTA disabled until email or phone has content (constraint over punishment) with the hint explaining what is needed; busy label "Sending…" instead of "…".
+- RESTORED /api/admin/upload a 5TH time — this round the session-recovery auto-commit 6c1095d (UUID message) committed the deletion itself; restored from d11958c and included in the Task 90 commit.
+- Caught a REAL pre-existing bug while live-verifying (display-only): /api/cart items carried price only under product, but computeCartShipping/physicalSubtotal read top-level it.price -> NaN -> threshold never tripped -> EVERY cart showed a $6.95 (or wrong district) fee at checkout while the server charged correctly (sifalo-server maps product.price properly). The cart drawer was safe only because it short-circuits >=$75 before calling the helper; typescript.ignoreBuildErrors:true hid the type mismatch. Fixed in 1af6aa3: shipping helpers accept both shapes (top-level OR product.price/productType fallback, NaN-proof Number()), /api/cart buildCart now emits top-level price + productType on both Supabase and Prisma paths, CartItem type documents the contract. Verified with bun: old-shape 450->0, new-shape 450->0, digital-only->0, tiny-no-district->6.95, tiny-Hodan->1.5, mixed($90 digital+$10 cable)->1.5 on the physical subtotal only.
+- Pushes: dc54272 (Task 90 UX + upload restore), 1af6aa3 (shipping display fix). Linear-history merge-base checks passed both times.
+- Deploy poll: Task-90 strings verified in live chunks (9/9 signals: payErrTitle, payNeedDistrict, payChecking, errCartSync, pdp.deliveryFee, lead.popupSending, Gaadhitaanka, Bixintu ma dhicin, Free-delivery note); shipping-lib chunk hash changed 43r39oj9mp3fk -> 41pwues4mv9rm for the fix deploy.
+- Live browser verification (agent-browser, signed-in via UI signup t90-norman@shop.demo): PDP delivery box renders with aria-labeled combobox; "Delivery to Hodan: $1.50" appears after picking; popup CTA observed disabled with empty fields; checkout before fix showed Subtotal 450/Shipping 6.95/Total 456.95, after fix shows Subtotal 450/Shipping Free/Total 450 with "Pay $450.00 securely"; picking Hodan at checkout keeps Free (threshold rule dominates, consistent with the PDP note).
+- Screenshots in download/: task90-pdp-delivery-preview.png, task90-pdp-delivery-hodan.png, task90-checkout-fixed-free.png, task90-checkout-district-hodan.png.
+- UX-PRINCIPLES.md updated: 5 items marked fixed with file references + the NaN case recorded as a paradox-of-technology case study.
+
+Stage Summary:
+- All 5 Norman audit items shipped and live: the delivery fee is now knowledge-in-the-world at the decision point (PDP), payment failures get categorized recovery copy next to the pay button, disabled controls explain themselves, the lead popup never interrupts an active task, and every new signifier ships in EN + SO.
+- Bonus: found and fixed the checkout display/charge drift (NaN physical subtotal) — the displayed total and the Sifalo-charged total are once again provably the same number, now enforced by shape-tolerant helpers.
+- t90-norman@shop.demo exists in prod Supabase (browser-verified signup with a cart item) — add to the pending test-user cleanup list (customer@shop.demo, task83-probe, t85-reviewer, t88-probe).
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; test-user cleanup decision; lead-popup 18s timing is an owner lever.
