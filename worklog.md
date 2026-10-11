@@ -1974,3 +1974,16 @@ Stage Summary:
 - Hayaan's Samsung A-series now sells at sanguni's current primary prices: A06 $118, A07 $140, A16 $145, A17 $190 (was $110/$125/$118/$165). All changes audited server-side and backed up locally; verified live on all 4 PDPs.
 - Owner decisions still open: test-user cleanup list (customer@shop.demo, task83-probe, t85-reviewer, t88-probe, t90-norman); whether to keep tracking sanguni's cheapest vs primary listings going forward.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; next blog batch awaiting owner go-ahead.
+---
+Task ID: 92-a
+Agent: Super Z (main)
+Task: Owner requested undo of the Task 92 A-series price sync — restore original prices.
+
+Work Log:
+- Wrote scripts/task92-revert-a-series.mjs (same admin pipeline + same safety precondition: refuse if current price != the synced price).
+- Reverted 4/4: A06 $118 -> $110, A07 $140 -> $125, A16 $145 -> $118, A17 $190 -> $165. Each change audited server-side by the PUT route (old -> new).
+- Verified: public catalog API matches 4/4; live PDP JSON-LD shows 110 / 125 / 118 / 165.
+- Evidence: scripts/task92-revert-results.json. No code changed -> no build/deploy cycle.
+
+Stage Summary:
+- A-series prices are back at the pre-sync originals ($110/$125/$118/$165). The sanguni price-drift question is now closed as "keep Hayaan's current prices" unless the owner revisits it; backups (task92-price-sync-backup.json) remain available if they ever want the higher margin.

@@ -1,0 +1,63 @@
+{
+ "ranAt": "2026-10-11T19:44:20.695Z",
+ "results": [
+  {
+   "id": "87f4a5d5-99a4-4b11-aef6-f2e401e8cb56",
+   "name": "Samsung Galaxy A06",
+   "expectCurrent": 118,
+   "price": 110,
+   "status": "reverted",
+   "http": 200,
+   "newPrice": 110
+  },
+  {
+   "id": "9da7722a-2ea5-465c-a05d-346211bf724f",
+   "name": "Samsung Galaxy A07",
+   "expectCurrent": 140,
+   "price": 125,
+   "status": "reverted",
+   "http": 200,
+   "newPrice": 125
+  },
+  {
+   "id": "7798dbd3-0942-426b-b338-6fb831a68bc2",
+   "name": "Samsung Galaxy A16",
+   "expectCurrent": 145,
+   "price": 118,
+   "status": "reverted",
+   "http": 200,
+   "newPrice": 118
+  },
+  {
+   "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+   "name": "Samsung Galaxy A17",
+   "expectCurrent": 190,
+   "price": 165,
+   "status": "reverted",
+   "http": 200,
+   "newPrice": 165
+  }
+ ],
+ "verify": {
+  "Samsung Galaxy A06": {
+   "publicPrice": 110,
+   "expected": 110,
+   "match": true
+  },
+  "Samsung Galaxy A07": {
+   "publicPrice": 125,
+   "expected": 125,
+   "match": true
+  },
+  "Samsung Galaxy A16": {
+   "publicPrice": 118,
+   "expected": 118,
+   "match": true
+  },
+  "Samsung Galaxy A17": {
+   "publicPrice": 165,
+   "expected": 165,
+   "match": true
+  }
+ }
+}
