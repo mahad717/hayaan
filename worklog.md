@@ -1845,3 +1845,30 @@ Work Log:
 Stage Summary:
 - The blog now runs 9 code-shipped SEO/AEO guides + the owner's DB posts: 4 new money-keyword guides (PS5 price, iPhone price, online payments, smartwatches) are live at hayaan.co/blog with quick answers, FAQ/HowTo structured data, and on-brand covers. No DB changes, no migration needed - guides ship with the app and remain owner-editable via the slug-shadow mechanism.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; customer@shop.demo cleanup decision (+ task83-probe, t85-reviewer test users). Blog post (if owner wants): submit new guides to KarmaLinks-style backlink partners / Google Search Console indexing.
+
+---
+Task ID: 87
+Agent: Super Z (main)
+Task: Add internal links from product pages to the buying guides, and write the next SEO/AEO batch (AC buying guide, TV sizes, Mogadishu city-targeted post).
+
+Work Log:
+- Restored src/app/api/admin/upload/route.ts from git (deleted from the working tree again, same regression as Task 85).
+- Verified the live catalog via /api/products: Lightwave ACs 9K/12K/18K/24K ($260/$280/$390/$460), TVs 32"-85" ($175 Geepas 32" to $2,350 Samsung 85"), watches, district fee table from src/lib/shipping.ts (20 districts, $1.50-$3.00, free >= $75, $6.95 nationwide).
+- Wrote 3 new AEO posts in src/lib/blog-seo-posts.ts (post10-12): air-conditioner-price-in-somalia (BTU room sizing, stabilizer upsell, 5 FAQs + HowTo), what-size-tv-to-buy-in-somalia (viewing-distance rule, brand tiers, PS5 pairing), online-shopping-in-mogadishu (full 20-district fee list, $75 free-shipping math). All prices verified against the live catalog on publish day; iPhone slug links use %28%29 encoding.
+- Fixed broken Huawei Watch product link in live post9 (slug had a stray "-46-mm" -> actual slug "-46mm", /product/huawei-watch-gt-6-gps-46mm now 200).
+- Added cross-links from existing post1 (TV size guide, PS5 guide).
+- Created src/lib/product-guides.ts: BUYING_GUIDES registry (12 guides) + guidesForProduct(name, categorySlug) matcher — name-specific guides first, category guides next, universal pay/shopping/mogadishu fillers, max 3 cards.
+- Wired a server-rendered "Before you order - buying guides" section into src/app/product/[slug]/page.tsx below ProductDetail (crawler-visible in first HTML, brand-styled cards).
+- Added 3 bullets to llms.txt route.
+- Generated 3 covers via z-ai (scripts/task87-covers.mjs, 1344x768, strict no-text prompts, 3/3 first attempt) and optimized to 1200x675 progressive JPG (scripts/task87-optimize-covers.py); visual inspection passed - no garbled AI text.
+- Built (next build + OpenNext), committed, linear-history verified (merge-base check) and pushed via token URL.
+- Polled deploy (scripts/task87-poll-deploy.sh): all signals green in 3 polls (~90s) - cover 200, /blog lists new slugs, Mogadishu quickAnswer live, product page "Before you order" live.
+- Verified live: all 3 posts return 200 with FAQPage + HowTo + BlogPosting JSON-LD and og:image; sitemap.xml, llms.txt and llms-full.txt all enumerate the new slugs.
+- Caught and fixed a mapping bug: Apple/Galaxy/Huawei/Amazfit watches did not match the "smart watch" name regex - added phones-wearables category + /watch/ name rule; rebuilt, pushed (418b863), re-polled, verified Apple Watch and Galaxy Watch pages now surface the smartwatch guide.
+- Screenshots (scripts/task87-screenshots.mjs, CDP): download/task87-mogadishu-guide-top.png, download/task87-ac-guide-prices.png, download/task87-product-page-guides.png (3 guide cards visible on the LG 55" TV page).
+
+Stage Summary:
+- Live: 3 new guides (/blog/air-conditioner-price-in-somalia, /blog/what-size-tv-to-buy-in-somalia, /blog/online-shopping-in-mogadishu) with full AEO recipe (quickAnswer, FAQPage, HowTo, BlogPosting, og:image covers).
+- Live: every product page (97 products) now carries up to 3 contextual buying-guide links; mappings verified per product type (TV/AC/iPhone/watch/PS5/generic).
+- Blog now has 12 SEO posts + 1 owner-authored Somali post; llms.txt/llms-full.txt/sitemap in sync.
+- Commits: a6802c8 (batch + product-page links), 418b863 (watch mapping fix). No secrets committed.
