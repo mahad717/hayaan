@@ -37,6 +37,9 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Air Conditioner Price in Somalia](${SITE}/blog/air-conditioner-price-in-somalia): Lightwave 9K–24K split units from $260 to $460, room sizing by BTU, and the stabilizer that protects the compressor.
 - [What Size TV Should You Buy in Somalia](${SITE}/blog/what-size-tv-to-buy-in-somalia): every TV from $175 (32") to $2,350 (85") and the viewing-distance rule that picks the right size.
 - [Online Shopping in Mogadishu](${SITE}/blog/online-shopping-in-mogadishu): delivery fees for all 20 districts ($1.50–$3.00), the $75 free-shipping line, and how to order step by step.
+- [Wi-Fi Router Price in Somalia](${SITE}/blog/wifi-router-price-in-somalia): routers, extenders and access points from $15 to $145, matched to homes and offices, with placement and power-cut notes.
+- [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $75, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
+- [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood (free over $75), payment and ordering walkthrough.
 
 ## Key pages
 

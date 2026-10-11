@@ -83,6 +83,21 @@ export const BUYING_GUIDES = {
     "Online Shopping in Mogadishu",
     "Delivery fees for every district, and how free shipping works over $75.",
   ),
+  router: G(
+    "wifi-router-price-in-somalia",
+    "Wi-Fi Router Price in Somalia (2026)",
+    "From $15 to $145: routers, extenders and access points matched to your home or office.",
+  ),
+  printer: G(
+    "printer-price-in-somalia",
+    "Printer Price in Somalia (2026)",
+    "HP lasers from $75, print-only vs MFP, and the toner math before you order.",
+  ),
+  hargeisa: G(
+    "online-shopping-in-hargeisa",
+    "Online Shopping in Hargeisa",
+    "Flat $6.95 citywide delivery, free over $75, and how to order step by step.",
+  ),
 } satisfies Record<string, GuideLink>;
 
 /**
@@ -103,6 +118,8 @@ export function guidesForProduct(name: string, categorySlug?: string | null): Gu
 
   // Specific product-name matches first.
   if (/air conditioner/.test(n)) push(BUYING_GUIDES.ac);
+  if (/router|access point|extender|wi-?fi|\buni-?fi\b|mikrotik|omada/.test(n)) push(BUYING_GUIDES.router);
+  if (/printer|toner/.test(n)) push(BUYING_GUIDES.printer);
   if (/\btv\b|television/.test(n)) push(BUYING_GUIDES.tv);
   if (/playstation|\bps5\b/.test(n)) push(BUYING_GUIDES.ps5);
   if (/iphone/.test(n)) push(BUYING_GUIDES.iphone);

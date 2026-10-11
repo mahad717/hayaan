@@ -980,6 +980,288 @@ Payment happens at checkout, before the rider leaves — EVC Plus, Edahab, or ca
 Nationwide delivery is a flat **$6.95** to any city or town — and $75+ orders ship free nationwide too. The full walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), and the [deals page](https://hayaan.co/deals) is where restocks and price drops land first.`,
 };
 
+// Task 93 — October 2026 batch 3 (Wi-Fi routers, printers, Hargeisa city).
+// Same AEO recipe; prices verified against the live catalog on publish day.
+
+const post13 = {
+  id: "seo-router-somalia",
+  slug: "wifi-router-price-in-somalia",
+  title: "Wi-Fi Router Price in Somalia (2026): From $15 to $145, Which One Fits Your Home?",
+  excerpt:
+    "Every router, extender and access point price at Hayaan right now, what each tier is actually for, and how to get whole-home Wi-Fi without overpaying.",
+  quickAnswer:
+    "Wi-Fi router prices in Somalia at Hayaan Market (hayaan.co) start at $15 for the TP-Link 840N, with the dual-band AC750 at $25, the AC1200 range extender at $36, the Omada AC1350 access point at $85, and pro-grade MikroTik ($135) and UniFi ($145) gear for offices — fixed USD prices, no VAT, flat $6.95 delivery nationwide and free over $75.",
+  howtoSteps: [
+    {
+      name: "Count the devices",
+      text: "Phones, laptops, TVs, consoles and smartwatches all share one router — a family home is easily ten or more devices.",
+    },
+    {
+      name: "Pick the tier",
+      text: "One room and a few devices: the 840N at $15. A whole family: the dual-band AC750 at $25. Large house with far rooms: add the AC1200 extender at $36.",
+    },
+    {
+      name: "Place it centrally",
+      text: "High, open, near the middle of the home — walls are what kill Wi-Fi, not distance.",
+    },
+    {
+      name: "Extend the weak rooms",
+      text: "If one wing stays slow, the $36 AC1200 extender in a hallway socket usually fixes it; offices do it properly with an $85+ access point.",
+    },
+    {
+      name: "Order and secure it",
+      text: "Check out with EVC Plus, Edahab, or card, then change the admin password during first setup.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much does a Wi-Fi router cost in Somalia?",
+      a: "At Hayaan Market: TP-Link 840N $15, TP-Link AC750 dual-band $25, TP-Link AC1200 extender $36, TP-Link Omada AC1350 access point $85, MikroTik L009 $135, and UniFi AP AC PRO $145 — fixed USD prices, no VAT.",
+    },
+    {
+      q: "Which router is best for a family home?",
+      a: "The TP-Link AC750 at $25 is the family baseline — dual-band keeps streaming stable on one band while phones browse on the other. Larger homes add the AC1200 extender for the far rooms.",
+    },
+    {
+      q: "My ISP installed a modem — do I still need a router?",
+      a: "Yes, in most homes. The modem your ISP installs provides the internet line, and a router behind it shares that connection as Wi-Fi to all your devices over a standard ethernet cable.",
+    },
+    {
+      q: "What is the difference between a router, extender and access point?",
+      a: "A router creates your home Wi-Fi; an extender repeats it into weak rooms; an access point serves Wi-Fi from a ceiling or wall mount in offices, wired back to the network.",
+    },
+    {
+      q: "Do you deliver routers outside Mogadishu?",
+      a: "Nationwide flat $6.95 — Hargeisa, Burao, Bosaso, Kismayo, anywhere in Somalia — and orders over $75 ship free.",
+    },
+  ],
+  content: `A router is the cheapest piece of technology that decides whether your internet feels broken. The line your ISP brings into the house is only as good as the box that shares it — and most home Wi-Fi complaints in Somalia trace back to a router that is too weak for the household, placed in the worst possible corner, or asked to reach rooms it was never going to reach.
+
+Here is every price on the shelf right now, what each tier is for, and how to put the pieces together.
+
+## Router prices in Somalia right now
+
+Live on the [home & office shelf](https://hayaan.co/category/home-office), fixed USD prices:
+
+1. **TP-Link 840N — $15.** The single-room basics: one machine or a small flat, Wi-Fi for browsing and chat.
+2. **TP-Link AC750 dual-band — $25.** The family baseline. Two bands means video calls and streaming stay smooth while everyone else's phones browse alongside.
+3. **TP-Link AC1200 range extender — $36.** Not a router — it repeats an existing Wi-Fi signal into the rooms the router cannot reach.
+4. **TP-Link Omada AC1350 access point — $85.** Business Wi-Fi: mounts on wall or ceiling and serves clients across a shop or office floor.
+5. **MikroTik L009 — $135.** The serious wired router: eight gigabit ports and full professional control for power users, offices and small ISPs.
+6. **UniFi AP AC PRO — $145.** The premium ceiling-mount Wi-Fi for offices, guesthouses and hotels — many units roam together as one network.
+
+Every price above is the final price — no VAT added at checkout.
+
+## Match the gear to the job
+
+- **Small flat or one room:** the [$15 TP-Link 840N](https://hayaan.co/product/tp-link-840n-wi-fi-router) is enough, and it leaves budget for a proper cable.
+- **Family home:** the [$25 AC750](https://hayaan.co/product/tp-link-ac750-wireless-dual-band-router) as the heart of the network — this is the pick for nine out of ten households.
+- **Weak rooms upstairs or at the back:** keep your router and add the [$36 AC1200 extender](https://hayaan.co/product/tp-link-ac1200-wifi-range-extender) in a hallway socket halfway to the dead zone.
+- **Shop, office or school:** an [$85 Omada access point](https://hayaan.co/product/tp-link-omada-ac1350-access-point) per floor, wired back to a [MikroTik L009 at $135](https://hayaan.co/product/mikrotik-l009-series-router); guesthouses and hotels step up to the [UniFi AP AC PRO at $145](https://hayaan.co/product/unifi-ap-ac-pro-wireless-access-point).
+
+If you are outfitting a whole workspace, the [home office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) itemises the full desk — printer, light, microphone — around this network.
+
+## Where routers actually die: placement
+
+A router in a steel cabinet, under the TV, or at one end of a long concrete house will disappoint at any price. Put it high, open, and near the middle of the home — then run an ethernet cable to anything that stands still. A [TV](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) on Wi-Fi is the number-one cause of buffering; a $3 [cable from the shop](https://hayaan.co/category/power-charging-audio) solves it permanently.
+
+## The power-cut reality
+
+When the power goes, the router goes with it — and comes back by itself when it returns. Nothing to fix. What actually damages networking gear over time is the voltage swing at the moment power returns, so put the [$11.50 Lightwave stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) between the wall and the router — the same insurance the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) recommends for compressors.
+
+> Rule: the router shares the internet; placement decides how far it reaches, and the stabilizer decides how long it lives.
+
+## Ordering, step by step
+
+1. **Count your devices** and pick the tier from the list above.
+2. **Add cables and the extender** to the same cart if the house is big — one order, one delivery.
+3. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the protections.
+4. **On first setup, change the admin password** — the one step most homes skip.
+
+Delivery is a flat **$6.95 nationwide** and free on orders over $75 — inside Mogadishu it is priced by district, which the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists. Watch the [deals page](https://hayaan.co/deals) for restocks, and the [bulk quote form](https://hayaan.co/quote) prices multi-unit office orders.`,
+};
+
+const post14 = {
+  id: "seo-printer-somalia",
+  slug: "printer-price-in-somalia",
+  title: "Printer Price in Somalia (2026): HP Lasers From $75, Plus What Toner Really Costs",
+  excerpt:
+    "The two HP lasers homes, schools and shops actually buy, why laser beats inkjet in this climate, and the toner math to know before you order.",
+  quickAnswer:
+    "Printer prices in Somalia at Hayaan Market (hayaan.co) start at $75 for the HP Laser 107A (print-only mono laser) with the HP Laser MFP 135A — print, scan and copy — at $165. Both are USB-connected mono lasers; original HP toner sets, like the 651A set at $277, are stocked. Fixed USD prices, no VAT, free delivery on orders over $75.",
+  howtoSteps: [
+    {
+      name: "Estimate your monthly pages",
+      text: "A student printing assignments and a shop printing daily invoices need different machines — be honest about the number before you buy.",
+    },
+    {
+      name: "Print-only or MFP",
+      text: "Print only: the 107A at $75. Scan and copy too — schools, shops, clinics: the MFP 135A at $165 replaces two machines.",
+    },
+    {
+      name: "Budget the toner with the printer",
+      text: "Both lasers take the HP 106A cartridge, and one is included in the box — put a spare in the same order.",
+    },
+    {
+      name: "Plan the connection",
+      text: "Both connect by USB to the computer that prints — place the printer within cable reach of that PC.",
+    },
+    {
+      name: "Order at the listed price",
+      text: "EVC Plus, Edahab, or card at checkout; delivery is $1.50–$3 by district in Mogadishu, flat $6.95 nationwide, free over $75.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much does a printer cost in Somalia?",
+      a: "At Hayaan Market the HP Laser 107A is $75 and the HP Laser MFP 135A (print, scan, copy) is $165 — fixed USD prices, no VAT.",
+    },
+    {
+      q: "Which printer should a home or student buy?",
+      a: "The HP Laser 107A at $75 covers essays, forms and tickets. If the household also needs photocopies and scanning, the MFP 135A at $165 is the better single purchase.",
+    },
+    {
+      q: "Why buy a laser instead of an inkjet?",
+      a: "Toner is powder — it does not dry out or clog the way inkjet ink does in heat and humidity, and page for page, laser printing costs less.",
+    },
+    {
+      q: "How much is printer toner in Somalia?",
+      a: "The 107A and MFP 135A take the HP 106A cartridge. Original HP toner sets for larger office Color LaserJets — like the 651A set at $277 — are also stocked. Match the exact cartridge number printed for your model.",
+    },
+    {
+      q: "Can the printer connect over Wi-Fi?",
+      a: "These two models are USB-connected — plug them into the PC that prints. For printing across an office network, share the printer from one computer; the router guide covers the networking gear.",
+    },
+  ],
+  content: `A printer is the last analog step in a digital life: the school form, the invoice, the clinic record, the ticket. And in Somalia it is exactly the appliance where the cheap choice backfires — inkjets meant for a cool office dry out and clog in our heat, and a printer that needs its head cleaned every second week is not a bargain at any price.
+
+The two lasers below are what homes, schools and shops actually buy. Here is what they cost, what toner really costs, and how to order.
+
+## Printer prices in Somalia right now
+
+Live on the [home & office shelf](https://hayaan.co/category/home-office), fixed USD prices:
+
+1. **HP Laser 107A — $75.** The home and student pick: a mono laser that prints about 20 pages a minute, month after month, without drama.
+2. **HP Laser MFP 135A — $165.** The same laser engine plus scan and copy — for shops, schools and clinics that used to queue at a photocopy stand.
+3. **HP 651A Original Toner Set — $277.** Original HP cartridges for bigger office Color LaserJets — the example of what "original toner" looks like on the shelf.
+
+Every price above is the final price — no VAT added at checkout.
+
+## Laser vs inkjet, in Somali conditions
+
+An inkjet sprays liquid ink through tiny nozzles. Heat and dust are exactly what those nozzles hate: ink dries in the head, the first page comes out streaked, and cleaning cycles eat the cartridge. Toner is powder — it sits in the cartridge for months and prints the day you need it. For a machine that works in a Mogadishu summer or a Hargeisa winter, mono laser is not a preference; it is the sane default.
+
+> Rule: inkjets are for photo studios; lasers are for everything else.
+
+## Print-only or MFP?
+
+- **HP Laser 107A ($75):** printing only. Students, home offices, anyone whose copies happen twice a year.
+- **HP Laser MFP 135A ($165):** printing, scanning and copying in one box. If the household pays a photocopy stand even twice a week, the MFP pays for itself inside a few months — and the kids' school forms get scanned and sent instead of lost.
+
+## The toner math, before you order
+
+Both printers take the **HP 106A cartridge** (about a thousand pages), and each ships with one in the box. The mistake to avoid is buying the printer and forgetting the toner — put a spare cartridge in the same cart so the machine never sits idle.
+
+Two rules protect your money: buy **original** cartridges (compatibles are the reason cheap printers get thrown away), and match the **exact number** printed for your model — the [651A original set at $277](https://hayaan.co/product/hp-toner-cartridge-651a-original-set) fits the bigger office Color LaserJets, not these two.
+
+## Setup and ordering
+
+1. **Pick the model** from your honest monthly page count.
+2. **Add a spare toner** to the same order.
+3. **Place the printer within USB reach** of the PC that prints — both models connect by cable.
+4. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains what the secure checkout protects.
+5. **Keep the packaging** until the first ream has gone through — it is your reference if anything must come back.
+
+Delivery is $1.50–$3.00 by district in Mogadishu and a flat $6.95 nationwide — free over $75. The full shopping list around the printer (desk light, microphone, network) lives in the [home office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia), and the [bulk quote form](https://hayaan.co/quote) prices multi-printer orders for schools and offices.`,
+};
+
+const post15 = {
+  id: "seo-hargeisa-somalia",
+  slug: "online-shopping-in-hargeisa",
+  title: "Online Shopping in Hargeisa: Delivery, Payment and How to Order From Hayaan",
+  excerpt:
+    "One flat $6.95 delivery fee to any Hargeisa neighborhood, free over $75, EVC Plus/Edahab/card checkout — the complete walkthrough for Somaliland's capital.",
+  quickAnswer:
+    "Hayaan Market (hayaan.co) delivers across Hargeisa for a flat $6.95 per order — free on orders of $75 or more. Every listing shows the exact USD price, payment is EVC Plus, Edahab, or card in the secure checkout before dispatch, and your order number tracks delivery from cart to door. The same flat fee applies nationwide.",
+  howtoSteps: [
+    {
+      name: "Fill the cart at fixed prices",
+      text: "Every listing on hayaan.co shows the exact USD price and live stock — no haggling, no phone calls.",
+    },
+    {
+      name: "Enter your Hargeisa address",
+      text: "Neighborhood plus a landmark the rider can find; the flat $6.95 fee appears before payment.",
+    },
+    {
+      name: "Approve the exact total",
+      text: "Products plus $6.95, itemised on the checkout screen — nothing is added at the door.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "EVC Plus, Edahab, or card — approved on your phone and recorded on both sides.",
+    },
+    {
+      name: "Keep the order number",
+      text: "It tracks under Orders, and support@hayaan.co works from that number.",
+    },
+  ],
+  faqs: [
+    {
+      q: "Does Hayaan deliver to Hargeisa?",
+      a: "Yes — the nationwide flat $6.95 per order covers every Hargeisa neighborhood, and orders of $75 or more ship free.",
+    },
+    {
+      q: "How do I pay from Hargeisa?",
+      a: "In the secure hosted checkout, before dispatch: EVC Plus, Edahab, or card. The approved total is the charged total — itemised, with nothing collected at the door.",
+    },
+    {
+      q: "Is delivery free to Hargeisa?",
+      a: "On orders of $75 or more, yes. Below that it is the flat $6.95 — the same fee as everywhere in Somalia outside Mogadishu.",
+    },
+    {
+      q: "What do people in Hargeisa order most?",
+      a: "Phones and wearables first — the iPhone price guide lists every model — then TVs and consoles, and printers and networking gear for offices and schools.",
+    },
+    {
+      q: "Do you deliver to other Somaliland towns?",
+      a: "Yes — Burao, Berbera, Borama, Erigavo and anywhere else in Somalia are the same flat $6.95, free over $75.",
+    },
+  ],
+  content: `Hargeisa shops well — if you have the day to spend. The phone market, the electronics rows, the drive to confirm a price is real and a box is sealed: it all costs hours, and the price you are quoted can change with the exchange rate. Ordering online flips it around. Every price is written down in dollars, the stock is live, and the box comes to your neighborhood for a fee you saw before you paid.
+
+This is the complete walkthrough for ordering from Hayaan Market in Hargeisa — delivery, payment, and what arrives when.
+
+## How ordering works from Hargeisa
+
+1. **Fill the cart at fixed prices.** Every listing on [hayaan.co](https://hayaan.co/) shows the exact USD price and live stock — no haggling, no calls.
+2. **Enter your Hargeisa address.** Neighborhood plus a landmark the rider can find; the flat $6.95 fee appears before payment.
+3. **Approve the exact total.** Products plus the delivery fee, itemised on the checkout screen — nothing is added at the door.
+4. **Pay through the secure checkout.** EVC Plus, Edahab, or card — approved on your phone, recorded on both sides.
+5. **Keep the order number.** It tracks under Orders, and support@hayaan.co works from that number.
+
+## Delivery: one flat fee for the whole city
+
+Hargeisa has no district pricing to learn. **Every neighborhood is the same flat $6.95 per order** — the same fee as everywhere in Somalia outside Mogadishu, where the [capital's per-district table](https://hayaan.co/blog/online-shopping-in-mogadishu) applies instead.
+
+And the line that erases the fee entirely: **any order of $75 or more ships free.** In practice that means every [TV](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) (from $175), every [iPhone](https://hayaan.co/blog/iphone-price-in-somalia) (from $990) and every [air conditioner](https://hayaan.co/blog/air-conditioner-price-in-somalia) (from $260) ships free to Hargeisa — the fee only really matters on small accessory orders, where one added item usually clears it anyway.
+
+> The fee is per order, not per item: one cart with everything beats two separate orders.
+
+## Paying from Hargeisa
+
+Payment happens in the hosted secure checkout, before the parcel leaves — EVC Plus, Edahab, or card, approved on your phone wherever you are. The [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the two protections that matter: the approved total is the charged total (itemised, nothing collected at the door), and the transaction is recorded on both sides — your order number is the receipt support works from.
+
+## What Hargeisa orders most
+
+- **Phones and wearables** — the [phones & wearables section](https://hayaan.co/category/phones-wearables) runs from budget Galaxy A models to the iPhone 18 lineup; the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) lists every model and its SIM type.
+- **TVs and gaming** — [smart TVs from $175 to $2,350](https://hayaan.co/category/computers-tv-gaming) and the [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) for the two console editions.
+- **Office and school gear** — the [printer guide](https://hayaan.co/blog/printer-price-in-somalia) covers HP lasers from $75 and the toner math, while the [router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) builds the network behind it.
+
+## Outside the capital, outside Hargeisa
+
+Nationwide means nationwide: Burao, Berbera, Borama, Erigavo, Bosaso, Kismayo — the same flat **$6.95**, free over $75. The full nationwide walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), restocks and price drops land first on the [deals page](https://hayaan.co/deals), and offices, schools and hotels can price multi-unit orders through the [bulk quote form](https://hayaan.co/quote).`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1001,6 +1283,10 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post10, coverImage: "https://hayaan.co/images/blog/air-conditioner-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T09:00:00.000Z"), createdAt: "2026-10-11T09:00:00.000Z", updatedAt: "2026-10-11T09:00:00.000Z" },
   { ...post11, coverImage: "https://hayaan.co/images/blog/what-size-tv-to-buy-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T09:30:00.000Z"), createdAt: "2026-10-11T09:30:00.000Z", updatedAt: "2026-10-11T09:30:00.000Z" },
   { ...post12, coverImage: "https://hayaan.co/images/blog/online-shopping-in-mogadishu.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T10:00:00.000Z"), createdAt: "2026-10-11T10:00:00.000Z", updatedAt: "2026-10-11T10:00:00.000Z" },
+  // Task 93 — October 2026 batch 3 (routers, printers, Hargeisa city) — prices verified against the live catalog on publish day.
+  { ...post13, coverImage: "https://hayaan.co/images/blog/wifi-router-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T09:00:00.000Z"), createdAt: "2026-10-12T09:00:00.000Z", updatedAt: "2026-10-12T09:00:00.000Z" },
+  { ...post14, coverImage: "https://hayaan.co/images/blog/printer-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T09:30:00.000Z"), createdAt: "2026-10-12T09:30:00.000Z", updatedAt: "2026-10-12T09:30:00.000Z" },
+  { ...post15, coverImage: "https://hayaan.co/images/blog/online-shopping-in-hargeisa.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:00:00.000Z"), createdAt: "2026-10-12T10:00:00.000Z", updatedAt: "2026-10-12T10:00:00.000Z" },
 ];
 
 
