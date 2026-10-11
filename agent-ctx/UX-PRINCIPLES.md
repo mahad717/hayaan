@@ -89,6 +89,12 @@ and document it — consistent convention beats cleverness.
    known (`lead-popup.tsx`, `checkout.tsx`).
 4. ~~SO translations~~ → every Task 90 key shipped EN + SO together
    (TS `Record<DictKey,string>` enforces completeness at build time).
+   Task 94 completeness pass: 430/430 keys bilingual; the remaining hardcoded
+   surfaces localized (cart/header a11y labels, hero alts, form placeholders,
+   blog index/post chrome + Somali SSR dates, category FAQ titles, PDP guide
+   cards, branded 404); full Somali FAQ content (site + category + generic)
+   with JSON-LD matching the visible language; known API/hook error strings
+   mapped to dict keys via `localizeApiError()` so toasts never leak English.
 5. ~~Lead popup interruption~~ → never stacks over an open auth modal, cart
    drawer, or checkout/orders view; postpones 30s and retries up to 4x
    before giving up for the visit (`lead-popup.tsx`).
