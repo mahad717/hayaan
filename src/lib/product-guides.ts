@@ -106,7 +106,7 @@ export function guidesForProduct(name: string, categorySlug?: string | null): Gu
   if (/\btv\b|television/.test(n)) push(BUYING_GUIDES.tv);
   if (/playstation|\bps5\b/.test(n)) push(BUYING_GUIDES.ps5);
   if (/iphone/.test(n)) push(BUYING_GUIDES.iphone);
-  if (/smart ?watch/.test(n)) push(BUYING_GUIDES.smartwatch);
+  if (/smart ?watch/.test(n) || (cat === "phones-wearables" && /watch/.test(n))) push(BUYING_GUIDES.smartwatch);
 
   // Category-level guides next.
   if (cat === "computers-tv-gaming") push(BUYING_GUIDES.electronics);
