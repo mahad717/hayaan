@@ -148,7 +148,9 @@ export function cartTotal(cart: Cart): number {
 }
 
 export async function fetchProducts(): Promise<Product[]> {
-  const res = await fetch("/api/products");
+  // ?limit=500: the API default is 100 and the catalog outgrew it
+  // (Task 91 sanguni mobile sync -> 141 products; the tail was invisible).
+  const res = await fetch("/api/products?limit=500");
   if (!res.ok) return [];
   const data = await res.json();
   return data.products as Product[];

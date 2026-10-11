@@ -59,8 +59,10 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 /** All active products for the storefront grid — mirrors GET /api/products'
  *  default (newest-first) query. Used by the home page to render the catalog
- *  into the SSR HTML. */
-export async function listActiveProducts(limit = 100): Promise<Product[]> {
+ *  into the SSR HTML. Limit must exceed the live catalog size: at the old
+ *  default of 100, the 2026-10 sanguni mobile sync (141 products) silently
+ *  hid 41 cards from the grid and sitemap. */
+export async function listActiveProducts(limit = 500): Promise<Product[]> {
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
     const { data, error } = await supabase
@@ -142,7 +144,7 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 
 /** Active products in one category, newest-first — mirrors the storefront
  *  grid order so /category/[slug] pages show the same cards. */
-export async function listProductsByCategorySlug(slug: string, limit = 100): Promise<Product[]> {
+export async function listProductsByCategorySlug(slug: string, limit = 500): Promise<Product[]> {
   const decoded = decodeURIComponent(slug);
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
