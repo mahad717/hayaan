@@ -1987,3 +1987,23 @@ Work Log:
 
 Stage Summary:
 - A-series prices are back at the pre-sync originals ($110/$125/$118/$165). The sanguni price-drift question is now closed as "keep Hayaan's current prices" unless the owner revisits it; backups (task92-price-sync-backup.json) remain available if they ever want the higher margin.
+---
+Task ID: 93
+Agent: Super Z (main)
+Task: Blog batch 3 (owner picked "next blog batch" — the AC/TV/Mogadishu trio was already live from Task 87, so this batch extends the series): Wi-Fi router guide, printer guide, Hargeisa city post.
+
+Work Log:
+- Confirmed the owner's referenced trio (AC / TV sizes / Mogadishu) is already live from Task 87; grounded the new batch in catalog gaps instead: networking gear (6 SKUs $15-$145), HP printers + toner (3 SKUs), and the second city post (Hargeisa) mirroring the Mogadishu one.
+- 3 posts in src/lib/blog-seo-posts.ts with the full AEO recipe (quickAnswer, 5 FAQs each, 5 howtoSteps each, BlogPosting/FAQPage/HowTo JSON-LD, og:image covers): wifi-router-price-in-somalia (TP-Link 840N $15, AC750 $25, AC1200 extender $36, Omada AC1350 $85, MikroTik L009 $135, UniFi AP AC PRO $145), printer-price-in-somalia (HP 107A $75, MFP 135A $165, 651A toner set $277, HP 106A toner math, laser-vs-inkjet climate argument), online-shopping-in-hargeisa (flat $6.95 citywide, free over $75, EVC Plus/Edahab/card, links to the Mogadishu district table as the capital counterpart).
+- Prices were pulled from the live catalog API on publish day and every product link uses real slugs; printer FAQ answer kept honest (both models are USB-connected — no invented Wi-Fi claims); toner guidance matches cartridge numbers explicitly (106A for the two lasers, 651A only for bigger Color LaserJets).
+- Covers: scripts/task93-covers.mjs (z-ai, 1344x768, strict no-text prompts — router on shelf, laser printer on desk, rider with green box against a Hargeisa-like mountain backdrop) -> task93-optimize-covers.py (1200x675 progressive JPG into public/images/blog). Visual inspection passed: brandless, zero garbled text.
+- Wiring: product-guides.ts registry + matcher gained router/printer/hargeisa guides — router regex /router|access point|extender|wi-?fi|uni-?fi|mikrotik|omada/ verified to match exactly the 6 intended products with zero over-matches; printer /printer|toner/ matches all 3. Router and printer PDPs now show their specific guide card first. llms.txt gained 3 curated bullets; llms-full.txt and sitemap enumerate the new posts automatically.
+- Build: fresh `next build` + OpenNext (verified BUILD_ID refreshed and all 3 slugs present in 8 server chunks each), committed ac3312d with linear-history merge-base check, pushed via token URL.
+- Deploy poll (scripts/task93-poll-deploy.sh): DEPLOYED in 3 polls (~2 min) — 3 covers 200, /blog lists the slugs, router post serves its quickAnswer, router PDP renders the new guide card, llms.txt carries the bullets.
+- Live verification: all 3 posts 200 with FAQPage + HowTo + BlogPosting JSON-LD and correct per-post og:image URLs; sitemap.xml enumerates all 3; printer PDP shows printer guide + home-office cards.
+- Screenshots: download/task93-router-post.png (post with QUICK ANSWER block), download/task93-router-pdp-guides.png (AC750 PDP with the router guide card first).
+
+Stage Summary:
+- Blog is now 15 shipped SEO/AEO guides + 1 owner-authored Somali post. Batch 3 live: Wi-Fi Router Price in Somalia, Printer Price in Somalia, Online Shopping in Hargeisa — each internally linked to its products, sibling guides, and the payment/Mogadishu/nationwide walkthroughs.
+- Router/printer guide cards are live on the matching PDPs (6 networking SKUs + 3 printer SKUs).
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; test-user cleanup decision.
