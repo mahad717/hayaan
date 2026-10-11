@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PartyPopper } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { useStore } from "@/hooks/use-store";
 
 const SEEN_KEY = "hayaan_offer_seen";
 const SHOW_AFTER_MS = 18_000; // let the visitor look around first
@@ -32,14 +33,27 @@ export function LeadPopup() {
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
+    // Norman (Task 90): never interrupt a task in progress. If another dialog
+    // is up (auth), the cart drawer is open, or the visitor is inside
+    // checkout/orders, postpone the offer instead of stacking modals — retry
+    // a few times before giving up for this visit.
+    const attempts = { n: 0 };
+    const tryShow = () => {
+      const s = useStore.getState();
+      if (s.authOpen || s.cartOpen || s.view === "checkout" || s.view === "orders") {
+        if (attempts.n++ < 4) timer = setTimeout(tryShow, 30_000);
+        return;
+      }
+      setOpen(true);
+    };
     try {
       const seen = Number(localStorage.getItem(SEEN_KEY) ?? 0);
       if (Date.now() - seen < AGAIN_AFTER_MS) return;
-      timer = setTimeout(() => setOpen(true), SHOW_AFTER_MS);
+      timer = setTimeout(tryShow, SHOW_AFTER_MS);
     } catch {
       // Private mode may block localStorage — still show, but rely on the
       // in-memory `done` state for the rest of this page view.
-      timer = setTimeout(() => setOpen(true), SHOW_AFTER_MS);
+      timer = setTimeout(tryShow, SHOW_AFTER_MS);
     }
     return () => clearTimeout(timer);
   }, []);
@@ -153,8 +167,15 @@ export function LeadPopup() {
                 className={INPUT_CLASS}
               />
               <p className="text-xs text-muted-foreground">{error ?? t("lead.popupContactHint")}</p>
-              <Button type="submit" disabled={busy} className="btn-accent mt-1">
-                {busy ? "…" : t("lead.popupCta")}
+              {/* Constraint over punishment (Norman): the CTA stays disabled
+                  until there is something to send — the hint above explains
+                  what is needed, so the disabled state is never a mystery. */}
+              <Button
+                type="submit"
+                disabled={busy || (!email.trim() && !phone.trim())}
+                className="btn-accent mt-1"
+              >
+                {busy ? t("lead.popupSending") : t("lead.popupCta")}
               </Button>
               <button
                 type="button"

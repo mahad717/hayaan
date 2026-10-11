@@ -6,9 +6,18 @@ import { ChevronLeft, Download, Minus, Plus, ShoppingBag, Star, Truck, Shield, R
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { addToCart, fetchCategories, fetchProducts, goToView, useStore } from "@/hooks/use-store";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import {
+  FREE_SHIPPING_THRESHOLD,
+  MOGADISHU_DISTRICTS,
+  OTHER_CITY,
+  OUTSIDE_MOGADISHU_FEE,
+  districtFee,
+  findDistrict,
+} from "@/lib/shipping";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName, productDescription } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, sanitizeRichText } from "@/lib/rich-text";
@@ -35,6 +44,19 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
   const [adding, setAdding] = useState(false);
+  // Task 90: PDP delivery preview — the district fee shown at the decision
+  // point instead of only at checkout (Norman: knowledge in the world).
+  // Starts empty so the SSR snapshot and the first client render match;
+  // the saved district fills in once the session resolves.
+  const [districtChoice, setDistrictChoice] = useState("");
+
+  useEffect(() => {
+    setDistrictChoice((choice) => {
+      if (choice) return choice;
+      const matched = findDistrict(user?.city);
+      return matched ? matched.name : user?.city ? OTHER_CITY : "";
+    });
+  }, [user]);
 
   // Route mode: mirror the server-loaded product into the store so the cart
   // drawer, auth modal, and any store-bound UI agree on the current product.
@@ -369,6 +391,49 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
               {t("pdp.buyNow")}
             </Button>
           </div>
+
+          {/* Task 90: delivery preview — pick a district, see the fee right
+              here (same table the checkout and the order creator use, so the
+              number can never drift). Physical products only; digital shows
+              its own instant-delivery promise instead. */}
+          {product.productType !== "digital" && (
+            <div className="rounded-xl border border-[#e6e2d4] bg-white p-4 text-sm">
+              <div className="flex items-center gap-2 font-medium text-brand-dark">
+                <Truck className="h-4 w-4 text-brand" /> {t("pdp.deliveryTitle")}
+              </div>
+              <div className="mt-3 grid gap-2 sm:grid-cols-[minmax(0,230px)_1fr] sm:items-center">
+                <Select value={districtChoice || undefined} onValueChange={setDistrictChoice}>
+                  <SelectTrigger
+                    aria-label={t("pdp.deliverySelectAria")}
+                    className="w-full bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
+                  >
+                    <SelectValue placeholder={t("co.districtPlaceholder")} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {MOGADISHU_DISTRICTS.map((d) => (
+                      <SelectItem key={d.name} value={d.name}>
+                        {d.name} — ${d.fee.toFixed(2)}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value={OTHER_CITY}>{t("co.districtOther")}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-muted-foreground" aria-live="polite">
+                  {!districtChoice
+                    ? t("pdp.deliveryPick")
+                    : districtChoice === OTHER_CITY
+                      ? t("pdp.deliveryOutside", { fee: formatPrice(OUTSIDE_MOGADISHU_FEE, product.currency) })
+                      : t("pdp.deliveryFee", {
+                          district: districtChoice,
+                          fee: formatPrice(districtFee(districtChoice) ?? 0, product.currency),
+                        })}
+                </p>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t("pdp.deliveryFreeNote", { amount: formatPrice(FREE_SHIPPING_THRESHOLD, product.currency) })}
+              </p>
+            </div>
+          )}
 
           {/* Reassurance row — digital products swap the delivery promise */}
           <div className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] p-4 text-sm font-original sm:grid-cols-3">

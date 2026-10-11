@@ -108,6 +108,14 @@ const en = {
   "pdp.digitalInstant": "Instant digital delivery — download right after payment",
   "pdp.digitalReassure": "Instant download — no delivery wait",
   "pdp.imgAria": "View image {n}",
+  // PDP delivery preview (Task 90) — the district fee shown at the decision
+  // point instead of only at checkout (knowledge in the world).
+  "pdp.deliveryTitle": "Delivery",
+  "pdp.deliveryPick": "Pick your district to see the delivery fee",
+  "pdp.deliveryFee": "Delivery to {district}: {fee}",
+  "pdp.deliveryOutside": "Outside Mogadishu: {fee} flat",
+  "pdp.deliveryFreeNote": "Free delivery on every order over {amount}",
+  "pdp.deliverySelectAria": "Choose your delivery district",
 
   // Ratings & reviews (Task 85)
   "reviews.title": "Ratings & reviews",
@@ -205,6 +213,15 @@ const en = {
   "co.unavailable": "Online payment is temporarily unavailable — please check back soon.",
   "co.payButton": "Pay {amount} securely",
   "co.secureNote": "Secure checkout · EVC Plus, Edahab & Card",
+  // Task 90: failures get inline, categorized recovery copy next to the pay
+  // button (not just a toast), and the disabled button explains itself.
+  "co.payErrTitle": "The payment didn’t go through",
+  "co.errNetwork": "We couldn’t reach the payment service. Check your connection and try again — you have not been charged.",
+  "co.errCartSync": "Your cart was already saved as an order draft. It has been refreshed below — review it and try paying again.",
+  "co.errGeneric": "The payment failed or was declined — no money has left your account. Please try again, or contact us on WhatsApp if it keeps happening.",
+  "co.payChecking": "Checking payment availability…",
+  "co.payNeedDistrict": "Pick your delivery district above to enable payment.",
+  "co.payErrDismiss": "Dismiss this message",
   // Digital delivery (Task 82)
   "co.digitalTitle": "Digital delivery",
   "co.digitalBody": "Nothing to ship — your files are ready to download in Orders the moment your payment is confirmed.",
@@ -331,6 +348,7 @@ const en = {
   "lead.popupSuccessBody":
     "We'll reach out when something good lands — watch your inbox or WhatsApp.",
   "lead.popupError": "Couldn't save that — please try again.",
+  "lead.popupSending": "Sending…",
   "ft.newsletterPh": "your@email.com",
   "ft.subscribe": "Subscribe",
   "ft.subscribed": "You're in — welcome!",
@@ -532,6 +550,13 @@ const so: Record<DictKey, string> = {
   "pdp.digitalInstant": "Gudbin dijitaal oo degdeg ah — soo deji bixinta kaddib",
   "pdp.digitalReassure": "Soo deji degdeg ah — sugitaan gaadhitaan ma jiro",
   "pdp.imgAria": "Fiiri sawirka {n}",
+  // PDP delivery preview (Task 90)
+  "pdp.deliveryTitle": "Gaadhitaanka",
+  "pdp.deliveryPick": "Dooro degmadaada si aad u aragto kharashka gaadhitaanka",
+  "pdp.deliveryFee": "Gaadhitaanka {district}: {fee}",
+  "pdp.deliveryOutside": "Muqdisho ka bannaan: {fee} oo go'an",
+  "pdp.deliveryFreeNote": "Gaadhitaan bilaash ah dalab kasta oo {amount} ka badan",
+  "pdp.deliverySelectAria": "Dooro degmada gaadhitaanka",
 
   // Ratings & reviews (Task 85)
   "reviews.title": "Qiimeynta iyo faallooyinka",
@@ -636,6 +661,14 @@ const so: Record<DictKey, string> = {
   "co.digitalChip": "Dijitaal",
   "co.digitalDrawerNote": "Soo deji degdeg ah — faylashaagu way furmayaan bogga Dalabyada bixinta kaddib.",
   "co.noShipping": "Gaadhitaan lama baahna — soo deji degdeg ah",
+  // Task 90: inline recovery copy at the pay button
+  "co.payErrTitle": "Bixintu ma dhicin",
+  "co.errNetwork": "Bixinta waannu la soo xiriirin karnay. Xaqiiji isku xirkaaga oo isku day mar kale — lacag lama jarin.",
+  "co.errCartSync": "Gaadhigaaga waa horey u kaydsan yahay dalab la diyaariyay. Waa la cusboonaysiiyay hoos — fiiri oo isku day bixin mar kale.",
+  "co.errGeneric": "Bixintu way fashilantay ama waa la diiday — lacag lama jarin. Fadlan isku day mar kale, ama nala soo xiriir WhatsApp haddii ay sii jirto.",
+  "co.payChecking": "La hubinayo helitaanka bixinta…",
+  "co.payNeedDistrict": "Dooro degmadaada gaadhitaanka kor si bixintu u shaqeeyto.",
+  "co.payErrDismiss": "Fariintan xir",
 
   // Auth modal
   "au.welcomeBack": "Soo dhawoow",
@@ -756,6 +789,7 @@ const so: Record<DictKey, string> = {
   "lead.popupSuccessBody":
     "Waxaan kula soo xiriiri doonaa marka wax fiican yimaado — la soco email-kaaga ama WhatsApp-ka.",
   "lead.popupError": "Lama kaydin — fadlan isku day mar kale.",
+  "lead.popupSending": "La dirayaa…",
   "ft.newsletterPh": "email@kaaga.com",
   "ft.subscribe": "Ku biir",
   "ft.subscribed": "Waad ku dhaaftay — soo dhawoow!",

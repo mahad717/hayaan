@@ -75,17 +75,27 @@ and document it — consistent convention beats cleverness.
 - PDP "Before you order — buying guides" = knowledge in the world at the
   point of decision.
 
-**Flagged for future work (do not fix without owner approval):**
-1. **Lead popup** interrupts on load — Norman's principle: unsolicited
-   interruptions are anti-feedback; reconsider timing/exit criteria.
-2. **SO translations** must be complete for every new key — a missing Somali
-   string is a missing signifier for most shoppers.
-3. **Shipping-fee visibility** at PDP: district fees should be previewable
-   without leaving the product (currently shown late in checkout).
-4. **Checkout error states**: verify each failure (network, payment, stock)
-   has recovery copy, not a generic error.
-5. **Form validation**: prefer disabling invalid actions (constraint) over
-   post-submit error toasts (punishment).
+**Fixed same day (Task 90, shipped):**
+1. ~~Shipping-fee visibility~~ → PDP delivery preview: district picker with
+   the exact fee, free-threshold note, defaults to the saved district
+   (`product-detail.tsx`, same table as checkout/order creator — no drift).
+2. ~~Checkout error states~~ → inline, categorized recovery panel next to
+   the pay button (network / cart-consumed / declined), auto-scrolled into
+   view, dismissible; disabled pay button explains itself
+   (checking-payment / pick-district hints) (`checkout.tsx`).
+3. ~~Form validation~~ → constraint-first: lead-popup CTA disabled until
+   there is something to send, with the hint explaining what is needed;
+   checkout pay button stays disabled until the district makes the total
+   known (`lead-popup.tsx`, `checkout.tsx`).
+4. ~~SO translations~~ → every Task 90 key shipped EN + SO together
+   (TS `Record<DictKey,string>` enforces completeness at build time).
+5. ~~Lead popup interruption~~ → never stacks over an open auth modal, cart
+   drawer, or checkout/orders view; postpones 30s and retries up to 4x
+   before giving up for the visit (`lead-popup.tsx`).
+
+**Still open for owner review:**
+- Lead popup timing itself (18s) is a business lever — Norman would prefer
+  engagement-triggered; owner's call, left as-is.
 
 **Rule for every new PR:** each user-visible action ships with (a) a
 signifier, (b) immediate feedback, (c) a defined failure path with recoverable

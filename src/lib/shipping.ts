@@ -18,6 +18,11 @@ export const FREE_SHIPPING_THRESHOLD = 75;
 /** Flat delivery fee outside the priced Mogadishu districts. */
 export const OUTSIDE_MOGADISHU_FEE = 6.95;
 
+/** Sentinel for district selects: cities outside the priced Mogadishu list.
+ *  Shared by the checkout form and the PDP delivery preview so both pickers
+ *  behave identically (natural mapping: one convention, everywhere). */
+export const OTHER_CITY = "__other";
+
 export const MOGADISHU_DISTRICTS: ShippingDistrict[] = [
   { name: "Abdiaziz", fee: 2.5, aliases: ["abdiaziz", "cabdiaziz"] },
   { name: "Bondhere", fee: 2.5, aliases: ["bondhere", "boondheere"] },

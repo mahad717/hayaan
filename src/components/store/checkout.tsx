@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ChevronLeft, CreditCard, Download, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { AlertTriangle, ChevronLeft, CreditCard, Download, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
-import { MOGADISHU_DISTRICTS, findDistrict, computeShipping, computeCartShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
+import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -20,9 +20,6 @@ function formatPrice(price: number, currency = "USD") {
     return `$${price.toFixed(2)}`;
   }
 }
-
-// Sentinel for the district select: cities outside the priced Mogadishu list.
-const OTHER_CITY = "__other";
 
 export function Checkout() {
   const { cart, setCart, setView, toast, user, setAuthOpen, bootReady } = useStore();
@@ -50,6 +47,11 @@ export function Checkout() {
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
   const [stuck, setStuck] = useState(false);
   const [done, setDone] = useState<{ orderId: string; total: number } | null>(null);
+  // Task 90: the last payment failure, categorized into plain recovery copy
+  // rendered INLINE next to the pay button (a toast alone breaks the gulf of
+  // evaluation — the customer must see what failed and what to do next).
+  const [payError, setPayError] = useState<string | null>(null);
+  const payErrorRef = useRef<HTMLDivElement>(null);
   // District picker: a canonical district name, OTHER_CITY, or "" (nothing
   // picked yet). form.city holds the free-text city for the OTHER_CITY path;
   // the submitted city is the canonical district name (or the typed city).
@@ -239,6 +241,7 @@ export function Checkout() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPayError(null);
     if (!digitalOnly && (!districtChoice || (districtChoice === OTHER_CITY && !form.city.trim()))) {
       toast(t("co.pickDistrictToast"), "error");
       return;
@@ -278,18 +281,27 @@ export function Checkout() {
       toast(t("co.redirectTitle"), "success");
     } catch (err) {
       const msg = (err as Error).message;
-      toast(msg, "error");
-      // A failed gateway handshake can still consume the server cart (the
-      // pending order is kept for later verification). If the customer retries
-      // with a stale client cart they'd hit a confusing "Cart is empty" 400 —
-      // re-sync from the server so the badge/checkout reflect reality.
+      // Norman (Task 90): categorize the failure into readable recovery copy.
+      // Three buckets: the cart was already consumed by a draft order (the
+      // most confusing one — the server keeps the pending order even when the
+      // gateway handshake fails), a network failure (nothing was charged),
+      // and everything else (declined/failed at the gateway — never charged).
       if (/cart is empty|couldn't find your cart|cart not found/i.test(msg)) {
+        setPayError(t("co.errCartSync"));
         try {
           setCart(await fetchCart());
         } catch {
           setCart({ id: "", items: [] });
         }
+      } else if (/network|fetch|failed|connect|socket/i.test(msg)) {
+        setPayError(t("co.errNetwork"));
+      } else {
+        setPayError(t("co.errGeneric"));
       }
+      toast(msg, "error");
+      requestAnimationFrame(() => {
+        payErrorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
       setPlacing(false);
     }
     // No reset on success: `placing` stays true so the button keeps showing
@@ -540,13 +552,44 @@ export function Checkout() {
                   <span className="text-brand">{formatPrice(total)}</span>
                 </div>
               </div>
+              {/* Task 90: inline, categorized failure recovery — visible right
+                  where the action happened, dismissible, never a dead end. */}
+              {payError && (
+                <div
+                  ref={payErrorRef}
+                  role="alert"
+                  className="rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm"
+                >
+                  <p className="flex items-center gap-1.5 font-medium text-destructive">
+                    <AlertTriangle className="h-4 w-4" aria-hidden /> {t("co.payErrTitle")}
+                  </p>
+                  <p className="mt-1 leading-relaxed text-muted-foreground">{payError}</p>
+                  <button
+                    type="button"
+                    onClick={() => setPayError(null)}
+                    className="mt-2 text-xs text-muted-foreground underline underline-offset-2 transition hover:text-foreground"
+                  >
+                    {t("co.payErrDismiss")}
+                  </button>
+                </div>
+              )}
               {/* Pay button — Market Orange (the 10% accent) */}
               <Button type="submit" size="lg" className="btn-accent" disabled={placing || sifaloEnabled !== true || !shippingKnown}>
                 {placing ? t("co.redirectTitle") : t("co.payButton", { amount: formatPrice(total) })}
               </Button>
-              <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-                <Lock className="h-3 w-3" /> {t("co.secureNote")}
-              </p>
+              {/* A disabled control explains itself (Norman: signifier — the
+                  customer must never guess why they can't act yet). */}
+              {sifaloEnabled === null ? (
+                <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+                  <Loader2 className="h-3 w-3 animate-spin" aria-hidden /> {t("co.payChecking")}
+                </p>
+              ) : !shippingKnown && sifaloEnabled === true ? (
+                <p className="text-center text-xs text-muted-foreground">{t("co.payNeedDistrict")}</p>
+              ) : (
+                <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+                  <Lock className="h-3 w-3" /> {t("co.secureNote")}
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
