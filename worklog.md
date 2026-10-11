@@ -2029,3 +2029,21 @@ Stage Summary:
 - Evidence: download/task94-home-so-faq.png, task94-pdp-so-guides.png, task94-blog-post-so.png, task94-blog-index-so.png, task94-404-so.png; tooling: scripts/task94-audit-i18n.ts, task94-sweep-hardcoded.mjs, task94-poll-deploy.sh.
 - Known acceptable leftovers (by design): admin dashboard English; product names/blog post bodies in their authored language; gateway-returned message bodies; metadata/SEO titles stay English for search consistency; the 6 EN/SO-identical dictionary values are legitimate (Blog, SKU, phone formats).
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision.
+---
+Task ID: 95
+Agent: Super Z (main)
+Task: Add Samsung Galaxy A18 (Black, 256GB) at $187 (owner request with the Samsung UAE business listing URL).
+
+Work Log:
+- Catalog check: no existing A18 (A16/A17 present, catalog at 141) — clean single-product add, SKU sequence continues at HAY-MOB-145.
+- Specs verified via web search (Samsung/gsmarena/91mobiles/Wikipedia snippets; Samsung AE and GSMArena pages block direct fetches, page_reader returned empty): Galaxy A18 4G, released Sep 18 2026 — Exynos 1610, 6.7" 90Hz Super AMOLED, 50MP (f/1.8) triple camera with Ultra Wide + Macro, 4K video, 5000mAh 25W, IP64, stereo speakers, 7.7mm/196g, Android 17 with 6 major OS upgrades, 256GB + microSD, 4GB RAM (GSMArena: "256 GB storage, 4 GB RAM"). Description claims limited to these verified facts; no invented SIM specifics.
+- Image: sanguni and Samsung blocked to fetchers, so used image-search; best hit was a 3-variant A18 render with a faint SammyGuru watermark — cropped the BLACK variant only (matches the sold color, avoids the watermark region), white-margin trim + 2x Lanczos upscale -> 784x952 JPEG. Second render candidate rejected (different model, "Entreprise Edition" screen).
+- Created via the Task 91 admin pipeline (scripts/task95-add-galaxy-a18.mjs): POST /api/seed -> admin login -> /api/admin/upload -> POST /api/products. Guards: refuse on duplicate name or SKU; no code changed so no build/deploy cycle.
+- Result: id 0f2a1e38-b52c-460a-a928-8359cd2de199, slug samsung-galaxy-a18, SKU HAY-MOB-145, $187, stock 25, phones-wearables category, supplierUrl = the owner's Samsung UAE link. Catalog 141 -> 142.
+- Live verification: PDP 200 with SSR JSON-LD price 187.00 USD; image 200; homepage SSR now reads "142 products to explore"; phones-wearables category page contains the new PDP; browser screenshot shows full PDP (specs, delivery district picker, matched phone buying guides).
+- Evidence: scripts/task95-add-results.json, download/task95-pdp-galaxy-a18.png.
+
+Stage Summary:
+- Samsung Galaxy A18 (256GB Black) is live at $187: https://hayaan.co/product/samsung-galaxy-a18 — catalog now 142 products, homepage/category counts SSR-correct, JSON-LD price feeds search engines.
+- Blog price-sync check: A-series content unaffected (no A18 price references exist; phone-guide tiers use the $2,650 iPhone ceiling) — no content edits needed.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision; remaining Norman UX follow-ups if the owner reprioritizes.

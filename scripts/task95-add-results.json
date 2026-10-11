@@ -1,0 +1,21 @@
+{
+ "ranAt": "2026-10-11T21:04:58.244Z",
+ "before": 141,
+ "after": 142,
+ "created": {
+  "id": "0f2a1e38-b52c-460a-a928-8359cd2de199",
+  "slug": "samsung-galaxy-a18",
+  "sku": "HAY-MOB-145",
+  "price": 187,
+  "image": "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1791752695312-3d54eccd-7a24-45e4-b4d6-2b8b7c3b7461.jpg"
+ },
+ "publicVerification": {
+  "name": "Samsung Galaxy A18",
+  "price": 187,
+  "slug": "samsung-galaxy-a18",
+  "sku": "HAY-MOB-145",
+  "images": [
+   "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1791752695312-3d54eccd-7a24-45e4-b4d6-2b8b7c3b7461.jpg"
+  ]
+ }
+}

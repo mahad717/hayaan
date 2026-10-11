@@ -1,0 +1,27 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "html": "<html style=\"height: 100%;\"><head><meta name=\"viewport\" content=\"width=device-width, minimum-scale=0.1\"><title>https://fdn.gsmarena.com/vv/assets12/i/logo.svg</title></head><body style=\"margin: 0px; height: 100%; background-color: rgb(14, 14, 14);\"><p>A 250x38 small image, likely a logo, icon or avatar</p></body></html>",
+    "httpStatus": 200,
+    "httpStatusText": "OK",
+    "publishedTime": "Sun, 08 Oct 2017 22:00:00 GMT",
+    "title": "https://fdn.gsmarena.com/vv/assets12/i/logo.svg",
+    "url": "https://www.gsmarena.com/samsung_galaxy_a18_4g-13941.php",
+    "usage": {
+      "measuredTokens": 0,
+      "outputTokens": 0,
+      "scaledTokens": 102,
+      "tokens": 102
+    }
+  },
+  "meta": {
+    "usage": {
+      "measuredTokens": 0,
+      "outputTokens": 0,
+      "scaledTokens": 102,
+      "tokens": 102
+    }
+  },
+  "status": 20000
+}

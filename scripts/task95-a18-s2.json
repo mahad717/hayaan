@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.merriam-webster.com/dictionary/display",
+    "name": "DISPLAY Definition & Meaning",
+    "snippet": "The meaning of DISPLAY is to place or spread (something) for people to see ; also : to serve as a place for displaying (something).",
+    "host_name": "www.merriam-webster.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://developer.mozilla.org",
+    "name": "display CSS property - MDN Web Docs - Mozilla",
+    "snippet": "Sep 21, 2026 — The display CSS property sets whether an element is treated as a block or inline box and the layout used for its children, ...",
+    "host_name": "developer.mozilla.org",
+    "rank": 1,
+    "date": "Sep 21, 2026",
+    "favicon": ""
+  },
+  {
+    "url": "https://developer.android.com/android/view/Display",
+    "name": "Display | API reference",
+    "snippet": "Aug 3, 2026 — Provides information about the size and density of a logical display . The display area is described in two different ways. Read more",
+    "host_name": "developer.android.com",
+    "rank": 2,
+    "date": "Aug 3, 2026",
+    "favicon": ""
+  },
+  {
+    "url": "https://business.google.com/en-all/ad-solutions/display-ads",
+    "name": "Increase Your Reach with Display Ad Campaigns",
+    "snippet": "With Display campaigns, you can promote your business across websites and apps. Discover what display ads are and how they help increase your reach.",
+    "host_name": "business.google.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://learn.microsoft.com/en-us/answers/questions",
+    "name": "Main Display is Suddenly Greyed Out - Microsoft Q&A",
+    "snippet": "Hey so I had a secondary minitor set to be my main display for my laptop, and now since the most recent update, it is no longer selected, and is now ...",
+    "host_name": "learn.microsoft.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://support.google.com/google-ads/answer/2404190?hl=en",
+    "name": "About Display ads and the Google Display Network",
+    "snippet": "We're bringing the flexibility of standard Display campaigns and the AI capabilities of Smart Display campaigns into a single Display campaign.",
+    "host_name": "support.google.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  }
+]
