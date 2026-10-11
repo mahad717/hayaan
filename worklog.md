@@ -1895,3 +1895,18 @@ Work Log:
 Stage Summary:
 - Wishlist is fully built, deployed, and guest-verified live: hearts on all 97 product cards + every PDP image (Amazon placement), header heart with count badge, /?view=wishlist page. It switches ON for signed-in customers the moment the owner runs ONE migration in the Supabase SQL editor: src/lib/supabase/migrations/2026-10-11-wishlist.sql (idempotent, deny-all RLS, no other setup). Until then, signed-in users see no hearts (clean degradation) and guests keep seeing them with the sign-in gate.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; test-user cleanup decision (+ t88-probe). Future wishlist upsides now unlocked: most-saved products as a merchandising signal, back-in-stock/price-drop email triggers once RESEND_API_KEY lands.
+---
+Task ID: 89
+Agent: Super Z (main)
+Task: Read the owner-uploaded "The Design of Everyday Things" (Donald Norman, 2013 revised ed.) and permanently adopt its principles as the UX standard for Hayaan.
+
+Work Log:
+- Extracted the .mobi (python mobi lib -> book.html -> plain text, 748K chars) to scripts/doet-fulltext.txt; located all 7 body chapters.
+- Pulled definitional passages from the body text (not TOC) for the core concepts and verified each quote: affordance, signifier, mapping, feedback, conceptual model, seven stages, constraints, slips/mistakes, knowledge in the world/head, HCD, double-diamond, paradox of technology.
+- Wrote agent-ctx/UX-PRINCIPLES.md — the standing UX policy: six discoverability fundamentals table with verified quotes + Hayaan application column; gulfs/seven-stages/knowledge rules; error-philosophy rules (slips vs mistakes, design for error, never blame the user, forced functions sparingly); process rules (double-diamond, HCD for Somali mobile-first shoppers, paradox of technology); standardization fallback.
+- Audited the just-shipped surfaces against the book: wishlist-heart.tsx is the reference implementation (always-visible signifier, optimistic feedback, server write-back, revert+toast on failure, uniform guest gate); toasts in 15 components; aria labels on cards; PDP guides = knowledge in the world at the decision point.
+- Flagged 5 items for owner review (not fixed): lead-popup interruption timing, SO translation completeness as a signifier requirement, district shipping-fee preview on PDP, checkout per-failure recovery copy, constraint-over-punishment form validation.
+- No app code changed, so no build/push cycle. New rule recorded: every PR ships each user-visible action with signifier + immediate feedback + recoverable failure copy + EN/SO strings.
+
+Stage Summary:
+- Norman's DOET is now the project's standing UX standard, persisted at agent-ctx/UX-PRINCIPLES.md with book-verified quotes and a Hayaan mapping table; future tasks must design/review against it. Wishlist heart flow identified as the in-repo reference implementation of the principles.
