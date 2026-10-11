@@ -1,0 +1,109 @@
+{
+ "fetchedAt": "2026-10-11T19:27:25.638Z",
+ "backup": {
+  "Samsung Galaxy A06": {
+   "id": "87f4a5d5-99a4-4b11-aef6-f2e401e8cb56",
+   "name": "Samsung Galaxy A06",
+   "slug": "samsung-galaxy-a06",
+   "description": "Upgrade your everyday carry with the Samsung Galaxy A06. Available now at Hayaan Market — fast delivery across Somalia, pay by card or Sifalo.",
+   "price": 110,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "HAY-T2-001",
+   "stock": 25,
+   "rating": 0,
+   "reviewCount": 0,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1789585361549-3b3eb9b8-9d45-4f1e-959e-70a099f757dc.jpg"
+   ],
+   "tags": [],
+   "featured": false,
+   "productType": "physical",
+   "categoryId": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+   "category": {
+    "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+    "name": "Phones & Wearables",
+    "slug": "phones-wearables",
+    "description": "Smartphones, smart watches and wearables."
+   }
+  },
+  "Samsung Galaxy A07": {
+   "id": "9da7722a-2ea5-465c-a05d-346211bf724f",
+   "name": "Samsung Galaxy A07",
+   "slug": "samsung-galaxy-a07",
+   "description": "Samsung Galaxy A07 — genuine device, ready for Somali networks. Buy now from Hayaan Market for fast nationwide delivery and secure card or Sifalo payment.",
+   "price": 125,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "HAY-T2-002",
+   "stock": 25,
+   "rating": 0,
+   "reviewCount": 0,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1789585363390-60be44a2-781e-48c9-b3d4-8e0b9d04a6bc.jpg"
+   ],
+   "tags": [],
+   "featured": false,
+   "productType": "physical",
+   "categoryId": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+   "category": {
+    "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+    "name": "Phones & Wearables",
+    "slug": "phones-wearables",
+    "description": "Smartphones, smart watches and wearables."
+   }
+  },
+  "Samsung Galaxy A16": {
+   "id": "7798dbd3-0942-426b-b338-6fb831a68bc2",
+   "name": "Samsung Galaxy A16",
+   "slug": "samsung-galaxy-a16",
+   "description": "Upgrade your everyday carry with the Samsung Galaxy A16. Available now at Hayaan Market — fast delivery across Somalia, pay by card or Sifalo.",
+   "price": 118,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "HAY-T2-003",
+   "stock": 25,
+   "rating": 0,
+   "reviewCount": 0,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1789585365062-c7c7d5e3-6e79-47b4-8613-372055770ec2.jpg"
+   ],
+   "tags": [],
+   "featured": false,
+   "productType": "physical",
+   "categoryId": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+   "category": {
+    "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+    "name": "Phones & Wearables",
+    "slug": "phones-wearables",
+    "description": "Smartphones, smart watches and wearables."
+   }
+  },
+  "Samsung Galaxy A17": {
+   "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17",
+   "description": "Samsung Galaxy A17 — genuine device, ready for Somali networks. Buy now from Hayaan Market for fast nationwide delivery and secure card or Sifalo payment.",
+   "price": 165,
+   "compareAt": null,
+   "currency": "USD",
+   "sku": "HAY-T2-004",
+   "stock": 25,
+   "rating": 0,
+   "reviewCount": 0,
+   "images": [
+    "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1789585366727-59f2990d-383a-48c4-a909-9541bb7dad34.jpg"
+   ],
+   "tags": [],
+   "featured": false,
+   "productType": "physical",
+   "categoryId": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+   "category": {
+    "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+    "name": "Phones & Wearables",
+    "slug": "phones-wearables",
+    "description": "Smartphones, smart watches and wearables."
+   }
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "ranAt": "2026-10-11T19:27:31.990Z",
+ "results": [
+  {
+   "id": "87f4a5d5-99a4-4b11-aef6-f2e401e8cb56",
+   "name": "Samsung Galaxy A06",
+   "old": 110,
+   "price": 118,
+   "sanguni": "samsung-galaxy-a06",
+   "status": "updated",
+   "http": 200,
+   "newPrice": 118
+  },
+  {
+   "id": "9da7722a-2ea5-465c-a05d-346211bf724f",
+   "name": "Samsung Galaxy A07",
+   "old": 125,
+   "price": 140,
+   "sanguni": "samsung-galaxy-a07",
+   "status": "updated",
+   "http": 200,
+   "newPrice": 140
+  },
+  {
+   "id": "7798dbd3-0942-426b-b338-6fb831a68bc2",
+   "name": "Samsung Galaxy A16",
+   "old": 118,
+   "price": 145,
+   "sanguni": "samsung-galaxy-a16",
+   "status": "updated",
+   "http": 200,
+   "newPrice": 145
+  },
+  {
+   "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+   "name": "Samsung Galaxy A17",
+   "old": 165,
+   "price": 190,
+   "sanguni": "samsung-galaxy-a17-3 (lowest raised listing; -2 variant is $240)",
+   "status": "updated",
+   "http": 200,
+   "newPrice": 190
+  }
+ ],
+ "verify": {
+  "Samsung Galaxy A06": {
+   "publicPrice": 118,
+   "expected": 118,
+   "match": true
+  },
+  "Samsung Galaxy A07": {
+   "publicPrice": 140,
+   "expected": 140,
+   "match": true
+  },
+  "Samsung Galaxy A16": {
+   "publicPrice": 145,
+   "expected": 145,
+   "match": true
+  },
+  "Samsung Galaxy A17": {
+   "publicPrice": 190,
+   "expected": 190,
+   "match": true
+  }
+ }
+}

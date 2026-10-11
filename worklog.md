@@ -1956,3 +1956,21 @@ Stage Summary:
 - Evidence: download/task91-home-grid-new-mobiles.png, download/task91-pdp-iphone18promax.png, download/task91-pdp-ztrifold.png; data: scripts/task91-import-results.json, payload/pdp-details committed.
 - Owner decisions pending: A-series price drift (A06/A07/A16/A17 now cheaper on Hayaan than sanguni cost), test-user cleanup list unchanged.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass.
+---
+Task ID: 92
+Agent: Super Z (main)
+Task: Apply the owner-approved A-series price sync flagged in Task 91 (owner's "yes" to matching sanguni.so's current prices).
+
+Work Log:
+- Sanguni's current prices from the Task 91 crawl: A06 $118, A07 $140, A16 $145, A17 $190 (lowest raised listing; sanguni also carries a $240 A17 variant). Hayaan was still at import-time prices: $110 / $125 / $118 / $165.
+- Wrote scripts/task92-update-a-series.mjs (same admin-API pipeline as Task 91): POST /api/seed -> login -> backup all 4 full rows -> PUT /api/products/:id { price } -> verify via public catalog. Safety precondition: the script REFUSES to touch a product whose current price does not match the expected old price.
+- Price-only change; descriptions carry no storage claims so no copy edits needed. The PUT route audits every price change automatically (old -> new) into the admin audit log.
+- Results: 4/4 updated and verified. Public API matches: A06 $118, A07 $140, A16 $145, A17 $190. Live PDP JSON-LD confirmed the same four prices in SSR HTML (also feeds Google/answer engines).
+- Evidence: scripts/task92-price-sync-backup.json (pre-change rows), scripts/task92-price-sync-results.json, download/task92-a17-price-190.png (PDP shows $190.00).
+- No app code changed -> no build/deploy cycle needed (prices are DB data, live immediately).
+- Note for the owner: sanguni still lists cheaper duplicate listings for these models (A06 $110, A07 $125, A16 $118, A17 $165 alongside the higher primaries). Hayaan now tracks their primary listings; if margin policy prefers matching the cheapest listing instead, the backup JSON has the old rows and a reverse PUT restores them in seconds.
+
+Stage Summary:
+- Hayaan's Samsung A-series now sells at sanguni's current primary prices: A06 $118, A07 $140, A16 $145, A17 $190 (was $110/$125/$118/$165). All changes audited server-side and backed up locally; verified live on all 4 PDPs.
+- Owner decisions still open: test-user cleanup list (customer@shop.demo, task83-probe, t85-reviewer, t88-probe, t90-norman); whether to keep tracking sanguni's cheapest vs primary listings going forward.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; Somali translation pass; next blog batch awaiting owner go-ahead.
