@@ -56,7 +56,7 @@ export const BUYING_GUIDES = {
   iphone: G(
     "iphone-price-in-somalia",
     "iPhone Price in Somalia (2026)",
-    "Every model from $990 to $1,550 — physical-SIM notes included.",
+    "Every model from $990 to $2,650 — the iPhone 18 lineup included, with SIM-type notes.",
   ),
   pay: G(
     "how-to-pay-online-in-somalia",

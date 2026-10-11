@@ -96,9 +96,9 @@ const post2 = {
   slug: "how-to-buy-phones-online-in-somalia",
   title: "How to Buy Phones Online in Somalia (and What to Check Before You Pay)",
   excerpt:
-    "iPhone or Galaxy, physical SIM or eSIM, $118 or $1,550 — a plain-language guide to ordering a phone online in Somalia with confidence.",
+    "iPhone or Galaxy, physical SIM or eSIM, $118 or $2,650 — a plain-language guide to ordering a phone online in Somalia with confidence.",
   quickAnswer:
-    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships up to about $990–$1,550. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
+    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships from $990 up to $2,650 for the iPhone 18 Pro Max 1TB. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
   faqs: [
     {
       q: "Can I buy an iPhone or Samsung online in Somalia?",
@@ -125,7 +125,7 @@ At the time of writing, the [phones and wearables](https://hayaan.co/category/ph
 
 1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $118 and the Galaxy A17 at $165. Big batteries, modern software, honest prices.
 2. **$250–$450** — mid-range and wearables: the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $320, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
-3. **$900 and up** — current flagships like the iPhone 17 at $990 and the iPhone 16 Pro Max at $1,240, for buyers who want the top of the market.
+3. **$900 and up** — current flagships like the iPhone 17 at $990, the iPhone 18 Pro from $1,500, and the iPhone 18 Pro Max at up to $2,650, for buyers who want the top of the market.
 
 Decide the tier first. It turns a hundred listings into five, and it stops you from paying flagship money for mid-range hardware.
 
@@ -463,19 +463,23 @@ Support is part of the deal too: write to support@hayaan.co with your order numb
 const post7 = {
   id: "seo-iphone-price-somalia",
   slug: "iphone-price-in-somalia",
-  title: "iPhone Price in Somalia (2026): Every Model, From $990 to $1,550",
+  title: "iPhone Price in Somalia (2026): Every Model, From $990 to $2,650",
   excerpt:
-    "Real iPhone prices in Somalia for every current model — iPhone 17, 17 Pro, 17 Pro Max, Air, 16 Pro, and 15 Pro Max — with physical-SIM notes and how to order one safely online.",
+    "Real iPhone prices in Somalia for every current model — iPhone 18 Pro, 18 Pro Max, 17 lineup, Air, 16 Pro, and 15 Pro Max — with eSIM and physical-SIM notes and how to order one safely online.",
   quickAnswer:
-    "iPhone prices in Somalia at Hayaan Market (hayaan.co): iPhone 17 from $990, 17 Pro $1,420, 17 Pro Max $1,550, iPhone Air $1,280, 16 Pro $1,120, 16 Pro Max $1,240, and 15 Pro Max $1,170. Fixed USD prices with no VAT, physical-SIM models labelled, paid via EVC Plus, Edahab, or card, with free delivery on orders over $75.",
+    "iPhone prices in Somalia at Hayaan Market (hayaan.co): iPhone 18 Pro from $1,500 and 18 Pro Max from $1,780 up to $2,650 for 1TB; iPhone 17 from $990, 17 Pro $1,420, 17 Pro Max $1,550 (eSIM variant $1,380), Air $1,280, 16 Pro $1,120, 15 Pro Max $1,170. Fixed USD prices with no VAT, SIM type labelled, free delivery on orders over $75.",
   faqs: [
     {
       q: "How much is an iPhone 17 Pro Max in Somalia?",
-      a: "The iPhone 17 Pro Max (Physical SIM) is $1,550 at Hayaan Market, the 17 Pro is $1,420, and the standard iPhone 17 is $990 — fixed USD prices with no VAT added at checkout.",
+      a: "The iPhone 17 Pro Max (Physical SIM) is $1,550 at Hayaan Market and the eSIM variant is $1,380; the 17 Pro is $1,420 and the standard iPhone 17 is $990 — fixed USD prices with no VAT added at checkout.",
+    },
+    {
+      q: "How much is the iPhone 18 Pro Max in Somalia?",
+      a: "The iPhone 18 Pro Max starts at $1,780 for the 256GB Silver, with 512GB models from $1,950 and the 1TB at $2,600–$2,650. The iPhone 18 Pro starts at $1,500 for 256GB. All are eSIM listings with fixed USD prices.",
     },
     {
       q: "Which iPhones work with Somali SIM cards?",
-      a: "Listings marked (Physical SIM) accept the plastic SIM cards sold by Somali carriers — the iPhone 17, 17 Pro, and 17 Pro Max are listed that way. Check the listing label before ordering.",
+      a: "Listings marked (Physical SIM) accept the plastic SIM cards sold by Somali carriers — the iPhone 17, 17 Pro, and 17 Pro Max are listed that way. The iPhone 18 Pro and 18 Pro Max listings are eSIM models, so check your carrier's eSIM support and the listing label before ordering.",
     },
     {
       q: "What is the cheapest current-generation iPhone I can buy online?",
@@ -496,26 +500,29 @@ const post7 = {
 
 Every listing below is live on the [phones & wearables shelf](https://hayaan.co/category/phones-wearables) at a fixed USD price — no VAT added at checkout:
 
-1. **iPhone 17 Pro Max (Physical SIM) — $1,550.** Apple's current flagship: the biggest display, the best cameras, the most storage headroom.
-2. **iPhone 17 Pro (Physical SIM) — $1,420.** The same generation in a more compact body — the pick for Pro cameras in one hand.
-3. **iPhone Air — $1,280.** Apple's thinnest, lightest iPhone; the style pick that still runs the current generation.
-4. **iPhone 16 Pro Max — $1,240** and **iPhone 16 Pro — $1,120.** Last year's Pro flagships at a real discount, still excellent phones.
-5. **iPhone 15 Pro Max — $1,170.** The previous Pro Max, the cheapest entry into the Pro Max screen size.
-6. **iPhone 17 (Physical SIM) — $990.** The current generation at the friendliest price in the lineup.
+1. **iPhone 18 Pro Max — from $1,780.** Apple's newest flagship, listed per storage and colour: 256GB Silver $1,780 up to 1TB Black or Burgundy at $2,650. eSIM listings.
+2. **iPhone 18 Pro — from $1,500.** The same new generation in a compact body: 256GB from $1,500, 512GB $1,780–$1,850. eSIM listings.
+3. **iPhone 17 Pro Max (Physical SIM) — $1,550**, now also listed as an **eSIM model at $1,380.** The proven current-generation Pro Max.
+4. **iPhone 17 Pro (Physical SIM) — $1,420.** Pro cameras in one hand.
+5. **iPhone Air — $1,280.** Apple's thinnest, lightest iPhone.
+6. **iPhone 16 Pro Max — $1,240** and **iPhone 16 Pro — $1,120.** Last year's Pro flagships at a real discount, still excellent phones.
+7. **iPhone 15 Pro Max — $1,170.** The cheapest entry into the Pro Max screen size.
+8. **iPhone 17 (Physical SIM) — $990.** The current generation at the friendliest price in the lineup.
 
-If a "new iPhone 17 Pro Max" is offered at, say, $700, that is not a deal — it is a question mark. Genuine flagships hold their prices; the discount models above are how honest savings actually look.
+If a "new iPhone 18 Pro Max" is offered at, say, $900, that is not a deal — it is a question mark. Genuine flagships hold their prices; the discount models above are how honest savings actually look.
 
 ## Which model is worth your money?
 
-- **Maximum everything:** iPhone 17 Pro Max at $1,550 — no compromises on display, cameras, or battery.
-- **Pro cameras, smaller hand:** iPhone 17 Pro at $1,420.
+- **Maximum everything:** iPhone 18 Pro Max at $1,780–$2,650 — the newest display, cameras, and battery, priced by storage.
+- **Newest Pro, smaller hand:** iPhone 18 Pro from $1,500.
+- **Pro Max value:** iPhone 17 Pro Max (Physical SIM) at $1,550 — nearly everything the 18 Pro Max does, for hundreds less.
 - **Thinnest and lightest:** iPhone Air at $1,280.
-- **Best value flagship:** iPhone 16 Pro Max at $1,240 — nearly everything the 17 Pro Max does, for $310 less.
+- **Best value flagship:** iPhone 16 Pro Max at $1,240.
 - **Newest generation on a budget:** iPhone 17 at $990.
 
 ## Do they work with Somali SIM cards?
 
-This is the detail that matters most in Somalia: some iPhone variants are eSIM-only, and a phone that cannot hold a local plastic SIM is a problem. That is why the 17-lineup listings are labelled explicitly — the [iPhone 17](https://hayaan.co/product/iphone-17-%28physical-sim%29), [iPhone 17 Pro](https://hayaan.co/product/iphone-17-pro-%28physical-sim%29), and [iPhone 17 Pro Max](https://hayaan.co/product/iphone-17-pro-max-%28physical-sim%29) all ship as **physical-SIM** units that take the SIM cards sold by Somali carriers. Check that label on any iPhone listing before you pay, wherever you buy.
+This is the detail that matters most in Somalia: some iPhone variants are eSIM-only, and a phone that cannot hold a local plastic SIM is a problem. That is why the listings are labelled explicitly — the [iPhone 17](https://hayaan.co/product/iphone-17-%28physical-sim%29), [iPhone 17 Pro](https://hayaan.co/product/iphone-17-pro-%28physical-sim%29), and [iPhone 17 Pro Max](https://hayaan.co/product/iphone-17-pro-max-%28physical-sim%29) all ship as **physical-SIM** units that take the SIM cards sold by Somali carriers, while the new [iPhone 18 Pro](https://hayaan.co/product/iphone-18-pro-256gb-black-esim) and [iPhone 18 Pro Max](https://hayaan.co/product/iphone-18-pro-max-256gb-black-esim) listings are **eSIM** models — confirm your carrier supports eSIM activation before ordering one. Check that label on any iPhone listing before you pay, wherever you buy.
 
 ## What to check before you pay for an iPhone online
 
