@@ -65,6 +65,12 @@ export interface CartItem {
   id: string;
   productId: string;
   quantity: number;
+  /** Denormalized from product (Task 90) so the /api/cart payload doubles as
+   *  a CartShippingItem for the client-side shipping helpers — without these
+   *  the checkout's physical subtotal was NaN and carts ≥$75 still showed a
+   *  $6.95 delivery fee while the server charged the correct amount. */
+  price?: number;
+  productType?: "physical" | "digital";
   product: Product;
 }
 

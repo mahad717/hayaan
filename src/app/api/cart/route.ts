@@ -54,6 +54,12 @@ async function buildCart(userId: string): Promise<Cart> {
         id: it.id,
         productId: it.product.id,
         quantity: it.quantity,
+        // Top-level price/type (Task 90): the client shipping helpers read
+        // CartShippingItem-shaped items — without these the checkout's
+        // physical subtotal was NaN and every cart showed a $6.95 delivery
+        // fee while the server charged the correct amount.
+        price: Number(it.product.price),
+        productType: (it.product.productType ?? it.product.product_type ?? "physical") === "digital" ? "digital" : "physical",
         product: rowToProduct(it.product),
       })),
     };
@@ -72,6 +78,9 @@ async function buildCart(userId: string): Promise<Cart> {
       id: it.id,
       productId: it.productId,
       quantity: it.quantity,
+      // Task 90: same top-level price/type as the Supabase path above.
+      price: Number(it.product.price),
+      productType: it.product.productType === "digital" ? "digital" : "physical",
       product: rowToProduct(it.product),
     })),
   };

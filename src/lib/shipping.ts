@@ -95,12 +95,26 @@ export interface CartShippingItem {
   productType?: string | null; // "physical" (default) | "digital"
   price: number;
   quantity: number;
+  /** Optional nested product row. Client cart payloads (/api/cart) carry the
+   *  price/type here (CartItem shape); the Sifalo order creator passes them
+   *  top-level. The helpers below accept BOTH so a payload drift can never
+   *  turn the physical subtotal into NaN again (Task 90 fix). */
+  product?: { price?: number | null; productType?: string | null } | null;
 }
+
+const typeOf = (it: CartShippingItem): string =>
+  it.productType ?? it.product?.productType ?? "physical";
+
+const priceOf = (it: CartShippingItem): number => {
+  const raw = it.price ?? it.product?.price;
+  const n = raw == null ? 0 : Number(raw);
+  return Number.isFinite(n) ? n : 0;
+};
 
 /** True when the cart holds at least one physical item (default when the
  *  product_type column is missing — pre-migration rows are physical). */
 export function hasPhysicalItems(items: CartShippingItem[]): boolean {
-  return items.some((it) => (it.productType ?? "physical") !== "digital");
+  return items.some((it) => typeOf(it) !== "digital");
 }
 
 /** Subtotal of PHYSICAL items only — digital goods never count toward the
@@ -108,8 +122,8 @@ export function hasPhysicalItems(items: CartShippingItem[]): boolean {
  *  for a $10 cable in a mixed cart; digital-only carts pay nothing). */
 export function physicalSubtotal(items: CartShippingItem[]): number {
   return items
-    .filter((it) => (it.productType ?? "physical") !== "digital")
-    .reduce((sum, it) => sum + it.price * it.quantity, 0);
+    .filter((it) => typeOf(it) !== "digital")
+    .reduce((sum, it) => sum + priceOf(it) * it.quantity, 0);
 }
 
 /**
