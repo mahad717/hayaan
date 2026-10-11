@@ -8,25 +8,14 @@ import { MarkdownContent } from "@/lib/markdown";
 import { faqPageJsonLd } from "@/lib/faq";
 import { FaqSection } from "@/components/store/faq-section";
 import { StoreShell } from "@/components/store/store-shell";
-import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
+import { formatDateLang, isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-function formatDate(iso: string | null, lang: "en" | "so"): string {
-  if (!iso) return "";
-  try {
-    return new Intl.DateTimeFormat(lang === "so" ? "so-SO" : "en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(iso));
-  } catch {
-    return "";
-  }
-}
-
+// Dates render through formatDateLang (dictionary) — Workers ICU silently
+// falls back to en-US for "so-SO", so Somali months are explicit there.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug).catch(() => null);
@@ -127,7 +116,7 @@ export default async function BlogPostPage({ params }: Props) {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground font-original">
             {t("blog.by", { name: post.authorName })}
-            {post.publishedAt ? ` · ${formatDate(post.publishedAt, lang)}` : ""}
+            {post.publishedAt ? ` · ${formatDateLang(post.publishedAt, lang)}` : ""}
           </p>
         </header>
 

@@ -1043,6 +1043,34 @@ const so: Record<DictKey, string> = {
 
 export const dictionaries: Record<Lang, Record<DictKey, string>> = { en, so };
 
+/**
+ * SSR-safe date formatting. The Cloudflare Workers ICU build silently falls
+ * back to en-US for the "so-SO" locale (browsers DO support it — that's why
+ * the client-side orders dates were fine), so Somali server-rendered dates
+ * get explicit month names instead of Intl.
+ */
+const SO_MONTHS = [
+  "Janaayo", "Febraayo", "Maarso", "Abriil", "Maajo", "Juun",
+  "Luulyo", "Agoosto", "Sebtembar", "Oktoobar", "Nofembar", "Disembar",
+];
+
+export function formatDateLang(
+  iso: string | null | undefined,
+  lang: Lang,
+): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  if (lang === "so") {
+    return `${SO_MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  }
+  try {
+    return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric" }).format(d);
+  } catch {
+    return "";
+  }
+}
+
 /** Translate `key` into `lang` with {var} interpolation. Never throws. */
 export function translate(lang: Lang, key: DictKey, vars?: Vars): string {
   let s = dictionaries[lang]?.[key] ?? en[key] ?? String(key);

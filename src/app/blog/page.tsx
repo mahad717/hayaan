@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { Newspaper } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog";
 import { StoreShell } from "@/components/store/store-shell";
-import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
+import { formatDateLang, isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
 // Rendered per request so newly published posts appear immediately.
 export const dynamic = "force-dynamic";
@@ -22,20 +22,8 @@ export const metadata: Metadata = {
   },
 };
 
-function formatDate(iso: string | null, lang: "en" | "so"): string {
-  if (!iso) return "";
-  try {
-    // so-SO month names (Janaayo, Febraayo…) mirror the orders-view dates.
-    return new Intl.DateTimeFormat(lang === "so" ? "so-SO" : "en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(iso));
-  } catch {
-    return "";
-  }
-}
-
+// Dates render through formatDateLang (dictionary) — Workers ICU silently
+// falls back to en-US for "so-SO", so Somali months are explicit there.
 export default async function BlogIndexPage() {
   const { posts, tableMissing } = await listPublishedPosts().catch(() => ({ posts: [], tableMissing: true }));
 
@@ -105,7 +93,7 @@ export default async function BlogIndexPage() {
                   </div>
                   <div className="flex flex-col gap-2 p-5">
                     <p className="text-xs uppercase tracking-wide text-[#3f7d4a]">
-                      {formatDate(post.publishedAt, lang)}
+                      {formatDateLang(post.publishedAt, lang)}
                     </p>
                     <h2 className="line-clamp-2 text-base font-bold leading-snug text-brand-dark group-hover:text-brand">
                       {post.title}
