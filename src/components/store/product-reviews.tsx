@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Stars, StarInput } from "@/components/store/stars";
 import { useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { cn } from "@/lib/utils";
 import type { ProductReview, ReviewSummary } from "@/lib/types";
 
@@ -103,7 +104,7 @@ export function ProductReviews({ productId }: { productId: string }) {
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
-        toast(data?.error ?? t("reviews.error"), "error");
+        toast(localizeApiError(data?.error, t) || t("reviews.error"), "error");
         return;
       }
       toast(t("reviews.posted"), "success");
@@ -131,7 +132,7 @@ export function ProductReviews({ productId }: { productId: string }) {
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
-        toast(data?.error ?? t("reviews.error"), "error");
+        toast(localizeApiError(data?.error, t) || t("reviews.error"), "error");
         return;
       }
       setMyReview(null);

@@ -1,21 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { ChevronLeft, Newspaper } from "lucide-react";
 import { getPublishedPostBySlug } from "@/lib/blog";
 import { MarkdownContent } from "@/lib/markdown";
 import { faqPageJsonLd } from "@/lib/faq";
 import { FaqSection } from "@/components/store/faq-section";
 import { StoreShell } from "@/components/store/store-shell";
+import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-function formatDate(iso: string | null): string {
+function formatDate(iso: string | null, lang: "en" | "so"): string {
   if (!iso) return "";
   try {
-    return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));
+    return new Intl.DateTimeFormat(lang === "so" ? "so-SO" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(iso));
   } catch {
     return "";
   }
@@ -56,6 +62,12 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const SITE_POST_URL = `https://hayaan.co/blog/${post.slug}`;
+  // SSR in the visitor's language (same cookie mechanism as the storefront).
+  // Post CONTENT stays in its authored language (English guides / the owner's
+  // Somali post); the page CHROME around it is what gets localized here.
+  const cookieLang = (await cookies()).get(LANG_COOKIE)?.value;
+  const lang = isLang(cookieLang) ? cookieLang : "en";
+  const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
   // AEO (Task 77): BlogPosting + (when the guide defines them) FAQPage and
   // HowTo nodes. Every node mirrors content that is visibly on the page.
   const jsonLd = {
@@ -103,19 +115,19 @@ export default async function BlogPostPage({ params }: Props) {
           href="/blog"
           className="inline-flex items-center text-sm font-bold text-brand hover:text-brand-dark"
         >
-          <ChevronLeft className="mr-1 h-4 w-4" /> Back to blog
+          <ChevronLeft className="mr-1 h-4 w-4" /> {t("blog.back")}
         </Link>
 
         <header className="mt-6">
           <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#3f7d4a]">
-            <Newspaper className="h-4 w-4" aria-hidden /> Hayaan Market Blog
+            <Newspaper className="h-4 w-4" aria-hidden /> {t("blog.kicker")}
           </p>
           <h1 className="mt-2 text-3xl font-black leading-tight tracking-tight text-brand-dark sm:text-4xl">
             {post.title}
           </h1>
           <p className="mt-3 text-sm text-muted-foreground font-original">
-            By {post.authorName}
-            {post.publishedAt ? ` · ${formatDate(post.publishedAt)}` : ""}
+            {t("blog.by", { name: post.authorName })}
+            {post.publishedAt ? ` · ${formatDate(post.publishedAt, lang)}` : ""}
           </p>
         </header>
 
@@ -141,7 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
         {post.quickAnswer && (
           <div className="mt-6 rounded-2xl border border-[#e6e2d4] bg-[#faf8f1] p-5">
             <h2 className="text-xs font-bold uppercase tracking-widest text-[#3f7d4a]">
-              Quick answer
+              {t("blog.quickAnswer")}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-foreground">{post.quickAnswer}</p>
           </div>
@@ -152,19 +164,19 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         {post.faqs?.length ? (
-          <FaqSection faqs={post.faqs} className="mt-10 border-t border-[#e6e2d4] pt-8" />
+          <FaqSection faqs={post.faqs} title={t("faq.short")} className="mt-10 border-t border-[#e6e2d4] pt-8" />
         ) : null}
 
         <footer className="mt-12 rounded-2xl bg-[#f3f7f1] p-6 text-center">
-          <h2 className="text-lg font-bold text-brand-dark">Ready to shop the story?</h2>
+          <h2 className="text-lg font-bold text-brand-dark">{t("blog.ctaTitle")}</h2>
           <p className="mt-1 text-sm text-muted-foreground font-original">
-            Browse the market — useful finds across fashion, beauty, electronics, and home.
+            {t("blog.ctaBody")}
           </p>
           <Link
             href="/"
             className="btn-accent mt-4 inline-flex h-10 items-center justify-center rounded-md px-5 text-sm"
           >
-            Start shopping
+            {t("blog.ctaButton")}
           </Link>
         </footer>
       </article>

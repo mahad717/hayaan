@@ -16,10 +16,11 @@ import { AuthModal } from "@/components/store/auth-modal";
 import { WishlistView } from "@/components/store/wishlist-view";
 import { Footer } from "@/components/store/footer";
 import { FaqSection } from "@/components/store/faq-section";
-import { SITE_FAQS } from "@/lib/faq";
+import { siteFaqs } from "@/lib/faq";
 import { LeadPopup } from "@/components/store/lead-popup";
 import { WhatsAppButton } from "@/components/store/whatsapp-button";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 
 function SeedCallout() {
   const { products, user, productsLoaded, view } = useStore();
@@ -48,7 +49,7 @@ function SeedCallout() {
                 return;
               }
               const data = await res.json().catch(() => null);
-              alert(data?.error ?? t("seed.fail"));
+              alert(localizeApiError(data?.error, t) || t("seed.fail"));
             }}
           >
             {t("seed.now")}
@@ -129,7 +130,7 @@ export function StorefrontApp({
 
   // Session (user + cart) bootstrap — shared with the SSR route shells.
   useStoreBootstrap();
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -149,7 +150,7 @@ export function StorefrontApp({
                 answers on the same page. Static markup, so SSR HTML carries the
                 full Q&A text for crawlers and answer engines. */}
             <FaqSection
-              faqs={SITE_FAQS}
+              faqs={siteFaqs(lang)}
               title={t("ft.faqTitle")}
               className="mx-auto max-w-7xl px-4 pb-16 sm:px-6"
             />

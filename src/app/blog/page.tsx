@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { Newspaper } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog";
 import { StoreShell } from "@/components/store/store-shell";
+import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
 // Rendered per request so newly published posts appear immediately.
 export const dynamic = "force-dynamic";
@@ -20,10 +22,15 @@ export const metadata: Metadata = {
   },
 };
 
-function formatDate(iso: string | null): string {
+function formatDate(iso: string | null, lang: "en" | "so"): string {
   if (!iso) return "";
   try {
-    return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));
+    // so-SO month names (Janaayo, Febraayo…) mirror the orders-view dates.
+    return new Intl.DateTimeFormat(lang === "so" ? "so-SO" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(iso));
   } catch {
     return "";
   }
@@ -31,6 +38,11 @@ function formatDate(iso: string | null): string {
 
 export default async function BlogIndexPage() {
   const { posts, tableMissing } = await listPublishedPosts().catch(() => ({ posts: [], tableMissing: true }));
+
+  // SSR in the visitor's language (same cookie mechanism as the storefront).
+  const cookieLang = (await cookies()).get(LANG_COOKIE)?.value;
+  const lang = isLang(cookieLang) ? cookieLang : "en";
+  const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
 
   return (
     <StoreShell>
@@ -57,19 +69,16 @@ export default async function BlogIndexPage() {
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-dark sm:text-4xl">Blog</h1>
           <p className="mt-3 text-base leading-relaxed text-muted-foreground font-original">
-            Shopping guides, product care tips, and stories from the market — everything we
-            wish we knew before buying, written down for you.
+            {t("blog.subtitle")}
           </p>
         </header>
 
         {posts.length === 0 ? (
           <div className="mt-12 rounded-2xl border border-dashed border-[#e6e2d4] bg-white p-12 text-center">
             <Newspaper className="mx-auto h-10 w-10 text-[#3f7d4a]/60" aria-hidden />
-            <h2 className="mt-4 text-lg font-semibold text-brand-dark">No stories yet</h2>
+            <h2 className="mt-4 text-lg font-semibold text-brand-dark">{t("blog.emptyTitle")}</h2>
             <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground font-original">
-              {tableMissing
-                ? "The blog is being set up — check back soon for guides and picks."
-                : "Our first guide is on its way. Check back soon!"}
+              {tableMissing ? t("blog.emptySetup") : t("blog.emptySoon")}
             </p>
           </div>
         ) : (
@@ -96,7 +105,7 @@ export default async function BlogIndexPage() {
                   </div>
                   <div className="flex flex-col gap-2 p-5">
                     <p className="text-xs uppercase tracking-wide text-[#3f7d4a]">
-                      {formatDate(post.publishedAt)}
+                      {formatDate(post.publishedAt, lang)}
                     </p>
                     <h2 className="line-clamp-2 text-base font-bold leading-snug text-brand-dark group-hover:text-brand">
                       {post.title}
@@ -106,7 +115,7 @@ export default async function BlogIndexPage() {
                         {post.excerpt}
                       </p>
                     )}
-                    <span className="mt-1 text-sm font-bold text-[#f28c28]">Read more →</span>
+                    <span className="mt-1 text-sm font-bold text-[#f28c28]">{t("blog.readMore")}</span>
                   </div>
                 </Link>
               </article>

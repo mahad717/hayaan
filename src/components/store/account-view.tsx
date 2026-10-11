@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MOGADISHU_DISTRICTS, findDistrict } from "@/lib/shipping";
 import { SOMALIA_CITIES, isSomaliaCity } from "@/lib/somalia";
@@ -239,7 +240,7 @@ export function AccountView() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        toast(data.error ?? t("acc.toastSaveFail"), "error");
+        toast(localizeApiError(data.error, t) || t("acc.toastSaveFail"), "error");
         return;
       }
       setPwd("");
@@ -303,7 +304,7 @@ export function AccountView() {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 autoComplete="name"
-                placeholder="e.g. Hodan Ahmed"
+                placeholder={t("acc.namePh")}
                 className={FIELD_CLS}
               />
             </div>
@@ -352,7 +353,7 @@ export function AccountView() {
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
                 autoComplete="street-address"
-                placeholder="Villa 12, Maka Al Mukarama Road"
+                placeholder={t("acc.addressPh")}
                 className={FIELD_CLS}
               />
             </div>

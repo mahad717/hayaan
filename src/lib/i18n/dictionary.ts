@@ -461,6 +461,80 @@ const en = {
   "wl.loading": "Loading your wishlist…",
   "wl.signinTitle": "Sign in to see your wishlist",
   "wl.signinBody": "Your saved products live in your account, so they follow you across every device you sign in on.",
+
+  // --- Task 94 (Somali translation completeness pass) ----------------------
+
+  // Cart quantity a11y
+  "cart.qtyDec": "Decrease quantity",
+  "cart.qtyInc": "Increase quantity",
+
+  // Header / nav a11y
+  "header.homeAria": "Hayaan Market home",
+  "nav.breadcrumbAria": "Breadcrumb",
+
+  // Hero image alt text
+  "hero.alt1": "Wireless headphones",
+  "hero.alt2": "Linen hoodie",
+  "hero.alt3": "Matte black ceramic vase",
+  "hero.alt4": "Heavyweight sweatshirt",
+
+  // Form placeholders
+  "acc.namePh": "e.g. Hodan Ahmed",
+  "acc.addressPh": "Villa 12, Maka Al Mukarama Road",
+  "au.namePh": "Alex Rivera",
+  "co.streetPh": "123 Garden St",
+
+  // Blog index / post chrome (server pages)
+  "blog.kicker": "Hayaan Market Blog",
+  "blog.subtitle": "Shopping guides, product care tips, and stories from the market — everything we wish we knew before buying, written down for you.",
+  "blog.readMore": "Read more →",
+  "blog.emptyTitle": "No stories yet",
+  "blog.emptySetup": "The blog is being set up — check back soon for guides and picks.",
+  "blog.emptySoon": "Our first guide is on its way. Check back soon!",
+  "blog.back": "Back to blog",
+  "blog.by": "By {name}",
+  "blog.quickAnswer": "Quick answer",
+  "blog.ctaTitle": "Ready to shop the story?",
+  "blog.ctaBody": "Browse the market — useful finds across fashion, beauty, electronics, and home.",
+  "blog.ctaButton": "Start shopping",
+
+  // PDP buying-guide cards (server-rendered)
+  "guides.heading": "Before you order — buying guides",
+  "guides.cta": "Read the guide →",
+
+  // Branded 404 (server page)
+  "nf.h1": "This page wandered off the map",
+  "nf.body": "The link may be old or mistyped — but the market is full of useful finds. Head back to the shop, browse a deal, or read the latest guide.",
+  "nf.backShop": "Back to the shop",
+  "nf.deals": "Current deals",
+  "nf.guides": "Shopping guides",
+
+  // FAQ heading (short form for category & post pages)
+  "faq.short": "Frequently asked questions",
+
+  // API / hook error copy surfaced in client toasts. The API keeps returning
+  // English (logs / support debugging); localizeApiError() maps the known
+  // strings to these keys so Somali shoppers never see English errors.
+  "err.signIn": "Please sign in.",
+  "err.signInCart": "Please sign in to add items to your cart.",
+  "err.signInOrder": "Please sign in to place an order.",
+  "err.signInReview": "Sign in to write a review.",
+  "err.signInWishlist": "Sign in to save items to your wishlist.",
+  "err.pwShort": "Password must be at least 6 characters.",
+  "err.pwFail": "Could not set the password. Please try again.",
+  "err.emailPwRequired": "Email and password are required.",
+  "err.emailExists": "An account with that email already exists.",
+  "err.invalidCreds": "Invalid email or password.",
+  "err.orderNotFound": "Order not found.",
+  "err.ratingRange": "Rating must be a whole number from 1 to 5.",
+  "err.cartFail": "Could not update the cart. Please try again.",
+  "err.wishlistFail": "Could not save the item. Please try again.",
+  "err.generic": "Something went wrong. Please try again.",
+  "err.nameEmpty": "Name cannot be empty.",
+  "err.tellName": "Please tell us your name.",
+  "err.describe": "Please describe what you need.",
+  "err.leaveContact": "Leave a phone number or email so we can send the quote.",
+  "err.emailLooks": "That email address doesn’t look right.",
 } as const;
 
 export type DictKey = keyof typeof en;
@@ -780,7 +854,7 @@ const so: Record<DictKey, string> = {
   "lead.popupTitle": "Alaab cusub & faa'iidooyin — ka hor qof kasta",
   "lead.popupBody":
     "Ku biir liiska Hayaan, waannu kuu sheegi doonaa marka alaab danayn kara la yimaado. Ma jiro spam — fariin gaaban oo keliya.",
-  "lead.popupEmailPh": "you@example.com",
+  "lead.popupEmailPh": "email@kaaga.com",
   "lead.popupPhonePh": "WhatsApp ama taleefan",
   "lead.popupContactHint": "Email, number WhatsApp, ama labadaba.",
   "lead.popupCta": "I warran",
@@ -808,7 +882,7 @@ const so: Record<DictKey, string> = {
   "quote.phone": "Taleefan / WhatsApp",
   "quote.phonePh": "+252 …",
   "quote.email": "Email (ikhtiyaari)",
-  "quote.emailPh": "you@example.com",
+  "quote.emailPh": "email@kaaga.com",
   "quote.items": "Waxa aad u baahan tahay",
   "quote.itemsPh": "tus: 10 × iPhone 17, 5 × HP EliteBook 840, 20 shubmo…",
   "quote.itemsHint": "Sheeg alaabta iyo tirada — summadaha, noocyada, tirada.",
@@ -830,7 +904,7 @@ const so: Record<DictKey, string> = {
   "deals.phone": "Taleefan / WhatsApp",
   "deals.phonePh": "+252 …",
   "deals.email": "Email (ikhtiyaari)",
-  "deals.emailPh": "you@example.com",
+  "deals.emailPh": "email@kaaga.com",
   "deals.interest": "Waxa aad raadineysaa?",
   "deals.interestPh": "Dooro mid…",
   "deals.i1": "Taleefoono",
@@ -859,7 +933,7 @@ const so: Record<DictKey, string> = {
 
   // Sifalo Pay return page (server-rendered guards)
   "sf.received": "Lacagta waa la helay — waad ku mahadsan tahay!",
-  "sf.via": "via {type}",
+  "sf.via": "iyadoo la marayo {type}",
   "sf.missingRefTitle": "Tixraaca bixinta waa maqan yahay",
   "sf.missingRefBody":
     "Ma garan karno dalabka ay bixintani ka tirsan tahay. Haddii aad bixisay, fiiri bogga Dalabyada — wuu cusboonaysanayaa marka bixinta la xaqiijiyo.",
@@ -902,6 +976,69 @@ const so: Record<DictKey, string> = {
   "wl.loading": "Liiska rabitaanka ayaa soo dejinaya…",
   "wl.signinTitle": "Soo gal si aad aragto liiska rabitaanka",
   "wl.signinBody": "Alaabaha aad kaydisay waxay ku jiraan akoonkaaga, sidaas darteed way kula socdaan qalab kasta oo aad ku galo.",
+
+  // --- Task 94 (Somali translation completeness pass) ----------------------
+
+  "cart.qtyDec": "Yaree tirada",
+  "cart.qtyInc": "Kordhi tirada",
+
+  "header.homeAria": "Hayaan Market, bogga hore",
+  "nav.breadcrumbAria": "Jidka bogga",
+
+  "hero.alt1": "Kabaha dhegaha ee aan fiilo lahayn",
+  "hero.alt2": "Hoodie linen ah",
+  "hero.alt3": "Dherig ceramic oo madow",
+  "hero.alt4": "Sweatshirt oo maro culus ah",
+
+  "acc.namePh": "tus: Hodan Ahmed",
+  "acc.addressPh": "Villa 12, Wadada Maka Al Mukarama",
+  "au.namePh": "tus: Faadumo Ali",
+  "co.streetPh": "123 Wadada Garden",
+
+  "blog.kicker": "Blogga Hayaan Market",
+  "blog.subtitle": "Hagayaasha iibsiga, talooyinka daryeelka alaabta, iyo sheekooyinka suuqa — wax kasta oo aan runtii ka garan lahayn kahor intaanan iibsan, annaga ayaa kuu qoray.",
+  "blog.readMore": "Akhri dheeraad ah →",
+  "blog.emptyTitle": "Weli sheeko ma jirto",
+  "blog.emptySetup": "Blogga waa la diyaarinayaa — ku noqo dhawaan si aad hagayaasha iyo doorooyinka u aragto.",
+  "blog.emptySoon": "Hagaha koowaad wuu jiidahay. Ku noqo dhawaan!",
+  "blog.back": "Ku noqo blogga",
+  "blog.by": "Waxaa qoray {name}",
+  "blog.quickAnswer": "Jawaab degdeg ah",
+  "blog.ctaTitle": "Diyaar u tahay inaad sheekada suuqa ugu gudato?",
+  "blog.ctaBody": "Sahran suuqa — alaab muhiim ah oo dhar, qurux, elektirooniks iyo guriga ah.",
+  "blog.ctaButton": "Bilow iibsiga",
+
+  "guides.heading": "Ka hor intaadan dalbin — hagayaasha iibsiga",
+  "guides.cta": "Akhri hagaha →",
+
+  "nf.h1": "Boggan wuu lumay jidkiisa",
+  "nf.body": "Link-gu waa duugoobay ama si qaldan ayaa loo qoray — laakiin suuqu wuxuu buuxaa alaab muhiim ah. Ku noqo suuqa, fiiri qiimo jabinada, ama akhri hagaha ugu dambeeya.",
+  "nf.backShop": "Ku noqo suuqa",
+  "nf.deals": "Qiimo jabinada hadda jira",
+  "nf.guides": "Hagayaasha iibsiga",
+
+  "faq.short": "Su'aalaha badan la isweydiiyo",
+
+  "err.signIn": "Fadlan soo gal akoonkaaga.",
+  "err.signInCart": "Fadlan soo gal si aad wax ugu darto gaadhiga.",
+  "err.signInOrder": "Fadlan soo gal si aad dalab u samaysato.",
+  "err.signInReview": "Soo gal si aad faallo u qorto.",
+  "err.signInWishlist": "Soo gal si aad u kaydiso alaabaha liiska rabitaanka.",
+  "err.pwShort": "Furaha waa inuu ka kooban yahay ugu yaraan 6 xaraf.",
+  "err.pwFail": "Furaha lama dhigi karin. Fadlan isku day mar kale.",
+  "err.emailPwRequired": "Iimaylka iyo furaha waa loo baahan yahay.",
+  "err.emailExists": "Akoon iimaylkaan leh horeyba wuu jiraa.",
+  "err.invalidCreds": "Iimaylka ama furaha waa qaldan.",
+  "err.orderNotFound": "Dalabka lama helin.",
+  "err.ratingRange": "Darajaddu waa inay tahay tiro dhan oo 1 ilaa 5 ah.",
+  "err.cartFail": "Gaadhiga lama cusboonaysiin karin. Fadlan isku day mar kale.",
+  "err.wishlistFail": "Alaabta lama kaydin karin. Fadlan isku day mar kale.",
+  "err.generic": "Wax qalad ah ayaa dhacay. Fadlan isku day mar kale.",
+  "err.nameEmpty": "Magaca waa loo baahan yahay.",
+  "err.tellName": "Fadlan noo sheeg magacaaga.",
+  "err.describe": "Fadlan noo sharax waxa aad u baahan tahay.",
+  "err.leaveContact": "Fadlan ka tag number ama iimayl si aan kuu dirno qiimaynta.",
+  "err.emailLooks": "Iimaylkaasu ma muuqdo mid sax ah.",
 };
 
 export const dictionaries: Record<Lang, Record<DictKey, string>> = { en, so };

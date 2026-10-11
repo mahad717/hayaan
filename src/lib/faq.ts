@@ -143,8 +143,136 @@ export const GENERIC_CATEGORY_FAQS: FaqEntry[] = [
   },
 ];
 
-export function categoryFaqsFor(slug: string): FaqEntry[] {
+export function categoryFaqsFor(slug: string, lang: "en" | "so" = "en"): FaqEntry[] {
+  if (lang === "so") return CATEGORY_FAQS_SO[slug] ?? GENERIC_CATEGORY_FAQS_SO;
   return CATEGORY_FAQS[slug] ?? GENERIC_CATEGORY_FAQS;
+}
+
+/** Somali mirror of SITE_FAQS (Task 94 translation pass) — same facts, same order. */
+export const SITE_FAQS_SO: FaqEntry[] = [
+  {
+    q: "Maxay tahay Hayaan Market?",
+    a: "Hayaan Market (hayaan.co) waa suuq online oo Soomaali ah. Waxaad ka iibsataa elektirooniks, TV-yada, kombuyuutarada, teleefoonada, koronta iyo shubista, qalabka guriga iyo xafiiska, iyo caafimaadka — qiimo USD ah oo go'an, bixin ammaan ah oo EVC Plus, Edahab iyo kaar ah, iyo gaadhitaan ilaa albaabkaada.",
+  },
+  {
+    q: "Sideen u dalban karaa Hayaan Market?",
+    a: "Sahran kataloogyada, ku dar alaabta gaadhiga, kadibna bixi magacaaga, taleefankaaga iyo degmada gaadhitaanka. Waxaad ku bixisaa si ammaan ah oo EVC Plus, Edahab ama kaar ah, dalabkuna wuu ku gaaraa cinwaankaaga. Xafiisyada, dugsiyada iyo hoteeladuna waxay codsi dalab weyn u soo diri karaan hayaan.co/quote.",
+  },
+  {
+    q: "Immisa ayay ku baxdaa gaadhitaanta Muqdisho?",
+    a: "Gaadhitaanta Muqdisho waxay ku kala duwan tahay degmo kasta — laga bilaabo $1.50 (Hodan, Waberi, Wadajir) ilaa $3.00 (Daynile, Kahda, Gubadley, Darussalam, Garasbaaley). Khidmada saxda ah ee degmadaada waxaa lagu tusaa checkout-ka kahor intaadan bixin.",
+  },
+  {
+    q: "Gaadhitaantu waa bilaash baa?",
+    a: "Haa — dalabyada wadartooda $75 ama ka badan waxay Muqdisho si bilaash ah u gaaraan degmo kasta. Haddii aanay $75 gaadhin, khidmada caadiga ah ee degmada ayaa lacagta laga qaadaa, Soomaaliya dibeddana khidmada dalka oo dhan waa $6.95 oo go'an.",
+  },
+  {
+    q: "Muqdisho dibed ma gaadhsisiisaan?",
+    a: "Haa. Gaadhitaanta Soomaaliya meel kasta ah waa $6.95 oo go'an, xitaa haddii dalabku weyn yahay. Magaalooyinka kale checkout-ka ku qor, khidmaduna si toos ah ayay u xisaabtamaysaa kahor bixinta.",
+  },
+  {
+    q: "Sideen u bixin karaa?",
+    a: "Dhammaan dalabyada waxaa lagu bixiyaa si ammaan ah oo EVC Plus, Edahab ama kaar ah. Qiimahu waa dollar US, VAT-na lama taago — wadarta aad checkout-ka ku xaqiijiso (qiimaha alaabta iyo khidmada gaadhitaanka oo lagu muujiyay) ayaa keliya oo aad bixisay.",
+  },
+  {
+    q: "Xafiiskayga, dugsigayga ama dukaankayga ma wax badan (bulk) ka iibsadaa?",
+    a: "Haa. Bogga dalabka weyn hayaan.co/quote ku sharax waxa aad u baahan tahay — printaro, laptop-yada, TV-yada, vitamiinada ama qalab xafiis oo dhan — xubnaha kooxdayada waxay kuu soo dirayaan qiimaysto gaar ah.",
+  },
+  {
+    q: "Sideen kala soo xiriiri karaa taageerada?",
+    a: `Nage soo wado WhatsApp ${SUPPORT_WHATSAPP} ama iimayl u dir support@hayaan.co. Waxaan kaa caawin karnaa su'aalaha alaabta, xaaladda dalabka iyo faahfaahinta gaadhitaanta.`,
+  },
+];
+
+/** Somali mirrors of the per-category Q&A (Task 94) — same facts, same order. */
+export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
+  "computers-tv-gaming": [
+    {
+      q: "Soomaaliya xaggay ka iibsan karaa laptop ama TV online?",
+      a: "Qaybta Kombuyuutarada & TV-yada ee Hayaan Market waxaa ku iibsan MacBook, TV smart, PS5 iyo projector — laga bilaabo 43-inch LG oo qiimo $450 ah ilaa 85-inch Samsung ee ugu weyn — dhammaanna qiimo USD go'an iyo gaadhitaan albaabka Muqdisho.",
+    },
+    {
+      q: "Immisa ayay ku baxdaa smart TV Soomaaliya?",
+      a: "hayaan.co TV-yada smart hadda waxay ka bilaabmaan qiimo $450 oo 43-inch LG ah, ilaa $2,350 oo 85-inch Samsung ah. Listing kastaa wuxuu muujiyaa qiimaha saxda ah kahor intaadan dalbin, dalabyada $75 ka badanna Muqdisho way bilaash yihiin.",
+    },
+    {
+      q: "Console-yada ciyaaraha iyo projector-yada gaadhitaan baa la yimaadaa?",
+      a: "Haa — PlayStation 5, projector-yada sida Epson CO-W01 ($350) iyo wax kasta oo kataloogyada ku jira waxay u gaaraan degmo kasta oo Muqdisho ah ($1.50–$3.00) ama Soomaaliya meel kasta oo $6.95 ah.",
+    },
+  ],
+  "phones-wearables": [
+    {
+      q: "Soomaaliya xaggay online ka iibsan karaa teleefoon?",
+      a: "Qaybta Teleefoonada & Saacadaha ee Hayaan Market waxay iibisantaa teleefoono smart iyo saacadaho smart oo qiimo USD go'an leh — laga bilaabo Android yaryar oo $118 ah ilaa flagship-yada — waxayna kuugu gaaraan degmadaada Muqdisho ama Soomaaliya meel kasta.",
+    },
+    {
+      q: "Immisa ayay tahay qiimaha teleefoonda ugu jaban Soomaaliya?",
+      a: "Teleefoonda Android ee jaban ee hayaan.co waxay ka bilaabmaan $118. Listing kastaa wuxuu muujiyaa qiimaha USD saxda ah — sidaas darteed waad isbarbardhigi kartaa moodelada kahor intaadan bixin EVC Plus, Edahab ama kaar.",
+    },
+    {
+      q: "Qiimaha teleefoonka gaadhitaan buu ka kooban yahay?",
+      a: "Qiimaha la muujiyay waa qiimaha alaabta. Gaadhitaanku wuxuu ku daraa $1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada — waxuuna bilaash yahay dalabyada $75 ama ka badan.",
+    },
+  ],
+  "health-supplements": [
+    {
+      q: "Soomaaliya xaggay online ka iibsan karaa vitamiinada iyo alaabta caafimaadka?",
+      a: "Qaybta Caafimaad & Vitamiinada ee Hayaan Market waxay multivitamiin iyo alaab caafimaad u dirtaa Muqdisho iyo Soomaaliya oo dhan — qiimo USD go'an, bixin ammaan oo EVC Plus / Edahab / kaar ah, iyo gaadhitaan albaabka.",
+    },
+    {
+      q: "Sideen u dooran karaa multivitamiin fiican?",
+      a: "Calcaamka ku eeg barkimada iyo cabirka hal dufcad, tirada dufcadaha daawada ku jira, iibsi-na ka samee listing muujinaya qiimaha saxda ah iyo stock-ka. Hagaha wax ka iibsiga ee caafimaadka ee bogga Hayaan wuxuu ku dhaafaa liiska buuxa.",
+    },
+    {
+      q: "Xafiisyada ama gym-yada miyey vitamiinada wax badan (bulk) ka dalban karaan?",
+      a: "Haa — hayaan.co/quote ka soo dir codsi dalab weyn oo sharaxaya waxa aad u baahan tahay, waxaana kuu soo baxaya qiimaysto gaar ah.",
+    },
+  ],
+  "home-office": [
+    {
+      q: "Soomaaliya xaggay online ka iibsan karaa qalabka xafiiska?",
+      a: "Qaybta Guryaha & Xafiisyada ee hayaan.co waxaa ku jira printaro, laptop-yada, shaashadaha iyo alaab xafiis oo qiimo USD go'an leh, gaadhitaan albaabka Muqdisho ($1.50–$3.00) ama dalka oo dhan ($6.95).",
+    },
+    {
+      q: "Xafiis yar printerkee ayaa waa inaan iibsadaa?",
+      a: "Marka hore printer dooro, kadibna isku xir lambarka toner-ka — Hayaan waxay la socdaan printerada iyo cartridge-yadooda si aad labada ugu darto hal gaadhi oo aad gaarto $75 gaadhitaanta bilaashka ah.",
+    },
+    {
+      q: "Ma dalban karaa qalab xafiis oo dhan?",
+      a: "Haa. Dugsiyada, hoteelada iyo xafiisyada — hayaan.co/quote u soo dir alaabta iyo tirada aad u baahan tahay, waxaana kuu imanaya qiimaysto gaar ah.",
+    },
+  ],
+  "power-charging-audio": [
+    {
+      q: "Soomaaliya xaggay online ka iibsan karaa power bank?",
+      a: "Qaybta Koronta & Shubista ee Hayaan Market waxay iibisantaa power bank xaddid weyn leh (sida Green Lion 80,000mAh oo $65 ah), shubmo iyo agab cod oo qiimo USD go'an iyo gaadhitaan albaab ah.",
+    },
+    {
+      q: "Immisa ayay ku baxdaa gaadhitaanta shubmada iyo spikarrada?",
+      a: "$1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada, bilaash dalabyada $75 ama ka badan, iyo $6.95 oo go'an Soomaaliya meel kasta oo kale.",
+    },
+    {
+      q: "Qiimayaasha la muujiyay baa miyay kama dambeys yihiin?",
+      a: "Haa — qiimaha USD ee listing-ka ayaa aad bixisay. VAT ma jiro; waxa kaliya oo dheeraad ah waa khidmada gaadhitaanta oo checkout-ka lagu muujiyo kahor xaqiijinta bixinta.",
+    },
+  ],
+};
+
+/** Somali mirror of GENERIC_CATEGORY_FAQS (Task 94). */
+export const GENERIC_CATEGORY_FAQS_SO: FaqEntry[] = [
+  {
+    q: "Qaybtan Soomaaliya online miyaan ka dalban karaa?",
+    a: "Haa — Hayaan Market dalka oo dhan ayay u dirtaa. Muqdisho gudihiisa $1.50–$3.00 ayay ku xiran tahay degmada, dalabyada $75 ama ka badan way bilaash yihiin, Soomaaliya meel kastana waa $6.95 oo go'an.",
+  },
+  {
+    q: "Sideen u bixin karaa dalabkayga?",
+    a: "EVC Plus, Edahab ama kaar — si ammaan ah, dollar US. Wadarta (qiimaha alaabta iyo khidmada gaadhitaanta oo checkout-ka lagu muujiyay) waxaa la xaqiijiyaa kahor bixinta, VAT-na lama taago.",
+  },
+];
+
+/** Site-wide FAQs in the visitor's language. */
+export function siteFaqs(lang: "en" | "so"): FaqEntry[] {
+  return lang === "so" ? SITE_FAQS_SO : SITE_FAQS;
 }
 
 /** FAQPage JSON-LD graph node from a list of Q&As. */

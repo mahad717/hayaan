@@ -117,7 +117,7 @@ export function Header() {
         <button
           onClick={() => goToView("home")}
           className="flex shrink-0 items-center gap-2 text-base font-black font-panton tracking-tight"
-          aria-label="Hayaan Market home"
+          aria-label={t("header.homeAria")}
         >
           {/* Official Hayaan cart mark — dark green variant */}
           <img src="/hayaan-logo-green.svg" alt="" aria-hidden="true" className="h-8 w-8 sm:h-9 sm:w-9" />

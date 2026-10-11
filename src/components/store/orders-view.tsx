@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useStore, fetchOrders } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import type { Order, OrderStatus } from "@/lib/types";
 
 function formatPrice(n: number, currency = "USD") {
@@ -64,7 +65,7 @@ export function OrdersView() {
       } else if (res.ok && data.state === "failed") {
         setVerifyNote(t("ord.verifyFailed"));
       } else {
-        setVerifyNote(data?.error ?? t("ord.verifyError"));
+        setVerifyNote(localizeApiError(data?.error, t) || t("ord.verifyError"));
       }
     } catch {
       setVerifyNote(t("ord.verifyNetwork"));

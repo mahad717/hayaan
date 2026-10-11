@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PartyPopper } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { useStore } from "@/hooks/use-store";
 
 const SEEN_KEY = "hayaan_offer_seen";
@@ -93,7 +94,7 @@ export function LeadPopup() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        setError(data?.error ?? t("lead.popupError"));
+        setError(localizeApiError(data?.error, t) || t("lead.popupError"));
         return;
       }
       setDone(true);

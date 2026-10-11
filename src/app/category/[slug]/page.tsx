@@ -84,7 +84,7 @@ export default async function CategoryPage({ params }: Props) {
   const name = categoryName(category.name, category.slug, lang);
   const others = allCategories.filter((c) => c.slug !== category.slug);
 
-  const faqs = categoryFaqsFor(category.slug);
+  const faqs = categoryFaqsFor(category.slug, lang);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -132,7 +132,7 @@ export default async function CategoryPage({ params }: Props) {
       />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         {/* Visible breadcrumb — mirrors the BreadcrumbList structured data */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-sm text-muted-foreground">
+        <nav aria-label={t("nav.breadcrumbAria")} className="flex items-center gap-1 text-sm text-muted-foreground">
           <Link href="/" className="transition hover:text-brand">
             {t("ft.shop")}
           </Link>
@@ -175,7 +175,7 @@ export default async function CategoryPage({ params }: Props) {
         {/* AEO (Task 77): buyer questions for this category ("where can I
             buy X online in Somalia"-style prompts), answered with the store's
             real delivery/payment facts. */}
-        <FaqSection faqs={faqs} className="mt-12" />
+        <FaqSection faqs={faqs} title={t("faq.short")} className="mt-12" />
 
         {others.length > 0 && (
           <section className="mt-12 border-t border-[#e6e2d4] pt-8">

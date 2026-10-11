@@ -5,6 +5,7 @@ import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { hydrateWishlist, saveToWishlist, unsaveFromWishlist, useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeThrownError } from "@/lib/i18n/api-errors";
 
 /**
  * The wishlist heart (Task 88). Rendered on product cards (top-right of the
@@ -72,7 +73,7 @@ export function WishlistHeartButton({
       // Revert to the pre-click list and re-sync availability (the failure
       // may be the pre-migration unavailable path).
       await hydrateWishlist().catch(() => setWishlist(prev));
-      toast((err as Error).message, "error");
+      toast(localizeThrownError(err, t), "error");
     } finally {
       setBusy(false);
     }

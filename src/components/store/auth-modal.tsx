@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { hydrateWishlist, useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { createOAuthBrowserClient } from "@/lib/supabase/client";
 
 const INPUT_CLASS =
@@ -45,7 +46,7 @@ export function AuthModal() {
       });
       const data = await res.json();
       if (!res.ok) {
-        toast(data.error ?? t("au.toastFailed"), "error");
+        toast(localizeApiError(data.error, t) || t("au.toastFailed"), "error");
         return;
       }
       setUser(data.user);
@@ -155,7 +156,7 @@ export function AuthModal() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Alex Rivera"
+                  placeholder={t("au.namePh")}
                   autoComplete="name"
                   className={INPUT_CLASS}
                 />

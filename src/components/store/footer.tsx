@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Instagram, Twitter, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { useStore } from "@/hooks/use-store";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { categoryName } from "@/lib/i18n/dictionary";
@@ -50,7 +51,7 @@ export function Footer() {
         toast(t("ft.subscribed"), "success");
       } else {
         const data = await res.json().catch(() => null);
-        toast(data?.error ?? t("lead.popupError"), "error");
+        toast(localizeApiError(data?.error, t) || t("lead.popupError"), "error");
       }
     } catch {
       toast(t("lead.popupError"), "error");

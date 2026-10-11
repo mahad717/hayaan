@@ -77,22 +77,22 @@ export function Hero({ onShop }: { onShop: () => void }) {
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <img
               src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"
-              alt="Wireless headphones"
+              alt={t("hero.alt1")}
               className="aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
             <img
               src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&auto=format&fit=crop"
-              alt="Linen hoodie"
+              alt={t("hero.alt2")}
               className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
             <img
               src="https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg"
-              alt="Matte black ceramic vase"
+              alt={t("hero.alt3")}
               className="aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
             <img
               src="https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg"
-              alt="Heavyweight sweatshirt"
+              alt={t("hero.alt4")}
               className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
           </div>

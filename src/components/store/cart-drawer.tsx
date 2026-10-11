@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeThrownError } from "@/lib/i18n/api-errors";
 import { FREE_SHIPPING_THRESHOLD, computeCartShipping, districtFee, physicalSubtotal } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
@@ -33,7 +34,7 @@ export function CartDrawer() {
       const updated = await addToCart(productId, 1, action);
       setCart(updated);
     } catch (err) {
-      toast((err as Error).message, "error");
+      toast(localizeThrownError(err, t), "error");
     }
   };
 
@@ -42,7 +43,7 @@ export function CartDrawer() {
       const updated = await removeFromCart(itemId);
       setCart(updated);
     } catch (err) {
-      toast((err as Error).message, "error");
+      toast(localizeThrownError(err, t), "error");
     }
   };
 
@@ -137,7 +138,7 @@ export function CartDrawer() {
                           size="icon"
                           className="h-7 w-7 text-brand"
                           onClick={() => updateQty(it.id, it.productId, it.quantity, "decrement")}
-                          aria-label="Decrease quantity"
+                          aria-label={t("cart.qtyDec")}
                           disabled={it.quantity <= 1}
                         >
                           <Minus className="h-3 w-3" />
@@ -148,7 +149,7 @@ export function CartDrawer() {
                           size="icon"
                           className="h-7 w-7 text-brand"
                           onClick={() => updateQty(it.id, it.productId, it.quantity, "increment")}
-                          aria-label="Increase quantity"
+                          aria-label={t("cart.qtyInc")}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>

@@ -7,7 +7,7 @@ import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { guidesForProduct } from "@/lib/product-guides";
-import { isLang, LANG_COOKIE, productDescription } from "@/lib/i18n/dictionary";
+import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 
 // SSR per request — catalog changes are visible immediately and crawlers
@@ -68,6 +68,11 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) notFound();
+
+  // SSR in the visitor's language (same cookie mechanism as the storefront).
+  const cookieLang = (await cookies()).get(LANG_COOKIE)?.value;
+  const lang = isLang(cookieLang) ? cookieLang : "en";
+  const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
 
   const inStock = product.stock > 0;
   // Task 87: contextual buying-guide links — server-rendered so the first
@@ -149,7 +154,7 @@ export default async function ProductPage({ params }: Props) {
             className="flex items-center gap-2 text-lg font-bold text-brand-dark"
           >
             <BookOpen className="h-5 w-5 text-brand" aria-hidden />
-            Before you order — buying guides
+            {t("guides.heading")}
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             {guides.map((g) => (
@@ -165,7 +170,7 @@ export default async function ProductPage({ params }: Props) {
                   {g.description}
                 </p>
                 <span className="mt-3 inline-block text-xs font-bold text-[#f28c28]">
-                  Read the guide →
+                  {t("guides.cta")}
                 </span>
               </Link>
             ))}

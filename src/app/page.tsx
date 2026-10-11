@@ -1,6 +1,8 @@
 import { StorefrontApp } from "@/components/store/storefront-app";
 import { listActiveProducts, listCategories } from "@/lib/products-server";
-import { SITE_FAQS, faqPageJsonLd } from "@/lib/faq";
+import { faqPageJsonLd, siteFaqs } from "@/lib/faq";
+import { cookies } from "next/headers";
+import { isLang, LANG_COOKIE } from "@/lib/i18n/dictionary";
 import type { Category, Product } from "@/lib/types";
 
 // Awaiting searchParams makes this route render dynamically per request, so
@@ -55,13 +57,22 @@ export default async function Page({
       {/* AEO (Task 77): FAQPage structured data for the site-wide questions.
           The matching VISIBLE answers render in the homepage FAQ section
           (below the catalog, inside StorefrontApp's home view), so markup
-          and page content agree as answer engines expect. */}
+          and page content agree as answer engines expect. Task 94: the FAQ
+          renders in the cookie language, so the JSON-LD mirrors the same
+          language (markup must match visible content). */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            ...faqPageJsonLd(SITE_FAQS, "https://hayaan.co"),
+            ...faqPageJsonLd(
+              siteFaqs(
+                isLang((await cookies()).get(LANG_COOKIE)?.value)
+                  ? ((await cookies()).get(LANG_COOKIE)!.value as "en" | "so")
+                  : "en",
+              ),
+              "https://hayaan.co",
+            ),
           }),
         }}
       />

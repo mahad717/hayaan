@@ -374,7 +374,7 @@ export function Checkout() {
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
                   autoComplete="street-address"
-                  placeholder="123 Garden St"
+                  placeholder={t("co.streetPh")}
                   className="bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20"
                 />
               </div>

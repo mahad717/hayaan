@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 
 const INPUT_CLASS =
   "bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20";
@@ -63,7 +64,7 @@ export function DealsSignupForm() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        setError(data?.error ?? t("lead.popupError"));
+        setError(localizeApiError(data?.error, t) || t("lead.popupError"));
         return;
       }
       setDone(true);
