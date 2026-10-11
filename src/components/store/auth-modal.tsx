@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import { useStore } from "@/hooks/use-store";
+import { hydrateWishlist, useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { createOAuthBrowserClient } from "@/lib/supabase/client";
 
@@ -55,6 +55,10 @@ export function AuthModal() {
         const cartData = await cartRes.json();
         setCart(cartData.cart);
       }
+      // Wishlist (Task 88) — hydrate the freshly authenticated session's
+      // saved products (and the availability flag) without a full reload,
+      // mirroring the cart refresh above.
+      hydrateWishlist().catch(() => {});
       reset();
       setAuthOpen(false);
     } catch (err) {

@@ -425,6 +425,24 @@ const en = {
   "sf.checking": "Checking your payment…",
   "sf.pendingNote": "Still pending — the network hasn’t approved it yet.",
   "sf.notConfirmed": "Still not confirmed. Give it a moment and try again.",
+
+  // Wishlist (Task 88) — heart toggle on cards/PDP, header badge, /?view=wishlist
+  "header.wishlist": "Wishlist",
+  "header.wishlistAria": "Wishlist — {n} items",
+  "header.wishlistBadgeAria": "{n} items saved in your wishlist",
+  "card.saveAria": "Save {name} to your wishlist",
+  "card.unsaveAria": "Remove {name} from your wishlist",
+  "wl.signIn": "Sign in to save items to your wishlist",
+  "wl.saved": "Saved to your wishlist",
+  "wl.removed": "Removed from your wishlist",
+  "wl.title": "My wishlist",
+  "wl.count": "{n} saved items",
+  "wl.empty": "Your wishlist is empty",
+  "wl.emptyBody": "Tap the heart on any product to save it here for later.",
+  "wl.cta": "Continue shopping",
+  "wl.loading": "Loading your wishlist…",
+  "wl.signinTitle": "Sign in to see your wishlist",
+  "wl.signinBody": "Your saved products live in your account, so they follow you across every device you sign in on.",
 } as const;
 
 export type DictKey = keyof typeof en;
@@ -832,6 +850,24 @@ const so: Record<DictKey, string> = {
   "sf.checking": "Bixinta ayaa la xaqiijinayo…",
   "sf.pendingNote": "Weli sugaya — shabakadu weli ma ansixisin.",
   "sf.notConfirmed": "Weli lama xaqiijin. Sug wax yar, isku day mar kale.",
+
+  // Wishlist (Task 88)
+  "header.wishlist": "Liiska rabitaanka",
+  "header.wishlistAria": "Liiska rabitaanka — {n} alaab",
+  "header.wishlistBadgeAria": "{n} alaab oo liiska rabitaanka lagu kaydiyay",
+  "card.saveAria": "Kaydi {name} liiska rabitaanka",
+  "card.unsaveAria": "Ka saar {name} liiska rabitaanka",
+  "wl.signIn": "Soo gal si aad u kaydiso alaabaha liiska rabitaanka",
+  "wl.saved": "Waa la kaydiyay liiska rabitaanka",
+  "wl.removed": "Waa laga saaray liiska rabitaanka",
+  "wl.title": "Liiskayga rabitaanka",
+  "wl.count": "{n} alaab oo la kaydiyay",
+  "wl.empty": "Liiska rabitaankaadu waa madhan yahay",
+  "wl.emptyBody": "Guji wadnaha alaab kasta si aad halkan u kaydiso wixii aad rabto.",
+  "wl.cta": "Sii wad iibsiga",
+  "wl.loading": "Liiska rabitaanka ayaa soo dejinaya…",
+  "wl.signinTitle": "Soo gal si aad aragto liiska rabitaanka",
+  "wl.signinBody": "Alaabaha aad kaydisay waxay ku jiraan akoonkaaga, sidaas darteed way kula socdaan qalab kasta oo aad ku galo.",
 };
 
 export const dictionaries: Record<Lang, Record<DictKey, string>> = { en, so };

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 // Views that may arrive via the /?view= deep link — must match VALID_VIEWS in
 // storefront-app.tsx. Only the home view displays the catalog.
-const VALID_VIEWS = ["home", "product", "checkout", "orders", "account"];
+const VALID_VIEWS = ["home", "product", "checkout", "orders", "account", "wishlist"];
 
 export default async function Page({
   searchParams,

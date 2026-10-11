@@ -13,6 +13,7 @@ import { OrdersView } from "@/components/store/orders-view";
 import { AccountView } from "@/components/store/account-view";
 import { CartDrawer } from "@/components/store/cart-drawer";
 import { AuthModal } from "@/components/store/auth-modal";
+import { WishlistView } from "@/components/store/wishlist-view";
 import { Footer } from "@/components/store/footer";
 import { FaqSection } from "@/components/store/faq-section";
 import { SITE_FAQS } from "@/lib/faq";
@@ -75,8 +76,9 @@ function useHiddenState() {
 }
 
 // Views that may arrive via the /?view= deep link (same list the payment
-// return page and goToView use).
-const VALID_VIEWS: readonly string[] = ["home", "product", "checkout", "orders", "account"];
+// return page and goToView use). "wishlist" (Task 88) is deep-linked by the
+// header heart from SSR routes and bookmarkable.
+const VALID_VIEWS: readonly string[] = ["home", "product", "checkout", "orders", "account", "wishlist"];
 
 /**
  * The storefront SPA. The wrapping server page (src/app/page.tsx) reads the
@@ -157,6 +159,7 @@ export function StorefrontApp({
         {view === "checkout" && <Checkout />}
         {view === "orders" && <OrdersView />}
         {view === "account" && <AccountView />}
+        {view === "wishlist" && <WishlistView />}
       </main>
       <Footer />
 

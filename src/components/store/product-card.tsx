@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@/lib/types";
 import { addToCart, useStore } from "@/hooks/use-store";
+import { WishlistHeartButton } from "@/components/store/wishlist-heart";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName } from "@/lib/i18n/dictionary";
 
@@ -94,15 +95,20 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Featured badge — subtle, green-tinted */}
-        {product.featured && (
-          <Badge
-            variant="secondary"
-            className="absolute right-3 top-3 bg-white/95 text-brand hover:bg-white shadow-sm"
-          >
-            {t("card.featured")}
-          </Badge>
-        )}
+        {/* Right column — featured badge + wishlist heart (Task 88), stacked
+            so both stay visible on featured products. The heart is ALWAYS
+            visible (Jumia/Noon pattern, not hover-only): the "save for
+            later" moment happens while scrolling the grid, often on mobile
+            where hover doesn't exist. stopPropagation inside keeps the tap
+            from navigating to the PDP. */}
+        <div className="absolute right-3 top-3 z-10 flex flex-col items-end gap-1.5">
+          {product.featured && (
+            <Badge variant="secondary" className="bg-white/95 text-brand shadow-sm hover:bg-white">
+              {t("card.featured")}
+            </Badge>
+          )}
+          <WishlistHeartButton productId={product.id} productName={product.name} />
+        </div>
 
         {/* Hover add-to-cart overlay button (orange, 10% accent).
             pointer-events dance keeps the hidden overlay from stealing taps

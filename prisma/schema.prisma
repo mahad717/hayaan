@@ -317,3 +317,20 @@ model Lead {
   @@index([createdAt])
   @@map("leads")
 }
+
+// Wishlist (Task 88) — products a customer saved for later (heart toggle on
+// product cards + PDP). One row per (user, product); newest first everywhere.
+// ids (no Prisma relations) — same pattern as Review/ProductCost: the existing
+// User and Product models are untouched, and in Supabase the table is
+// RLS deny-all with reads/writes only through service-role API routes.
+// Orphaned rows (user/product deleted) are filtered out on read in the API.
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  productId String   @map("product_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userId, productId])
+  @@index([userId, createdAt])
+  @@map("wishlist_items")
+}

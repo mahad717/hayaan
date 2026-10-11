@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu, Newspaper } from "lucide-react";
+import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu, Newspaper, Heart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useStore, cartCount, goToView } from "@/hooks/use-store";
+import { cn } from "@/lib/utils";
 import { LangToggle, useLang } from "@/components/store/language-provider";
 import { useState, useEffect } from "react";
 
@@ -35,6 +36,7 @@ export function Header() {
     view,
     searchQuery,
     setSearchQuery,
+    wishlist,
   } = useStore();
   const [q, setQ] = useState(searchQuery);
   const [scrolled, setScrolled] = useState(false);
@@ -195,6 +197,9 @@ export function Header() {
                   <DropdownMenuItem onClick={() => goToView("account")}>
                     <UserRound className="mr-2 h-4 w-4" /> {t("header.myProfile")}
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => goToView("wishlist")}>
+                    <Heart className="mr-2 h-4 w-4" /> {t("header.wishlist")}
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => goToView("orders")}>
                     <Package className="mr-2 h-4 w-4" /> {t("header.myOrders")}
                   </DropdownMenuItem>
@@ -217,6 +222,32 @@ export function Header() {
               )}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* Wishlist (Task 88) — heart with saved-count badge, next to the
+              cart. Desktop icon only: phones already get it in the drawer
+              and the header right cluster is too tight for a 5th icon. */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative hidden text-brand hover:bg-secondary sm:inline-flex"
+            onClick={() => goToView("wishlist")}
+            aria-label={t("header.wishlistAria", { n: wishlist.length })}
+          >
+            <Heart
+              className={cn(
+                "h-5 w-5",
+                wishlist.length > 0 && "fill-[#f28c28] text-[#f28c28]",
+              )}
+            />
+            {wishlist.length > 0 && (
+              <span
+                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-white shadow-sm ring-2 ring-white"
+                aria-label={t("header.wishlistBadgeAria", { n: wishlist.length })}
+              >
+                {wishlist.length}
+              </span>
+            )}
+          </Button>
 
           {/* Cart — green icon, orange count badge */}
           <Button
@@ -303,6 +334,13 @@ export function Header() {
               <Link href="/blog">
                 <Newspaper className="mr-2 h-4 w-4" /> {t("header.blog")}
               </Link>
+            </Button>
+            <Button
+              variant={view === "wishlist" ? "secondary" : "ghost"}
+              onClick={menuAction(() => goToView("wishlist"))}
+              className={view === "wishlist" ? "justify-start" : "justify-start text-foreground/80 hover:text-brand"}
+            >
+              <Heart className="mr-2 h-4 w-4" /> {t("header.wishlist")}
             </Button>
             {user?.role === "admin" && (
               <Button asChild variant="ghost" onClick={menuAction(() => {})} className="justify-start text-foreground/80 hover:text-brand">

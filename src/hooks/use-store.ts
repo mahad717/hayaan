@@ -4,7 +4,7 @@ import { create } from "zustand";
 import type { Cart, CartItem, Order, Product, SafeUser, Category } from "@/lib/types";
 
 // "admin" is a dedicated route (/admin) — not a storefront view.
-export type View = "home" | "product" | "cart" | "checkout" | "orders" | "account";
+export type View = "home" | "product" | "cart" | "checkout" | "orders" | "account" | "wishlist";
 
 interface StoreState {
   // Navigation
@@ -49,6 +49,17 @@ interface StoreState {
   cartOpen: boolean;
   setCartOpen: (b: boolean) => void;
 
+  // Wishlist (Task 88) — full product rows, newest save first.
+  // wishlistAvailable starts optimistic-true: guests see hearts (clicking
+  // opens the auth modal, same as the cart). It only flips false when a
+  // signed-in GET reports the wishlist_items table is missing — then hearts
+  // hide everywhere until the owner runs the migration, mirroring the
+  // product-reviews section behavior.
+  wishlist: Product[];
+  setWishlist: (p: Product[]) => void;
+  wishlistAvailable: boolean;
+  setWishlistAvailable: (b: boolean) => void;
+
   // Orders
   orders: Order[];
   setOrders: (o: Order[]) => void;
@@ -87,6 +98,11 @@ export const useStore = create<StoreState>((set, get) => ({
   setCart: (cart) => set({ cart }),
   cartOpen: false,
   setCartOpen: (cartOpen) => set({ cartOpen }),
+
+  wishlist: [],
+  setWishlist: (wishlist) => set({ wishlist }),
+  wishlistAvailable: true,
+  setWishlistAvailable: (wishlistAvailable) => set({ wishlistAvailable }),
 
   orders: [],
   setOrders: (orders) => set({ orders }),
@@ -182,6 +198,54 @@ export async function clearCart(): Promise<Cart> {
   if (!res.ok) throw new Error("Failed to clear cart");
   const data = await res.json();
   return data.cart as Cart;
+}
+
+export async function fetchWishlist(): Promise<{ products: Product[]; unavailable: boolean }> {
+  const res = await fetch("/api/wishlist", { credentials: "include" });
+  if (!res.ok) return { products: [], unavailable: false };
+  const data = await res.json();
+  return { products: (data.products ?? []) as Product[], unavailable: Boolean(data.unavailable) };
+}
+
+/** Save a product to the wishlist; returns the updated list (server truth). */
+export async function saveToWishlist(productId: string): Promise<Product[]> {
+  const res = await fetch("/api/wishlist", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ productId }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error ?? "Failed to save the item");
+  }
+  const data = await res.json();
+  return (data.products ?? []) as Product[];
+}
+
+/** Remove a product from the wishlist; returns the updated list. */
+export async function unsaveFromWishlist(productId: string): Promise<Product[]> {
+  const res = await fetch(`/api/wishlist?productId=${encodeURIComponent(productId)}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error ?? "Failed to update the wishlist");
+  }
+  const data = await res.json();
+  return (data.products ?? []) as Product[];
+}
+
+/**
+ * Fetch the signed-in user's wishlist into the store and resolve the
+ * availability flag. Called from the session bootstrap and after a fresh
+ * login/signup. Safe to call for guests (GET returns an empty list).
+ */
+export async function hydrateWishlist(): Promise<void> {
+  const { products, unavailable } = await fetchWishlist();
+  useStore.getState().setWishlistAvailable(!unavailable);
+  useStore.getState().setWishlist(products);
 }
 
 export async function fetchOrders(): Promise<Order[]> {

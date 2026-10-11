@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useStore } from "@/hooks/use-store";
+import { hydrateWishlist, useStore } from "@/hooks/use-store";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { CartDrawer } from "@/components/store/cart-drawer";
@@ -38,6 +38,11 @@ export function useStoreBootstrap() {
           const { cart } = await cartRes.json();
           setCart(cart);
         }
+        // Wishlist (Task 88) hydrates after the session resolves: guests get
+        // an empty list (hearts still render optimistically), signed-in users
+        // get their saved products — and the availability flag flips false
+        // here when the wishlist table isn't migrated yet, hiding hearts.
+        await hydrateWishlist().catch(() => {});
       } catch {
         // Network errors are non-fatal — UI still works.
       } finally {

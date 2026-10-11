@@ -13,6 +13,7 @@ import { useLang } from "@/components/store/language-provider";
 import { categoryName, productDescription } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, sanitizeRichText } from "@/lib/rich-text";
 import { ProductReviews } from "@/components/store/product-reviews";
+import { WishlistHeartButton } from "@/components/store/wishlist-heart";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -170,6 +171,16 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                 -{discount}%
               </span>
             )}
+            {/* Wishlist heart (Task 88) — Amazon's placement: top-right of
+                the product image (the share+heart pair on amazon.com PDPs).
+                Slightly larger than the card heart — this is the focused
+                surface where the save decision gets made. */}
+            <WishlistHeartButton
+              productId={product.id}
+              productName={product.name}
+              className="absolute right-4 top-4 h-11 w-11"
+              iconClassName="h-5 w-5"
+            />
           </div>
           {product.images.length > 1 && (
             <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
