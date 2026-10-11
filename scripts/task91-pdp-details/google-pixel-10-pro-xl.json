@@ -1,0 +1,38 @@
+{
+ "cat": "new-arrivals",
+ "name": "Google Pixel 10 Pro XL",
+ "slug": "google-pixel-10-pro-xl",
+ "prices": [
+  [
+   "$",
+   "1,050.00"
+  ]
+ ],
+ "pdp": {
+  "name": "Google Pixel 10 Pro XL",
+  "description": "Description (Faahfaahin)\r\nMemory: 256GB\r\nRam: 16GB\r\nBattery:5200MAH\r\nDisplay: 6.8-inch\r\nMain Camera: 50 MP, f/1.7, 25mm (wide)+48 MP, f/2.8, 113mm+ 48 MP, f/1.7, 123\u02da (ultrawide),\r\nSelfie camera:42 MP, f/2.2, 17mm (ultrawide),\r\nVideo: 4K@30/60fps, 1080p@30/60fps",
+  "jsonld_images": [
+   "https://sanguni.so/wp-content/uploads/2026/06/pixel-011-01-scaled.jpg"
+  ],
+  "price": null,
+  "priceHigh": null,
+  "in_stock": true,
+  "og_image": null,
+  "gallery": [
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-32x32.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-192x192.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-180x180.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-270x270.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-150x150.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-600x600.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1200x1200.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-300x300.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1024x1024.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-768x768.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1536x1536.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-2048x2048.png"
+  ],
+  "short_description": "Description (Faahfaahin) Memory: 256GB Ram: 16GB Battery: 5200MAH Display: 6.8-inch Main Camera : 50 MP, f/1.7, 25mm (wide)+48 MP, f/2.8, 113mm+ 48 MP, f/1.7, 123\u02da (ultrawide), Selfie camera: 42 MP, f/2.2, 17mm (ultrawide), Video: 4K@30/60fps, 1080p@30/60fps",
+  "stock_label": null
+ }
+}

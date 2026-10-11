@@ -1,0 +1,38 @@
+{
+ "cat": "nokia",
+ "name": "Nokia 125",
+ "slug": "nokia-125",
+ "prices": [
+  [
+   "$",
+   "25.00"
+  ]
+ ],
+ "pdp": {
+  "name": "Nokia 125",
+  "description": "Description (Faahfahin)\r\nBattery:1020Mah\r\nDisplay: 2.4-inch\r\nSIM: Dual SIM\r\nInternal: 4MB\r\nRadio: FM radio; built-in antenna\r\nBluetooth: No\r\nUSB: micro USB 2.0",
+  "jsonld_images": [
+   "https://sanguni.so/wp-content/uploads/2025/03/NOKIA-125-01-scaled.jpg"
+  ],
+  "price": null,
+  "priceHigh": null,
+  "in_stock": true,
+  "og_image": null,
+  "gallery": [
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-32x32.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-192x192.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-180x180.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-270x270.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-150x150.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-600x600.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1200x1200.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-300x300.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1024x1024.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-768x768.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1536x1536.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-2048x2048.png"
+  ],
+  "short_description": "Description (Faahfahin) Battery: 1020Mah Display: 2.4-inch SIM : Dual SIM Internal : 4MB Radio: FM radio; built-in antenna Bluetooth: No USB: micro USB 2.0",
+  "stock_label": null
+ }
+}

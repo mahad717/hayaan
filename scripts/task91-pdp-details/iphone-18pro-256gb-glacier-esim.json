@@ -1,0 +1,38 @@
+{
+ "cat": "iphone",
+ "name": "iPhone 18Pro 256GB Glacier eSim",
+ "slug": "iphone-18pro-256gb-glacier-esim",
+ "prices": [
+  [
+   "$",
+   "1,530.00"
+  ]
+ ],
+ "pdp": {
+  "name": "iPhone 18Pro 256GB Glacier eSim",
+  "description": "Description (Faahfahin)\r\nMemory: 256GB\r\nRam: 12GB\r\nBattery:4056MAH\r\nDisplay:6.3-inch\r\nMain Camera:48 MP, f/1.5-4.0, 24mm (wide)+48 MP, f/2.8, 100mm (periscope telephoto)+48 MP, f/2.2, 13mm, 120\u02da (ultrawide)\r\nSelfie camera: 18 MP multi-aspect, f/1.9, 20mm (ultrawide)\r\nVideo: 4K@24/25/30/60fps, 1080p@25/30/60/120fps, gyro-EIS",
+  "jsonld_images": [
+   "https://sanguni.so/wp-content/uploads/2026/09/183-01-scaled.jpg"
+  ],
+  "price": null,
+  "priceHigh": null,
+  "in_stock": true,
+  "og_image": null,
+  "gallery": [
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-32x32.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-192x192.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-180x180.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-270x270.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-150x150.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-600x600.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1200x1200.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-300x300.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1024x1024.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-768x768.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1536x1536.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-2048x2048.png"
+  ],
+  "short_description": "Description (Faahfahin) Memory: 256GB Ram: 12GB Battery: 4056MAH Display: 6.3-inch Main Camera: 48 MP, f/1.5-4.0, 24mm (wide)+48 MP, f/2.8, 100mm (periscope telephoto)+48 MP, f/2.2, 13mm, 120\u02da (ultrawide) Selfie camera: 18 MP multi-aspect, f/1.9, 20mm (ultrawide) Video: 4K@24/25/30/60fps, 1080p@25/30/60/120fps, gyro-EIS",
+  "stock_label": null
+ }
+}

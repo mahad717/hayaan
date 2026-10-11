@@ -1,0 +1,320 @@
+{
+ "ranAt": "2026-10-11T17:46:43.473Z",
+ "before": 97,
+ "after": 141,
+ "createdCount": 44,
+ "failedCount": 0,
+ "skippedCount": 0,
+ "created": [
+  {
+   "slug": "google-pixel-10-pro-xl",
+   "id": "b2064e62-ebca-44d9-9273-4b97b717de4e",
+   "productSlug": "google-pixel-10-pro-xl",
+   "sku": "HAY-MOB-101",
+   "price": 1050
+  },
+  {
+   "slug": "iphone-17pro-max-esim",
+   "id": "f1471060-d241-492c-a2d3-95e936b91142",
+   "productSlug": "iphone-17-pro-max-esim",
+   "sku": "HAY-MOB-102",
+   "price": 1380
+  },
+  {
+   "slug": "iphone-18pro-256gb-black-esim",
+   "id": "85b07523-fe07-4972-8d7c-706d4f08b5a1",
+   "productSlug": "iphone-18-pro-256gb-black-esim",
+   "sku": "HAY-MOB-103",
+   "price": 1530
+  },
+  {
+   "slug": "iphone-18pro-256gb-burgundy-esim",
+   "id": "d9b38666-6e50-42d8-a4b1-40b45b6079ac",
+   "productSlug": "iphone-18-pro-256gb-burgundy-esim",
+   "sku": "HAY-MOB-104",
+   "price": 1550
+  },
+  {
+   "slug": "iphone-18pro-256gb-glacier-esim",
+   "id": "a308bba1-b8d4-4c69-9cca-f58ae0003f93",
+   "productSlug": "iphone-18-pro-256gb-glacier-esim",
+   "sku": "HAY-MOB-105",
+   "price": 1530
+  },
+  {
+   "slug": "iphone-18pro-256gb-silver-esim",
+   "id": "ffbed149-6f60-4cf0-944a-b041ba8c7e11",
+   "productSlug": "iphone-18-pro-256gb-silver-esim",
+   "sku": "HAY-MOB-106",
+   "price": 1500
+  },
+  {
+   "slug": "iphone-18pro-512gb-black-esim",
+   "id": "ead57432-e982-4459-a640-567a6250c026",
+   "productSlug": "iphone-18-pro-512gb-black-esim",
+   "sku": "HAY-MOB-107",
+   "price": 1850
+  },
+  {
+   "slug": "iphone-18pro-512gb-burgundy-esim",
+   "id": "5bc34325-aa25-447b-90b5-9bd4be34fd6e",
+   "productSlug": "iphone-18-pro-512gb-burgundy-esim",
+   "sku": "HAY-MOB-108",
+   "price": 1850
+  },
+  {
+   "slug": "iphone-18pro-512gb-glacier-esim",
+   "id": "d5ca5432-68c7-4c07-a6cd-31c171a9d0a9",
+   "productSlug": "iphone-18-pro-512gb-glacier-esim",
+   "sku": "HAY-MOB-109",
+   "price": 1830
+  },
+  {
+   "slug": "iphone-18pro-512gb-silver-esim",
+   "id": "07726135-a90a-421d-a0c8-de9abca73330",
+   "productSlug": "iphone-18-pro-512gb-silver-esim",
+   "sku": "HAY-MOB-110",
+   "price": 1780
+  },
+  {
+   "slug": "iphone-18pro-max-1tb-black-esim",
+   "id": "5fa5adc0-a69b-4207-bf12-e56881e82a0e",
+   "productSlug": "iphone-18-pro-max-1tb-black-esim",
+   "sku": "HAY-MOB-111",
+   "price": 2650
+  },
+  {
+   "slug": "iphone-18pro-max-1tb-burgundy-esim",
+   "id": "3eb6a58b-e01f-4442-b0b7-aa21cb00e1a1",
+   "productSlug": "iphone-18-pro-max-1tb-burgundy-esim",
+   "sku": "HAY-MOB-112",
+   "price": 2650
+  },
+  {
+   "slug": "iphone-18pro-max-1tb-glacier-esim",
+   "id": "ff0a0374-27af-4563-a032-6337f26c892b",
+   "productSlug": "iphone-18-pro-max-1tb-glacier-esim",
+   "sku": "HAY-MOB-113",
+   "price": 2600
+  },
+  {
+   "slug": "iphone-18pro-max-1tb-silver-esim",
+   "id": "c894ff17-742d-4867-81dc-2ba0044b8bda",
+   "productSlug": "iphone-18-pro-max-1tb-silver-esim",
+   "sku": "HAY-MOB-114",
+   "price": 2600
+  },
+  {
+   "slug": "iphone-18pro-max-256gb-black-esim",
+   "id": "ab2a7762-ba41-4bd1-ae28-22d93f64ca54",
+   "productSlug": "iphone-18-pro-max-256gb-black-esim",
+   "sku": "HAY-MOB-115",
+   "price": 1850
+  },
+  {
+   "slug": "iphone-18pro-max-256gb-burgundy-esim",
+   "id": "4a691d1f-7b90-4ffb-bb11-71af8ee5ae05",
+   "productSlug": "iphone-18-pro-max-256gb-burgundy-esim",
+   "sku": "HAY-MOB-116",
+   "price": 1950
+  },
+  {
+   "slug": "iphone-18pro-max-256gb-glacier-esim",
+   "id": "6c83d66f-d0ff-4ea8-989b-1fc2298657c3",
+   "productSlug": "iphone-18-pro-max-256gb-glacier-esim",
+   "sku": "HAY-MOB-117",
+   "price": 1830
+  },
+  {
+   "slug": "iphone-18pro-max-256gb-silver-esim",
+   "id": "327b8716-3e58-47e3-8969-30ffd48255b6",
+   "productSlug": "iphone-18-pro-max-256gb-silver-esim",
+   "sku": "HAY-MOB-118",
+   "price": 1780
+  },
+  {
+   "slug": "iphone-18pro-max-512gb-black-esim",
+   "id": "4b427e3e-efc3-458a-9415-389c6bcf0013",
+   "productSlug": "iphone-18-pro-max-512gb-black-esim",
+   "sku": "HAY-MOB-119",
+   "price": 2030
+  },
+  {
+   "slug": "iphone-18pro-max-512gb-burgundy-esim",
+   "id": "d6b13c8a-0cf8-40a4-9f0e-ade585d3e753",
+   "productSlug": "iphone-18-pro-max-512gb-burgundy-esim",
+   "sku": "HAY-MOB-120",
+   "price": 2050
+  },
+  {
+   "slug": "iphone-18pro-max-512gb-glacier-esim",
+   "id": "bd1b71e8-81e4-4e18-b31a-3c69d4107f8c",
+   "productSlug": "iphone-18-pro-max-512gb-glacier-esim",
+   "sku": "HAY-MOB-121",
+   "price": 1980
+  },
+  {
+   "slug": "iphone-18pro-max-512gb-silver-esim",
+   "id": "cbcea29c-7ae0-428d-a68c-854cc612f715",
+   "productSlug": "iphone-18-pro-max-512gb-silver-esim",
+   "sku": "HAY-MOB-122",
+   "price": 1950
+  },
+  {
+   "slug": "nokia-105-4g",
+   "id": "95416b75-a798-4ef5-98e6-850bb28867db",
+   "productSlug": "nokia-105-4g",
+   "sku": "HAY-MOB-123",
+   "price": 16
+  },
+  {
+   "slug": "nokia-125",
+   "id": "fb4db438-2847-42f9-9b35-d499d42acade",
+   "productSlug": "nokia-125",
+   "sku": "HAY-MOB-124",
+   "price": 25
+  },
+  {
+   "slug": "nokia-235-4g",
+   "id": "3ecbd0df-ea64-4b13-bf29-c7d4bc8a3605",
+   "productSlug": "nokia-235-4g",
+   "sku": "HAY-MOB-125",
+   "price": 48
+  },
+  {
+   "slug": "nokia-2660-flip",
+   "id": "c68521fc-0793-4eab-b1a2-79856a85a78b",
+   "productSlug": "nokia-2660-flip",
+   "sku": "HAY-MOB-126",
+   "price": 47
+  },
+  {
+   "slug": "nokia-5310",
+   "id": "a9573edb-88da-4697-8ba2-946a8423c9cf",
+   "productSlug": "nokia-5310",
+   "sku": "HAY-MOB-127",
+   "price": 37
+  },
+  {
+   "slug": "nokia-5710-xpress-audio",
+   "id": "4ee86b37-a993-4187-8a3a-3c04f87a3e23",
+   "productSlug": "nokia-5710-xpressaudio",
+   "sku": "HAY-MOB-128",
+   "price": 50
+  },
+  {
+   "slug": "nokia-6310-4g",
+   "id": "f1409587-f3b0-4c18-94b4-4a5c67af68a1",
+   "productSlug": "nokia-6310-4g",
+   "sku": "HAY-MOB-129",
+   "price": 40
+  },
+  {
+   "slug": "nokia-8210-4g",
+   "id": "31c0d99d-af12-42a9-93eb-e197cec2fef5",
+   "productSlug": "nokia-8210-4g",
+   "sku": "HAY-MOB-130",
+   "price": 53
+  },
+  {
+   "slug": "samsung-galaxy-a56-5g",
+   "id": "6350d0af-e5bc-4931-88c6-57c64f905551",
+   "productSlug": "samsung-galaxy-a56-5g",
+   "sku": "HAY-MOB-131",
+   "price": 370
+  },
+  {
+   "slug": "samsung-galaxy-a57-5g-2",
+   "id": "a290e4e9-89d3-4976-a8f1-79da991a64ca",
+   "productSlug": "samsung-galaxy-a57-5g-12gb256gb",
+   "sku": "HAY-MOB-132",
+   "price": 440
+  },
+  {
+   "slug": "samsung-galaxy-a57-5g",
+   "id": "967cab8b-71a9-4c3a-9af1-fac26197f936",
+   "productSlug": "samsung-galaxy-a57-5g-8gb256gb",
+   "sku": "HAY-MOB-133",
+   "price": 375
+  },
+  {
+   "slug": "samsung-galaxy-s23-ultra-5g",
+   "id": "928b3b84-08a0-4d27-9743-eece1b09b864",
+   "productSlug": "samsung-galaxy-s23-ultra-5g",
+   "sku": "HAY-MOB-134",
+   "price": 930
+  },
+  {
+   "slug": "samsung-galaxy-s25-ultra-2",
+   "id": "8d93f162-4400-4a49-bfd9-31e623f1d50c",
+   "productSlug": "samsung-galaxy-s25-ultra-256gb",
+   "sku": "HAY-MOB-135",
+   "price": 830
+  },
+  {
+   "slug": "samsung-galaxy-s25-ultra",
+   "id": "f2736182-70ab-4c0e-a2c7-dff2e7ff583a",
+   "productSlug": "samsung-galaxy-s25-ultra-512gb",
+   "sku": "HAY-MOB-136",
+   "price": 1090
+  },
+  {
+   "slug": "samsung-galaxy-s26-ultra",
+   "id": "28c337b5-7642-426a-88ab-820df0a09167",
+   "productSlug": "samsung-galaxy-s26-ultra",
+   "sku": "HAY-MOB-137",
+   "price": 999
+  },
+  {
+   "slug": "samsung-galaxy-z-flip6-5g",
+   "id": "7a31f7e1-0f3d-4271-934c-aba29d68eebc",
+   "productSlug": "samsung-galaxy-z-flip6-5g",
+   "sku": "HAY-MOB-138",
+   "price": 678
+  },
+  {
+   "slug": "samsung-galaxy-z-flip7",
+   "id": "a9f1769a-6d64-4d08-97d4-b616432d81a3",
+   "productSlug": "samsung-galaxy-z-flip7",
+   "sku": "HAY-MOB-139",
+   "price": 830
+  },
+  {
+   "slug": "samsung-galaxy-z-flip8-5g",
+   "id": "ad39ddc1-aa99-4170-b0c6-23a9486683dd",
+   "productSlug": "samsung-galaxy-z-flip8-5g",
+   "sku": "HAY-MOB-140",
+   "price": 950
+  },
+  {
+   "slug": "samsung-galaxy-z-fold7-2",
+   "id": "83b42fd3-295f-4831-861c-fe426afefc5e",
+   "productSlug": "samsung-galaxy-z-fold7-512gb",
+   "sku": "HAY-MOB-141",
+   "price": 1500
+  },
+  {
+   "slug": "samsung-galaxy-z-fold7",
+   "id": "adad6188-6fcd-413f-af37-32091c02a8bd",
+   "productSlug": "samsung-galaxy-z-fold7-256gb",
+   "sku": "HAY-MOB-142",
+   "price": 1330
+  },
+  {
+   "slug": "samsung-galaxy-z-fold8-ultra-5g",
+   "id": "121fc229-a391-404f-8a96-d2ca807f6a8e",
+   "productSlug": "samsung-galaxy-z-fold8-ultra-5g",
+   "sku": "HAY-MOB-143",
+   "price": 2150
+  },
+  {
+   "slug": "samsung-galaxy-z-trifold",
+   "id": "7f37e666-2507-40e3-a435-a22b11432b58",
+   "productSlug": "samsung-galaxy-z-trifold",
+   "sku": "HAY-MOB-144",
+   "price": 4900
+  }
+ ],
+ "failed": [],
+ "skipped": []
+}

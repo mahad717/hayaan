@@ -1,0 +1,38 @@
+{
+ "cat": "nokia",
+ "name": "Nokia 235 4G",
+ "slug": "nokia-235-4g",
+ "prices": [
+  [
+   "$",
+   "48.00"
+  ]
+ ],
+ "pdp": {
+  "name": "Nokia 235 4G",
+  "description": "Description (Faahfahin)\r\nBattery:1450Mah\r\nDisplay: 2.8-inch\r\nSIM: Dual SIM\r\nInternal: Includes 128 MB of internal storage\r\nCamera: A 2 MP rear camera complete with an LED flash\r\nWireless Bluetooth 5.0: Wirelessly streams audio to your favorite Bluetooth earbuds",
+  "jsonld_images": [
+   "https://sanguni.so/wp-content/uploads/2026/06/235-011-01-scaled.jpg"
+  ],
+  "price": null,
+  "priceHigh": null,
+  "in_stock": true,
+  "og_image": null,
+  "gallery": [
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-32x32.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-192x192.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-180x180.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-270x270.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-150x150.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-600x600.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1200x1200.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-300x300.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1024x1024.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-768x768.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1536x1536.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-2048x2048.png"
+  ],
+  "short_description": "Description (Faahfahin) Battery: 1450Mah Display: 2.8-inch SIM : Dual SIM Internal : Includes 128 MB of internal storage Camera: A 2 MP rear camera complete with an LED flash Wireless Bluetooth 5.0: Wirelessly streams audio to your favorite Bluetooth earbuds",
+  "stock_label": null
+ }
+}

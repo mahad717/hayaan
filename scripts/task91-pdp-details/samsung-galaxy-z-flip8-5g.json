@@ -1,0 +1,38 @@
+{
+ "cat": "samsung",
+ "name": "Samsung Galaxy Z Flip8 5G",
+ "slug": "samsung-galaxy-z-flip8-5g",
+ "prices": [
+  [
+   "$",
+   "950.00"
+  ]
+ ],
+ "pdp": {
+  "name": "Samsung Galaxy Z Flip8 5G",
+  "description": "Description (Faahfaahin)\r\nMemory: 256GB\r\nRam: 12GB\r\nDisplay: 6.9-inch\r\nBattery: 4300mAh\r\nMain Camera: 50 MP, f/1.8, 23mm (wide)+12 MP, f/2.2, 13mm, 123\u02da (ultrawide)\r\nSelfie camera:10 MP, f/2.2, 23mm (wide)\r\nVideo:4K@30/60fps",
+  "jsonld_images": [
+   "https://sanguni.so/wp-content/uploads/2026/08/flip8-011-01-scaled.jpg"
+  ],
+  "price": null,
+  "priceHigh": null,
+  "in_stock": true,
+  "og_image": null,
+  "gallery": [
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-32x32.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-192x192.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-180x180.png",
+   "https://sanguni.so/wp-content/uploads/2026/08/cropped-Sanguni-Favicon-01-270x270.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-150x150.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-600x600.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1200x1200.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-300x300.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1024x1024.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-768x768.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-1536x1536.png",
+   "https://sanguni.so/wp-content/uploads/2025/02/Computers-Accessories-01-2048x2048.png"
+  ],
+  "short_description": "Description (Faahfaahin) Memory: 256GB Ram: 12GB Display: 6.9-inch Battery: 4300mAh Main Camera : 50 MP, f/1.8, 23mm (wide)+12 MP, f/2.2, 13mm, 123\u02da (ultrawide) Selfie camera: 10 MP, f/2.2, 23mm (wide) Video: 4K@30/60fps",
+  "stock_label": null
+ }
+}

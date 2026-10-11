@@ -1,0 +1,2016 @@
+{
+ "iphone": [
+  {
+   "name": "iPhone 15 Pro Max",
+   "slug": "iphone-15-pro-max",
+   "prices": [
+    [
+     "$",
+     "1,170.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 16 Pro",
+   "slug": "iphone-16-pro",
+   "prices": [
+    [
+     "$",
+     "1,120.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 16 Pro Max",
+   "slug": "iphone-16-pro-max",
+   "prices": [
+    [
+     "$",
+     "1,240.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17 Physical",
+   "slug": "iphone-17-physical",
+   "prices": [
+    [
+     "$",
+     "990.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Max eSim",
+   "slug": "iphone-17pro-max-esim",
+   "prices": [
+    [
+     "$",
+     "1,380.00"
+    ],
+    [
+     "$",
+     "1,480.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Max Physical",
+   "slug": "iphone-17pro-max-physical",
+   "prices": [
+    [
+     "$",
+     "1,550.00"
+    ],
+    [
+     "$",
+     "1,820.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Physical",
+   "slug": "iphone-17pro-physical",
+   "prices": [
+    [
+     "$",
+     "1,420.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Black eSim",
+   "slug": "iphone-18pro-256gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,530.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Burgundy eSim",
+   "slug": "iphone-18pro-256gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,550.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Glacier eSim",
+   "slug": "iphone-18pro-256gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,530.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Silver eSim",
+   "slug": "iphone-18pro-256gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,500.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Black eSim",
+   "slug": "iphone-18pro-512gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Burgundy eSim",
+   "slug": "iphone-18pro-512gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Glacier eSim",
+   "slug": "iphone-18pro-512gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,830.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Silver eSim",
+   "slug": "iphone-18pro-512gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,780.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Black eSim",
+   "slug": "iphone-18pro-max-1tb-black-esim",
+   "prices": [
+    [
+     "$",
+     "2,650.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Burgundy eSim",
+   "slug": "iphone-18pro-max-1tb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "2,650.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Glacier eSim",
+   "slug": "iphone-18pro-max-1tb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "2,600.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Silver eSim",
+   "slug": "iphone-18pro-max-1tb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "2,600.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Black eSim",
+   "slug": "iphone-18pro-max-256gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Burgundy eSim",
+   "slug": "iphone-18pro-max-256gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,950.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Glacier eSim",
+   "slug": "iphone-18pro-max-256gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,830.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Silver eSim",
+   "slug": "iphone-18pro-max-256gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,780.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Black eSim",
+   "slug": "iphone-18pro-max-512gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "2,030.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Burgundy eSim",
+   "slug": "iphone-18pro-max-512gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "2,050.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Glacier eSim",
+   "slug": "iphone-18pro-max-512gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,980.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Silver eSim",
+   "slug": "iphone-18pro-max-512gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,950.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone Air",
+   "slug": "iphone-air",
+   "prices": [
+    [
+     "$",
+     "1,280.00"
+    ]
+   ]
+  }
+ ],
+ "samsung": [
+  {
+   "name": "Samsung Galaxy A06",
+   "slug": "samsung-galaxy-a06",
+   "prices": [
+    [
+     "$",
+     "118.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A06",
+   "slug": "samsung-galaxy-a06-2",
+   "prices": [
+    [
+     "$",
+     "110.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A07",
+   "slug": "samsung-galaxy-a07",
+   "prices": [
+    [
+     "$",
+     "140.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A07",
+   "slug": "samsung-galaxy-a07-2",
+   "prices": [
+    [
+     "$",
+     "125.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A16",
+   "slug": "samsung-galaxy-a16",
+   "prices": [
+    [
+     "$",
+     "145.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A16",
+   "slug": "samsung-galaxy-a16-2",
+   "prices": [
+    [
+     "$",
+     "173.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A16",
+   "slug": "samsung-galaxy-a16-3",
+   "prices": [
+    [
+     "$",
+     "118.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17",
+   "prices": [
+    [
+     "$",
+     "165.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17-2",
+   "prices": [
+    [
+     "$",
+     "240.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17-3",
+   "prices": [
+    [
+     "$",
+     "190.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A36 5G",
+   "slug": "samsung-galaxy-a36-5g",
+   "prices": [
+    [
+     "$",
+     "285.00"
+    ],
+    [
+     "$",
+     "295.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A37 5G",
+   "slug": "samsung-galaxy-a37-5g",
+   "prices": [
+    [
+     "$",
+     "320.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A56 5G",
+   "slug": "samsung-galaxy-a56-5g",
+   "prices": [
+    [
+     "$",
+     "370.00"
+    ],
+    [
+     "$",
+     "405.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A57 5G",
+   "slug": "samsung-galaxy-a57-5g",
+   "prices": [
+    [
+     "$",
+     "375.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A57 5G",
+   "slug": "samsung-galaxy-a57-5g-2",
+   "prices": [
+    [
+     "$",
+     "440.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy S23 Ultra 5G",
+   "slug": "samsung-galaxy-s23-ultra-5g",
+   "prices": [
+    [
+     "$",
+     "930.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy S25 Ultra",
+   "slug": "samsung-galaxy-s25-ultra",
+   "prices": [
+    [
+     "$",
+     "1,090.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy S25 Ultra",
+   "slug": "samsung-galaxy-s25-ultra-2",
+   "prices": [
+    [
+     "$",
+     "830.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy S26 Ultra",
+   "slug": "samsung-galaxy-s26-ultra",
+   "prices": [
+    [
+     "$",
+     "999.00"
+    ],
+    [
+     "$",
+     "1,170.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Flip6 5G",
+   "slug": "samsung-galaxy-z-flip6-5g",
+   "prices": [
+    [
+     "$",
+     "678.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Flip7",
+   "slug": "samsung-galaxy-z-flip7",
+   "prices": [
+    [
+     "$",
+     "830.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Flip8 5G",
+   "slug": "samsung-galaxy-z-flip8-5g",
+   "prices": [
+    [
+     "$",
+     "950.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold7",
+   "slug": "samsung-galaxy-z-fold7",
+   "prices": [
+    [
+     "$",
+     "1,330.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold7",
+   "slug": "samsung-galaxy-z-fold7-2",
+   "prices": [
+    [
+     "$",
+     "1,500.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold8 Ultra 5G",
+   "slug": "samsung-galaxy-z-fold8-ultra-5g",
+   "prices": [
+    [
+     "$",
+     "2,150.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z TriFold",
+   "slug": "samsung-galaxy-z-trifold",
+   "prices": [
+    [
+     "$",
+     "4,900.00"
+    ]
+   ]
+  }
+ ],
+ "nokia": [
+  {
+   "name": "Nokia 105 4G",
+   "slug": "nokia-105-4g",
+   "prices": [
+    [
+     "$",
+     "16.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 125",
+   "slug": "nokia-125",
+   "prices": [
+    [
+     "$",
+     "25.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 235 4G",
+   "slug": "nokia-235-4g",
+   "prices": [
+    [
+     "$",
+     "48.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 2660 Flip",
+   "slug": "nokia-2660-flip",
+   "prices": [
+    [
+     "$",
+     "47.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 5310",
+   "slug": "nokia-5310",
+   "prices": [
+    [
+     "$",
+     "37.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 5710 Xpress Audio",
+   "slug": "nokia-5710-xpress-audio",
+   "prices": [
+    [
+     "$",
+     "50.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 6310 4G",
+   "slug": "nokia-6310-4g",
+   "prices": [
+    [
+     "$",
+     "40.00"
+    ]
+   ]
+  },
+  {
+   "name": "Nokia 8210 4G",
+   "slug": "nokia-8210-4g",
+   "prices": [
+    [
+     "$",
+     "53.00"
+    ]
+   ]
+  }
+ ],
+ "new-arrivals": [
+  {
+   "name": "Amazon Kindle Paperwhite Signature",
+   "slug": "amazon-kindle-paperwhite-signature",
+   "prices": [
+    [
+     "$",
+     "230.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple MacBook Air M5",
+   "slug": "apple-macbook-air-m5",
+   "prices": [
+    [
+     "$",
+     "1,530.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple MacBook Neo",
+   "slug": "apple-macbook-neo",
+   "prices": [
+    [
+     "$",
+     "999.90"
+    ]
+   ]
+  },
+  {
+   "name": "Apple MacBook Pro M4",
+   "slug": "apple-macbook-pro-m4-2",
+   "prices": [
+    [
+     "$",
+     "1,720.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple MacBook Pro M5",
+   "slug": "apple-macbook-pro-m5",
+   "prices": [
+    [
+     "$",
+     "1,900.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple MacBook Pro M5",
+   "slug": "apple-macbook-pro-m5-2",
+   "prices": [
+    [
+     "$",
+     "2,100.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple Watch SE 40mm",
+   "slug": "apple-watch-se-40mm",
+   "prices": [
+    [
+     "$",
+     "250.00"
+    ]
+   ]
+  },
+  {
+   "name": "Apple Watch Series 11 46mm",
+   "slug": "apple-watch-series-11-46mm",
+   "prices": [
+    [
+     "$",
+     "440.00"
+    ]
+   ]
+  },
+  {
+   "name": "Bluetooth Air Pods Pro",
+   "slug": "bluetooth-air-pods-pro",
+   "prices": [
+    [
+     "$",
+     "12.00"
+    ]
+   ]
+  },
+  {
+   "name": "Bluetooth Air Pods Pro 3",
+   "slug": "bluetooth-air-pods-pro-3",
+   "prices": [
+    [
+     "$",
+     "280.00"
+    ]
+   ]
+  },
+  {
+   "name": "Bluetooth Galaxy Buds 4 Pro",
+   "slug": "bluetooth-galaxy-buds-4-pro",
+   "prices": [
+    [
+     "$",
+     "210.00"
+    ]
+   ]
+  },
+  {
+   "name": "Bluetooth Marshall Motif",
+   "slug": "bluetooth-marshall-motif",
+   "prices": [
+    [
+     "$",
+     "23.00"
+    ]
+   ]
+  },
+  {
+   "name": "Camera DJI Osmo Pocket 4 Creator Combo",
+   "slug": "camera-dji-osmo-pocket-4-creator-combo",
+   "prices": [
+    [
+     "$",
+     "700.00"
+    ]
+   ]
+  },
+  {
+   "name": "Camera DJI Osmo Pocket 4P Creator Combo",
+   "slug": "camera-dji-osmo-pocket-4p-creator-combo",
+   "prices": [
+    [
+     "$",
+     "890.00"
+    ]
+   ]
+  },
+  {
+   "name": "Canon EOS R5 + RF 50mm F/1.8 STM",
+   "slug": "canon-eos-r5-rf-50mm-f-1-8-stm",
+   "prices": [
+    [
+     "$",
+     "2,700.00"
+    ]
+   ]
+  },
+  {
+   "name": "Coffee Machine Geepas Espresso &Cappuccino",
+   "slug": "coffee-machine-geepas-espresso-cappuccino",
+   "prices": [
+    [
+     "$",
+     "145.00"
+    ]
+   ]
+  },
+  {
+   "name": "DJI Osmo Mobile 8 Gimbal",
+   "slug": "dji-osmo-mobile-8-gimbal",
+   "prices": [
+    [
+     "$",
+     "180.00"
+    ]
+   ]
+  },
+  {
+   "name": "DJI Osmo Mobile 8P Gimbal",
+   "slug": "dji-osmo-mobile-8p-gimbal",
+   "prices": [
+    [
+     "$",
+     "195.00"
+    ]
+   ]
+  },
+  {
+   "name": "EA SPORTS FC\u2122 27",
+   "slug": "ea-sports-fc-27",
+   "prices": [
+    [
+     "$",
+     "65.00"
+    ]
+   ]
+  },
+  {
+   "name": "Electric Kettle Geepas",
+   "slug": "electric-kettle-geepas",
+   "prices": [
+    [
+     "$",
+     "15.00"
+    ]
+   ]
+  },
+  {
+   "name": "Finger Print ZKTeco Iface-950 Advanced",
+   "slug": "finger-print-zkteco-iface-950-advanced",
+   "prices": [
+    [
+     "$",
+     "350.00"
+    ]
+   ]
+  },
+  {
+   "name": "Finger Print ZKTeco UA760",
+   "slug": "finger-print-zkteco-ua760",
+   "prices": [
+    [
+     "$",
+     "160.00"
+    ]
+   ]
+  },
+  {
+   "name": "Gaming PC Intel Core i9-14900K",
+   "slug": "gaming-pc-intel-core-i9-14900k",
+   "prices": [
+    [
+     "$",
+     "3,300.00"
+    ]
+   ]
+  },
+  {
+   "name": "Gimbal Porodo 3-Axis Stabilizer Magnetic Fill Light",
+   "slug": "gimbal-porodo-3-axis-stabilizer-magnetic-fill-light",
+   "prices": [
+    [
+     "$",
+     "85.00"
+    ]
+   ]
+  },
+  {
+   "name": "Google Pixel 10 Pro XL",
+   "slug": "google-pixel-10-pro-xl",
+   "prices": [
+    [
+     "$",
+     "1,050.00"
+    ]
+   ]
+  },
+  {
+   "name": "GoPro Max 2 True 8K 360 Camera",
+   "slug": "gopro-max-2-true-8k-360-camera",
+   "prices": [
+    [
+     "$",
+     "480.00"
+    ]
+   ]
+  },
+  {
+   "name": "Headphone Porodo Onyx Sonic Wireless",
+   "slug": "headphone-porodo-onyx-sonic-wireless",
+   "prices": [
+    [
+     "$",
+     "28.00"
+    ]
+   ]
+  },
+  {
+   "name": "Hot Air Styler Tp- 5+1",
+   "slug": "hot-air-styler-tp-51",
+   "prices": [
+    [
+     "$",
+     "10.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP All in One Intel Core i5-13th Gen 24-inch",
+   "slug": "hp-all-in-one-intel-core-i5-13th-gen-24-inch",
+   "prices": [
+    [
+     "$",
+     "880.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP All in One Intel Core i5-13th Gen 24-inch",
+   "slug": "hp-all-in-one-intel-core-i5-13th-gen-24-inch-2",
+   "prices": [
+    [
+     "$",
+     "820.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP All in One Intel Core i7-1255U Gen 27-inch",
+   "slug": "hp-all-in-one-intel-core-i7-1255u-gen-27-inch",
+   "prices": [
+    [
+     "$",
+     "1,250.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP All in One Intel Core i7-13th Gen 24-inch",
+   "slug": "hp-all-in-one-intel-core-i7-13th-gen-24-inch-2",
+   "prices": [
+    [
+     "$",
+     "1,290.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP All in One Intel Core i7-13th Gen 27-inch",
+   "slug": "hp-all-in-one-intel-core-i7-13th-gen-27-inch",
+   "prices": [
+    [
+     "$",
+     "1,250.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Desktop Intel\u00aeCore\u2122 i5 400 G9 Slim",
+   "slug": "hp-desktop-intelcore-i5-400-g9-slim",
+   "prices": [
+    [
+     "$",
+     "695.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP EliteBook 830 G7 Intel Core i7-10Gen",
+   "slug": "hp-elitebook-830-g7-intel-core-i7-10gen",
+   "prices": [
+    [
+     "$",
+     "340.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP EliteBook 830 G8 Intel Core i7-11Gen",
+   "slug": "hp-elitebook-830-g8-intel-core-i7-11gen",
+   "prices": [
+    [
+     "$",
+     "380.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP EliteBook 840 G7 Notebook",
+   "slug": "hp-elitebook-840-g7-notebook",
+   "prices": [
+    [
+     "$",
+     "310.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Elitebook X360 1030 G8 Notebook",
+   "slug": "hp-elitebook-x360-1030-g8-notebook",
+   "prices": [
+    [
+     "$",
+     "450.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Intel\u00ae Core\u2122 i3 1315U 13th Generation",
+   "slug": "hp-intel-core-i3-1315u-13th-generation",
+   "prices": [
+    [
+     "$",
+     "380.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Intel\u00ae Core\u2122 i5 1334U 13th Generation",
+   "slug": "hp-intel-core-i5-1334u-13th-generation",
+   "prices": [
+    [
+     "$",
+     "720.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Intel\u00ae Core\u2122 i7 1355U 13th Generation",
+   "slug": "hp-intel-core-i7-1355u-13th-generation",
+   "prices": [
+    [
+     "$",
+     "890.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Monitor Full HD E24d G4 23.8\u2033",
+   "slug": "hp-monitor-full-hd-e24d-g4-23-8",
+   "prices": [
+    [
+     "$",
+     "440.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Monitor with Speaker & IR Webcam G4 27\u2033",
+   "slug": "hp-monitor-with-speaker-ir-webcam-g4-27",
+   "prices": [
+    [
+     "$",
+     "380.00"
+    ]
+   ]
+  },
+  {
+   "name": "Hp Monitor with Speakers Series 5 23.8 inch",
+   "slug": "hp-monitor-with-speakers-series-5-23-8-inch",
+   "prices": [
+    [
+     "$",
+     "170.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP Monitor with Speakers Series 5 27-inch",
+   "slug": "hp-monitor-with-speakers-series-5-27-inch",
+   "prices": [
+    [
+     "$",
+     "220.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP OmniBook X Flip 2in1 Intel\u00aeCore\u2122Ultra 7",
+   "slug": "hp-omnibook-x-flip-2in1-intelcoreultra-7",
+   "prices": [
+    [
+     "$",
+     "1,300.00"
+    ]
+   ]
+  },
+  {
+   "name": "HP ZBook 15 G8 Intel Core i7-11Gen",
+   "slug": "hp-zbook-15-g8-intel-core-i7-11gen",
+   "prices": [
+    [
+     "$",
+     "670.00"
+    ]
+   ]
+  },
+  {
+   "name": "Insta360 GO Ultra 4K",
+   "slug": "insta360-go-ultra-4k",
+   "prices": [
+    [
+     "$",
+     "530.00"
+    ]
+   ]
+  },
+  {
+   "name": "Insta360 X5 Essentials Bundle",
+   "slug": "insta360-x5-essentials-bundle",
+   "prices": [
+    [
+     "$",
+     "760.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPad Pro M5 11\u2033",
+   "slug": "ipad-pro-m5-11",
+   "prices": [
+    [
+     "$",
+     "1,290.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPad Pro M5 13\u2033",
+   "slug": "ipad-pro-m5-13",
+   "prices": [
+    [
+     "$",
+     "1,400.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17 Physical",
+   "slug": "iphone-17-physical",
+   "prices": [
+    [
+     "$",
+     "990.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Max eSim",
+   "slug": "iphone-17pro-max-esim",
+   "prices": [
+    [
+     "$",
+     "1,380.00"
+    ],
+    [
+     "$",
+     "1,480.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Max Physical",
+   "slug": "iphone-17pro-max-physical",
+   "prices": [
+    [
+     "$",
+     "1,550.00"
+    ],
+    [
+     "$",
+     "1,820.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 17Pro Physical",
+   "slug": "iphone-17pro-physical",
+   "prices": [
+    [
+     "$",
+     "1,420.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Black eSim",
+   "slug": "iphone-18pro-256gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,530.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Burgundy eSim",
+   "slug": "iphone-18pro-256gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,550.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Glacier eSim",
+   "slug": "iphone-18pro-256gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,530.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 256GB Silver eSim",
+   "slug": "iphone-18pro-256gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,500.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Black eSim",
+   "slug": "iphone-18pro-512gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Burgundy eSim",
+   "slug": "iphone-18pro-512gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Glacier eSim",
+   "slug": "iphone-18pro-512gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,830.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro 512GB Silver eSim",
+   "slug": "iphone-18pro-512gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,780.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Black eSim",
+   "slug": "iphone-18pro-max-1tb-black-esim",
+   "prices": [
+    [
+     "$",
+     "2,650.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Burgundy eSim",
+   "slug": "iphone-18pro-max-1tb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "2,650.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Glacier eSim",
+   "slug": "iphone-18pro-max-1tb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "2,600.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 1TB Silver eSim",
+   "slug": "iphone-18pro-max-1tb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "2,600.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Black eSim",
+   "slug": "iphone-18pro-max-256gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "1,850.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Burgundy eSim",
+   "slug": "iphone-18pro-max-256gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "1,950.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Glacier eSim",
+   "slug": "iphone-18pro-max-256gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,830.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 256GB Silver eSim",
+   "slug": "iphone-18pro-max-256gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,780.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Black eSim",
+   "slug": "iphone-18pro-max-512gb-black-esim",
+   "prices": [
+    [
+     "$",
+     "2,030.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Burgundy eSim",
+   "slug": "iphone-18pro-max-512gb-burgundy-esim",
+   "prices": [
+    [
+     "$",
+     "2,050.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Glacier eSim",
+   "slug": "iphone-18pro-max-512gb-glacier-esim",
+   "prices": [
+    [
+     "$",
+     "1,980.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone 18Pro Max 512GB Silver eSim",
+   "slug": "iphone-18pro-max-512gb-silver-esim",
+   "prices": [
+    [
+     "$",
+     "1,950.00"
+    ]
+   ]
+  },
+  {
+   "name": "iPhone Air",
+   "slug": "iphone-air",
+   "prices": [
+    [
+     "$",
+     "1,280.00"
+    ]
+   ]
+  },
+  {
+   "name": "Lenovo All in One intel Core i7-13620H 27-inch",
+   "slug": "lenovo-all-in-one-intel-core-i7-13620h-27-inch",
+   "prices": [
+    [
+     "$",
+     "850.00"
+    ]
+   ]
+  },
+  {
+   "name": "Lenovo Legion 5 Intel Core i7 Gaming",
+   "slug": "lenovo-legion-5-intel-core-i7-gaming",
+   "prices": [
+    [
+     "$",
+     "1,550.00"
+    ]
+   ]
+  },
+  {
+   "name": "Lenovo Legion 5 Intel Core Ultra 9",
+   "slug": "lenovo-legion-5-intel-core-ultra-9",
+   "prices": [
+    [
+     "$",
+     "1,980.00"
+    ]
+   ]
+  },
+  {
+   "name": "Logitech Group Video Conferencing",
+   "slug": "logitech-group-video-conferencing",
+   "prices": [
+    [
+     "$",
+     "750.00"
+    ]
+   ]
+  },
+  {
+   "name": "Logitech Rally Bar All In One Video Conferencing System",
+   "slug": "logitech-rally-bar-all-in-one-video-conferencing-system",
+   "prices": [
+    [
+     "$",
+     "3,200.00"
+    ]
+   ]
+  },
+  {
+   "name": "Logitech Rally Plus Video Conferencing Kit",
+   "slug": "logitech-rally-plus-video-conferencing-kit",
+   "prices": [
+    [
+     "$",
+     "2,300.00"
+    ]
+   ]
+  },
+  {
+   "name": "Maxwell Fusion Smart Watch",
+   "slug": "maxwell-fusion-smart-watch",
+   "prices": [
+    [
+     "$",
+     "55.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone Ahuja",
+   "slug": "microphone-ahuja",
+   "prices": [
+    [
+     "$",
+     "13.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone Ahuja Headband",
+   "slug": "microphone-ahuja-headband",
+   "prices": [
+    [
+     "$",
+     "16.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone Boya M1",
+   "slug": "microphone-boya-m1",
+   "prices": [
+    [
+     "$",
+     "12.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone DJI Mic 2",
+   "slug": "microphone-dji-mic-2",
+   "prices": [
+    [
+     "$",
+     "250.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone DJI Mic 3",
+   "slug": "microphone-dji-mic-3",
+   "prices": [
+    [
+     "$",
+     "320.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone DJI Mic Mini 2",
+   "slug": "microphone-dji-mic-mini-2",
+   "prices": [
+    [
+     "$",
+     "125.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone R\u00d8DE Wireless GO III",
+   "slug": "microphone-rode-wireless-go-iii",
+   "prices": [
+    [
+     "$",
+     "240.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone Wireless 3in1 Multi-function",
+   "slug": "microphone-wireless-3in1-multi-function",
+   "prices": [
+    [
+     "$",
+     "18.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microphone Wireless Jmary",
+   "slug": "microphone-wireless-jmary",
+   "prices": [
+    [
+     "$",
+     "35.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microsoft Surface Pro 11",
+   "slug": "microsoft-surface-pro-11",
+   "prices": [
+    [
+     "$",
+     "2,200.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microsoft Surface Pro X Elite",
+   "slug": "microsoft-surface-pro-x-elite",
+   "prices": [
+    [
+     "$",
+     "1,350.00"
+    ]
+   ]
+  },
+  {
+   "name": "Microsoft Surface Pro X Plus",
+   "slug": "microsoft-surface-pro-x-plus",
+   "prices": [
+    [
+     "$",
+     "1,220.00"
+    ]
+   ]
+  },
+  {
+   "name": "PlayStation Sony 5Pro 2TB Slim",
+   "slug": "playstation-sony-5pro-2tb-slim",
+   "prices": [
+    [
+     "$",
+     "1,180.00"
+    ]
+   ]
+  },
+  {
+   "name": "PlayStation\u00ae5 Digital Edition (slim)",
+   "slug": "playstation5-digital-edition-slim",
+   "prices": [
+    [
+     "$",
+     "850.00"
+    ]
+   ]
+  },
+  {
+   "name": "Popcorn Maker Geepas",
+   "slug": "popcorn-maker-geepas",
+   "prices": [
+    [
+     "$",
+     "20.00"
+    ]
+   ]
+  },
+  {
+   "name": "Power Bank 10000mAh Porodo Chrome Volt",
+   "slug": "power-bank-10000mah-porodo-chrome-volt",
+   "prices": [
+    [
+     "$",
+     "25.00"
+    ]
+   ]
+  },
+  {
+   "name": "Power Bank 10000mAh Porodo Pocket Volt",
+   "slug": "power-bank-10000mah-porodo-pocket-volt",
+   "prices": [
+    [
+     "$",
+     "22.00"
+    ]
+   ]
+  },
+  {
+   "name": "Power Bank Aston 10000mAh MagSafe",
+   "slug": "power-bank-aston-10000mah-magsafe",
+   "prices": [
+    [
+     "$",
+     "22.00"
+    ]
+   ]
+  },
+  {
+   "name": "Professional Hot Air Styler Gemei",
+   "slug": "professional-hot-air-styler-gemei",
+   "prices": [
+    [
+     "$",
+     "13.00"
+    ]
+   ]
+  },
+  {
+   "name": "Projector Horizon Supports 4K Video",
+   "slug": "projector-horizon-supports-4k-video",
+   "prices": [
+    [
+     "$",
+     "130.00"
+    ]
+   ]
+  },
+  {
+   "name": "Projector Maxwell Spectra",
+   "slug": "projector-maxwell-spectra",
+   "prices": [
+    [
+     "$",
+     "120.00"
+    ]
+   ]
+  },
+  {
+   "name": "Projector Optrix Supports 4K Video",
+   "slug": "projector-optrix-supports-4k-video",
+   "prices": [
+    [
+     "$",
+     "135.00"
+    ]
+   ]
+  },
+  {
+   "name": "Projector Stellar Portable Supports 4K Video",
+   "slug": "projector-stellar-portable-supports-4k-video",
+   "prices": [
+    [
+     "$",
+     "120.00"
+    ]
+   ]
+  },
+  {
+   "name": "Remote Control Door Calling Bell",
+   "slug": "remote-control-door-calling-bell",
+   "prices": [
+    [
+     "$",
+     "18.00"
+    ]
+   ]
+  },
+  {
+   "name": "Rice Cooker Geepas Electric with Steamer",
+   "slug": "rice-cooker-geepas-electric-with-steamer",
+   "prices": [
+    [
+     "$",
+     "46.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A07",
+   "slug": "samsung-galaxy-a07",
+   "prices": [
+    [
+     "$",
+     "140.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A07",
+   "slug": "samsung-galaxy-a07-2",
+   "prices": [
+    [
+     "$",
+     "125.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17",
+   "prices": [
+    [
+     "$",
+     "165.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17-2",
+   "prices": [
+    [
+     "$",
+     "240.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy A17",
+   "slug": "samsung-galaxy-a17-3",
+   "prices": [
+    [
+     "$",
+     "190.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy S26 Ultra",
+   "slug": "samsung-galaxy-s26-ultra",
+   "prices": [
+    [
+     "$",
+     "999.00"
+    ],
+    [
+     "$",
+     "1,170.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Tab S10 FE 5G",
+   "slug": "samsung-galaxy-tab-s10-fe-5g-2",
+   "prices": [
+    [
+     "$",
+     "520.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Tab S10 Lite 5G",
+   "slug": "samsung-galaxy-tab-s10-lite-5g",
+   "prices": [
+    [
+     "$",
+     "470.00"
+    ],
+    [
+     "$",
+     "540.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Tab S11 Ultra 5G",
+   "slug": "samsung-galaxy-tab-s11-ultra-5g",
+   "prices": [
+    [
+     "$",
+     "1,350.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Watch 8",
+   "slug": "samsung-galaxy-watch-8",
+   "prices": [
+    [
+     "$",
+     "260.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Watch 8 Classic",
+   "slug": "samsung-galaxy-watch-8-classic",
+   "prices": [
+    [
+     "$",
+     "350.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Watch9 44mm",
+   "slug": "samsung-galaxy-watch9-44mm",
+   "prices": [
+    [
+     "$",
+     "330.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Flip7",
+   "slug": "samsung-galaxy-z-flip7",
+   "prices": [
+    [
+     "$",
+     "830.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Flip8 5G",
+   "slug": "samsung-galaxy-z-flip8-5g",
+   "prices": [
+    [
+     "$",
+     "950.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold7",
+   "slug": "samsung-galaxy-z-fold7",
+   "prices": [
+    [
+     "$",
+     "1,330.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold7",
+   "slug": "samsung-galaxy-z-fold7-2",
+   "prices": [
+    [
+     "$",
+     "1,500.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z Fold8 Ultra 5G",
+   "slug": "samsung-galaxy-z-fold8-ultra-5g",
+   "prices": [
+    [
+     "$",
+     "2,150.00"
+    ]
+   ]
+  },
+  {
+   "name": "Samsung Galaxy Z TriFold",
+   "slug": "samsung-galaxy-z-trifold",
+   "prices": [
+    [
+     "$",
+     "4,900.00"
+    ]
+   ]
+  },
+  {
+   "name": "Sandwich Maker Geepas",
+   "slug": "sandwich-maker-geepas",
+   "prices": [
+    [
+     "$",
+     "25.00"
+    ]
+   ]
+  },
+  {
+   "name": "Smart Door Lock Elite",
+   "slug": "smart-door-lock-elite",
+   "prices": [
+    [
+     "$",
+     "450.00"
+    ]
+   ]
+  },
+  {
+   "name": "Sony FX30 Digital Cinema Camera",
+   "slug": "sony-fx30-digital-cinema-camera",
+   "prices": [
+    [
+     "$",
+     "1,900.00"
+    ]
+   ]
+  },
+  {
+   "name": "Steam Iron Geepas",
+   "slug": "steam-iron-geepas",
+   "prices": [
+    [
+     "$",
+     "15.00"
+    ]
+   ]
+  },
+  {
+   "name": "Tablet Oteeto K3 kids learning",
+   "slug": "tablet-oteeto-k3-kids-learning",
+   "prices": [
+    [
+     "$",
+     "45.00"
+    ]
+   ]
+  },
+  {
+   "name": "Tripod Selfie Stick Handle",
+   "slug": "tripod-selfie-stick-handle",
+   "prices": [
+    [
+     "$",
+     "55.00"
+    ]
+   ]
+  },
+  {
+   "name": "VGR Professional Hair Clipper",
+   "slug": "vgr-professional-hair-clipper",
+   "prices": [
+    [
+     "$",
+     "24.00"
+    ]
+   ]
+  },
+  {
+   "name": "VGR Professional Hair Trimmer",
+   "slug": "vgr-professional-hair-trimmer",
+   "prices": [
+    [
+     "$",
+     "11.00"
+    ]
+   ]
+  },
+  {
+   "name": "Waer Professional Hair Clipper",
+   "slug": "waer-professional-hair-clipper",
+   "prices": [
+    [
+     "$",
+     "15.00"
+    ]
+   ]
+  }
+ ]
+}
