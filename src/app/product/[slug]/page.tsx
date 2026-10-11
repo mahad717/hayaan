@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { BookOpen } from "lucide-react";
 import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
+import { guidesForProduct } from "@/lib/product-guides";
 import { isLang, LANG_COOKIE, productDescription } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 
@@ -67,6 +70,9 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   const inStock = product.stock > 0;
+  // Task 87: contextual buying-guide links — server-rendered so the first
+  // HTML the crawler sees carries them (max 3, most-relevant first).
+  const guides = guidesForProduct(product.name, product.category?.slug ?? null);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -130,6 +136,42 @@ export default async function ProductPage({ params }: Props) {
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductDetail initialProduct={product} />
+
+      {/* Buying guides (Task 87): internal links from the product page to
+          the SEO/AEO guides that answer pre-purchase questions. */}
+      {guides.length > 0 && (
+        <section
+          aria-labelledby="pdp-guides-heading"
+          className="mx-auto max-w-7xl px-4 pb-12 sm:px-6"
+        >
+          <h2
+            id="pdp-guides-heading"
+            className="flex items-center gap-2 text-lg font-bold text-brand-dark"
+          >
+            <BookOpen className="h-5 w-5 text-brand" aria-hidden />
+            Before you order — buying guides
+          </h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            {guides.map((g) => (
+              <Link
+                key={g.href}
+                href={g.href}
+                className="group rounded-2xl border border-[#e6e2d4] bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <h3 className="text-sm font-bold leading-snug text-brand-dark group-hover:text-brand">
+                  {g.title}
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground font-original">
+                  {g.description}
+                </p>
+                <span className="mt-3 inline-block text-xs font-bold text-[#f28c28]">
+                  Read the guide →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </StoreShell>
   );
 }

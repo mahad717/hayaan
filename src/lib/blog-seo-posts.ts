@@ -64,9 +64,9 @@ The same applies across other shelves: phones and watches, power and audio gear,
 
 Prices for the same TV or laptop can vary wildly between sellers. As a rule of thumb at the time of writing:
 
-1. **Smart TVs** — LG 43-inch from about $450, LG 55-inch around $650, LG 65-inch near $850, and the 75–85 inch tier from $1,290.
+1. **Smart TVs** — LG 43-inch from about $450, LG 55-inch around $650, LG 65-inch near $850, and the 75–85 inch tier from $1,290. Not sure which size? The [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) matches every panel to your room.
 2. **MacBooks** — Air M5 around $1,530, Pro M4 around $1,720, Pro M5 around $1,900. Anything dramatically cheaper than that should make you ask questions.
-3. **PlayStation 5** — the Digital Slim edition near $720 and the Pro 2TB around $1,180.
+3. **PlayStation 5** — the Digital Slim edition near $720 and the Pro 2TB around $1,180. The [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) picks the right edition.
 
 If a deal looks too good to be true — a "new" iPhone at half the market price — it almost always is.
 
@@ -670,7 +670,7 @@ Live on the [phones & wearables shelf](https://hayaan.co/category/phones-wearabl
 ## Rule one: match the watch to your phone
 
 - **iPhone owners:** the Apple Watch is the only watch with the complete experience — message replies, Apple Pay-style unlocks, deep health integration. Start at the SE ($250) if the price matters; the [Series 11 at $440](https://hayaan.co/product/apple-watch-series-11-46mm) is the flagship.
-- **Android owners:** pick the [Galaxy Watch 7 at $190](https://hayaan.co/product/samsung-galaxy-watch-7-44mm) (best with Samsung phones), the [Huawei GT 6 at $230](https://hayaan.co/product/huawei-watch-gt-6-gps-46-mm) for battery life, or the Amazfit Active at $130 for fitness-first use.
+- **Android owners:** pick the [Galaxy Watch 7 at $190](https://hayaan.co/product/samsung-galaxy-watch-7-44mm) (best with Samsung phones), the [Huawei GT 6 at $230](https://hayaan.co/product/huawei-watch-gt-6-gps-46mm) for battery life, or the Amazfit Active at $130 for fitness-first use.
 
 An Apple Watch paired with Android loses most of what you paid for — that is the single most common smartwatch mistake, and it is entirely avoidable.
 
@@ -685,6 +685,292 @@ An Apple Watch paired with Android loses most of what you paid for — that is t
 Check the pairing rule above, open the listing to confirm the exact model and condition, and add it to cart. Orders of $75 or more ship free — every watch in this guide qualifies — so delivery costs you nothing in Mogadishu or anywhere else in Somalia. Pay with EVC Plus, Edahab, or card through the secure checkout, track the order under Orders, and write to support@hayaan.co with your order number for anything that does not match the page.
 
 If you are kitting out a team — delivery riders, gym staff, a corporate gift batch — the [bulk quote form](https://hayaan.co/quote) usually beats listed prices, and the [deals page](https://hayaan.co/deals) is where watch restocks and price drops land first.`,
+};
+
+const post10 = {
+  id: "seo-ac-somalia",
+  slug: "air-conditioner-price-in-somalia",
+  title: "Air Conditioner Price in Somalia (2026): Lightwave 9K–24K from $260",
+  excerpt:
+    "Every air conditioner price in Somalia right now — 9,000 to 24,000 BTU, which size fits your room, why a voltage stabilizer matters, and how to order one online.",
+  quickAnswer:
+    "Air conditioner prices in Somalia at Hayaan Market (hayaan.co) start at $260 for the Lightwave 9,000 BTU unit, with 12,000 BTU at $280, 18,000 BTU at $390, and 24,000 BTU at $460 — fixed USD prices, no VAT, free delivery on orders over $75. Size the unit to the room: 9K BTU cools a bedroom up to about 20 m², 12K a living room of 20–30 m², 18K–24K large halls and shops — and a voltage stabilizer ($11.50) protects the compressor.",
+  howtoSteps: [
+    {
+      name: "Measure the room",
+      text: "Length × width in metres gives the area; most Mogadishu bedrooms land under 20 m², where the 9,000 BTU unit is enough.",
+    },
+    {
+      name: "Pick the BTU class",
+      text: "Match the area: 9K up to about 20 m², 12K for 20–30 m², 18K for 30–45 m², 24K for 45 m² and larger — and step up one size for sun-baked top floors.",
+    },
+    {
+      name: "Add a voltage stabilizer",
+      text: "The $11.50 Lightwave digital stabilizer protects the compressor from the voltage swings that come with grid and generator power.",
+    },
+    {
+      name: "Order online",
+      text: "Add the unit to the cart on hayaan.co, enter your district, and pay with EVC Plus, Edahab, or card at the exact shown total.",
+    },
+    {
+      name: "Prepare the install spot",
+      text: "Clear the wall, confirm a power source the unit can reach, and keep the packaging until the unit is running — it is your reference if anything must come back.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much does an air conditioner cost in Somalia?",
+      a: "At Hayaan Market the Lightwave split units run $260 (9,000 BTU), $280 (12,000 BTU), $390 (18,000 BTU), and $460 (24,000 BTU) — fixed USD prices, no VAT.",
+    },
+    {
+      q: "Which AC size do I need for my room?",
+      a: "Rule of thumb: 9,000 BTU cools a bedroom up to about 20 m², 12,000 BTU covers most living rooms (20–30 m²), 18,000 BTU suits 30–45 m², and 24,000 BTU handles halls, restaurants and shops from about 45 m² up.",
+    },
+    {
+      q: "Do I need a voltage stabilizer with the AC?",
+      a: "Strongly recommended. Grid and generator voltage swings stress the compressor; a stabilizer (the Lightwave digital unit is $11.50 in the shop) sits between the wall and the unit and absorbs the spikes.",
+    },
+    {
+      q: "How is delivery charged for an air conditioner?",
+      a: "Mogadishu delivery is priced by district ($1.50–$3.00), orders over $75 ship free — which covers every AC here — and anywhere else in Somalia is a flat $6.95.",
+    },
+    {
+      q: "Can I pay for the AC in installments or mobile money?",
+      a: "Payment is one approved amount — EVC Plus, Edahab, or card through the secure checkout at the fixed listed price. There are no add-ons collected at the door.",
+    },
+  ],
+  content: `The hottest months test every home in Somalia — and nothing changes a room like an air conditioner sized and installed right. The catch has always been price and trust: window-shopping across town, haggling in the heat, and hoping the box actually holds what the sticker promised. Ordering online fixes that: every unit below has a fixed USD price, live stock, and delivery to your district.
+
+## Air conditioner prices in Somalia right now
+
+Live on the [home & office shelf](https://hayaan.co/category/home-office), fixed USD prices:
+
+1. **Lightwave 9,000 BTU — $260.** The bedroom unit: quiet, efficient, and enough for most sleeping rooms in the city.
+2. **Lightwave 12,000 BTU — $280.** The sweet spot for family living rooms and larger master bedrooms — only $20 more than the 9K.
+3. **Lightwave 18,000 BTU — $390.** For big living spaces and small shops that need serious airflow.
+4. **Lightwave 24,000 BTU — $460.** The hall unit: restaurants, waiting rooms, and high-ceiling spaces.
+
+Every price above is the final price — no VAT added at checkout.
+
+## Which size fits your room?
+
+Bigger is not automatically better — an oversized unit short-cycles (cools fast, shuts off, and the humidity stays), while an undersized one runs forever without reaching temperature. Match the unit to the space:
+
+- **9,000 BTU** — bedrooms and small offices up to about 20 m².
+- **12,000 BTU** — living rooms and large bedrooms, roughly 20–30 m².
+- **18,000 BTU** — large living rooms and shop floors, roughly 30–45 m².
+- **24,000 BTU** — halls, restaurants and open spaces from about 45 m² up.
+
+Two Somalia-specific adjustments: if the room is a sun-baked top floor or faces west all afternoon, step up one size. And if the room connects to an open hallway, you are cooling the hallway too — close it off or size up.
+
+## The $11.50 accessory that protects your $460 AC
+
+Compressors die from voltage swings, and Mogadishu power — grid or generator — swings. The [Lightwave digital voltage stabilizer at $11.50](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) sits between the wall socket and the unit, absorbing the spikes and dips that would otherwise slowly cook the compressor. On a $260–$460 appliance it is the cheapest insurance you will ever buy.
+
+> Rule: the AC is the appliance; the stabilizer is what keeps it an appliance.
+
+## Ordering an air conditioner online, step by step
+
+1. **Measure the room** — length × width in metres, and note whether it is a top floor or west-facing.
+2. **Pick the BTU class** from the list above — when between sizes, size up.
+3. **Add the stabilizer** to the same cart so the whole setup arrives together.
+4. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the protections.
+5. **Prepare the install spot** — clear wall space, a reachable power source, and keep the packaging until the unit is running.
+
+Delivery is priced by district inside Mogadishu ($1.50–$3.00 — the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district) and a flat $6.95 nationwide. Every AC clears the $75 free-delivery line, so shipping costs nothing.
+
+## Outfitting a shop, hotel or office?
+
+Air conditioning scales by room count, and the [bulk quote form](https://hayaan.co/quote) usually beats listed prices on multi-unit orders. Watch the [deals page](https://hayaan.co/deals) for restocks and price drops first.`,
+};
+
+const post11 = {
+  id: "seo-tv-size-somalia",
+  slug: "what-size-tv-to-buy-in-somalia",
+  title: "What Size TV Should You Buy in Somalia (2026)? From 32 to 85 Inches",
+  excerpt:
+    "32, 43, 55, 65, 75 or 85 inches? Every TV price in Somalia right now, the viewing-distance rule that picks the right size, and which sets pair best with a PS5.",
+  quickAnswer:
+    "TV prices in Somalia at Hayaan Market (hayaan.co) run from $175 (Geepas 32-inch smart) through $210 (Geepas 43-inch), $450 (LG 43-inch) and $650 (LG 55-inch) up to $2,350 (Samsung 85-inch). Pick the size from your seating distance: up to 1.5 m suits a 32-inch, 1.5–2.5 m a 43-inch, 2.5–3.5 m a 55-inch, and over 3.5 m a 65-inch or larger — any 4K LG or Samsung pairs cleanly with a PS5.",
+  howtoSteps: [
+    {
+      name: "Measure the seating distance",
+      text: "Sofa (or bed) to wall, in metres — it is the single measurement that decides the right size.",
+    },
+    {
+      name: "Match the distance to a size",
+      text: "Up to 1.5 m: 32-inch. 1.5–2.5 m: 43-inch. 2.5–3.5 m: 55-inch. Over 3.5 m: 65-inch and up.",
+    },
+    {
+      name: "Choose the brand tier",
+      text: "Geepas ($175–$210) covers budget smart viewing, LG ($450–$1,290) is the 4K value line, Samsung tops the chart at 85 inches for $2,350.",
+    },
+    {
+      name: "Check console and decoder resolution",
+      text: "A PS5 renders at 4K — any LG or Samsung here does it justice; a 32-inch Geepas is fine for decoder TV and series.",
+    },
+    {
+      name: "Order with free delivery",
+      text: "Every TV clears the $75 free-delivery line — pay with EVC Plus, Edahab, or card and it ships to your Mogadishu district or nationwide.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much is a smart TV in Somalia?",
+      a: "At Hayaan Market: Geepas 32-inch $175, Geepas 43-inch $210, LG 43-inch $450, LG 55-inch $650, LG 65-inch $850, LG 75-inch $1,290, and Samsung 85-inch $2,350 — fixed USD prices, no VAT.",
+    },
+    {
+      q: "What size TV is right for a living room?",
+      a: "Most living rooms seat 2.5–3.5 metres from the screen, which makes the 55-inch the sweet spot (the LG 55-inch is $650). Smaller rooms suit the 43-inch at $450.",
+    },
+    {
+      q: "Is a 43-inch TV big enough for a PS5?",
+      a: "Yes — the LG 43-inch is a 4K panel, so the PS5 renders at full resolution. At 2.5–3.5 m of distance the 55-inch shows the difference and is the pairing most living rooms want.",
+    },
+    {
+      q: "What is the difference between the $210 and $450 43-inch TV?",
+      a: "The Geepas 43-inch ($210) covers smart apps and everyday viewing on a budget; the LG 43-inch ($450) is a 4K panel with better colour and motion — the upgrade matters most for PS5, football and movie nights.",
+    },
+    {
+      q: "Does a bigger TV cost more to deliver?",
+      a: "No — delivery is by district in Mogadishu ($1.50–$3.00) or a flat $6.95 nationwide, and orders over $75 — every TV here — ship free.",
+    },
+  ],
+  content: `The most expensive TV mistake is not buying the wrong brand — it is buying the wrong size for the room. Too small and a $650 set feels like a decoder screen; too big and a small room turns the football match into a panoramic scan. Here is every TV on the shop right now with its real price, and the distance rule that picks the right one.
+
+## TV prices in Somalia right now
+
+Live on the [computers, TV & gaming shelf](https://hayaan.co/category/computers-tv-gaming), fixed USD prices:
+
+1. **Geepas Smart 32" — $175.** The budget entry: smart apps and compact panels for bedrooms and kitchens.
+2. **Geepas Smart 43" — $210.** The cheapest 43-inch smart set in the market.
+3. **LG 43" — $450.** The 4K value pick — the smallest TV that does a PS5 justice.
+4. **LG 55" — $650.** The living-room standard: 4K, big enough for 3 metres of sofa distance.
+5. **LG 65" — $850.** For large living rooms — the step up most families end up wanting.
+6. **LG 75" — $1,290.** Statement size for halls and majlis-style seating.
+7. **Samsung 85" — $2,350.** The flagship: events, showrooms and very large walls.
+
+Every price is final — no VAT at checkout.
+
+## The distance rule (all you need)
+
+One measurement decides it — sofa (or bed) to wall, in metres:
+
+- **Up to 1.5 m** — 32-inch is right; 43-inch is the ceiling.
+- **1.5–2.5 m** — 43-inch is the sweet spot; 32-inch starts to feel small.
+- **2.5–3.5 m** — 55-inch is the sweet spot; 43-inch is watchable, 65-inch is immersive.
+- **Over 3.5 m** — 65-inch minimum; 75–85 inch becomes worth the money.
+
+> Measure before you browse. Ten seconds with a tape measure prevents the classic regret — a TV that looks perfect in the shop and small at home.
+
+## Geepas, LG or Samsung?
+
+- **Geepas ($175–$210)** covers the essentials: smart apps, decoder TV, news and series on a budget.
+- **LG ($450–$1,290)** is the value line: 4K panels with better colour and motion — the tier that makes consoles and football look right.
+- **Samsung ($2,350)** is the flagship tier: the biggest panel in the market with the image processing to match.
+
+## Pairing with a PS5
+
+A PlayStation 5 renders at 4K, so the panel matters: the [LG 43-inch at $450](https://hayaan.co/product/tv-lg-43-inch-smart) is the smallest set that shows the console properly, and the [55-inch at $650](https://hayaan.co/product/tv-lg-55-inch-smart) is the pairing most living rooms actually want. The [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) covers which console edition to put in front of it.
+
+## Ordering a TV online
+
+Every TV here clears the $75 free-delivery line, so shipping is $0 to any Mogadishu district (the [Mogadishu delivery guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists the district fees) and free nationwide too. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia), keep the order number, and hold the packaging until the set is mounted and running.
+
+Buying for a hotel, restaurant or event space? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices, and the [deals page](https://hayaan.co/deals) is where TV price drops land first.`,
+};
+
+const post12 = {
+  id: "seo-mogadishu-shopping",
+  slug: "online-shopping-in-mogadishu",
+  title: "Online Shopping in Mogadishu (2026): Delivery Fees by District and How to Order",
+  excerpt:
+    "What delivery really costs in every Mogadishu district — from Hodan's $1.50 to Daynile's $3 — how free shipping works over $75, and how to order to your door.",
+  quickAnswer:
+    "Online shopping in Mogadishu works like this: order on hayaan.co at a fixed USD price, pay with EVC Plus, Edahab, or card through the secure checkout, and delivery is charged by district — $1.50 in Hodan, Waberi and Wadajir, $2.00–$2.50 across the central districts, $3.00 in Daynile, Heliwa, Kahda and the outer districts — while any order of $75 or more ships free. Outside Mogadishu, nationwide delivery is a flat $6.95.",
+  howtoSteps: [
+    {
+      name: "Fill the cart at fixed prices",
+      text: "Every listing on hayaan.co shows the exact USD price and live stock — no haggling and no phone calls to confirm what things cost.",
+    },
+    {
+      name: "Enter your district",
+      text: "Type it the way you know it — 'Xamar Jab Jab' and 'Hamar Jajab' both resolve — and the delivery fee appears before you pay.",
+    },
+    {
+      name: "Approve the exact total",
+      text: "Products plus the district fee, itemised on the checkout screen — the amount you approve is the amount that moves, and nothing is added at the door.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "EVC Plus, Edahab, or card — the hosted page records the transaction for both sides, so a receipt always exists.",
+    },
+    {
+      name: "Keep the order number",
+      text: "Track the order under Orders and write to support@hayaan.co with that number for any question about the delivery.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much is delivery in Mogadishu?",
+      a: "By district: $1.50 (Hodan, Waberi, Wadajir), $2.00 (Hamar-Jajab, Howl-Wadag, Wardhigley, Yaqshid), $2.50 (Abdiaziz, Bondhere, Dharkenley, Hamar-Weyne, Karan, Shangani, Shibis), $3.00 (Daynile, Heliwa, Kahda, Gubadley, Darussalam, Garasbaaley) — and orders of $75 or more ship free everywhere.",
+    },
+    {
+      q: "Which districts have the cheapest delivery?",
+      a: "Hodan, Waberi and Wadajir at $1.50 — the lowest district rate in the city.",
+    },
+    {
+      q: "How do I get free delivery in Mogadishu?",
+      a: "Reach a $75 subtotal. A $450 TV or a $990 iPhone always ships free; a $55 smartwatch alone pays the district fee, but bundled with an accessory it clears the line.",
+    },
+    {
+      q: "Can I pay cash on delivery?",
+      a: "Payment happens at checkout through the secure hosted page — EVC Plus, Edahab, or card — so the exact total is approved and recorded before the rider leaves. No cash changes hands at the door.",
+    },
+    {
+      q: "Does online shopping work outside Mogadishu?",
+      a: "Yes — nationwide delivery is a flat $6.95 to any city or town, and orders of $75 or more ship free nationwide too.",
+    },
+  ],
+  content: `Online shopping in Mogadishu has one question that decides everything: what does delivery cost to my street? The answer is written down — district by district, in dollars, shown before you pay. This guide lists the fee for every Mogadishu district, explains the $75 free-delivery line, and walks through an order from cart to door.
+
+## How ordering works in Mogadishu
+
+1. **Fill the cart at fixed prices.** Every listing on [hayaan.co](https://hayaan.co/) shows the exact USD price and live stock — no haggling, no phone calls.
+2. **Enter your district.** Type it the way you know it — "Xamar Jab Jab" and "Hamar Jajab" both resolve; the fee appears before payment.
+3. **Approve the exact total.** Products plus the district fee, itemised on the checkout screen — nothing is added at the door.
+4. **Pay through the secure checkout.** EVC Plus, Edahab, or card — the transaction is recorded for both sides.
+5. **Keep the order number.** Track the order under Orders; support@hayaan.co works from that number.
+
+## Delivery fees by district
+
+Mogadishu delivery is priced per district, straight from the official shipping sheet:
+
+- **$1.50 — Hodan, Waberi, Wadajir.** The cheapest districts to receive an order.
+- **$2.00 — Hamar-Jajab, Howl-Wadag, Wardhigley, Yaqshid.**
+- **$2.50 — Abdiaziz, Bondhere, Dharkenley, Hamar-Weyne, Karan, Shangani, Shibis.** The central band.
+- **$3.00 — Daynile, Heliwa, Kahda, Gubadley, Darussalam, Garasbaaley.** The outer districts.
+
+And the shortcut that erases the fee entirely: **any order of $75 or more ships free, in every district.**
+
+## The $75 free-delivery line, in plain math
+
+- An [LG 43-inch TV at $450](https://hayaan.co/product/tv-lg-43-inch-smart) always ships free — so does an [iPhone 17 at $990](https://hayaan.co/product/iphone-17-%28physical-sim%29).
+- Small orders are where the fee matters: $1.50–$3.00 on a $10 accessory is a big slice, while the same fee on a $60 order is under 5% — and one added item usually clears the line.
+
+> The fee is per order, not per item: one cart with everything beats three separate orders.
+
+## What Mogadishu orders most
+
+The city's most-ordered shelves: [phones & wearables](https://hayaan.co/category/phones-wearables) — the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) lists every model — and [computers & TV](https://hayaan.co/category/computers-tv-gaming), where the [PS5 guide](https://hayaan.co/blog/ps5-price-in-somalia) and the [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) cover the big-ticket picks. Home cooling is the quiet riser: the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) sizes Lightwave units from $260, stabilizer included.
+
+## Paying from Mogadishu
+
+Payment happens at checkout, before the rider leaves — EVC Plus, Edahab, or card through the hosted secure page. The [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the two protections that matter: the approved total is the charged total (itemised, no surprises at the door), and the transaction is recorded on both sides — your order number is the receipt that support works from.
+
+## Outside the capital?
+
+Nationwide delivery is a flat **$6.95** to any city or town — and $75+ orders ship free nationwide too. The full walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), and the [deals page](https://hayaan.co/deals) is where restocks and price drops land first.`,
 };
 
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
@@ -704,6 +990,10 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post7, coverImage: "https://hayaan.co/images/blog/iphone-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-10T09:30:00.000Z"), createdAt: "2026-10-10T09:30:00.000Z", updatedAt: "2026-10-10T09:30:00.000Z" },
   { ...post8, coverImage: "https://hayaan.co/images/blog/how-to-pay-online-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-10T10:00:00.000Z"), createdAt: "2026-10-10T10:00:00.000Z", updatedAt: "2026-10-10T10:00:00.000Z" },
   { ...post9, coverImage: "https://hayaan.co/images/blog/best-smartwatches-online-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-10T10:30:00.000Z"), createdAt: "2026-10-10T10:30:00.000Z", updatedAt: "2026-10-10T10:30:00.000Z" },
+  // Task 87 — October 2026 batch 2 (AC, TV sizing, Mogadishu city) — prices verified against the live catalog on publish day.
+  { ...post10, coverImage: "https://hayaan.co/images/blog/air-conditioner-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T09:00:00.000Z"), createdAt: "2026-10-11T09:00:00.000Z", updatedAt: "2026-10-11T09:00:00.000Z" },
+  { ...post11, coverImage: "https://hayaan.co/images/blog/what-size-tv-to-buy-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T09:30:00.000Z"), createdAt: "2026-10-11T09:30:00.000Z", updatedAt: "2026-10-11T09:30:00.000Z" },
+  { ...post12, coverImage: "https://hayaan.co/images/blog/online-shopping-in-mogadishu.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-11T10:00:00.000Z"), createdAt: "2026-10-11T10:00:00.000Z", updatedAt: "2026-10-11T10:00:00.000Z" },
 ];
 
 
