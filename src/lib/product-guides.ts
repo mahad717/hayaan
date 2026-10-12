@@ -98,6 +98,11 @@ export const BUYING_GUIDES = {
     "Online Shopping in Hargeisa",
     "Flat $6.95 citywide delivery, free over $75, and how to order step by step.",
   ),
+  galaxyA18: G(
+    "samsung-galaxy-a18-price-in-somalia",
+    "Galaxy A18 Price in Somalia (2026)",
+    "$187 with 256GB — specs, the A16/A17/A18 ladder, and how to order.",
+  ),
 } satisfies Record<string, GuideLink>;
 
 /**
@@ -118,6 +123,7 @@ export function guidesForProduct(name: string, categorySlug?: string | null): Gu
 
   // Specific product-name matches first.
   if (/air conditioner/.test(n)) push(BUYING_GUIDES.ac);
+  if (/galaxy a18|sm-a185/.test(n)) push(BUYING_GUIDES.galaxyA18);
   if (/router|access point|extender|wi-?fi|\buni-?fi\b|mikrotik|omada/.test(n)) push(BUYING_GUIDES.router);
   if (/printer|toner/.test(n)) push(BUYING_GUIDES.printer);
   if (/\btv\b|television/.test(n)) push(BUYING_GUIDES.tv);

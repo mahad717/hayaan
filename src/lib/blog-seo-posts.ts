@@ -124,7 +124,7 @@ const post2 = {
 At the time of writing, the [phones and wearables](https://hayaan.co/category/phones-wearables) shelf splits roughly like this:
 
 1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $118 and the Galaxy A17 at $165. Big batteries, modern software, honest prices.
-2. **$250–$450** — mid-range and wearables: the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $320, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
+2. **$180–$450** — mid-range, fresh releases and wearables: the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $187, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $320, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
 3. **$900 and up** — current flagships like the iPhone 17 at $990, the iPhone 18 Pro from $1,500, and the iPhone 18 Pro Max at up to $2,650, for buyers who want the top of the market.
 
 Decide the tier first. It turns a hundred listings into five, and it stops you from paying flagship money for mid-range hardware.
@@ -1262,6 +1262,106 @@ Payment happens in the hosted secure checkout, before the parcel leaves — EVC 
 Nationwide means nationwide: Burao, Berbera, Borama, Erigavo, Bosaso, Kismayo — the same flat **$6.95**, free over $75. The full nationwide walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), restocks and price drops land first on the [deals page](https://hayaan.co/deals), and offices, schools and hotels can price multi-unit orders through the [bulk quote form](https://hayaan.co/quote).`,
 };
 
+// Task 96 — October 2026: the Samsung Galaxy A18 landed in the catalog at $187
+// (SKU HAY-MOB-145). Specs verified against GSMArena/SamMobile/DigitalTrends on
+// publish day; prices verified against the live catalog.
+const post16 = {
+  id: "seo-galaxy-a18-price-somalia",
+  slug: "samsung-galaxy-a18-price-in-somalia",
+  title: "Samsung Galaxy A18 Price in Somalia (2026): $187, Full Specs and Verdict",
+  excerpt:
+    "The newest budget Galaxy at $187 — about $140 under its European launch price, with double the storage. What the Exynos 1610, 90Hz AMOLED and updates-until-2032 buy you, and how it stacks against the A16 and A17.",
+  quickAnswer:
+    "The Samsung Galaxy A18 (256GB, Black) costs $187 at Hayaan Market (hayaan.co) — roughly $140 under its €279 European launch price, with double the storage. You get a 6.7-inch 90Hz Super AMOLED display, Samsung's Exynos 1610 chipset, a 50MP triple camera with 4K video, a 5000mAh battery with 25W charging, an IP64 rating and Android 17 with updates promised until 2032 — delivered to Mogadishu districts for $1.50–$3 (free over $75) or anywhere in Somalia for a flat $6.95.",
+  howtoSteps: [
+    {
+      name: "Open the product page",
+      text: "Check the live price ($187) and stock on the Galaxy A18 listing — exact model: 256GB storage, Black.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add the phone to your cart and sign in with your email so the order and its receipt stay in your order history.",
+    },
+    {
+      name: "Pick the delivery district",
+      text: "Mogadishu shoppers pick their district for the exact fee ($1.50–$3.00); elsewhere in Somalia it is a flat $6.95 — and any order over $75 ships free.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "EVC Plus, Edahab, or card — the amount you approve on the hosted page is the amount that moves, with a record on both sides.",
+    },
+    {
+      name: "Check the phone on arrival",
+      text: "Match it against the listing (model, colour, storage), keep the order number, and write to support@hayaan.co the same day if anything is off.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much is the Samsung Galaxy A18 in Somalia?",
+      a: "$187 at Hayaan Market for the 256GB Black model — fixed USD, no VAT. Samsung's European launch price was €279 (about $330) for the 128GB version, so the Somali listing undercuts it by roughly $140 with double the storage.",
+    },
+    {
+      q: "Is the Galaxy A18 5G?",
+      a: "No — the A18 is a 4G LTE phone, which is what most everyday mobile data in Somalia runs on anyway; a 5G version is expected later. Choosing the 4G model now means a lower price and strong battery life.",
+    },
+    {
+      q: "Is the Galaxy A18 better than the Galaxy A17 or A16?",
+      a: "It is the newest of the three: the A18 ($187) runs Samsung's Exynos 1610, carries an IP64 rating and stereo speakers, and is promised updates until 2032. The A17 ($165) and A16 ($118) remain solid buys for tighter budgets — the A18 is worth the step up if you keep phones for years.",
+    },
+    {
+      q: "How much storage and RAM does the Galaxy A18 have?",
+      a: "256GB of storage with a microSD slot for expansion, paired with 4GB of RAM — enough for everyday apps and social media, with the 256GB covering years of video, photos and offline music.",
+    },
+    {
+      q: "How do I pay and get the Galaxy A18 delivered?",
+      a: "Pay with EVC Plus, Edahab, or card through the secure checkout; delivery is $1.50–$3.00 by Mogadishu district, free on orders of $75 or more, and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
+    },
+  ],
+  content: `Samsung's most affordable new Galaxy of 2026 has landed in Somalia — and it landed at a price that undercuts its own European launch. The Galaxy A18 (256GB, Black) is [live on Hayaan Market at $187](https://hayaan.co/product/samsung-galaxy-a18), with delivery to your door in Mogadishu or anywhere in the country. Here is what the money buys, how it compares with the A16 and A17 below it, and how to order one today.
+
+## Samsung Galaxy A18 price in Somalia
+
+The Galaxy A18 sells at Hayaan Market for **$187** — the 256GB model in Black, at a fixed USD price with no VAT at checkout.
+
+For context: Samsung launched the A18 in Europe in September 2026 at **€279** (about $330) for the 128GB version. The Somali listing is roughly **$140 cheaper with double the storage** — the kind of gap that explains why phone shoppers here check the market first and the official European price second.
+
+The listing terms are the same as everything on the shop: live stock count on the page, the exact fee shown before you pay — Mogadishu districts $1.50–$3.00, free on orders over $75, flat $6.95 nationwide.
+
+## What you get for $187
+
+- **6.7-inch Super AMOLED, 90Hz** — the big, smooth panel that used to be mid-range-only territory.
+- **Exynos 1610 chipset** — Samsung's newest budget silicon, a clear step up from the previous A-series generation.
+- **50MP triple camera** — main f/1.8 sensor plus ultra-wide and macro, recording 4K video.
+- **5000mAh battery, 25W fast charging** — a full day comfortably, and a flat battery back to life over lunch.
+- **IP64 dust and water resistance, stereo speakers** — flagship habits at a budget price, in a 7.7mm frame that weighs 196g.
+- **Android 17 with updates promised until 2032** — six major OS upgrades, the longest software runway of the budget Galaxys.
+- **256GB storage, expandable** — a microSD slot on top of double the base storage the European launch shipped.
+
+## A16, A17 or A18? The $118–$187 ladder
+
+1. **[Galaxy A16 — $118](https://hayaan.co/product/samsung-galaxy-a16).** The budget anchor: big battery, honest price, still the cheapest way into a new Samsung.
+2. **[Galaxy A17 — $165](https://hayaan.co/product/samsung-galaxy-a17).** The middle step: a newer take on the same formula for a modest jump.
+3. **[Galaxy A18 — $187](https://hayaan.co/product/samsung-galaxy-a18).** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise.
+
+> Rule of thumb: buy the newest phone your budget allows. Software support is the feature that decides how a phone feels in year three — and the A18 has the deepest reserves of the three.
+
+## 4G only — does that matter in Somalia?
+
+The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday mobile data here — WhatsApp calls, YouTube, Facebook, banking apps — runs on 4G networks that the A18 handles comfortably, and skipping 5G hardware is part of why the phone costs $187 instead of more. If 5G matters to you, the [Galaxy A36 5G at $285](https://hayaan.co/product/samsung-galaxy-a36-5g) and [Galaxy A56 5G at $370](https://hayaan.co/product/samsung-galaxy-a56-5g) are the next rungs on the ladder.
+
+## How to order the Galaxy A18
+
+1. Open the [Galaxy A18 product page](https://hayaan.co/product/samsung-galaxy-a18) and check the live price and stock.
+2. Add to cart and sign in with your email so the order history stays with you.
+3. Choose your delivery district — the exact fee appears before payment ($1.50–$3.00 in Mogadishu, $6.95 elsewhere, free over $75; the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district).
+4. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia) — the approved total is the charged total.
+5. Keep the order number and check the phone against the listing when it arrives; support@hayaan.co works from that number.
+
+## The bottom line
+
+At $187 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $118](https://hayaan.co/product/samsung-galaxy-a16) and [A17 at $165](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1287,6 +1387,9 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post13, coverImage: "https://hayaan.co/images/blog/wifi-router-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T09:00:00.000Z"), createdAt: "2026-10-12T09:00:00.000Z", updatedAt: "2026-10-12T09:00:00.000Z" },
   { ...post14, coverImage: "https://hayaan.co/images/blog/printer-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T09:30:00.000Z"), createdAt: "2026-10-12T09:30:00.000Z", updatedAt: "2026-10-12T09:30:00.000Z" },
   { ...post15, coverImage: "https://hayaan.co/images/blog/online-shopping-in-hargeisa.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:00:00.000Z"), createdAt: "2026-10-12T10:00:00.000Z", updatedAt: "2026-10-12T10:00:00.000Z" },
+  // Task 96 — the Galaxy A18 landed in the catalog at $187; specs verified against
+  // GSMArena/SamMobile/DigitalTrends, prices verified against the live catalog.
+  { ...post16, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-a18-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:30:00.000Z"), createdAt: "2026-10-12T10:30:00.000Z", updatedAt: "2026-10-12T10:30:00.000Z" },
 ];
 
 

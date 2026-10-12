@@ -40,6 +40,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Wi-Fi Router Price in Somalia](${SITE}/blog/wifi-router-price-in-somalia): routers, extenders and access points from $15 to $145, matched to homes and offices, with placement and power-cut notes.
 - [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $75, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
 - [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood (free over $75), payment and ordering walkthrough.
+- [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $187 (256GB), specs, the A16/A17/A18 ladder, and how to order.
 
 ## Key pages
 
