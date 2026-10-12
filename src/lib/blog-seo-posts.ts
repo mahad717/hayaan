@@ -1339,9 +1339,9 @@ The listing terms are the same as everything on the shop: live stock count on th
 
 ## A16, A17 or A18? The $118–$187 ladder
 
-1. **[Galaxy A16 — $118](https://hayaan.co/product/samsung-galaxy-a16).** The budget anchor: big battery, honest price, still the cheapest way into a new Samsung.
-2. **[Galaxy A17 — $165](https://hayaan.co/product/samsung-galaxy-a17).** The middle step: a newer take on the same formula for a modest jump.
-3. **[Galaxy A18 — $187](https://hayaan.co/product/samsung-galaxy-a18).** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise.
+1. **Galaxy A16 — $118.** The budget anchor: big battery, honest price — [the cheapest way into a new Samsung](https://hayaan.co/product/samsung-galaxy-a16).
+2. **Galaxy A17 — $165.** The middle step: a newer take on the same formula for a modest jump — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
+3. **Galaxy A18 — $187.** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise — [the A18 listing](https://hayaan.co/product/samsung-galaxy-a18).
 
 > Rule of thumb: buy the newest phone your budget allows. Software support is the feature that decides how a phone feels in year three — and the A18 has the deepest reserves of the three.
 
