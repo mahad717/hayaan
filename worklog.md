@@ -2110,3 +2110,20 @@ Stage Summary:
 - Watch-item: Google/AI answers may quote the old free-shipping claim from cached pages for a while; the FAQPage + llms.txt now state the current policy for recrawlers.
 - /api/admin/upload auto-deletion count: 8.
 - Follow-ups unchanged: Somali translation pass, blog batch (AC/TV sizes/Mogadishu posts queued earlier), remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, KarmaLinks submission, Zoho DKIM+DMARC, RESEND_API_KEY.
+
+---
+Task ID: 97-b
+Agent: Super Z (main)
+Task: Task 97 follow-up — the visual PDP check exposed 45 product descriptions still carrying the old free-shipping boilerplate; removed it.
+
+Work Log:
+- The first DB audit (8 narrow regexes incl. Somali variants) reported 0 hits, but the Task 97 PDP screenshot showed the A18 description ending "...Free delivery nationwide on orders over $75; Mogadishu districts from $1.50." — the boilerplate separates "free" from "$75" with "delivery nationwide", which the narrow patterns missed.
+- Broad re-audit (scripts/shipping-rule-db-audit2.mjs, free/75 co-occurrence within a sentence): 45 products hit, all with the IDENTICAL sentence — the Samsung/iPhone/Nokia/Pixel phone batch from earlier seed tasks.
+- Backed up all 45 full rows to scripts/task97-desc-backup.json (dry run), then applied via admin API (login -> PUT /api/products/:id with { description }), replacing the sentence with "Delivery is $1.50–$3.00 by Mogadishu district and a flat $6.95 nationwide." Result: 45 updated, 0 failed.
+- Re-audit: 0 hits across all 142 products. Live check: A18 + iPhone 18 Pro PDPs now render the new sentence (SSR + JSON-LD); no rebuild needed (DB-sourced content).
+- Evidence: download/task97-pdp-desc-fixed.png; tooling: scripts/task97-fix-descriptions.mjs (COMMIT=1 to apply), task97-desc-backup.json for rollback.
+
+Stage Summary:
+- The rule is now gone from EVERYWHERE: storefront UI, checkout/shipping logic, FAQ+JSON-LD, 16 blog posts, guides, llms.txt, and all 142 product descriptions (EN). Lesson recorded: description audits need free/75 co-occurrence matching, not phrase lists — phrase variants will always outrun regex lists.
+- Rollback path: restore descriptions from scripts/task97-desc-backup.json rows if ever needed.
+- Commit d46ce26 (code) + this DB pass; no further deploy required for the DB change.
