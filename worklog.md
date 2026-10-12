@@ -2047,3 +2047,19 @@ Stage Summary:
 - Samsung Galaxy A18 (256GB Black) is live at $187: https://hayaan.co/product/samsung-galaxy-a18 — catalog now 142 products, homepage/category counts SSR-correct, JSON-LD price feeds search engines.
 - Blog price-sync check: A-series content unaffected (no A18 price references exist; phone-guide tiers use the $2,650 iPhone ceiling) — no content edits needed.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision; remaining Norman UX follow-ups if the owner reprioritizes.
+---
+Task ID: 95-b
+Agent: Super Z (main)
+Task: Fix the owner-reported mobile crop on the new Galaxy A18 PDP image ("Parts of the mobile image have been cut off" + Chrome Android screenshot).
+
+Work Log:
+- Root cause: the PDP main image is an aspect-square container with object-cover (product-detail.tsx); the uploaded image was 784x952 portrait (ratio 0.824, tight framing after my watermark-avoiding crop), so the square frame center-cropped ~21% vertically and clipped the phone's top and bottom. Catalog convention is ~0.87-ratio renders with generous baked-in margins (A16/A17/A56/Flip7 all 0.87-0.88), which tolerate the same crop — the A18 was the outlier.
+- Fix (image-side, not theme-side): recomposed the same clean black-variant render onto a 952x952 white canvas (side padding, no further upscaling) -> scripts/task95-img/samsung-galaxy-a18-square.jpg. A 1:1 image crops to zero in the square container at every breakpoint.
+- Swapped via the admin pipeline (scripts/task95-swap-square-image.mjs): seed -> login -> backup full product row (task95-backup-before-swap.json) -> /api/admin/upload -> PUT /api/products/:id { images } -> public-API verification that the catalog serves the new URL. Old portrait image row preserved in the backup.
+- Live verification: mobile 390x844 viewport screenshot shows the full phone (top and bottom edges inside the frame); desktop 1440 screenshot unchanged and clean. Evidence: download/task95-pdp-a18-mobile-fixed.png, download/task95-pdp-a18-desktop-fixed.png.
+- No code changed -> no build/deploy cycle.
+
+Stage Summary:
+- A18 PDP image is now 1:1 and uncropped on mobile and desktop; price $187 and all other product data untouched.
+- Note for future imports: PDP/card frames are aspect-square + object-cover — product images should ship square (or near-square with wide margins); tight portrait crops will clip.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision.

@@ -1,0 +1,32 @@
+{
+ "id": "0f2a1e38-b52c-460a-a928-8359cd2de199",
+ "name": "Samsung Galaxy A18",
+ "slug": "samsung-galaxy-a18",
+ "description": "<p>Samsung Galaxy A18 (256GB, Black) — genuine stock available now at Hayaan Market.</p><ul><li><strong>Storage:</strong> 256GB, expandable with microSD</li><li><strong>RAM:</strong> 4GB</li><li><strong>Display:</strong> 6.7-inch Super AMOLED, 90Hz</li><li><strong>Chipset:</strong> Exynos 1610 (4G LTE)</li><li><strong>Main camera:</strong> 50 MP (f/1.8) + Ultra Wide + Macro triple camera, 4K video</li><li><strong>Battery:</strong> 5000MAH, 25W Super Fast Charging</li><li><strong>Build:</strong> IP64 dust and water resistance, stereo speakers, 7.7mm slim frame (196g)</li><li><strong>Software:</strong> Android 17 (One UI), up to 6 major OS upgrades</li></ul><p>Order today for fast delivery across Somalia — pay securely by card or Sifalo. Free delivery nationwide on orders over $75; Mogadishu districts from $1.50.</p>",
+ "price": 187,
+ "compareAt": null,
+ "currency": "USD",
+ "sku": "HAY-MOB-145",
+ "stock": 25,
+ "rating": 0,
+ "reviewCount": 0,
+ "images": [
+  "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1791752695312-3d54eccd-7a24-45e4-b4d6-2b8b7c3b7461.jpg"
+ ],
+ "tags": [],
+ "featured": false,
+ "isActive": true,
+ "productType": "physical",
+ "categoryId": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+ "category": {
+  "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+  "name": "Phones & Wearables",
+  "slug": "phones-wearables",
+  "description": "Smartphones, smart watches and wearables."
+ },
+ "cost": null,
+ "supplierUrl": "https://www.samsung.com/ae/business/smartphones/galaxy-a/galaxy-a18-black-256gb-sm-a185gzknmea/buy/",
+ "supplierSku": null,
+ "digitalUrl": null,
+ "digitalInstructions": null
+}
