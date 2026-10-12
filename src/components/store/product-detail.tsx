@@ -11,7 +11,6 @@ import { addToCart, fetchCategories, fetchProducts, goToView, useStore } from "@
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
-  FREE_SHIPPING_THRESHOLD,
   MOGADISHU_DISTRICTS,
   OTHER_CITY,
   OUTSIDE_MOGADISHU_FEE,
@@ -429,9 +428,6 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
                         })}
                 </p>
               </div>
-              <p className="mt-2 text-xs text-muted-foreground">
-                {t("pdp.deliveryFreeNote", { amount: formatPrice(FREE_SHIPPING_THRESHOLD, product.currency) })}
-              </p>
             </div>
           )}
 
@@ -445,7 +441,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
             ) : (
               <div className="flex items-center gap-2">
                 <Truck className="h-4 w-4 text-brand" />
-                {t("hero.badge")}
+                {t("pdp.deliveryReassure")}
               </div>
             )}
             <div className="flex items-center gap-2">

@@ -81,7 +81,7 @@ export const BUYING_GUIDES = {
   mogadishu: G(
     "online-shopping-in-mogadishu",
     "Online Shopping in Mogadishu",
-    "Delivery fees for every district, and how free shipping works over $75.",
+    "Delivery fees for every district, and how to order to your door.",
   ),
   router: G(
     "wifi-router-price-in-somalia",
@@ -96,7 +96,7 @@ export const BUYING_GUIDES = {
   hargeisa: G(
     "online-shopping-in-hargeisa",
     "Online Shopping in Hargeisa",
-    "Flat $6.95 citywide delivery, free over $75, and how to order step by step.",
+    "Flat $6.95 citywide delivery, and how to order step by step.",
   ),
   galaxyA18: G(
     "samsung-galaxy-a18-price-in-somalia",

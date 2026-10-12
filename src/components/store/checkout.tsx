@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
-import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
+import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -105,13 +105,14 @@ export function Checkout() {
   // moment payment is confirmed.
   const digitalOnly = cart.items.length > 0 && cart.items.every((it) => it.product.productType === "digital");
   // District-based delivery: priced Mogadishu district → its fee; typed other
-  // city → flat outside fee; free over the threshold. While nothing is picked
-  // the summary shows a hint instead of a number (and Pay stays disabled).
+  // city → flat outside fee. While nothing is picked the summary shows a hint
+  // instead of a number (and Pay stays disabled). Delivery is charged on every
+  // order — the free-over-$75 rule was removed in Oct 2026.
   const districtMatch = districtChoice && districtChoice !== OTHER_CITY ? findDistrict(districtChoice) : null;
   const otherCityKnown = districtChoice === OTHER_CITY && form.city.trim().length > 0;
   // Mixed carts are charged on the PHYSICAL subtotal only (computeCartShipping),
   // matching the Sifalo order creator exactly.
-  const shippingKnown = digitalOnly || subtotal >= FREE_SHIPPING_THRESHOLD || !!districtMatch || otherCityKnown;
+  const shippingKnown = digitalOnly || !!districtMatch || otherCityKnown;
   const shipping = digitalOnly ? 0 : computeCartShipping(cart.items, districtMatch?.name ?? (otherCityKnown ? form.city : ""));
   // No tax/VAT: the total is exactly what the customer pays — subtotal + delivery.
   const total = subtotal + (shippingKnown ? shipping : 0);

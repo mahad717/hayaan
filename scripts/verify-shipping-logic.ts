@@ -5,7 +5,6 @@ import {
   findDistrict,
   districtFee,
   computeShipping,
-  FREE_SHIPPING_THRESHOLD,
   OUTSIDE_MOGADISHU_FEE,
 } from "../src/lib/shipping";
 
@@ -75,17 +74,17 @@ check("hyphen Hamar-Jajab", districtFee("Hamar-Jajab"), 2);
 check("space Hamar Jajab", districtFee("hamar jajab"), 2);
 check("padded  Wadajir ", districtFee("  Wadajir  "), 1.5);
 
-// 4. Shipping computation: threshold, district fee, outside fallback
-check("free at $75 (Kahda)", computeShipping(75, "Kahda"), 0);
-check("free above $75 (null city)", computeShipping(100, null), 0);
-check("district fee below threshold (Hodan $74)", computeShipping(74, "Hodan"), 1.5);
-check("district fee below threshold (Kahda $74)", computeShipping(74, "Kahda"), 3);
-check("outside fee below threshold (Kismayo)", computeShipping(74, "Kismayo"), OUTSIDE_MOGADISHU_FEE);
-check("outside fee below threshold (empty)", computeShipping(74, ""), OUTSIDE_MOGADISHU_FEE);
-check("outside fee below threshold (null)", computeShipping(74, null), OUTSIDE_MOGADISHU_FEE);
+// 4. Shipping computation: district fee or outside fallback, charged on every
+//    order (the free-over-$75 rule was removed in Oct 2026)
+check("district fee (Hodan)", computeShipping(74, "Hodan"), 1.5);
+check("district fee (Kahda)", computeShipping(74, "Kahda"), 3);
+check("district fee regardless of size (Hodan $900 cart)", computeShipping(900, "Hodan"), 1.5);
+check("outside fee (Kismayo)", computeShipping(74, "Kismayo"), OUTSIDE_MOGADISHU_FEE);
+check("outside fee (empty)", computeShipping(74, ""), OUTSIDE_MOGADISHU_FEE);
+check("outside fee (null)", computeShipping(74, null), OUTSIDE_MOGADISHU_FEE);
+check("outside fee regardless of size (Kismayo $900 cart)", computeShipping(900, "Kismayo"), OUTSIDE_MOGADISHU_FEE);
 check("cheapest district is Hodan $1.50", Math.min(...MOGADISHU_DISTRICTS.map((d) => d.fee)), 1.5);
 check("priciest districts are $3.00", Math.max(...MOGADISHU_DISTRICTS.map((d) => d.fee)), 3);
-check("free threshold constant", FREE_SHIPPING_THRESHOLD, 75);
 
 console.log(failures === 0 ? "\nALL CHECKS PASSED" : `\n${failures} CHECK(S) FAILED`);
 process.exit(failures === 0 ? 0 : 1);

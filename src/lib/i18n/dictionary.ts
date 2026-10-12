@@ -46,7 +46,7 @@ const en = {
   "lang.toggleAria": "Change language",
 
   // Hero
-  "hero.badge": "Free shipping over $75",
+  "hero.badge": "Fixed USD prices — no VAT",
   "hero.title1": "Find what you need,",
   "hero.title2": "discover what you’ll love.",
   "hero.sub":
@@ -114,7 +114,7 @@ const en = {
   "pdp.deliveryPick": "Pick your district to see the delivery fee",
   "pdp.deliveryFee": "Delivery to {district}: {fee}",
   "pdp.deliveryOutside": "Outside Mogadishu: {fee} flat",
-  "pdp.deliveryFreeNote": "Free delivery on every order over {amount}",
+  "pdp.deliveryReassure": "Delivery fees shown at checkout",
   "pdp.deliverySelectAria": "Choose your delivery district",
 
   // Ratings & reviews (Task 85)
@@ -156,7 +156,6 @@ const en = {
   "cart.shipping": "Shipping",
   "cart.free": "Free",
   "cart.total": "Total",
-  "cart.freeAway": "You’re {amount} away from free shipping.",
   "cart.shippingCalc": "Calculated at checkout",
   "cart.proceed": "Proceed to checkout",
   "cart.signinCheckout": "Sign in to check out",
@@ -195,7 +194,7 @@ const en = {
   "co.district": "District",
   "co.districtPlaceholder": "Select your district",
   "co.districtOther": "Other city (outside Mogadishu)",
-  "co.districtHint": "Delivery is priced by district — free over $75.",
+  "co.districtHint": "Delivery is priced by district — the exact fee shows at checkout.",
   "co.cityPlaceholder": "Pick your city…",
   "co.cityOther": "Other city (not listed)",
   "co.cityTypePlaceholder": "Type your city",
@@ -562,7 +561,7 @@ const so: Record<DictKey, string> = {
   "lang.toggleAria": "Beddel luqadda",
 
   // Hero
-  "hero.badge": "Gaadhitaan bilaash ah $75 ka badan",
+  "hero.badge": "Qiimo USD oo go'an — VAT ma jiro",
   "hero.title1": "Hel waxa aad u baahan tahay,",
   "hero.title2": "oo hel waxa aad jeceshahay.",
   "hero.sub":
@@ -629,7 +628,7 @@ const so: Record<DictKey, string> = {
   "pdp.deliveryPick": "Dooro degmadaada si aad u aragto kharashka gaadhitaanka",
   "pdp.deliveryFee": "Gaadhitaanka {district}: {fee}",
   "pdp.deliveryOutside": "Muqdisho ka bannaan: {fee} oo go'an",
-  "pdp.deliveryFreeNote": "Gaadhitaan bilaash ah dalab kasta oo {amount} ka badan",
+  "pdp.deliveryReassure": "Khidmada gaadhitaanka waxaa lagu tusaa checkout-ka",
   "pdp.deliverySelectAria": "Dooro degmada gaadhitaanka",
 
   // Ratings & reviews (Task 85)
@@ -671,7 +670,6 @@ const so: Record<DictKey, string> = {
   "cart.shipping": "Gaadhitaan",
   "cart.free": "Bilaash",
   "cart.total": "Wadarta guud",
-  "cart.freeAway": "{amount} ayaa ka hadhay gaadhitaan bilaash ah.",
   "cart.shippingCalc": "Waa la xisaabin doonaa marka la bixinayo",
   "cart.proceed": "Sii wad bixinta",
   "cart.signinCheckout": "Soo gal si aad u bixiso",
@@ -710,7 +708,7 @@ const so: Record<DictKey, string> = {
   "co.district": "Degmada",
   "co.districtPlaceholder": "Dooro degmadaada",
   "co.districtOther": "Magaalo kale (Muqdisho ka baxsan)",
-  "co.districtHint": "Gaadhitaanka waxaa go'aamiya degmada — $75 ka badan waa bilaash.",
+  "co.districtHint": "Gaadhitaanka waxaa go'aamiya degmada — khidmada saxda ah ayaa checkout-ka muuqata.",
   "co.cityPlaceholder": "Dooro magaaladaada…",
   "co.cityOther": "Magaalo kale (liiska ku jirin)",
   "co.cityTypePlaceholder": "Qor magaaladaada",

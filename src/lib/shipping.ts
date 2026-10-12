@@ -12,9 +12,6 @@ export interface ShippingDistrict {
   aliases: string[];
 }
 
-/** Free delivery kicks in at this subtotal (matches the "Free shipping over $75" badge). */
-export const FREE_SHIPPING_THRESHOLD = 75;
-
 /** Flat delivery fee outside the priced Mogadishu districts. */
 export const OUTSIDE_MOGADISHU_FEE = 6.95;
 
@@ -80,12 +77,11 @@ export function districtFee(city: string | null | undefined): number | null {
 
 /**
  * The one true shipping calculation:
- *   subtotal ≥ $75          → free (matches the storefront badge)
  *   priced Mogadishu district → the district's fee
- *   anything else           → flat outside-Mogadishu fee
+ *   anything else             → flat outside-Mogadishu fee
+ * Charged on EVERY order (the free-over-$75 rule was removed in Oct 2026).
  */
 export function computeShipping(subtotal: number, city: string | null | undefined): number {
-  if (subtotal >= FREE_SHIPPING_THRESHOLD) return 0;
   return districtFee(city) ?? OUTSIDE_MOGADISHU_FEE;
 }
 
@@ -117,9 +113,9 @@ export function hasPhysicalItems(items: CartShippingItem[]): boolean {
   return items.some((it) => typeOf(it) !== "digital");
 }
 
-/** Subtotal of PHYSICAL items only — digital goods never count toward the
- *  free-shipping threshold (a $90 ebook cart still pays district delivery
- *  for a $10 cable in a mixed cart; digital-only carts pay nothing). */
+/** Subtotal of PHYSICAL items only — digital goods never pay delivery
+ *  (mixed carts are charged on the physical subtotal; digital-only carts
+ *  pay nothing). */
 export function physicalSubtotal(items: CartShippingItem[]): number {
   return items
     .filter((it) => typeOf(it) !== "digital")
@@ -127,11 +123,11 @@ export function physicalSubtotal(items: CartShippingItem[]): number {
 }
 
 /**
- * Cart-level shipping: digital-only carts ship free (no address needed);
- * mixed/physical carts are charged on the physical subtotal exactly like the
- * pre-digital rules. Used by the cart drawer estimate, the checkout summary
- * AND the Sifalo order creator (authoritative charge) so the displayed and
- * charged amounts can never drift apart.
+ * Cart-level shipping: digital-only carts pay nothing (no address needed);
+ * mixed/physical carts are charged on the physical subtotal. Used by the
+ * cart drawer estimate, the checkout summary AND the Sifalo order creator
+ * (authoritative charge) so the displayed and charged amounts can never
+ * drift apart.
  */
 export function computeCartShipping(items: CartShippingItem[], city: string | null | undefined): number {
   if (!hasPhysicalItems(items)) return 0;

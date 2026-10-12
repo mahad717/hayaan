@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeThrownError } from "@/lib/i18n/api-errors";
-import { FREE_SHIPPING_THRESHOLD, computeCartShipping, districtFee, physicalSubtotal } from "@/lib/shipping";
+import { computeCartShipping, districtFee } from "@/lib/shipping";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -56,8 +56,8 @@ export function CartDrawer() {
   // drawer says "calculated at checkout" instead of guessing a number —
   // checkout is where the customer picks their exact district.
   const savedFee = districtFee(user?.city);
-  const shippingKnown = digitalOnly || subtotal >= FREE_SHIPPING_THRESHOLD || savedFee !== null;
-  const shipping = digitalOnly ? 0 : subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : computeCartShipping(cart.items, user?.city);
+  const shippingKnown = digitalOnly || savedFee !== null;
+  const shipping = digitalOnly ? 0 : computeCartShipping(cart.items, user?.city);
   const total = subtotal + shipping;
 
   return (
@@ -191,15 +191,7 @@ export function CartDrawer() {
                   <span className="text-brand">{formatPrice(total)}</span>
                 </div>
               )}
-              {digitalOnly ? (
-                <p className="text-xs text-[#3f7d4a]">{t("co.digitalDrawerNote")}</p>
-              ) : (
-                subtotal < FREE_SHIPPING_THRESHOLD && (
-                  <p className="text-xs text-muted-foreground">
-                    {t("cart.freeAway", { amount: formatPrice(FREE_SHIPPING_THRESHOLD - physicalSubtotal(cart.items)) })}
-                  </p>
-                )
-              )}
+              {digitalOnly && <p className="text-xs text-[#3f7d4a]">{t("co.digitalDrawerNote")}</p>}
             </div>
             {/* Checkout — Market Orange (the 10% accent) */}
             <Button

@@ -31,7 +31,7 @@ const post1 = {
   excerpt:
     "TVs, laptops, consoles and sound gear — where to find them online in Somalia, what they really cost, and how to order without getting burned.",
   quickAnswer:
-    "You can buy electronics online in Somalia from Hayaan Market (hayaan.co): smart TVs from $450, MacBooks from about $1,530, PS5 consoles and projectors, all at fixed USD prices paid securely via EVC Plus, Edahab, or card and delivered to your district in Mogadishu ($1.50–$3, free over $75) or nationwide for a flat $6.95.",
+    "You can buy electronics online in Somalia from Hayaan Market (hayaan.co): smart TVs from $450, MacBooks from about $1,530, PS5 consoles and projectors, all at fixed USD prices paid securely via EVC Plus, Edahab, or card and delivered to your district in Mogadishu ($1.50–$3) or nationwide for a flat $6.95.",
   faqs: [
     {
       q: "Where can I buy electronics online in Somalia?",
@@ -47,7 +47,7 @@ const post1 = {
     },
     {
       q: "How is delivery charged for electronics?",
-      a: "Mogadishu delivery is priced by district ($1.50–$3.00), orders over $75 ship free, and anywhere else in Somalia is a flat $6.95.",
+      a: "Mogadishu delivery is priced by district ($1.50–$3.00), and anywhere else in Somalia is a flat $6.95 — the exact fee shows at checkout before you pay.",
     },
   ],
   content: `Electronics are the number-one reason Somalis shop online. A genuine [Samsung 85-inch smart TV](https://hayaan.co/product/tv-samsung-85-inch-smart) or a sealed MacBook is hard to find at a fair price in local shops — and travelling to buy one is expensive. Buying online flips that around: you compare models side by side, pay securely from your phone, and the product comes to your door.
@@ -75,7 +75,7 @@ If a deal looks too good to be true — a "new" iPhone at half the market price 
 - **Confirm the model number**, not just the brand name. "Samsung TV" is not a spec sheet; the exact model tells you the panel, year, and features.
 - **Ask about the condition policy.** New-sealed, refurbished, and open-box are different products at different prices.
 - **Use a payment method with a receipt.** EVC Plus, Edahab and card payments through the secure checkout give both sides a record of the transaction — avoid informal transfers for large orders.
-- **Check delivery terms before checkout.** In Mogadishu, delivery is priced by district; elsewhere in Somalia it's a flat fee, and orders over $75 ship free.
+- **Check delivery terms before checkout.** In Mogadishu, delivery is priced by district; elsewhere in Somalia it's a flat fee. Both are shown before you pay.
 - **Keep your order number.** It's your reference for support, warranty questions, and follow-up purchases.
 
 > Rule of the market: the seller who answers "what exact model is it?" in one sentence is usually the one you can trust with your money.
@@ -98,7 +98,7 @@ const post2 = {
   excerpt:
     "iPhone or Galaxy, physical SIM or eSIM, $118 or $2,650 — a plain-language guide to ordering a phone online in Somalia with confidence.",
   quickAnswer:
-    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships from $990 up to $2,650 for the iPhone 18 Pro Max 1TB. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3, free over $75) or anywhere in Somalia for $6.95.",
+    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships from $990 up to $2,650 for the iPhone 18 Pro Max 1TB. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3) or anywhere in Somalia for $6.95.",
   faqs: [
     {
       q: "Can I buy an iPhone or Samsung online in Somalia?",
@@ -141,11 +141,11 @@ A phone listed well below the market price usually means one of three things: it
 
 1. Open the product page and read the **full name and specs** — model, size, connectivity.
 2. Add to cart and choose your quantity; sign in with your email so your order history stays with you.
-3. At checkout, pick your **district** for the exact delivery fee (Mogadishu districts are priced individually; outside the capital it is a flat $6.95, and orders over $75 ship free).
+3. At checkout, pick your **district** for the exact delivery fee (Mogadishu districts are priced individually; outside the capital it is a flat $6.95).
 4. Pay with **EVC Plus, Edahab, or card** and keep the confirmation — it is your receipt.
 5. If you need several phones for a shop, family, or organization, skip the line and request a [bulk quote](https://hayaan.co/quote) instead.
 
-> Tip: pair a new phone with audio from the [power & audio](https://hayaan.co/category/power-charging-audio) shelf — wired [EarPods USB-C at $4](https://hayaan.co/product/headphone-earpods-usb-c-wired) or the outdoor speaker at $70 — and you cross the free-shipping line in one order.
+> Tip: pair a new phone with audio from the [power & audio](https://hayaan.co/category/power-charging-audio) shelf — wired [EarPods USB-C at $4](https://hayaan.co/product/headphone-earpods-usb-c-wired) or the outdoor speaker at $70 — and everything arrives in one delivery.
 
 ## After the box arrives
 
@@ -161,7 +161,7 @@ const post3 = {
   excerpt:
     "Multivitamins, immunity blends and daily essentials — how to judge a supplement listing before you order, and what a good one looks like.",
   quickAnswer:
-    "You can buy vitamins and supplements online in Somalia from Hayaan Market's Health Supplements section. Judge a listing by its label (nutrients and dose per serving), servings per bottle, and whether it shows the exact USD price and stock — then pay with EVC Plus, Edahab, or card and get door delivery in Mogadishu ($1.50–$3, free over $75) or nationwide ($6.95).",
+    "You can buy vitamins and supplements online in Somalia from Hayaan Market's Health Supplements section. Judge a listing by its label (nutrients and dose per serving), servings per bottle, and whether it shows the exact USD price and stock — then pay with EVC Plus, Edahab, or card and get door delivery in Mogadishu ($1.50–$3) or nationwide ($6.95).",
   faqs: [
     {
       q: "Where can I buy multivitamins online in Somalia?",
@@ -177,7 +177,7 @@ const post3 = {
     },
     {
       q: "How much is delivery for supplements?",
-      a: "$1.50–$3.00 inside Mogadishu depending on your district, free on orders of $75 or more, and a flat $6.95 anywhere else in Somalia.",
+      a: "$1.50–$3.00 inside Mogadishu depending on your district, and a flat $6.95 anywhere else in Somalia.",
     },
   ],
   content: `Health supplements are one of the fastest-growing searches in Somali online shopping — and also the category where quality questions matter most. When you cannot hold the bottle before paying, the listing itself has to do the convincing. Here is how to read one like a pro.
@@ -201,7 +201,7 @@ Listings that hide behind phrases like "immunity booster" without naming actives
 
 Two reasons Somali shoppers keep coming back to the [health supplements category](https://hayaan.co/category/health-supplements): **selection** and **price visibility**. Local pharmacy stock rotates unpredictably, and prices vary shop to shop for identical bottles. Online, the listing is the listing — the same page, the same price, the same description whether you order today or next month, and your order history proves what you bought.
 
-Delivery removes the last friction: Mogadishu districts have fixed delivery fees, and anywhere else in Somalia is a flat rate — free over $75.
+Delivery removes the last friction: Mogadishu districts have fixed delivery fees, and anywhere else in Somalia is a flat rate — both shown at checkout before you pay.
 
 ## Building a sensible starter routine
 
@@ -224,7 +224,7 @@ const post4 = {
   excerpt:
     "Printer, toner, light, microphone: the practical equipment list for working and studying from home in Somalia — with real prices and one-cart ordering.",
   quickAnswer:
-    "To set up a home office in Somalia, order the essentials in one cart from Hayaan Market's Home & Office section: printer and matching toner, laptop, desk light and microphone — all at fixed USD prices. Pick the printer first and match its toner so one order reaches the $75 free-shipping threshold; delivery in Mogadishu is $1.50–$3 per district, $6.95 elsewhere.",
+    "To set up a home office in Somalia, order the essentials in one cart from Hayaan Market's Home & Office section: printer and matching toner, laptop, desk light and microphone — all at fixed USD prices. Pick the printer first and match its toner so one order pays delivery once; delivery in Mogadishu is $1.50–$3 per district, $6.95 elsewhere.",
   faqs: [
     {
       q: "Where can I buy a printer online in Somalia?",
@@ -232,7 +232,7 @@ const post4 = {
     },
     {
       q: "How do I choose a printer and toner?",
-      a: "Pick the printer first, then match its exact toner model — both are listed so you can add them to one cart and hit the $75 free-shipping threshold in a single order.",
+      a: "Pick the printer first, then match its exact toner model — both are listed so you can add them to one cart and pay delivery once.",
     },
     {
       q: "What do I need for working from home in Somalia?",
@@ -265,7 +265,7 @@ Somali offices live with outages, so power gear belongs in the office budget, no
 
 ## The one-cart rule
 
-Here is the trick that makes the whole list affordable: **order it together**. Delivery from Hayaan Market is free over $75, and Mogadishu districts carry fixed fees below that line. A printer alone pays delivery; a printer, toner, microphone, and stabilizer in one cart crosses the free threshold and lands everything in a single handover.
+Here is the trick that keeps the list simple: **order it together**. Delivery is charged once per order — $1.50–$3.00 by Mogadishu district, $6.95 nationwide — so a printer, toner, microphone, and stabilizer in one cart pay a single fee and land everything in a single handover.
 
 For schools, hotels, and offices buying several of everything, skip the cart entirely and request a [bulk quote](https://hayaan.co/quote) — quantity pricing usually beats the listed totals, with one delivery and one invoice.
 
@@ -274,7 +274,7 @@ For schools, hotels, and offices buying several of everything, skip the cart ent
 1. **Printer + original toner** — documents are the office's oxygen.
 2. **Studio light and microphone** — if calls and classes pay you.
 3. **Stabilizer or backup power** — protect everything above.
-4. **One order, one delivery** — bundle the cart over $75.
+4. **One order, one delivery** — bundle the cart and pay the fee once.
 
 Work from home in Somalia used to mean making do. Now it means a single afternoon of browsing, a secure EVC Plus, Edahab, or card payment, and a box at your door — the same week you decided to get serious.`,
 };
@@ -284,9 +284,9 @@ const post5 = {
   slug: "online-shopping-in-somalia-how-it-works",
   title: "Online Shopping in Somalia: How Delivery, Payment and Support Actually Work",
   excerpt:
-    "The no-surprises guide to ordering from Hayaan Market — district delivery fees, EVC Plus / Edahab / card payment, free shipping over $75, and what happens after you click Pay.",
+    "The no-surprises guide to ordering from Hayaan Market — district delivery fees, EVC Plus / Edahab / card payment, and what happens after you click Pay.",
   quickAnswer:
-    "Online shopping in Somalia works like this: browse a storefront with listed USD prices, add to cart, choose your delivery district ($1.50–$3 in Mogadishu, free over $75, $6.95 nationwide), pay securely with EVC Plus, Edahab, or card, and track the order until it arrives. Support is reachable at support@hayaan.co and WhatsApp for any question about an order.",
+    "Online shopping in Somalia works like this: browse a storefront with listed USD prices, add to cart, choose your delivery district ($1.50–$3 in Mogadishu, $6.95 nationwide), pay securely with EVC Plus, Edahab, or card, and track the order until it arrives. Support is reachable at support@hayaan.co and WhatsApp for any question about an order.",
   howtoSteps: [
     {
       name: "Browse and pick a product",
@@ -298,7 +298,7 @@ const post5 = {
     },
     {
       name: "Choose your delivery district",
-      text: "At checkout, pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee. Orders of $75 or more ship free.",
+      text: "At checkout, pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee.",
     },
     {
       name: "Pay with EVC Plus, Edahab, or card",
@@ -320,7 +320,7 @@ const post5 = {
     },
     {
       q: "How much is delivery in Mogadishu?",
-      a: "Per district: from $1.50 (Hodan, Waberi, Wadajir) to $3.00 (Daynile, Kahda, Gubadley, Darussalam, Garasbaaley) — shown at checkout before you pay, and free on orders over $75.",
+      a: "Per district: from $1.50 (Hodan, Waberi, Wadajir) to $3.00 (Daynile, Kahda, Gubadley, Darussalam, Garasbaaley) — shown at checkout before you pay.",
     },
     {
       q: "Who do I contact if something is wrong with my order?",
@@ -335,11 +335,11 @@ Every order goes through a secure hosted checkout. You confirm the order in the 
 
 Prices are shown in dollars on every listing, and the total you approve at checkout — products plus your district's delivery fee — is the total you pay. There is no tax line and no surprise at the door.
 
-## Delivery: priced by your district, free over $75
+## Delivery: priced by your district, shown before you pay
 
-Delivery inside Mogadishu is priced **by district** — you pick yours at checkout and see the exact fee before paying (it runs from about $1.50 to $3.00 depending on where you live). Outside the capital, it is a flat $6.95 to anywhere in Somalia. And the rule everyone should know:
+Delivery inside Mogadishu is priced **by district** — you pick yours at checkout and see the exact fee before paying (it runs from about $1.50 to $3.00 depending on where you live). Outside the capital, it is a flat $6.95 to anywhere in Somalia, charged on every order:
 
-> **Orders over $75 ship free.** Add a $4 pair of wired EarPods to a $72 cart and the delivery line disappears.
+> **The fee is shown before you pay.** Products plus delivery, itemised on the checkout screen — nothing is added at the door.
 
 You can follow every order under **Orders** in your account — status by status, from paid to delivered.
 
@@ -380,7 +380,7 @@ const post6 = {
   excerpt:
     "What a PlayStation 5 really costs in Somalia right now — the Digital Slim at $720 and the Pro 2TB at $1,180 — plus which edition suits you and how to get it delivered free to your door.",
   quickAnswer:
-    "The PS5 price in Somalia starts at $720 for the PlayStation 5 Digital Edition (Slim) and $1,180 for the PS5 Pro 2TB at Hayaan Market (hayaan.co). Both are new and listed in USD with no VAT, paid securely via EVC Plus, Edahab, or card — and delivery is free nationwide, because orders over $75 always ship free.",
+    "The PS5 price in Somalia starts at $720 for the PlayStation 5 Digital Edition (Slim) and $1,180 for the PS5 Pro 2TB at Hayaan Market (hayaan.co). Both are new and listed in USD with no VAT, paid securely via EVC Plus, Edahab, or card — with delivery shown at checkout ($1.50–$3.00 by Mogadishu district, flat $6.95 nationwide).",
   howtoSteps: [
     {
       name: "Pick your edition",
@@ -400,7 +400,7 @@ const post6 = {
     },
     {
       name: "Receive and track your console",
-      text: "A PS5 order is over $75, so delivery is free to any Mogadishu district or anywhere else in Somalia; follow the order under Orders and write to support@hayaan.co with your order number for anything that does not match the page.",
+      text: "Delivery costs $1.50–$3.00 to a Mogadishu district or a flat $6.95 anywhere else in Somalia; follow the order under Orders and write to support@hayaan.co with your order number for anything that does not match the page.",
     },
   ],
   faqs: [
@@ -422,7 +422,7 @@ const post6 = {
     },
     {
       q: "Does PS5 delivery cost anything in Somalia?",
-      a: "No — every PS5 order is over $75, and orders of $75 or more ship free, in every Mogadishu district and nationwide. Smaller orders pay district fees of $1.50–$3 in Mogadishu or a flat $6.95 elsewhere.",
+      a: "Delivery is charged per order: district fees of $1.50–$3 in Mogadishu or a flat $6.95 anywhere else in Somalia — the exact amount is shown at checkout before you pay.",
     },
   ],
   content: `The PlayStation 5 is the most-asked-about console in Somalia — and the product with the wildest price rumours. Ask one shop and you get one number; message a reseller on WhatsApp and you get another. This guide settles it: what a PS5 actually costs in Somalia right now, what you get for that money, and how to order one without leaving your chair.
@@ -434,7 +434,7 @@ At the time of writing, Hayaan Market carries two editions, both listed at fixed
 1. **PlayStation 5 Digital Edition (Slim) — $720.** The slim redesign with no disc drive: games download from the PlayStation Store. Same fast SSD, same DualSense controller, same library of digital titles.
 2. **PlayStation 5 Pro 2TB — $1,180.** The flagship. Double the storage at 2TB, an upgraded GPU with advanced ray tracing, and PSSR — Sony's AI upscaling — for smoother frame rates at near-4K quality.
 
-Both prices are final: no VAT is added at checkout, and because every PS5 order passes the $75 mark, delivery is free — to any Mogadishu district or anywhere else in Somalia.
+Both prices are final: no VAT is added at checkout, and delivery is charged per order — $1.50–$3.00 by Mogadishu district or a flat $6.95 anywhere else in Somalia, always shown before you pay.
 
 > Price rule of thumb: if a console is offered far below these numbers, ask the seller two questions — is it new and sealed, and which edition exactly? Most "bargains" fail one of the two.
 
@@ -467,7 +467,7 @@ const post7 = {
   excerpt:
     "Real iPhone prices in Somalia for every current model — iPhone 18 Pro, 18 Pro Max, 17 lineup, Air, 16 Pro, and 15 Pro Max — with eSIM and physical-SIM notes and how to order one safely online.",
   quickAnswer:
-    "iPhone prices in Somalia at Hayaan Market (hayaan.co): iPhone 18 Pro from $1,500 and 18 Pro Max from $1,780 up to $2,650 for 1TB; iPhone 17 from $990, 17 Pro $1,420, 17 Pro Max $1,550 (eSIM variant $1,380), Air $1,280, 16 Pro $1,120, 15 Pro Max $1,170. Fixed USD prices with no VAT, SIM type labelled, free delivery on orders over $75.",
+    "iPhone prices in Somalia at Hayaan Market (hayaan.co): iPhone 18 Pro from $1,500 and 18 Pro Max from $1,780 up to $2,650 for 1TB; iPhone 17 from $990, 17 Pro $1,420, 17 Pro Max $1,550 (eSIM variant $1,380), Air $1,280, 16 Pro $1,120, 15 Pro Max $1,170. Fixed USD prices with no VAT, SIM type labelled, delivery shown at checkout.",
   faqs: [
     {
       q: "How much is an iPhone 17 Pro Max in Somalia?",
@@ -491,7 +491,7 @@ const post7 = {
     },
     {
       q: "How much is delivery for an iPhone order?",
-      a: "Free — an iPhone order is over $75, and orders of $75 or more ship free in Mogadishu and nationwide. Orders below that pay district fees of $1.50–$3 in Mogadishu or a flat $6.95 elsewhere.",
+      a: "$1.50–$3 in Mogadishu or a flat $6.95 anywhere else in Somalia — the exact amount is shown at checkout before you pay.",
     },
   ],
   content: `The iPhone is Somalia's status phone — and the product where fake listings, refurbs sold as new, and made-up prices run wildest. Here are the real iPhone prices in Somalia right now, model by model, plus the checks that keep an online order safe.
@@ -530,7 +530,7 @@ This is the detail that matters most in Somalia: some iPhone variants are eSIM-o
 - **The (Physical SIM) label** if you use a Somali carrier SIM.
 - **Condition and stock count** on the listing — new, with live stock, not a "last one, pay first".
 - **A payment with a receipt.** Pay through the secure checkout with EVC Plus, Edahab, or card; that record plus your order number is what support works from.
-- **Delivery terms.** iPhone orders always exceed $75, so delivery is free — in Mogadishu and nationwide.
+- **Delivery terms.** Delivery is charged per order — $1.50–$3.00 by Mogadishu district or a flat $6.95 nationwide — and shown at checkout before you pay.
 
 ## How to order
 
@@ -544,7 +544,7 @@ const post8 = {
   excerpt:
     "A plain-language walkthrough of paying online in Somalia — EVC Plus, Edahab, and card through a secure checkout, what the receipt protects you from, and what to do if an order goes wrong.",
   quickAnswer:
-    "To pay online in Somalia, order from a storefront that checks you out through a secure hosted page: choose EVC Plus, Edahab, or card, approve the exact total in USD before you confirm, and keep the receipt. On Hayaan Market (hayaan.co) delivery fees are shown upfront — $1.50–$3 by district in Mogadishu, free over $75, $6.95 nationwide — and there is no VAT.",
+    "To pay online in Somalia, order from a storefront that checks you out through a secure hosted page: choose EVC Plus, Edahab, or card, approve the exact total in USD before you confirm, and keep the receipt. On Hayaan Market (hayaan.co) delivery fees are shown upfront — $1.50–$3 by district in Mogadishu, $6.95 nationwide — and there is no VAT.",
   howtoSteps: [
     {
       name: "Add what you need to the cart",
@@ -552,7 +552,7 @@ const post8 = {
     },
     {
       name: "Enter your delivery district",
-      text: "Pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee. Orders of $75 or more ship free.",
+      text: "Pick your Mogadishu district to see its exact delivery fee ($1.50–$3.00), or enter another city for the flat $6.95 nationwide fee.",
     },
     {
       name: "Choose EVC Plus, Edahab, or card",
@@ -578,7 +578,7 @@ const post8 = {
     },
     {
       q: "Do I pay extra fees or VAT when ordering online?",
-      a: "No VAT is added. You pay the product price plus the delivery fee shown at checkout — $1.50–$3 by district in Mogadishu, free on orders of $75 or more, and a flat $6.95 nationwide.",
+      a: "No VAT is added. You pay the product price plus the delivery fee shown at checkout — $1.50–$3 by district in Mogadishu or a flat $6.95 nationwide.",
     },
     {
       q: "What happens after I approve the payment?",
@@ -612,7 +612,7 @@ First, **you approve an exact total before any money moves** — the product pri
 ## Paying online, step by step
 
 1. **Fill the cart.** Every listing shows a fixed USD price, so the total is final before checkout even starts.
-2. **Enter your delivery district.** Mogadishu districts are priced individually ($1.50–$3.00); other cities pay a flat $6.95; orders of $75 or more ship free nationwide.
+2. **Enter your delivery district.** Mogadishu districts are priced individually ($1.50–$3.00); other cities pay a flat $6.95.
 3. **Choose EVC Plus, Edahab, or card.** You are redirected to the secure checkout page.
 4. **Approve the exact total.** Products plus the shown delivery fee — nothing else.
 5. **Keep the receipt and order number.** Track the order under Orders; support works from that number at support@hayaan.co.
@@ -638,7 +638,7 @@ const post9 = {
   excerpt:
     "Apple Watch, Galaxy Watch, Huawei or Amazfit — every smartwatch price in Somalia right now, which watch pairs with your phone, and how to order one online safely.",
   quickAnswer:
-    "Smartwatch prices in Somalia at Hayaan Market (hayaan.co) start at $55 for the Maxwell, with the Amazfit Active at $130, Samsung Galaxy Watch 7 at $190, Huawei Watch GT 6 at $230, and Apple Watch from $250 (SE) to $440 (Series 11). Fixed USD prices paid via EVC Plus, Edahab, or card, with free delivery on orders over $75.",
+    "Smartwatch prices in Somalia at Hayaan Market (hayaan.co) start at $55 for the Maxwell, with the Amazfit Active at $130, Samsung Galaxy Watch 7 at $190, Huawei Watch GT 6 at $230, and Apple Watch from $250 (SE) to $440 (Series 11). Fixed USD prices paid via EVC Plus, Edahab, or card, with delivery shown at checkout.",
   faqs: [
     {
       q: "How much is an Apple Watch in Somalia?",
@@ -654,7 +654,7 @@ const post9 = {
     },
     {
       q: "Do smartwatch prices include delivery?",
-      a: "Orders of $75 or more ship free — Mogadishu and nationwide — which covers most watches here. Below that, Mogadishu districts pay $1.50–$3 and other cities a flat $6.95.",
+      a: "Mogadishu districts pay $1.50–$3 and other cities a flat $6.95 — the exact fee shows at checkout before you pay, for every order size.",
     },
     {
       q: "Are the watches new, and what if mine has an issue?",
@@ -689,7 +689,7 @@ An Apple Watch paired with Android loses most of what you paid for — that is t
 
 ## Ordering a watch online in Somalia
 
-Check the pairing rule above, open the listing to confirm the exact model and condition, and add it to cart. Orders of $75 or more ship free — every watch in this guide qualifies — so delivery costs you nothing in Mogadishu or anywhere else in Somalia. Pay with EVC Plus, Edahab, or card through the secure checkout, track the order under Orders, and write to support@hayaan.co with your order number for anything that does not match the page.
+Check the pairing rule above, open the listing to confirm the exact model and condition, and add it to cart. Delivery is charged per order — $1.50–$3.00 by Mogadishu district or a flat $6.95 nationwide — and the exact fee is shown at checkout before you pay. Pay with EVC Plus, Edahab, or card through the secure checkout, track the order under Orders, and write to support@hayaan.co with your order number for anything that does not match the page.
 
 If you are kitting out a team — delivery riders, gym staff, a corporate gift batch — the [bulk quote form](https://hayaan.co/quote) usually beats listed prices, and the [deals page](https://hayaan.co/deals) is where watch restocks and price drops land first.`,
 };
@@ -701,7 +701,7 @@ const post10 = {
   excerpt:
     "Every air conditioner price in Somalia right now — 9,000 to 24,000 BTU, which size fits your room, why a voltage stabilizer matters, and how to order one online.",
   quickAnswer:
-    "Air conditioner prices in Somalia at Hayaan Market (hayaan.co) start at $260 for the Lightwave 9,000 BTU unit, with 12,000 BTU at $280, 18,000 BTU at $390, and 24,000 BTU at $460 — fixed USD prices, no VAT, free delivery on orders over $75. Size the unit to the room: 9K BTU cools a bedroom up to about 20 m², 12K a living room of 20–30 m², 18K–24K large halls and shops — and a voltage stabilizer ($11.50) protects the compressor.",
+    "Air conditioner prices in Somalia at Hayaan Market (hayaan.co) start at $260 for the Lightwave 9,000 BTU unit, with 12,000 BTU at $280, 18,000 BTU at $390, and 24,000 BTU at $460 — fixed USD prices, no VAT, delivery shown at checkout. Size the unit to the room: 9K BTU cools a bedroom up to about 20 m², 12K a living room of 20–30 m², 18K–24K large halls and shops — and a voltage stabilizer ($11.50) protects the compressor.",
   howtoSteps: [
     {
       name: "Measure the room",
@@ -739,7 +739,7 @@ const post10 = {
     },
     {
       q: "How is delivery charged for an air conditioner?",
-      a: "Mogadishu delivery is priced by district ($1.50–$3.00), orders over $75 ship free — which covers every AC here — and anywhere else in Somalia is a flat $6.95.",
+      a: "Mogadishu delivery is priced by district ($1.50–$3.00) and anywhere else in Somalia is a flat $6.95 — the exact fee shows at checkout before you pay.",
     },
     {
       q: "Can I pay for the AC in installments or mobile money?",
@@ -784,7 +784,7 @@ Compressors die from voltage swings, and Mogadishu power — grid or generator �
 4. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the protections.
 5. **Prepare the install spot** — clear wall space, a reachable power source, and keep the packaging until the unit is running.
 
-Delivery is priced by district inside Mogadishu ($1.50–$3.00 — the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district) and a flat $6.95 nationwide. Every AC clears the $75 free-delivery line, so shipping costs nothing.
+Delivery is priced by district inside Mogadishu ($1.50–$3.00 — the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district) and a flat $6.95 nationwide — the exact fee appears at checkout before you pay.
 
 ## Outfitting a shop, hotel or office?
 
@@ -817,8 +817,8 @@ const post11 = {
       text: "A PS5 renders at 4K — any LG or Samsung here does it justice; a 32-inch Geepas is fine for decoder TV and series.",
     },
     {
-      name: "Order with free delivery",
-      text: "Every TV clears the $75 free-delivery line — pay with EVC Plus, Edahab, or card and it ships to your Mogadishu district or nationwide.",
+      name: "Order with the fee shown upfront",
+      text: "The delivery fee appears at checkout before you pay — EVC Plus, Edahab, or card, shipped to your Mogadishu district or nationwide.",
     },
   ],
   faqs: [
@@ -840,7 +840,7 @@ const post11 = {
     },
     {
       q: "Does a bigger TV cost more to deliver?",
-      a: "No — delivery is by district in Mogadishu ($1.50–$3.00) or a flat $6.95 nationwide, and orders over $75 — every TV here — ship free.",
+      a: "No — delivery is charged per order: by district in Mogadishu ($1.50–$3.00) or a flat $6.95 nationwide, shown at checkout before you pay.",
     },
   ],
   content: `The most expensive TV mistake is not buying the wrong brand — it is buying the wrong size for the room. Too small and a $650 set feels like a decoder screen; too big and a small room turns the football match into a panoramic scan. Here is every TV on the shop right now with its real price, and the distance rule that picks the right one.
@@ -882,7 +882,7 @@ A PlayStation 5 renders at 4K, so the panel matters: the [LG 43-inch at $450](ht
 
 ## Ordering a TV online
 
-Every TV here clears the $75 free-delivery line, so shipping is $0 to any Mogadishu district (the [Mogadishu delivery guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists the district fees) and free nationwide too. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia), keep the order number, and hold the packaging until the set is mounted and running.
+Delivery is charged once per order: $1.50–$3.00 to any Mogadishu district (the [Mogadishu delivery guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists the district fees) or a flat $6.95 nationwide, always shown at checkout before you pay. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia), keep the order number, and hold the packaging until the set is mounted and running.
 
 Buying for a hotel, restaurant or event space? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices, and the [deals page](https://hayaan.co/deals) is where TV price drops land first.`,
 };
@@ -892,9 +892,9 @@ const post12 = {
   slug: "online-shopping-in-mogadishu",
   title: "Online Shopping in Mogadishu (2026): Delivery Fees by District and How to Order",
   excerpt:
-    "What delivery really costs in every Mogadishu district — from Hodan's $1.50 to Daynile's $3 — how free shipping works over $75, and how to order to your door.",
+    "What delivery really costs in every Mogadishu district — from Hodan's $1.50 to Daynile's $3 — and how to order to your door.",
   quickAnswer:
-    "Online shopping in Mogadishu works like this: order on hayaan.co at a fixed USD price, pay with EVC Plus, Edahab, or card through the secure checkout, and delivery is charged by district — $1.50 in Hodan, Waberi and Wadajir, $2.00–$2.50 across the central districts, $3.00 in Daynile, Heliwa, Kahda and the outer districts — while any order of $75 or more ships free. Outside Mogadishu, nationwide delivery is a flat $6.95.",
+    "Online shopping in Mogadishu works like this: order on hayaan.co at a fixed USD price, pay with EVC Plus, Edahab, or card through the secure checkout, and delivery is charged by district — $1.50 in Hodan, Waberi and Wadajir, $2.00–$2.50 across the central districts, $3.00 in Daynile, Heliwa, Kahda and the outer districts — with the exact fee shown at checkout before you pay. Outside Mogadishu, nationwide delivery is a flat $6.95.",
   howtoSteps: [
     {
       name: "Fill the cart at fixed prices",
@@ -920,15 +920,15 @@ const post12 = {
   faqs: [
     {
       q: "How much is delivery in Mogadishu?",
-      a: "By district: $1.50 (Hodan, Waberi, Wadajir), $2.00 (Hamar-Jajab, Howl-Wadag, Wardhigley, Yaqshid), $2.50 (Abdiaziz, Bondhere, Dharkenley, Hamar-Weyne, Karan, Shangani, Shibis), $3.00 (Daynile, Heliwa, Kahda, Gubadley, Darussalam, Garasbaaley) — and orders of $75 or more ship free everywhere.",
+      a: "By district: $1.50 (Hodan, Waberi, Wadajir), $2.00 (Hamar-Jajab, Howl-Wadag, Wardhigley, Yaqshid), $2.50 (Abdiaziz, Bondhere, Dharkenley, Hamar-Weyne, Karan, Shangani, Shibis), $3.00 (Daynile, Heliwa, Kahda, Gubadley, Darussalam, Garasbaaley) — shown at checkout before you pay.",
     },
     {
       q: "Which districts have the cheapest delivery?",
       a: "Hodan, Waberi and Wadajir at $1.50 — the lowest district rate in the city.",
     },
     {
-      q: "How do I get free delivery in Mogadishu?",
-      a: "Reach a $75 subtotal. A $450 TV or a $990 iPhone always ships free; a $55 smartwatch alone pays the district fee, but bundled with an accessory it clears the line.",
+      q: "Does the delivery fee change with order size?",
+      a: "No — the fee is per order, not per item or per dollar: $1.50–$3.00 by district in Mogadishu, a flat $6.95 nationwide. One cart with everything in it pays a single fee.",
     },
     {
       q: "Can I pay cash on delivery?",
@@ -936,10 +936,10 @@ const post12 = {
     },
     {
       q: "Does online shopping work outside Mogadishu?",
-      a: "Yes — nationwide delivery is a flat $6.95 to any city or town, and orders of $75 or more ship free nationwide too.",
+      a: "Yes — nationwide delivery is a flat $6.95 to any city or town, the same for every order size.",
     },
   ],
-  content: `Online shopping in Mogadishu has one question that decides everything: what does delivery cost to my street? The answer is written down — district by district, in dollars, shown before you pay. This guide lists the fee for every Mogadishu district, explains the $75 free-delivery line, and walks through an order from cart to door.
+  content: `Online shopping in Mogadishu has one question that decides everything: what does delivery cost to my street? The answer is written down — district by district, in dollars, shown before you pay. This guide lists the fee for every Mogadishu district and walks through an order from cart to door.
 
 ## How ordering works in Mogadishu
 
@@ -958,12 +958,12 @@ Mogadishu delivery is priced per district, straight from the official shipping s
 - **$2.50 — Abdiaziz, Bondhere, Dharkenley, Hamar-Weyne, Karan, Shangani, Shibis.** The central band.
 - **$3.00 — Daynile, Heliwa, Kahda, Gubadley, Darussalam, Garasbaaley.** The outer districts.
 
-And the shortcut that erases the fee entirely: **any order of $75 or more ships free, in every district.**
+And one rule that keeps it simple: **the fee is per order** — one cart with everything in it pays a single fee, in every district.
 
-## The $75 free-delivery line, in plain math
+## What the fee means for big and small orders
 
-- An [LG 43-inch TV at $450](https://hayaan.co/product/tv-lg-43-inch-smart) always ships free — so does an [iPhone 17 at $990](https://hayaan.co/product/iphone-17-%28physical-sim%29).
-- Small orders are where the fee matters: $1.50–$3.00 on a $10 accessory is a big slice, while the same fee on a $60 order is under 5% — and one added item usually clears the line.
+- The fee is the same whether the cart holds one item or ten: an [LG 43-inch TV at $450](https://hayaan.co/product/tv-lg-43-inch-smart) and a phone charger pay the same district rate.
+- Small orders feel it most: $1.50–$3.00 on a $10 accessory is a real slice, while the same fee on a $450 order is under 1%.
 
 > The fee is per order, not per item: one cart with everything beats three separate orders.
 
@@ -977,7 +977,7 @@ Payment happens at checkout, before the rider leaves — EVC Plus, Edahab, or ca
 
 ## Outside the capital?
 
-Nationwide delivery is a flat **$6.95** to any city or town — and $75+ orders ship free nationwide too. The full walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), and the [deals page](https://hayaan.co/deals) is where restocks and price drops land first.`,
+Nationwide delivery is a flat **$6.95** to any city or town, for every order size. The full walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), and the [deals page](https://hayaan.co/deals) is where restocks and price drops land first.`,
 };
 
 // Task 93 — October 2026 batch 3 (Wi-Fi routers, printers, Hargeisa city).
@@ -990,7 +990,7 @@ const post13 = {
   excerpt:
     "Every router, extender and access point price at Hayaan right now, what each tier is actually for, and how to get whole-home Wi-Fi without overpaying.",
   quickAnswer:
-    "Wi-Fi router prices in Somalia at Hayaan Market (hayaan.co) start at $15 for the TP-Link 840N, with the dual-band AC750 at $25, the AC1200 range extender at $36, the Omada AC1350 access point at $85, and pro-grade MikroTik ($135) and UniFi ($145) gear for offices — fixed USD prices, no VAT, flat $6.95 delivery nationwide and free over $75.",
+    "Wi-Fi router prices in Somalia at Hayaan Market (hayaan.co) start at $15 for the TP-Link 840N, with the dual-band AC750 at $25, the AC1200 range extender at $36, the Omada AC1350 access point at $85, and pro-grade MikroTik ($135) and UniFi ($145) gear for offices — fixed USD prices, no VAT, flat $6.95 delivery nationwide.",
   howtoSteps: [
     {
       name: "Count the devices",
@@ -1032,7 +1032,7 @@ const post13 = {
     },
     {
       q: "Do you deliver routers outside Mogadishu?",
-      a: "Nationwide flat $6.95 — Hargeisa, Burao, Bosaso, Kismayo, anywhere in Somalia — and orders over $75 ship free.",
+      a: "Nationwide flat $6.95 — Hargeisa, Burao, Bosaso, Kismayo, anywhere in Somalia. Inside Mogadishu, delivery is priced by district ($1.50–$3.00).",
     },
   ],
   content: `A router is the cheapest piece of technology that decides whether your internet feels broken. The line your ISP brings into the house is only as good as the box that shares it — and most home Wi-Fi complaints in Somalia trace back to a router that is too weak for the household, placed in the worst possible corner, or asked to reach rooms it was never going to reach.
@@ -1078,7 +1078,7 @@ When the power goes, the router goes with it — and comes back by itself when i
 3. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains the protections.
 4. **On first setup, change the admin password** — the one step most homes skip.
 
-Delivery is a flat **$6.95 nationwide** and free on orders over $75 — inside Mogadishu it is priced by district, which the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists. Watch the [deals page](https://hayaan.co/deals) for restocks, and the [bulk quote form](https://hayaan.co/quote) prices multi-unit office orders.`,
+Delivery is a flat **$6.95 nationwide** — inside Mogadishu it is priced by district, which the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists. Watch the [deals page](https://hayaan.co/deals) for restocks, and the [bulk quote form](https://hayaan.co/quote) prices multi-unit office orders.`,
 };
 
 const post14 = {
@@ -1088,7 +1088,7 @@ const post14 = {
   excerpt:
     "The two HP lasers homes, schools and shops actually buy, why laser beats inkjet in this climate, and the toner math to know before you order.",
   quickAnswer:
-    "Printer prices in Somalia at Hayaan Market (hayaan.co) start at $75 for the HP Laser 107A (print-only mono laser) with the HP Laser MFP 135A — print, scan and copy — at $165. Both are USB-connected mono lasers; original HP toner sets, like the 651A set at $277, are stocked. Fixed USD prices, no VAT, free delivery on orders over $75.",
+    "Printer prices in Somalia at Hayaan Market (hayaan.co) start at $75 for the HP Laser 107A (print-only mono laser) with the HP Laser MFP 135A — print, scan and copy — at $165. Both are USB-connected mono lasers; original HP toner sets, like the 651A set at $277, are stocked. Fixed USD prices, no VAT, delivery shown at checkout.",
   howtoSteps: [
     {
       name: "Estimate your monthly pages",
@@ -1108,7 +1108,7 @@ const post14 = {
     },
     {
       name: "Order at the listed price",
-      text: "EVC Plus, Edahab, or card at checkout; delivery is $1.50–$3 by district in Mogadishu, flat $6.95 nationwide, free over $75.",
+      text: "EVC Plus, Edahab, or card at checkout; delivery is $1.50–$3 by district in Mogadishu, flat $6.95 nationwide.",
     },
   ],
   faqs: [
@@ -1172,7 +1172,7 @@ Two rules protect your money: buy **original** cartridges (compatibles are the r
 4. **Check out with EVC Plus, Edahab, or card** at the exact shown total — the [payment guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) explains what the secure checkout protects.
 5. **Keep the packaging** until the first ream has gone through — it is your reference if anything must come back.
 
-Delivery is $1.50–$3.00 by district in Mogadishu and a flat $6.95 nationwide — free over $75. The full shopping list around the printer (desk light, microphone, network) lives in the [home office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia), and the [bulk quote form](https://hayaan.co/quote) prices multi-printer orders for schools and offices.`,
+Delivery is $1.50–$3.00 by district in Mogadishu and a flat $6.95 nationwide. The full shopping list around the printer (desk light, microphone, network) lives in the [home office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia), and the [bulk quote form](https://hayaan.co/quote) prices multi-printer orders for schools and offices.`,
 };
 
 const post15 = {
@@ -1180,9 +1180,9 @@ const post15 = {
   slug: "online-shopping-in-hargeisa",
   title: "Online Shopping in Hargeisa: Delivery, Payment and How to Order From Hayaan",
   excerpt:
-    "One flat $6.95 delivery fee to any Hargeisa neighborhood, free over $75, EVC Plus/Edahab/card checkout — the complete walkthrough for Somaliland's capital.",
+    "One flat $6.95 delivery fee to any Hargeisa neighborhood, EVC Plus/Edahab/card checkout — the complete walkthrough for Somaliland's capital.",
   quickAnswer:
-    "Hayaan Market (hayaan.co) delivers across Hargeisa for a flat $6.95 per order — free on orders of $75 or more. Every listing shows the exact USD price, payment is EVC Plus, Edahab, or card in the secure checkout before dispatch, and your order number tracks delivery from cart to door. The same flat fee applies nationwide.",
+    "Hayaan Market (hayaan.co) delivers across Hargeisa for a flat $6.95 per order. Every listing shows the exact USD price, payment is EVC Plus, Edahab, or card in the secure checkout before dispatch, and your order number tracks delivery from cart to door. The same flat fee applies nationwide.",
   howtoSteps: [
     {
       name: "Fill the cart at fixed prices",
@@ -1208,15 +1208,15 @@ const post15 = {
   faqs: [
     {
       q: "Does Hayaan deliver to Hargeisa?",
-      a: "Yes — the nationwide flat $6.95 per order covers every Hargeisa neighborhood, and orders of $75 or more ship free.",
+      a: "Yes — the nationwide flat $6.95 per order covers every Hargeisa neighborhood, whatever the order size.",
     },
     {
       q: "How do I pay from Hargeisa?",
       a: "In the secure hosted checkout, before dispatch: EVC Plus, Edahab, or card. The approved total is the charged total — itemised, with nothing collected at the door.",
     },
     {
-      q: "Is delivery free to Hargeisa?",
-      a: "On orders of $75 or more, yes. Below that it is the flat $6.95 — the same fee as everywhere in Somalia outside Mogadishu.",
+      q: "How much is delivery to Hargeisa?",
+      a: "A flat $6.95 per order — the same fee as everywhere in Somalia outside Mogadishu, shown at checkout before you pay.",
     },
     {
       q: "What do people in Hargeisa order most?",
@@ -1224,7 +1224,7 @@ const post15 = {
     },
     {
       q: "Do you deliver to other Somaliland towns?",
-      a: "Yes — Burao, Berbera, Borama, Erigavo and anywhere else in Somalia are the same flat $6.95, free over $75.",
+      a: "Yes — Burao, Berbera, Borama, Erigavo and anywhere else in Somalia are the same flat $6.95.",
     },
   ],
   content: `Hargeisa shops well — if you have the day to spend. The phone market, the electronics rows, the drive to confirm a price is real and a box is sealed: it all costs hours, and the price you are quoted can change with the exchange rate. Ordering online flips it around. Every price is written down in dollars, the stock is live, and the box comes to your neighborhood for a fee you saw before you paid.
@@ -1243,7 +1243,7 @@ This is the complete walkthrough for ordering from Hayaan Market in Hargeisa —
 
 Hargeisa has no district pricing to learn. **Every neighborhood is the same flat $6.95 per order** — the same fee as everywhere in Somalia outside Mogadishu, where the [capital's per-district table](https://hayaan.co/blog/online-shopping-in-mogadishu) applies instead.
 
-And the line that erases the fee entirely: **any order of $75 or more ships free.** In practice that means every [TV](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) (from $175), every [iPhone](https://hayaan.co/blog/iphone-price-in-somalia) (from $990) and every [air conditioner](https://hayaan.co/blog/air-conditioner-price-in-somalia) (from $260) ships free to Hargeisa — the fee only really matters on small accessory orders, where one added item usually clears it anyway.
+And one rule keeps it predictable: **the fee is per order, not per item.** Every [TV](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) (from $175), every [iPhone](https://hayaan.co/blog/iphone-price-in-somalia) (from $990) and every [air conditioner](https://hayaan.co/blog/air-conditioner-price-in-somalia) (from $260) pays the same flat $6.95 to Hargeisa as a single accessory would — so bundling the whole order into one cart costs nothing extra.
 
 > The fee is per order, not per item: one cart with everything beats two separate orders.
 
@@ -1259,7 +1259,7 @@ Payment happens in the hosted secure checkout, before the parcel leaves — EVC 
 
 ## Outside the capital, outside Hargeisa
 
-Nationwide means nationwide: Burao, Berbera, Borama, Erigavo, Bosaso, Kismayo — the same flat **$6.95**, free over $75. The full nationwide walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), restocks and price drops land first on the [deals page](https://hayaan.co/deals), and offices, schools and hotels can price multi-unit orders through the [bulk quote form](https://hayaan.co/quote).`,
+Nationwide means nationwide: Burao, Berbera, Borama, Erigavo, Bosaso, Kismayo — the same flat **$6.95**. The full nationwide walkthrough lives in the [online shopping guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works), restocks and price drops land first on the [deals page](https://hayaan.co/deals), and offices, schools and hotels can price multi-unit orders through the [bulk quote form](https://hayaan.co/quote).`,
 };
 
 // Task 96 — October 2026: the Samsung Galaxy A18 landed in the catalog at $187
@@ -1272,7 +1272,7 @@ const post16 = {
   excerpt:
     "The newest budget Galaxy at $187 — about $140 under its European launch price, with double the storage. What the Exynos 1610, 90Hz AMOLED and updates-until-2032 buy you, and how it stacks against the A16 and A17.",
   quickAnswer:
-    "The Samsung Galaxy A18 (256GB, Black) costs $187 at Hayaan Market (hayaan.co) — roughly $140 under its €279 European launch price, with double the storage. You get a 6.7-inch 90Hz Super AMOLED display, Samsung's Exynos 1610 chipset, a 50MP triple camera with 4K video, a 5000mAh battery with 25W charging, an IP64 rating and Android 17 with updates promised until 2032 — delivered to Mogadishu districts for $1.50–$3 (free over $75) or anywhere in Somalia for a flat $6.95.",
+    "The Samsung Galaxy A18 (256GB, Black) costs $187 at Hayaan Market (hayaan.co) — roughly $140 under its €279 European launch price, with double the storage. You get a 6.7-inch 90Hz Super AMOLED display, Samsung's Exynos 1610 chipset, a 50MP triple camera with 4K video, a 5000mAh battery with 25W charging, an IP64 rating and Android 17 with updates promised until 2032 — delivered to Mogadishu districts for $1.50–$3 or anywhere in Somalia for a flat $6.95.",
   howtoSteps: [
     {
       name: "Open the product page",
@@ -1284,7 +1284,7 @@ const post16 = {
     },
     {
       name: "Pick the delivery district",
-      text: "Mogadishu shoppers pick their district for the exact fee ($1.50–$3.00); elsewhere in Somalia it is a flat $6.95 — and any order over $75 ships free.",
+      text: "Mogadishu shoppers pick their district for the exact fee ($1.50–$3.00); elsewhere in Somalia it is a flat $6.95.",
     },
     {
       name: "Pay through the secure checkout",
@@ -1314,7 +1314,7 @@ const post16 = {
     },
     {
       q: "How do I pay and get the Galaxy A18 delivered?",
-      a: "Pay with EVC Plus, Edahab, or card through the secure checkout; delivery is $1.50–$3.00 by Mogadishu district, free on orders of $75 or more, and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
+      a: "Pay with EVC Plus, Edahab, or card through the secure checkout; delivery is $1.50–$3.00 by Mogadishu district and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
     },
   ],
   content: `Samsung's most affordable new Galaxy of 2026 has landed in Somalia — and it landed at a price that undercuts its own European launch. The Galaxy A18 (256GB, Black) is [live on Hayaan Market at $187](https://hayaan.co/product/samsung-galaxy-a18), with delivery to your door in Mogadishu or anywhere in the country. Here is what the money buys, how it compares with the A16 and A17 below it, and how to order one today.
@@ -1325,7 +1325,7 @@ The Galaxy A18 sells at Hayaan Market for **$187** — the 256GB model in Black,
 
 For context: Samsung launched the A18 in Europe in September 2026 at **€279** (about $330) for the 128GB version. The Somali listing is roughly **$140 cheaper with double the storage** — the kind of gap that explains why phone shoppers here check the market first and the official European price second.
 
-The listing terms are the same as everything on the shop: live stock count on the page, the exact fee shown before you pay — Mogadishu districts $1.50–$3.00, free on orders over $75, flat $6.95 nationwide.
+The listing terms are the same as everything on the shop: live stock count on the page, the exact fee shown before you pay — Mogadishu districts $1.50–$3.00, flat $6.95 nationwide.
 
 ## What you get for $187
 
@@ -1353,7 +1353,7 @@ The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday
 
 1. Open the [Galaxy A18 product page](https://hayaan.co/product/samsung-galaxy-a18) and check the live price and stock.
 2. Add to cart and sign in with your email so the order history stays with you.
-3. Choose your delivery district — the exact fee appears before payment ($1.50–$3.00 in Mogadishu, $6.95 elsewhere, free over $75; the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district).
+3. Choose your delivery district — the exact fee appears before payment ($1.50–$3.00 in Mogadishu, $6.95 elsewhere; the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district).
 4. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia) — the approved total is the charged total.
 5. Keep the order number and check the phone against the listing when it arrives; support@hayaan.co works from that number.
 

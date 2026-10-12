@@ -36,8 +36,8 @@ export const DIGITAL_SHIPPING_PLACEHOLDER = {
 
 /**
  * Mirror the checkout page's displayed total: product subtotal + district-based
- * shipping (Mogadishu districts from the owner's fee sheet, free over $75,
- * flat fee elsewhere). No tax/VAT — the total is exactly subtotal + shipping.
+ * shipping (Mogadishu districts from the owner's fee sheet, flat fee elsewhere —
+ * charged on every order). No tax/VAT — the total is exactly subtotal + shipping.
  * Charging exactly what the customer saw avoids "why was I charged less/more
  * than the screen showed" disputes.
  */

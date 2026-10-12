@@ -5,8 +5,8 @@
 //  * FAQPage JSON-LD (homepage, per-category, per-post)
 //
 // Every answer is grounded in verified store facts only:
-//   - shipping: district fees $1.50–$3.00, free ≥ $75, $6.95 flat outside
-//     Mogadishu (src/lib/shipping.ts, owner's Sep 2026 fee sheet)
+//   - shipping: district fees $1.50–$3.00 in Mogadishu, $6.95 flat outside
+//     Mogadishu — charged on every order (src/lib/shipping.ts, owner's fee sheet)
 //   - payment: secure hosted checkout (Sifalo Pay is the processor); the
 //     customer-facing methods are EVC Plus, Edahab and card — USD, no VAT
 //     (src/components/store/checkout.tsx, src/lib/sifalo-server.ts)
@@ -36,7 +36,7 @@ export const SITE_FAQS: FaqEntry[] = [
   },
   {
     q: "Is shipping free?",
-    a: "Yes — orders with a subtotal of $75 or more ship free to any Mogadishu district. Below $75 the standard district fee applies, and outside Mogadishu the flat nationwide fee is $6.95.",
+    a: "No — delivery is charged on every order: $1.50–$3.00 inside Mogadishu depending on your district, and a flat $6.95 anywhere else in Somalia. The exact fee is shown at checkout before you pay.",
   },
   {
     q: "Do you deliver outside Mogadishu?",
@@ -66,7 +66,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
     },
     {
       q: "How much does a smart TV cost in Somalia?",
-      a: "On hayaan.co smart TVs currently run from about $450 for a 43-inch LG up to $2,350 for the 85-inch Samsung. Every listing shows the exact price before you order, and orders over $75 ship free inside Mogadishu.",
+      a: "On hayaan.co smart TVs currently run from about $450 for a 43-inch LG up to $2,350 for the 85-inch Samsung. Every listing shows the exact price before you order, and the delivery fee is shown at checkout before you pay.",
     },
     {
       q: "Do gaming consoles and projectors come with delivery?",
@@ -84,7 +84,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
     },
     {
       q: "Do phone prices include delivery?",
-      a: "The listed price is the product price. Delivery adds $1.50–$3.00 inside Mogadishu depending on your district — and it is free on orders of $75 or more.",
+      a: "The listed price is the product price. Delivery adds $1.50–$3.00 inside Mogadishu depending on your district, or a flat $6.95 anywhere else in Somalia.",
     },
   ],
   "health-supplements": [
@@ -108,7 +108,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
     },
     {
       q: "Which printer should I buy for a small office?",
-      a: "Pick the printer first, then match its toner model — Hayaan lists printers and their cartridges so you can add both to one cart and reach the $75 free-shipping threshold in a single order.",
+      a: "Pick the printer first, then match its toner model — Hayaan lists printers and their cartridges so you can add both to one cart and pay delivery once.",
     },
     {
       q: "Can I order a full office setup?",
@@ -122,7 +122,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
     },
     {
       q: "What does delivery cost for chargers and speakers?",
-      a: "$1.50–$3.00 inside Mogadishu depending on your district, free on orders of $75 or more, and a flat $6.95 anywhere else in Somalia.",
+      a: "$1.50–$3.00 inside Mogadishu depending on your district, and a flat $6.95 anywhere else in Somalia.",
     },
     {
       q: "Are the listed prices final?",
@@ -135,7 +135,7 @@ export const CATEGORY_FAQS: Record<string, FaqEntry[]> = {
 export const GENERIC_CATEGORY_FAQS: FaqEntry[] = [
   {
     q: "Can I order this category online in Somalia?",
-    a: "Yes — Hayaan Market delivers nationwide. Orders inside Mogadishu cost $1.50–$3.00 to deliver depending on your district, orders of $75 or more ship free, and anywhere else in Somalia is a flat $6.95.",
+    a: "Yes — Hayaan Market delivers nationwide. Orders inside Mogadishu cost $1.50–$3.00 to deliver depending on your district, and anywhere else in Somalia is a flat $6.95.",
   },
   {
     q: "How do I pay for my order?",
@@ -164,7 +164,7 @@ export const SITE_FAQS_SO: FaqEntry[] = [
   },
   {
     q: "Gaadhitaantu waa bilaash baa?",
-    a: "Haa — dalabyada wadartooda $75 ama ka badan waxay Muqdisho si bilaash ah u gaaraan degmo kasta. Haddii aanay $75 gaadhin, khidmada caadiga ah ee degmada ayaa lacagta laga qaadaa, Soomaaliya dibeddana khidmada dalka oo dhan waa $6.95 oo go'an.",
+    a: "Maya — gaadhitaanku waa khidmo dalab kasta: $1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada, Soomaaliya meel kastana $6.95 oo go'an. Khidmada saxda ah waxaa lagu tusaa checkout-ka kahor intaadan bixin.",
   },
   {
     q: "Muqdisho dibed ma gaadhsisiisaan?",
@@ -193,7 +193,7 @@ export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
     },
     {
       q: "Immisa ayay ku baxdaa smart TV Soomaaliya?",
-      a: "hayaan.co TV-yada smart hadda waxay ka bilaabmaan qiimo $450 oo 43-inch LG ah, ilaa $2,350 oo 85-inch Samsung ah. Listing kastaa wuxuu muujiyaa qiimaha saxda ah kahor intaadan dalbin, dalabyada $75 ka badanna Muqdisho way bilaash yihiin.",
+      a: "hayaan.co TV-yada smart hadda waxay ka bilaabmaan qiimo $450 oo 43-inch LG ah, ilaa $2,350 oo 85-inch Samsung ah. Listing kastaa wuxuu muujiyaa qiimaha saxda ah kahor intaadan dalbin, khidmada gaadhitaankuna lagu tusaa checkout-ka kahor bixinta.",
     },
     {
       q: "Console-yada ciyaaraha iyo projector-yada gaadhitaan baa la yimaadaa?",
@@ -211,7 +211,7 @@ export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
     },
     {
       q: "Qiimaha teleefoonka gaadhitaan buu ka kooban yahay?",
-      a: "Qiimaha la muujiyay waa qiimaha alaabta. Gaadhitaanku wuxuu ku daraa $1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada — waxuuna bilaash yahay dalabyada $75 ama ka badan.",
+      a: "Qiimaha la muujiyay waa qiimaha alaabta. Gaadhitaanku wuxuu ku daraa $1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada, ama $6.95 oo go'an Soomaaliya meel kasta.",
     },
   ],
   "health-supplements": [
@@ -235,7 +235,7 @@ export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
     },
     {
       q: "Xafiis yar printerkee ayaa waa inaan iibsadaa?",
-      a: "Marka hore printer dooro, kadibna isku xir lambarka toner-ka — Hayaan waxay la socdaan printerada iyo cartridge-yadooda si aad labada ugu darto hal gaadhi oo aad gaarto $75 gaadhitaanta bilaashka ah.",
+      a: "Marka hore printer dooro, kadibna isku xir lambarka toner-ka — Hayaan waxay la socdaan printerada iyo cartridge-yadooda si aad labada ugu darto hal gaadhi oo hal mar khidmada gaadhitaanta u bixiso.",
     },
     {
       q: "Ma dalban karaa qalab xafiis oo dhan?",
@@ -249,7 +249,7 @@ export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
     },
     {
       q: "Immisa ayay ku baxdaa gaadhitaanta shubmada iyo spikarrada?",
-      a: "$1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada, bilaash dalabyada $75 ama ka badan, iyo $6.95 oo go'an Soomaaliya meel kasta oo kale.",
+      a: "$1.50–$3.00 gudaha Muqdisho iyadoo ku xiran degmada, iyo $6.95 oo go'an Soomaaliya meel kasta oo kale.",
     },
     {
       q: "Qiimayaasha la muujiyay baa miyay kama dambeys yihiin?",
@@ -262,7 +262,7 @@ export const CATEGORY_FAQS_SO: Record<string, FaqEntry[]> = {
 export const GENERIC_CATEGORY_FAQS_SO: FaqEntry[] = [
   {
     q: "Qaybtan Soomaaliya online miyaan ka dalban karaa?",
-    a: "Haa — Hayaan Market dalka oo dhan ayay u dirtaa. Muqdisho gudihiisa $1.50–$3.00 ayay ku xiran tahay degmada, dalabyada $75 ama ka badan way bilaash yihiin, Soomaaliya meel kastana waa $6.95 oo go'an.",
+    a: "Haa — Hayaan Market dalka oo dhan ayay u dirtaa. Muqdisho gudihiisa $1.50–$3.00 ayay ku xiran tahay degmada, Soomaaliya meel kastana waa $6.95 oo go'an.",
   },
   {
     q: "Sideen u bixin karaa dalabkayga?",

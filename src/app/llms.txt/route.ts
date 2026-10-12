@@ -13,7 +13,7 @@ export function GET() {
 
 > Hayaan Market (hayaan.co) is a Somali online marketplace: electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, paid securely through EVC Plus, Edahab, or card and delivered to your door in Mogadishu or anywhere in Somalia.
 
-Hayaan Market serves customers across Somalia. Prices are listed in US dollars with no VAT; every listing shows the exact price and stock before ordering. Delivery inside Mogadishu is priced per district ($1.50-$3.00), is free on orders of $75 or more, and costs a flat $6.95 anywhere else in the country. Payment runs through a secure hosted checkout — pay with EVC Plus, Edahab, or card. Bulk requests (offices, schools, hotels, shops) are handled via the /quote page. Support: WhatsApp ${WHATSAPP} or support@hayaan.co.
+Hayaan Market serves customers across Somalia. Prices are listed in US dollars with no VAT; every listing shows the exact price and stock before ordering. Delivery inside Mogadishu is priced per district ($1.50-$3.00) and costs a flat $6.95 anywhere else in the country. Payment runs through a secure hosted checkout — pay with EVC Plus, Edahab, or card. Bulk requests (offices, schools, hotels, shops) are handled via the /quote page. Support: WhatsApp ${WHATSAPP} or support@hayaan.co.
 
 ## Categories
 
@@ -36,10 +36,10 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Best Smartwatches to Buy Online in Somalia](${SITE}/blog/best-smartwatches-online-in-somalia): Apple Watch, Galaxy Watch, Huawei and Amazfit from $55 to $440, matched to your phone.
 - [Air Conditioner Price in Somalia](${SITE}/blog/air-conditioner-price-in-somalia): Lightwave 9K–24K split units from $260 to $460, room sizing by BTU, and the stabilizer that protects the compressor.
 - [What Size TV Should You Buy in Somalia](${SITE}/blog/what-size-tv-to-buy-in-somalia): every TV from $175 (32") to $2,350 (85") and the viewing-distance rule that picks the right size.
-- [Online Shopping in Mogadishu](${SITE}/blog/online-shopping-in-mogadishu): delivery fees for all 20 districts ($1.50–$3.00), the $75 free-shipping line, and how to order step by step.
+- [Online Shopping in Mogadishu](${SITE}/blog/online-shopping-in-mogadishu): delivery fees for all 20 districts ($1.50–$3.00) and how to order step by step.
 - [Wi-Fi Router Price in Somalia](${SITE}/blog/wifi-router-price-in-somalia): routers, extenders and access points from $15 to $145, matched to homes and offices, with placement and power-cut notes.
 - [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $75, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
-- [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood (free over $75), payment and ordering walkthrough.
+- [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood, payment and ordering walkthrough.
 - [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $187 (256GB), specs, the A16/A17/A18 ladder, and how to order.
 
 ## Key pages
@@ -53,7 +53,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 ## Policies
 
 - Prices: USD, no VAT.
-- Delivery: Mogadishu districts $1.50-$3.00 (20 districts priced); free over $75 subtotal; flat $6.95 elsewhere in Somalia.
+- Delivery: Mogadishu districts $1.50-$3.00 (20 districts priced); flat $6.95 elsewhere in Somalia.
 - Payment: EVC Plus, Edahab, or card via a secure hosted checkout.
 - Support: WhatsApp ${WHATSAPP}, support@hayaan.co.
 `;
