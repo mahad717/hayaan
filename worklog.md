@@ -2063,3 +2063,24 @@ Stage Summary:
 - A18 PDP image is now 1:1 and uncropped on mobile and desktop; price $187 and all other product data untouched.
 - Note for future imports: PDP/card frames are aspect-square + object-cover — product images should ship square (or near-square with wide margins); tight portrait crops will clip.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision.
+---
+Task ID: 96
+Agent: Super Z (main)
+Task: Publish an SEO/AEO-optimized blog post for the Samsung Galaxy A18 (owner: "A blog post about a18 with seo and AEO optimized").
+
+Work Log:
+- Facts verified before writing: live catalog prices (A18 $187, A16 $118, A17 $165, A36 5G $285, A56 5G $370; A57 slugs are -8gb256gb/-12gb256gb) and EU launch price via web search (SamMobile/DigitalTrends/AndroidHeadlines/SammyGuru all agree: EUR 279 ~ $330 in France, 128GB/4GB, September 2026; DigitalTrends headline confirms "updated until 2032"; 5G version expected later). Claims in the post are limited to these verified facts.
+- Post 16 in src/lib/blog-seo-posts.ts: samsung-galaxy-a18-price-in-somalia — title, excerpt, quickAnswer, 5 FAQs, 5 howtoSteps, ~800-word body. Sections: price vs EU launch, what $187 buys (verified spec bullets), the A16/A17/A18 ladder, the 4G-only question for Somalia, ordering steps, bottom line. Internal links: A18/A16/A17/A36/A56 PDPs, phones category, phones-guide, payment guide, Mogadishu guide, quote form. Array entry published 2026-10-12T10:30Z with the new cover.
+- Wiring: product-guides.ts gained galaxyA18 + regex /galaxy a18|sm-a185/ (matches only the A18 PDP; sits first in its guide cards); llms.txt gained the curated bullet; the phones buying guide's tier 2 was updated "$250-$450" -> "$180-$450" to include the A18 at $187 (keeps the tier ladder honest and adds a second internal link from an established guide).
+- Cover: scripts/task96-cover.mjs (z-ai, 1344x768, strict no-text brandless prompt — black phone back with vertical camera, charger and cable on a wooden table) -> 16:9 1200x675 progressive JPG in public/images/blog. Visual check: brandless, zero garbled text.
+- Build + pushes: restored /api/admin/upload a 7TH time (auto-commit f8daa41 with UUID message deleted it again; restored from d11958c, included in the Task 96 commit). f0c4b1e (post + wiring + cover), then 931cd60 after catching a real rendering bug live: the markdown-lite renderer cannot nest links inside **bold** — the ladder list printed raw [text](url). Restructured the three lines to the proven pattern (bold lead, link outside bold). Linear-history merge-base checks passed both times.
+- Deploy polls green: cover 200 + /blog slug + post quickAnswer + A18 PDP guide card + llms.txt bullet all live in ~2 min; fix poll confirmed raw markdown gone.
+- Live verification: post serves BlogPosting + FAQPage (5 Answers) + HowTo (5 HowToSteps) JSON-LD, correct <title> and og:image; sitemap.xml enumerates the slug; A18 PDP shows "Galaxy A18 Price in Somalia (2026)" as its first guide card; browser counted 3 A18 PDP links rendering on the post.
+- Evidence: download/task96-a18-post.png (post with QUICK ANSWER block + fixed ladder), download/task96-a18-pdp-guide-card.png (PDP with the A18 guide card first); tooling: scripts/task96-cover.mjs, task96-poll-deploy.sh.
+
+Stage Summary:
+- Blog is now 16 SEO/AEO guides + 1 owner-authored post. The A18 post is live and answers "galaxy a18 price in somalia" with the quick-answer block, FAQPage and HowTo markup, and a $187-under-EU-launch price story backed by verified sources.
+- The A18 PDP, the phones guide tiers, and llms.txt all interlink with it — the usual AEO mesh.
+- Renderer lesson recorded: markdown-lite supports **bold** and [links] but NOT links nested inside bold — future posts must keep them separate.
+- /api/admin/upload deletion count: 7. Still worth hardening against the session-recovery auto-commit.
+- Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision.
