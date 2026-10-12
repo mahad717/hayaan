@@ -2084,3 +2084,29 @@ Stage Summary:
 - Renderer lesson recorded: markdown-lite supports **bold** and [links] but NOT links nested inside bold — future posts must keep them separate.
 - /api/admin/upload deletion count: 7. Still worth hardening against the session-recovery auto-commit.
 - Follow-ups unchanged: Zoho DKIM+DMARC; RESEND_API_KEY; test-user cleanup decision.
+
+---
+Task ID: 97
+Agent: Super Z (main)
+Task: Remove the "Free shipping over $75" rule from the whole website (user instruction).
+
+Work Log:
+- Grepped the entire src tree + scripts; mapped the rule across 14 files: shipping.ts (FREE_SHIPPING_THRESHOLD + computeShipping), cart-drawer/checkout/PDP components, i18n dictionary (EN+SO), faq.ts (EN+SO), blog-seo-posts.ts (16 posts), product-guides.ts, llms.txt + llms-full.txt routes, sifalo-server comment, verify-shipping-logic.ts.
+- Core logic: computeShipping now returns districtFee ?? OUTSIDE_MOGADISHU_FEE unconditionally; FREE_SHIPPING_THRESHOLD export removed. Checkout "shippingKnown" no longer shortcuts on subtotal. Cart drawer estimate = district fee or "calculated at checkout"; the "X away from free shipping" progress line deleted (cart.freeAway key removed EN+SO).
+- PDP: pdp.deliveryFreeNote removed; truck reassurance row now uses new key pdp.deliveryReassure ("Delivery fees shown at checkout" / SO "Khidmada gaadhitaanka waxaa lagu tusaa checkout-ka").
+- Hero badge repurposed: EN "Fixed USD prices — no VAT", SO "Qiimo USD oo go'an — VAT ma jiro" (keeps the pill layout, drops the false promise).
+- faq.ts: "Is shipping free?" now answered honestly ("No — delivery is charged on every order: $1.50–$3.00 inside Mogadishu, flat $6.95 elsewhere"); TV/phones/printer/power/generic FAQs + all Somali mirrors updated the same way. FAQPage JSON-LD follows automatically.
+- blog-seo-posts.ts: ~40 claim rewrites across all 16 posts — quickAnswers, HowTo steps, FAQs, content sections. Posts whose selling point WAS the free threshold (PS5/iPhone/watch/AC/TV "every order over $75 ships free") now state per-order fees with "shown at checkout before you pay". Mogadishu post: "$75 free-delivery line, in plain math" section reworked into "What the fee means for big and small orders"; "How do I get free delivery?" FAQ replaced with "Does the delivery fee change with order size?". Hargeisa post: "Is delivery free to Hargeisa?" -> "How much is delivery to Hargeisa?". Also fixed the pre-existing "ome office setup guide" typo.
+- product-guides.ts blurbs (mogadishu, hargeisa) and llms.txt/llms-full.txt policy lines updated (delivery = district fees + flat $6.95, no threshold).
+- verify-shipping-logic.ts rewritten for the new rule (fee regardless of cart size, incl. $900-cart checks) — ALL CHECKS PASSED via bun.
+- DB audit: scanned all 142 live product descriptions via public API for the rule (8 regex patterns incl. Somali "75 ka badan waa bilaash") — 0 hits; product copy only uses generic "fast delivery" phrasing, so no DB writes needed. Tooling: scripts/shipping-rule-db-audit.mjs (+ audit JSON).
+- Build (next + opennextjs-cloudflare) green; caught /api/admin/upload deleted AGAIN in working tree before commit (8th occurrence) — restored from git before staging.
+- Commit d46ce26 pushed after fetch + merge-base --is-ancestor linear check; deployed in ~90s (poll via llms.txt content change).
+- Live verification: homepage hero shows "Fixed USD prices — no VAT" and FAQ JSON-LD answers "No — delivery is charged on every order"; Mogadishu post serves 0 rule mentions with the new section live; A18 PDP shows "Delivery fees shown at checkout"; llms-full.txt updated. Browser checks: add-to-cart as guest opens the sign-in dialog (existing behavior, unchanged).
+- Evidence: download/task97-home-hero-badge.png, task97-pdp-delivery-preview.png, task97-blog-mogadishu.png (cart-drawer shot captured the auth dialog instead — drawer change verified by code+build).
+
+Stage Summary:
+- The free-over-$75 rule is gone from storefront UI, checkout math (client AND authoritative Sifalo server path share computeShipping), FAQ/JSON-LD, all 16 blog posts, guides, llms.txt, and both languages. Shipping is now: Mogadishu districts $1.50–$3.00, flat $6.95 nationwide, charged on every order, always shown before payment.
+- Watch-item: Google/AI answers may quote the old free-shipping claim from cached pages for a while; the FAQPage + llms.txt now state the current policy for recrawlers.
+- /api/admin/upload auto-deletion count: 8.
+- Follow-ups unchanged: Somali translation pass, blog batch (AC/TV sizes/Mogadishu posts queued earlier), remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, KarmaLinks submission, Zoho DKIM+DMARC, RESEND_API_KEY.
