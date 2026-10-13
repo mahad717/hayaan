@@ -2127,3 +2127,25 @@ Stage Summary:
 - The rule is now gone from EVERYWHERE: storefront UI, checkout/shipping logic, FAQ+JSON-LD, 16 blog posts, guides, llms.txt, and all 142 product descriptions (EN). Lesson recorded: description audits need free/75 co-occurrence matching, not phrase lists — phrase variants will always outrun regex lists.
 - Rollback path: restore descriptions from scripts/task97-desc-backup.json rows if ever needed.
 - Commit d46ce26 (code) + this DB pass; no further deploy required for the DB change.
+---
+Task ID: 98
+Agent: Super Z (main)
+Task: Revise the live Samsung Galaxy A18 blog post to 128GB storage (owner: "Make the storage 128GB blog post Samsung Galaxy A18"); includes fixing a discovered DB-shadow regression that had resurrected the $75 free-shipping rule on one live post.
+
+Work Log:
+- Code edits (commit f5c1ac0): post16 in src/lib/blog-seo-posts.ts — excerpt, quickAnswer, HowTo step 1, FAQ 1 + FAQ 4, intro, price section, spec bullet all moved 256GB -> 128GB; "double the storage" claims replaced with like-for-like wording (the €279 EU launch WAS the 128GB/4GB config, verified in Task 96), so the price gap is now "same 128GB phone, roughly $140 less". FAQ 4 storage answer reworded around the microSD expansion path. updatedAt bumped to 2026-10-13T08:00Z (feeds BlogPosting dateModified). Wiring updated in product-guides.ts ("$187 with 128GB") and llms.txt route ("$187 (128GB)"). Remaining 256GB strings in the file are iPhone-post/generic-advice only.
+- Build green (next build + opennextjs-cloudflare). Caught /api/admin/upload auto-deleted AGAIN in the working tree pre-commit (9th occurrence) — restored from git. Linear-history fetch + merge-base check passed; pushed 904c981..f5c1ac0.
+- Deploy poll anomaly: llms.txt + PDP guide card served the new build but the A18 post and /blog index kept serving the OLD 256GB content. Root cause found in src/lib/blog.ts: DB blog_posts rows WIN the slug collision over code-shipped SEO_POSTS. The admin audit (scripts/task98-blog-row-audit.mjs) found 3 DB rows; the A18 row (saved 2026-10-12T18:22Z via admin panel) shadowed post16 — and because rowToPost never maps quickAnswer/faqs/howtoSteps, the live page had ALSO lost its QUICK ANSWER box and FAQPage/HowTo JSON-LD.
+- Bigger find: the online-shopping-in-somalia-how-it-works DB row (saved 2026-10-05, i.e. pre-Task-97) still served "free shipping over $75" 14x live — a Task 97 escape, since Task 97 only rewrote the code-shipped posts and its DB audit covered product descriptions, not blog_posts rows.
+- Verbatim proof before touching data (scripts/task98-verify-verbatim.mjs): A18 row byte-equal (normalized) to the post-97 shipped guide; how-it-works row byte-equal to the PRE-97 shipped guide (git blob 931cd60). Both are pure admin-panel snapshots — zero owner customization.
+- Backed up both rows (scripts/task98-a18-dbrow-backup.json, task98-hiw-dbrow-backup.json), then deleted via DELETE /api/admin/blog/[id] with slug/source guards (scripts/task98-delete-shadow-rows.mjs). Third DB row sida-loo-doorto-laptop-ka-kugu-habboon (owner-authored Somali post) left untouched. Re-audit: only that owner post remains in DB; both guides now serve from code.
+- Live verification: A18 post serves "same 128GB" x18 / "128GB" x38 / "256GB" x0, QUICK ANSWER box + FAQPage + HowTo JSON-LD restored, dateModified 2026-10-13T08:00:00.000Z, title/meta carry the new excerpt; how-it-works post serves $75 x0 with the Task-97 fee language and FAQPage back; /blog index card shows the new excerpt. No rebuild needed for the DB change (code already live from f5c1ac0).
+- Evidence: download/task98-a18-post-128gb-desktop.png, download/task98-a18-post-128gb-mobile.png; tooling: scripts/task98-poll-deploy.sh, task98-blog-row-audit.mjs, task98-verify-verbatim.mjs, task98-delete-shadow-rows.mjs.
+
+Stage Summary:
+- The A18 blog post now advertises 128GB storage with a cleaner like-for-like price story ($187 vs EUR 279 for the same 128GB config), and its full AEO mesh (quick answer, FAQPage, HowTo) is serving again.
+- Closed a hidden Task 97 gap: the $75 rule no longer appears anywhere live, including the DB-shadowed how-it-works guide that had escaped the code-only sweep.
+- Process lesson: after ANY shipped-guide content edit, verify the live slug actually serves from code — a DB row with the same slug silently shadows it. Verbatim-diff against the git blob before deleting a shadow row; backups are the rollback path.
+- Owner decision pending: the A18 PRODUCT page (DB description) still says 256GB per the original Samsung UAE listing, while the blog now says 128GB — sync either direction on request.
+- /api/admin/upload auto-deletion count: 9.
+- Follow-ups unchanged: Somali translation pass, blog batch (AC/TV sizes/Mogadishu posts queued earlier), remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, KarmaLinks submission, Zoho DKIM+DMARC, RESEND_API_KEY.
