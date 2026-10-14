@@ -2173,3 +2173,17 @@ Stage Summary:
 - Root-caused and fixed the row-shadow AEO regression class: any future admin save over a shipped guide keeps its quick answer/FAQ/HowTo rendering.
 - Ranking itself is off-site work now: submit both URLs in Search Console, request indexing, build internal/external links (KarmaLinks submission of the how-it-works guide is still queued), and keep the price consistent wherever it gets cited.
 - Follow-ups unchanged: Somali translation pass, blog batch (AC/TV/Mogadishu), remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, KarmaLinks, Zoho DKIM+DMARC, RESEND_API_KEY.
+---
+Task ID: 99b
+Agent: Super Z (main)
+Task: "Fix the style of FAQs, but don't change anything else" — restyle the A18 PDP FAQ block per the owner's screenshot.
+
+Work Log:
+- Diagnosis: the Task 99 PDP FAQ was a custom flat list (bold questions + thin dividers inside one white card) — visually inconsistent with the site's established FAQ pattern (shared FaqSection component: accordion <details> cards, +/- toggles, 2-col grid, cream open state) used by homepage/category/blog.
+- Style-only fix: FaqSection gained an optional `intro` slot (backward-compatible — existing callers render byte-identical markup); product/[slug]/page.tsx now renders <FaqSection> with the keyword intro passed as the intro prop. Same heading text, same 4 Q&A strings, same intro copy, same FAQPage JSON-LD — zero content/schema changes. Commit b0c35bc (92cbc55..b0c35bc, linear-history verified).
+- Deploy verified by markup probe (4x <details> accordion cards, old divide-y list + pdp-seo-heading id gone, faq-heading id present) then visually: desktop 2-col cards, mobile stacked cards, open state (− toggle + cream #faf8f1 highlight) all correct.
+- Integrity re-check after deploy: FAQPage JSON-LD present, brand "Samsung", intro + question strings unchanged, PDP title unchanged.
+- Evidence: download/task99b-pdp-faq-desktop.png, task99b-pdp-faq-mobile2.png, task99b-pdp-faq-open.png.
+
+Stage Summary:
+- The PDP FAQ now uses the site-wide FaqSection accordion pattern — one consistent FAQ look across storefront, categories, blog and product pages; content and AEO schema untouched.
