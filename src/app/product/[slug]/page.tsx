@@ -44,7 +44,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const image = product.images[0];
 
   return {
-    title: override ? override.title(seoCtx) : product.name,
+    // { absolute } bypasses the layout's "%s — Hayaan Market" template — the
+    // keyword title already carries the brand suffix itself.
+    title: override ? { absolute: override.title(seoCtx) } : product.name,
     description,
     alternates: { canonical: `/product/${product.slug}` },
     other: {
