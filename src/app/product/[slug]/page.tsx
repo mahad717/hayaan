@@ -7,6 +7,7 @@ import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { guidesForProduct } from "@/lib/product-guides";
+import { brandForProduct, pdpSeoFor, type PdpSeoCtx } from "@/lib/pdp-seo";
 import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 
@@ -30,12 +31,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const soDesc = productDescription(product.description, lang);
   // Meta tags need PLAIN text — strip formatting HTML if present.
   const plainDesc = looksLikeHtml(soDesc) ? stripHtml(soDesc) : soDesc;
+  // Task 99: slug-keyed SEO override wins for targeted products — its meta
+  // description interpolates the LIVE price, so a reprice can never go stale.
+  const override = pdpSeoFor(product.slug);
+  const seoCtx: PdpSeoCtx = { price: product.price, inStock: product.stock > 0 };
   const description =
-    plainDesc.length > 157 ? `${plainDesc.slice(0, 157)}…` : plainDesc;
+    override && lang === "en"
+      ? override.metaDescription(seoCtx)
+      : plainDesc.length > 157
+        ? `${plainDesc.slice(0, 157)}…`
+        : plainDesc;
   const image = product.images[0];
 
   return {
-    title: product.name,
+    title: override ? override.title(seoCtx) : product.name,
     description,
     alternates: { canonical: `/product/${product.slug}` },
     other: {
@@ -44,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "product:price:currency": product.currency,
     },
     openGraph: {
-      title: product.name,
+      title: override ? override.title(seoCtx) : product.name,
       description,
       url: `/product/${product.slug}`,
       // NOTE: Next rejects openGraph.type "product" at runtime (Next 16
@@ -57,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
+      title: override ? override.title(seoCtx) : product.name,
       description,
       images: image ? [image] : undefined,
     },
@@ -78,6 +87,11 @@ export default async function ProductPage({ params }: Props) {
   // Task 87: contextual buying-guide links — server-rendered so the first
   // HTML the crawler sees carries them (max 3, most-relevant first).
   const guides = guidesForProduct(product.name, product.category?.slug ?? null);
+  // Task 99: same override powers the visible FAQ section and the FAQPage
+  // JSON-LD — Google requires FAQ content to be on the page, not just in schema.
+  const override = pdpSeoFor(product.slug);
+  const seoCtx: PdpSeoCtx = { price: product.price, inStock: product.stock > 0 };
+  const faqs = override ? override.faqs(seoCtx) : null;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -88,7 +102,7 @@ export default async function ProductPage({ params }: Props) {
         image: product.images,
         sku: product.sku ?? undefined,
         productID: product.id,
-        brand: { "@type": "Brand", name: "Hayaan Market" },
+        brand: { "@type": "Brand", name: brandForProduct(product.name) },
         ...(product.rating > 0 && product.reviewCount > 0
           ? {
               aggregateRating: {
@@ -118,6 +132,18 @@ export default async function ProductPage({ params }: Props) {
           { "@type": "ListItem", position: product.category ? 3 : 2, name: product.name, item: `https://hayaan.co/product/${product.slug}` },
         ],
       },
+      ...(faqs
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -141,6 +167,39 @@ export default async function ProductPage({ params }: Props) {
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductDetail initialProduct={product} />
+
+      {/* Task 99: visible keyword-rich intro + FAQ section (AEO). Rendered
+          server-side so the first HTML the crawler sees carries the exact
+          "Samsung Galaxy A18 price" phrasing and the Q&A the FAQPage JSON-LD
+          below references — Google requires on-page FAQ content. */}
+      {override && faqs && (
+        <section
+          aria-labelledby="pdp-seo-heading"
+          className="mx-auto max-w-7xl px-4 pb-12 sm:px-6"
+        >
+          <div className="rounded-2xl border border-[#e6e2d4] bg-white p-6 sm:p-8">
+            <h2
+              id="pdp-seo-heading"
+              className="text-lg font-bold text-brand-dark"
+            >
+              {override.heading}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground font-original">
+              {override.intro(seoCtx)}
+            </p>
+            <div className="mt-6 divide-y divide-[#efece0]">
+              {faqs.map((f) => (
+                <div key={f.q} className="py-4 first:pt-0 last:pb-0">
+                  <h3 className="text-sm font-bold text-brand-dark">{f.q}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground font-original">
+                    {f.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Buying guides (Task 87): internal links from the product page to
           the SEO/AEO guides that answer pre-purchase questions. */}

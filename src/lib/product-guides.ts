@@ -101,7 +101,7 @@ export const BUYING_GUIDES = {
   galaxyA18: G(
     "samsung-galaxy-a18-price-in-somalia",
     "Galaxy A18 Price in Somalia (2026)",
-    "$187 with 128GB — specs, the A16/A17/A18 ladder, and how to order.",
+    "$190 with 128GB — specs, the A16/A17/A18 ladder, and how to order.",
   ),
 } satisfies Record<string, GuideLink>;
 
