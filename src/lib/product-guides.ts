@@ -103,6 +103,11 @@ export const BUYING_GUIDES = {
     "Galaxy A18 Price in Somalia (2026)",
     "$190 with 128GB — specs, the A16/A17/A18 ladder, and how to order.",
   ),
+  elitebook: G(
+    "hp-elitebook-price-in-somalia",
+    "HP EliteBook Price in Somalia (2026)",
+    "Every EliteBook from $310 to $950 priced, the G7/G8/G9 differences, and how to order.",
+  ),
 } satisfies Record<string, GuideLink>;
 
 /**
@@ -124,6 +129,7 @@ export function guidesForProduct(name: string, categorySlug?: string | null): Gu
   // Specific product-name matches first.
   if (/air conditioner/.test(n)) push(BUYING_GUIDES.ac);
   if (/galaxy a18|sm-a185/.test(n)) push(BUYING_GUIDES.galaxyA18);
+  if (/elitebook/.test(n)) push(BUYING_GUIDES.elitebook);
   if (/router|access point|extender|wi-?fi|\buni-?fi\b|mikrotik|omada/.test(n)) push(BUYING_GUIDES.router);
   if (/printer|toner/.test(n)) push(BUYING_GUIDES.printer);
   if (/\btv\b|television/.test(n)) push(BUYING_GUIDES.tv);

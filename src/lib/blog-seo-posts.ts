@@ -1368,6 +1368,111 @@ The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday
 At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $118](https://hayaan.co/product/samsung-galaxy-a16) and [A17 at $165](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
 };
 
+// Task 101 — HP EliteBook buying guide (owner request: SEO/AEO-optimized
+// EliteBook post). Targets "hp elitebook price in somalia", "hp laptop price
+// in somalia", "business laptop somalia". Prices verified against the live
+// catalog on publish day: 840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310.
+// Model-line traits (screen sizes, CPU generations, business build) are public
+// knowledge; RAM/SSD configs deliberately hedged to the listing.
+const post17 = {
+  id: "seo-hp-elitebook-price-in-somalia",
+  slug: "hp-elitebook-price-in-somalia",
+  title: "HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy",
+  excerpt:
+    "Every HP EliteBook listed in Somalia right now — the $310 EliteBook 840 G7, $340 830 G7, $380 830 G8 and $950 840 G9 — what actually separates the four models, and how to order one to your door.",
+  quickAnswer:
+    "HP EliteBook laptops cost $310–$950 at Hayaan Market (hayaan.co): the 14-inch EliteBook 840 G7 at $310, the 13.3-inch 830 G7 at $340, the 830 G8 (11th-gen Core i7, Thunderbolt 4) at $380, and the 840 G9 (12th-gen Core i7) at $950. Prices are fixed USD, paid securely with EVC Plus, Edahab, or card, delivered to Mogadishu districts for $1.50–$3.00 or anywhere in Somalia for a flat $6.95.",
+  howtoSteps: [
+    {
+      name: "Open the product page",
+      text: "Pick your model from the four listed below and check the live price and stock on its listing — every page shows the exact figure before you commit.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add the laptop to your cart and sign in with your email so the order and its receipt stay in your order history.",
+    },
+    {
+      name: "Pick the delivery district",
+      text: "Mogadishu shoppers pick their district for the exact fee ($1.50–$3.00); elsewhere in Somalia it is a flat $6.95.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "EVC Plus, Edahab, or card — the amount you approve on the hosted page is the amount that moves, with a record on both sides.",
+    },
+    {
+      name: "Check the laptop on arrival",
+      text: "Match it against the listing (model, generation, condition), keep the order number, and write to support@hayaan.co the same day if anything is off.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much does an HP EliteBook cost in Somalia?",
+      a: "$310 for the EliteBook 840 G7, $340 for the 830 G7, $380 for the 830 G8, and $950 for the 840 G9 (12th-gen Core i7) at Hayaan Market — fixed USD prices with no VAT, and the live stock count shown on every listing.",
+    },
+    {
+      q: "Which HP EliteBook is the best value?",
+      a: "The EliteBook 830 G8 at $380 is the sweet spot for most office work — an 11th-gen Core i7 with Thunderbolt 4 in a roughly 1.24 kg aluminum body. Tighter budgets get the 840 G7 at $310; heavy multitaskers and anyone keeping the machine for five-plus years should step up to the 840 G9 at $950.",
+    },
+    {
+      q: "What is the difference between the EliteBook 830 and the 840?",
+      a: "Screen size and weight. The 830 is the 13.3-inch traveler's machine (about 1.24 kg); the 840 is the 14-inch main laptop (about 1.3–1.4 kg). Within the same generation the keyboard, ports and security features are the same family — pick the 830 for portability, the 840 for more screen.",
+    },
+    {
+      q: "Are EliteBooks good laptops for office work in Somalia?",
+      a: "Yes — the EliteBook is HP's business line: aluminum chassis built to survive daily commuting, spill-resistant keyboards, and business-grade security features. An i7 machine with solid-state storage handles accounting, dozens of browser tabs, Office documents and video calls without strain, which is why offices, NGOs and schools standardize on them.",
+    },
+    {
+      q: "How do I pay for an EliteBook and get it delivered?",
+      a: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout; delivery is $1.50–$3.00 by Mogadishu district and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
+    },
+  ],
+  content: `The laptop most Somali offices, NGOs and schools end up standardizing on is not the newest MacBook — it is HP's EliteBook line: aluminum-bodied, business-grade machines that survive daily commutes, long meetings and the occasional power cut. Four EliteBooks are [listed at Hayaan Market](https://hayaan.co/category/computers-tv-gaming) right now, spanning **$310 to $950**. This guide prices every one of them, explains what actually separates the models, and walks through ordering one to your door.
+
+## HP EliteBook price in Somalia
+
+The [HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) tops the range at **$950** — the newest of the four, built on Intel's 12th-generation Core i7. Below it, three proven value picks start at barely a third of that price:
+
+- **HP EliteBook 840 G7 — $310.** The 14-inch entry point — [the cheapest business-class laptop in the shop](https://hayaan.co/product/hp-elitebook-840-g7-notebook), on Intel's 10th-generation Core platform.
+- **HP EliteBook 830 G7 — $340.** The same 10th-generation platform in the smaller, lighter 13.3-inch frame — [the 830 G7 listing](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen).
+- **HP EliteBook 830 G8 — $380.** One platform generation newer: an 11th-generation Core i7 with Thunderbolt 4 — [the 830 G8 listing](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen).
+- **HP EliteBook 840 G9 — $950.** The current-generation flagship: a 12th-generation Core i7 on Intel's newest business platform — [the 840 G9 listing](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen).
+
+Every listing is a fixed USD price with no VAT. The live stock count sits on each product page, and the delivery fee shows before you pay: $1.50–$3.00 by Mogadishu district, a flat $6.95 anywhere else in Somalia.
+
+## Which EliteBook should you buy? The $310–$950 ladder
+
+1. **EliteBook 840 G7 — $310.** The budget anchor. A 14-inch business screen, the full EliteBook keyboard and aluminum chassis, at a price that undercuts most consumer laptops — [the right pick for students and start-ups](https://hayaan.co/product/hp-elitebook-840-g7-notebook).
+2. **EliteBook 830 G7 — $340.** The portability pick. Same platform as the 840 G7 in a 13.3-inch body around 1.24 kg — the machine for consultants and field staff who live out of a bag.
+3. **EliteBook 830 G8 — $380.** The sweet spot. An 11th-generation Core i7, Thunderbolt 4 and Wi-Fi 6 for $40 more than the G7 — [the best value of the four](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) for everyday office work.
+4. **EliteBook 840 G9 — $950.** The long-haul pick. The 12th-generation platform, DDR5 memory and Wi-Fi 6E give it the performance headroom to stay fast for five-plus years — [the one to buy](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) if the laptop is your main work machine.
+
+> Rule of thumb: match the machine to the years you expect to keep it. A $310–$380 EliteBook comfortably covers documents, browsers and calls today; the $950 840 G9 is for anyone whose laptop IS the office.
+
+## What you get across the EliteBook line
+
+- **Aluminum business build** — the whole line runs roughly 1.2–1.4 kg with the stiffness plastic consumer laptops give up.
+- **Spill-resistant, backlit keyboards** — the reason EliteBooks stay the office default: they survive the daily reality of desk life.
+- **Business-grade security** — HP's business security stack and a webcam privacy shutter across the G7–G9 generations.
+- **Solid-state storage** — fast boot and wake on every model; the exact RAM and SSD configuration is stated on each listing, and support@hayaan.co confirms a specific config before you order.
+- **All-day battery design** — business batteries sized for a working day, so a power cut mid-meeting does not end the meeting.
+
+## EliteBook, MacBook or gaming laptop?
+
+It depends on the work. If the work is documents, browsers, email and video calls, the $310–$380 i7 EliteBooks do the job at a fraction of the alternatives. The MacBooks are beautiful machines but a different budget: the [MacBook Air M5 starts at $1,530](https://hayaan.co/product/macbook-air-m5) and the [MacBook Pro M4 at $1,720](https://hayaan.co/product/macbook-pro-m4). And if the work is design, CAD or gaming, the [Asus TUF FX507 gaming laptop at $1,320](https://hayaan.co/product/asus-tuf-fx507-gaming-i7-13gen) is the tool built for it. For pure office economics, the EliteBook ladder wins — which is exactly why organizations buy them in batches. Ordering several for a team? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.
+
+## How to order an EliteBook from Hayaan Market
+
+1. Open the product page of the model you picked and check the live price and stock.
+2. Add it to the cart and sign in with your email so the order history stays with you.
+3. Choose your delivery district — the exact fee appears before payment ($1.50–$3.00 in Mogadishu, $6.95 elsewhere; the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists every district).
+4. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia) — the approved total is the charged total.
+5. Keep the order number and check the laptop against the listing when it arrives; support@hayaan.co works from that number.
+
+## The bottom line
+
+The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $950](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $75](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1396,6 +1501,9 @@ export const SEO_POSTS: BlogPost[] = [
   // Task 96 — the Galaxy A18 landed in the catalog at $187; specs verified against
   // GSMArena/SamMobile/DigitalTrends, prices verified against the live catalog.
   { ...post16, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-a18-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:30:00.000Z"), createdAt: "2026-10-12T10:30:00.000Z", updatedAt: "2026-10-14T08:00:00.000Z" },
+  // Task 101 — HP EliteBook buying guide; prices verified against the live
+  // catalog on publish day (840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310).
+  { ...post17, coverImage: "https://hayaan.co/images/blog/hp-elitebook-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T09:00:00.000Z"), createdAt: "2026-10-15T09:00:00.000Z", updatedAt: "2026-10-15T09:00:00.000Z" },
 ];
 
 
