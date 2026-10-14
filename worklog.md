@@ -2187,3 +2187,22 @@ Work Log:
 
 Stage Summary:
 - The PDP FAQ now uses the site-wide FaqSection accordion pattern — one consistent FAQ look across storefront, categories, blog and product pages; content and AEO schema untouched.
+---
+Task ID: 101
+Agent: Super Z (main)
+Task: Owner request "Make HP EliteBook blog post seo & AEO optimized" (screenshots: the 840 G7 product card + shop page with 3 EliteBooks circled). No EliteBook post existed — created one following the Task 96/99 playbook.
+
+Work Log:
+- Pre-flight: no EliteBook post among the 16 shipped guides; live catalog has 4 EliteBooks — 840 G9 (i7-12Gen) $950 stock 25, 830 G8 (i7-11Gen) $380 stock 25, 830 G7 (i7-10Gen) $340 stock 25, 840 G7 Notebook $310 stock 12 (the Featured card from the owner's screenshot). Product descriptions are generic boilerplate, so the post uses model-line public traits (screen sizes, CPU generations from listing names, business build) and hedges RAM/SSD configs to the listing/support — no invented specs.
+- New post17 in src/lib/blog-seo-posts.ts: slug hp-elitebook-price-in-somalia, title "HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy" (targets "hp elitebook price in somalia", "hp laptop price in somalia", "business laptop somalia"). Full AEO mesh: ~80-word quickAnswer with all 4 prices, 5 HowTo order steps, 5 FAQs (price, best value, 830-vs-840, office fit, pay+delivery). Content: price section with exact-match anchors to all four listings, the $310–$950 ladder, line-traits bullets, EliteBook-vs-MacBook-vs-TUF section ($1,530 Air M5 / $1,720 Pro M4 / $1,320 TUF FX507 — slugs verified via live API), 5-step order walkthrough, bottom line pairing printer + home-office guides. No $75-rule language anywhere. Publish dates 2026-10-15T09:00Z.
+- Cover: scripts/task101-cover.mjs (SDK, 1344x768, strict no-text prompt: silver business laptop on office desk) + scripts/task101-optimize-covers.py -> public/images/blog/hp-elitebook-price-in-somalia.jpg (1200x675 progressive, 78 KB).
+- Wiring: product-guides.ts BUYING_GUIDES.elitebook entry + /elitebook/ name match (all 4 EliteBook PDPs now render the guide card first, specific-match priority); llms.txt buyer-guides line added. Sitemap/llms-full/feeds auto-include via listPublishedPosts.
+- /api/admin/upload auto-deletion count: 11 (restored from git pre-commit). Build green (next build + opennextjs-cloudflare). Commit d1ed592 pushed b0c35bc..d1ed592 after fetch + merge-base --is-ancestor linear check.
+- Deploy ~125 s. Live verification: title tag correct (single suffix), og:title/image/meta description correct, BlogPosting (datePublished=dateModified 2026-10-15) + FAQPage (5 Q) + HowTo (5 steps) JSON-LD all serving, QUICK ANSWER box visible, prices $310 x52 / $340 x22 / $380 x30 / $950 x52 occurrences, "elitebook" x165 on-page, 0 $75-rule hits, cover URL 200 (80 KB), post in sitemap.xml, /blog index card renders (relative link + cover), llms.txt line live.
+- PDP spot-check (840 G9): "Before you order — buying guides" shows the new EliteBook card first; Product JSON-LD brand already "HP" via brandForProduct (no PDP changes needed).
+- Evidence: download/task101-elitebook-post-desktop.png, task101-elitebook-post-desktop2.png, task101-elitebook-post-mobile.png, task101-elitebook-post-mobile2.png, task101-elitebook-pdp-guidecard.png.
+
+Stage Summary:
+- hayaan.co/blog/hp-elitebook-price-in-somalia is live with the full SEO/AEO mesh (keyword title/meta, BlogPosting + FAQPage + HowTo schema, quick-answer box, FAQ accordion, cover, sitemap, llms.txt) and receives internal links from all four EliteBook product pages.
+- Off-site follow-ups for ranking (same as A18): Search Console submit + request indexing for the new URL; KarmaLinks submission still queued.
+- Follow-ups unchanged: Somali translation pass, blog batch, remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, Zoho DKIM+DMARC, RESEND_API_KEY.
