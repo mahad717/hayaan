@@ -41,6 +41,26 @@ function rowToPost(row: any): BlogPost {
   };
 }
 
+/** Task 99: blog_posts has NO columns for the shipped guides' AEO fields
+ *  (quick_answer / faqs / howto_steps). When an admin-saved row shadows a
+ *  shipped guide (same slug), the public page silently loses the QUICK
+ *  ANSWER box and the FAQPage/HowTo JSON-LD — the Task 98 regression. Fill
+ *  the three fields from the code post whenever the row doesn't carry them;
+ *  owner edits to title/excerpt/content still win. */
+function withShippedAeo(post: BlogPost): BlogPost {
+  const shipped = SEO_POSTS.find((p) => p.slug === post.slug);
+  if (!shipped) return post;
+  const hasAeo =
+    !!post.quickAnswer && !!post.faqs?.length && !!post.howtoSteps?.length;
+  if (hasAeo) return post;
+  return {
+    ...post,
+    quickAnswer: post.quickAnswer ?? shipped.quickAnswer,
+    faqs: post.faqs?.length ? post.faqs : shipped.faqs,
+    howtoSteps: post.howtoSteps?.length ? post.howtoSteps : shipped.howtoSteps,
+  };
+}
+
 /** Detects Supabase's "table does not exist" family of errors. */
 export function isMissingTableError(err: { message?: string; code?: string }): boolean {
   const msg = (err?.message ?? "").toLowerCase();
@@ -59,7 +79,7 @@ export function isMissingTableError(err: { message?: string; code?: string }): b
 function mergeSeoPosts(dbPosts: BlogPost[], limit: number): BlogPost[] {
   const dbSlugs = new Set(dbPosts.map((p) => p.slug));
   const extra = SEO_POSTS.filter((p) => !dbSlugs.has(p.slug));
-  return [...dbPosts, ...extra]
+  return [...dbPosts.map(withShippedAeo), ...extra]
     .sort(
       (a, b) =>
         new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime(),
@@ -109,7 +129,7 @@ export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | n
       if (isMissingTableError(error)) return SEO_POSTS.find((p) => p.slug === slug) ?? null;
       throw new Error(error.message);
     }
-    if (data) return rowToPost(data);
+    if (data) return withShippedAeo(rowToPost(data));
     // DB miss — fall back to the shipped SEO guides (owner copy with the
     // same slug always wins above).
     return SEO_POSTS.find((p) => p.slug === slug) ?? null;
@@ -119,7 +139,7 @@ export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | n
     const post = await (await getDb()).blogPost.findFirst({
       where: { slug, status: "published" },
     });
-    if (post) return rowToPost(post);
+    if (post) return withShippedAeo(rowToPost(post));
     return SEO_POSTS.find((p) => p.slug === slug) ?? null;
   } catch (err: any) {
     if (isMissingTableError(err)) return SEO_POSTS.find((p) => p.slug === slug) ?? null;
