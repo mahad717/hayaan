@@ -6,6 +6,7 @@ import { BookOpen } from "lucide-react";
 import { getProductBySlug } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
+import { FaqSection } from "@/components/store/faq-section";
 import { guidesForProduct } from "@/lib/product-guides";
 import { brandForProduct, pdpSeoFor, type PdpSeoCtx } from "@/lib/pdp-seo";
 import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
@@ -170,37 +171,21 @@ export default async function ProductPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductDetail initialProduct={product} />
 
-      {/* Task 99: visible keyword-rich intro + FAQ section (AEO). Rendered
-          server-side so the first HTML the crawler sees carries the exact
-          "Samsung Galaxy A18 price" phrasing and the Q&A the FAQPage JSON-LD
-          below references — Google requires on-page FAQ content. */}
+      {/* Task 99: visible keyword-rich intro + FAQ section (AEO), rendered
+          with the site-wide FaqSection accordion-card pattern (same component
+          as homepage/category/blog guides) so the store has one FAQ look.
+          Server-rendered — the FAQPage JSON-LD above still mirrors this text. */}
       {override && faqs && (
-        <section
-          aria-labelledby="pdp-seo-heading"
+        <FaqSection
+          faqs={faqs}
+          title={override.heading}
           className="mx-auto max-w-7xl px-4 pb-12 sm:px-6"
-        >
-          <div className="rounded-2xl border border-[#e6e2d4] bg-white p-6 sm:p-8">
-            <h2
-              id="pdp-seo-heading"
-              className="text-lg font-bold text-brand-dark"
-            >
-              {override.heading}
-            </h2>
+          intro={
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground font-original">
               {override.intro(seoCtx)}
             </p>
-            <div className="mt-6 divide-y divide-[#efece0]">
-              {faqs.map((f) => (
-                <div key={f.q} className="py-4 first:pt-0 last:pb-0">
-                  <h3 className="text-sm font-bold text-brand-dark">{f.q}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground font-original">
-                    {f.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          }
+        />
       )}
 
       {/* Buying guides (Task 87): internal links from the product page to

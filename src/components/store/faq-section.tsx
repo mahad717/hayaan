@@ -4,16 +4,22 @@
 // content). Used by the homepage (site-wide Q&A), category pages and blog
 // guides.
 
+import type { ReactNode } from "react";
+
 import type { FaqEntry } from "@/lib/faq";
 
 export function FaqSection({
   faqs,
   title = "Frequently asked questions",
   className = "",
+  intro,
 }: {
   faqs: FaqEntry[];
   title?: string;
   className?: string;
+  /** Optional paragraph rendered under the heading, above the cards (PDP
+   *  keyword intro). Existing callers don't pass it and render unchanged. */
+  intro?: ReactNode;
 }) {
   if (!faqs.length) return null;
   return (
@@ -21,6 +27,7 @@ export function FaqSection({
       <h2 id="faq-heading" className="text-lg font-semibold text-brand-dark">
         {title}
       </h2>
+      {intro}
       {/* items-start: without it, grid rows stretch to the tallest card, so
           opening one question visually "expanded" its parallel card too. */}
       <div className="mt-4 grid items-start gap-3 md:grid-cols-2">
