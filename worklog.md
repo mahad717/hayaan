@@ -2229,3 +2229,25 @@ Stage Summary:
 - Off-site work decides the rankings from here: Search Console (submit homepage + the new post, request indexing), Google Business Profile if the owner has a physical location (biggest lever for true "near me" intent), and the queued KarmaLinks submission.
 - Deliberately excluded: trade-in/buy-sell-used keywords (wrong business intent — covered honestly by a FAQ) and US-geo keywords (wrong country).
 - Follow-ups unchanged: Somali translation pass, blog batch, Norman UX, test-user cleanup, ratings/reviews, digital goods, Zoho DKIM+DMARC, RESEND_API_KEY.
+
+---
+Task ID: 103
+Agent: Super Z (main)
+Task: Owner correction — all HP EliteBooks are Refurbished; fix the recently created EliteBook blog post and any contradicting copy.
+
+Work Log:
+- Audited all "refurbish"/"new" claims: confirmed live PDP descriptions and homepage copy make no "new" claim; found ONE contradicting claim in post18 (Task 102 near-me pillar) FAQ: "Hayaan Market sells new products only".
+- post17 (hp-elitebook-price-in-somalia) rewritten: title now "Refurbished HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy" (slug unchanged); excerpt, quickAnswer, HowTo step 1, FAQ1 and body now say refurbished; new dedicated section "All four EliteBooks are refurbished — here is why that is the deal" (honest value framing, RAM/SSD hedged to listing/support); "the newest of the four" softened to "the newest platform of the four"; bottom line says "real refurbished business laptops under $400".
+- post17 FAQ mesh grown 5→6 with new Q "Are these EliteBooks new or refurbished?" (AEO win: matches real search intent).
+- post18 fixed: FAQ "Do you buy or trade in used electronics?" no longer claims "sells new products only" — now states catalog is new stock with one exception (all four EliteBooks are refurbished units, from $310); laptops bullet anchor text → "refurbished HP EliteBooks from $310".
+- dateModified bumped: post17 → 2026-10-16T09:00Z, post18 → 2026-10-16T09:30Z (BlogPosting JSON-LD dateModified follows automatically).
+- product-guides.ts EliteBook card + llms.txt guide line renamed "Refurbished HP EliteBook Price in Somalia (2026)" (PDP guide-card anchor text updated site-wide on all 4 EliteBook PDPs).
+- Build (bun run build), restore auto-deleted upload route, commit b1abe64, linear-history check, push a60d097..b1abe64, deploy poll (~90s to live).
+- Live verification (15 checks): title tag has "Refurbished"; 14 refurbish mentions on page; QUICK ANSWER box updated; new section rendered; FAQPage JSON-LD = 6 questions incl. new-or-refurbished; BlogPosting dateModified 2026-10-16; near-me post old claim gone + refurbished exception present; PDP guide card title updated; llms.txt + /blog index cards updated; homepage 200; zero "$75 free shipping" hits.
+- Screenshots: download/task103-refurbished-post-top.png, download/task103-refurbished-section.png.
+
+Stage Summary:
+- Site copy now matches inventory reality: every EliteBook reference says refurbished; the one contradicting "new products only" FAQ is fixed.
+- SEO note: title/slug kept at hp-elitebook-price-in-somalia (no URL break); "refurbished" added as a targeting keyword; dateModified bump should trigger re-crawl.
+- Commit b1abe64 pushed; deployment verified live on https://hayaan.co.
+- Follow-up suggestion to owner (not done, DB-level): add "Refurbished" to the 4 EliteBook product names/descriptions in the catalog so PDPs match the blog.
