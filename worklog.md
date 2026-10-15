@@ -2206,3 +2206,26 @@ Stage Summary:
 - hayaan.co/blog/hp-elitebook-price-in-somalia is live with the full SEO/AEO mesh (keyword title/meta, BlogPosting + FAQPage + HowTo schema, quick-answer box, FAQ accordion, cover, sitemap, llms.txt) and receives internal links from all four EliteBook product pages.
 - Off-site follow-ups for ranking (same as A18): Search Console submit + request indexing for the new URL; KarmaLinks submission still queued.
 - Follow-ups unchanged: Somali translation pass, blog batch, remaining Norman UX fixes, test-user cleanup, ratings/reviews, digital goods, Zoho DKIM+DMARC, RESEND_API_KEY.
+---
+Task ID: 102
+Agent: Super Z (main)
+Task: Owner wants to rank #1 for ~90 keywords around "electronics store / shop / near me / online shopping". On-site SEO/AEO sweep across homepage, schema, content and internal links.
+
+Work Log:
+- Clustered the 90 terms: generic store/shop head terms, ~40 "near me/nearest/around me" local-intent variants, online-shopping intent, gadget/outlet/home-electronics variants — plus two clusters deliberately NOT chased: "buy and sell electronics near me / buy my electronics" (trade-in intent — Hayaan sells new only; addressed honestly with a no-trade-in FAQ) and "us/american electronics store" (wrong geo). Google normalizes the near-me variants heavily, so the work targets the cluster representatives.
+- Homepage (layout.tsx): default title now "Hayaan Market — Online Electronics Store in Somalia"; description rewritten around "online electronics store near you in Somalia" + delivery/payment; keywords array expanded to 12 cluster terms; OG/twitter mirrored. Hero sub (EN+SO) now reads "…the online electronics store that delivers to your door in Mogadishu and across Somalia" (visible keyword text, brand tagline H1 untouched).
+- Schema: added an OnlineStore node to the site-wide @graph — areaServed Mogadishu + Somalia, paymentAccepted (EVC Plus, Edahab, card), currenciesAccepted USD, knowsAbout (8 electronics categories). This is the entity signal for "electronics store" + local intent.
+- Site FAQs (faq.ts, EN+SO mirrors): new top-of-list Q "Where can I buy electronics near me in Somalia?" — renders in the visible homepage FAQ and its FAQPage JSON-LD automatically.
+- New pillar post18 electronics-store-near-me-in-somalia (title "Electronics Store Near Me in Somalia (2026): Prices, Delivery to Every District"): near-me reframe (the store that delivers to your district IS the nearest store), quickAnswer, 5 HowTo steps, 6 FAQs (nearest store, buy online, catalog+price anchors, my district, no-trade-in, safety), content linking all 5 category pages + A18/EliteBook/TV/router/AC/PS5/printers guides + Mogadishu/payment guides + bulk quote. Verified price anchors ($118 phones, $310 EliteBook, $175 TVs, $75 printers, $15 routers, $260 AC, $720 PS5). Publish dates 2026-10-15T11:00Z. Cover: scripts/task102-cover.mjs (smartphone+delivery boxes+rider helmet, no-text) → 1200x675 JPG.
+- Internal anchors: where-to-buy-electronics ("near-you guide") and Mogadishu ("electronics-store-near-you guide") posts now link the pillar with near-me anchor text. llms.txt: intro line now "…and the country's online electronics store" + new guide bullet.
+- CRITICAL INFRA FIND: the recurring /api/admin/upload deletion was this time COMMITTED to local history by the container's UUID auto-committer (9adedd1, author "Z User") — first time it reached history instead of the working tree. origin/main was NOT affected (still had the file from d1ed592) so live uploads kept working. Restored from d1ed592 in commit b5ce073 BEFORE pushing, so the push did not break admin uploads. Two artifact auto-commits (4c8ec63, 9adedd1) rode along in the push — harmless (screenshots + the deletion this commit undoes).
+- Commits: b5ce073 (upload restore) + a60d097 (Task 102), pushed d1ed592..a60d097 after linear-history check. Deploy ~75 s.
+- Live verification: homepage title/desc/OnlineStore schema/hero sub/new FAQ all serving; post live with BlogPosting (2026-10-15) + FAQPage (6 Q) + HowTo (5 steps) JSON-LD, og:image resolves; on-page density: "electronics store near me" x22, "near you" x12, "nearest electronics store" x9; no $75-rule text; llms.txt positioning + bullet live; post in sitemap.
+- Evidence: download/task102-nearme-post-desktop.png, task102-nearme-post-desktop2.png, task102-nearme-post-mobile.png, task102-home-hero.png.
+- /api/admin/upload auto-deletion count: 12 (this time committed — restored in b5ce073).
+
+Stage Summary:
+- The store now targets the electronics-store keyword clusters from four angles: homepage metadata + hero + FAQ (head terms), OnlineStore schema (entity/local intent), the new near-me pillar post (long-tail), and keyword-anchor internal links from two existing guides.
+- Off-site work decides the rankings from here: Search Console (submit homepage + the new post, request indexing), Google Business Profile if the owner has a physical location (biggest lever for true "near me" intent), and the queued KarmaLinks submission.
+- Deliberately excluded: trade-in/buy-sell-used keywords (wrong business intent — covered honestly by a FAQ) and US-geo keywords (wrong country).
+- Follow-ups unchanged: Somali translation pass, blog batch, Norman UX, test-user cleanup, ratings/reviews, digital goods, Zoho DKIM+DMARC, RESEND_API_KEY.
