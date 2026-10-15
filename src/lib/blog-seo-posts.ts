@@ -88,7 +88,7 @@ It also means your money moves through a secure hosted checkout — pay with EVC
 
 ## Ready to browse?
 
-Start with the categories people buy most: [computers, TV & gaming](https://hayaan.co/category/computers-tv-gaming), [phones & wearables](https://hayaan.co/category/phones-wearables), and [power & audio](https://hayaan.co/category/power-charging-audio). Bookmark the [deals page](https://hayaan.co/deals) — price drops and restocks get announced there first — and if you're buying for an office, school, or hotel, the [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+Start with the categories people buy most: [computers, TV & gaming](https://hayaan.co/category/computers-tv-gaming), [phones & wearables](https://hayaan.co/category/phones-wearables), and [power & audio](https://hayaan.co/category/power-charging-audio). If you landed here from a "electronics store near me" search, the [near-you guide](https://hayaan.co/blog/electronics-store-near-me-in-somalia) is the short version: the store that delivers to your district is nearer than the shop across town. Bookmark the [deals page](https://hayaan.co/deals) — price drops and restocks get announced there first — and if you're buying for an office, school, or hotel, the [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
 };
 
 const post2 = {
@@ -969,7 +969,7 @@ And one rule that keeps it simple: **the fee is per order** — one cart with ev
 
 ## What Mogadishu orders most
 
-The city's most-ordered shelves: [phones & wearables](https://hayaan.co/category/phones-wearables) — the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) lists every model — and [computers & TV](https://hayaan.co/category/computers-tv-gaming), where the [PS5 guide](https://hayaan.co/blog/ps5-price-in-somalia) and the [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) cover the big-ticket picks. Home cooling is the quiet riser: the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) sizes Lightwave units from $260, stabilizer included.
+The city's most-ordered shelves: [phones & wearables](https://hayaan.co/category/phones-wearables) — the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) lists every model — and [computers & TV](https://hayaan.co/category/computers-tv-gaming), where the [PS5 guide](https://hayaan.co/blog/ps5-price-in-somalia) and the [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) cover the big-ticket picks. Home cooling is the quiet riser: the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) sizes Lightwave units from $260, stabilizer included. And if you arrived from a "electronics store near me" search, the [electronics-store-near-you guide](https://hayaan.co/blog/electronics-store-near-me-in-somalia) is the one-line answer: the nearest store is the one that delivers to your district.
 
 ## Paying from Mogadishu
 
@@ -1473,6 +1473,108 @@ It depends on the work. If the work is documents, browsers, email and video call
 The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $950](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $75](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
 };
 
+// Task 102 — "electronics store near me" pillar post (owner keyword list:
+// ~90 terms around electronics store / shop / near me / online shopping).
+// Targets the near-me + generic-store + online-shopping clusters with the
+// local-intent reframe: the nearest store is the one that comes to you.
+// Prices verified against the live catalog (phones $118+, EliteBook $310+,
+// TVs $175+, printers $75+, routers $15+, AC $260+, PS5 $720).
+const post18 = {
+  id: "seo-electronics-store-near-me-in-somalia",
+  slug: "electronics-store-near-me-in-somalia",
+  title: "Electronics Store Near Me in Somalia (2026): Prices, Delivery to Every District",
+  excerpt:
+    "Searching for an electronics store near you? The nearest one is the phone in your hand: Hayaan Market delivers phones, laptops, TVs and home electronics to every Mogadishu district and nationwide — at fixed USD prices.",
+  quickAnswer:
+    "The nearest electronics store in Somalia is the one that comes to you: Hayaan Market (hayaan.co) is an online electronics store delivering to every Mogadishu district for $1.50–$3.00 and anywhere else in the country for a flat $6.95. Phones from $118, laptops from $310, TVs from $175, printers from $75 — all at fixed USD prices paid with EVC Plus, Edahab, or card.",
+  howtoSteps: [
+    {
+      name: "Open the store on your phone",
+      text: "Go to hayaan.co — the full electronics catalog is there: phones, laptops, TVs, printers, routers, air conditioners, power and audio gear, every listing with its exact USD price and live stock.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add what you need to the cart and sign in with your email so the order and its receipt stay in your order history.",
+    },
+    {
+      name: "Pick your delivery district",
+      text: "Mogadishu shoppers pick their district for the exact fee ($1.50–$3.00 across all 20 districts); anywhere else in Somalia is a flat $6.95.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "EVC Plus, Edahab, or card — the amount you approve on the hosted page is the amount that moves, with a record on both sides.",
+    },
+    {
+      name: "Receive and check the order",
+      text: "Keep the order number and check the items against the listing when they arrive; support@hayaan.co works from that number the same day if anything is off.",
+    },
+  ],
+  faqs: [
+    {
+      q: "Where is the nearest electronics store to me in Mogadishu?",
+      a: "The nearest one is your phone: Hayaan Market (hayaan.co) delivers electronics to every district in Mogadishu for $1.50–$3.00 — from Hodan, Waberi and Wadajir up to Daynile, Kahda and Garasbaaley — so the store comes to your door instead of you travelling across town for stock that may not even be there.",
+    },
+    {
+      q: "Can I buy electronics online in Somalia?",
+      a: "Yes. Hayaan Market sells phones, laptops, TVs, printers, routers, air conditioners and home gadgets online at fixed USD prices. You order on the site, pay through the secure checkout with EVC Plus, Edahab, or card, and the items are delivered to your address.",
+    },
+    {
+      q: "What electronics can I buy at Hayaan Market?",
+      a: "The catalog covers every category an electronics store carries: smartphones from $118, business laptops from $310 (MacBooks from $1,350), smart TVs from $175 to $2,350, HP laser printers from $75, Wi-Fi routers from $15, split air conditioners from $260, PS5 consoles from $720, projectors, power banks and audio gear.",
+    },
+    {
+      q: "Do you deliver electronics to my district?",
+      a: "Yes — all 20 Mogadishu districts are priced ($1.50–$3.00 by district, shown at checkout before you pay), and anywhere else in Somalia is a flat $6.95 regardless of order size.",
+    },
+    {
+      q: "Do you buy or trade in used electronics?",
+      a: "No — Hayaan Market sells new products only and does not buy or trade used devices. If you represent an office, school or shop, the bulk quote page at hayaan.co/quote is the right way to order several units at tailored prices.",
+    },
+    {
+      q: "Is it safe to order electronics online in Somalia?",
+      a: "At Hayaan Market every listing shows the exact model, USD price and live stock before you order; payment runs through a secure hosted checkout, the total you approve is the total that is charged, and every order keeps a receipt in your order history plus a support line (WhatsApp and support@hayaan.co) if anything needs fixing.",
+    },
+  ],
+  content: `Type "electronics store near me" into your phone and the map shows you shops across town — their opening hours, whether they answer, and whether the model you want is even in stock. In Mogadishu that search usually ends the same way: a taxi ride, a bargaining session, and a shop that happens to be out of the one thing you came for. There is a faster answer: the nearest electronics store to you is the one that comes to you. [Hayaan Market](https://hayaan.co) is an online electronics store that delivers to **every district in Mogadishu and everywhere else in Somalia** — with the price printed on every listing before you click.
+
+## The electronics store that delivers to your district
+
+Hayaan covers all **20 Mogadishu districts** — delivery runs **$1.50–$3.00** depending on where you are (from Hodan, Waberi and Wadajir up to Daynile, Kahda, Gubadley, Darussalam and Garasbaaley), and **anywhere else in Somalia is a flat $6.95**. The exact fee for your address shows at checkout before you pay — no surprises, no "delivery to be discussed".
+
+That changes the near-me question. The shop across town is only "near" if it has your item, at a fair price, today. A store that delivers to your door with the stock count live on the page is nearer — and it is open at midnight.
+
+## What's in the store: every electronics category, priced
+
+- **Phones** — smartphones from **$118** (the budget Galaxy A16) through the mid-range — the [Galaxy A18 at $190](https://hayaan.co/blog/samsung-galaxy-a18-price-in-somalia) — up to flagships; the [phones section](https://hayaan.co/category/phones-wearables) lists them all with exact prices.
+- **Laptops** — business-class [HP EliteBooks from $310](https://hayaan.co/blog/hp-elitebook-price-in-somalia) and MacBooks from $1,350, in the [Computers & TV section](https://hayaan.co/category/computers-tv-gaming).
+- **TVs** — smart TVs from **$175** (32-inch) to **$2,350** (85-inch Samsung); the sizing guide matches the screen to your room.
+- **Printers** — HP lasers from **$75**, with the toner pairing explained in the printer guide.
+- **Networking** — [Wi-Fi routers and access points from $15](https://hayaan.co/blog/wifi-router-price-in-somalia) for homes and offices.
+- **Cooling** — [split air conditioners from $260](https://hayaan.co/blog/air-conditioner-price-in-somalia), room-sizing included.
+- **Gaming & more** — [PS5 from $720](https://hayaan.co/blog/ps5-price-in-somalia), projectors from $350, plus the [power, charging and audio section](https://hayaan.co/category/power-charging-audio) for power banks, chargers and speakers.
+
+Home electronics, office electronics, gadgets — the shelves the big stores carry, with the prices the big stores print.
+
+## Why Somalis buy electronics online instead of walking the market
+
+1. **The price is fixed and printed.** Every listing states the exact USD amount — no haggling, no tourist markup, no VAT.
+2. **The stock is real.** The live count sits on each product page, so you never travel for an item that sold out yesterday.
+3. **The payment is documented.** EVC Plus, Edahab, or card through a secure hosted checkout — a record on both sides and a receipt in your order history.
+4. **The store comes to you.** Your district's exact delivery fee is calculated before you pay, in Mogadishu or anywhere in the country.
+
+## How to order from the electronics store near you
+
+1. Open [hayaan.co](https://hayaan.co) and find your item — the [full guide to shopping online in Somalia](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) walks the whole flow.
+2. Add it to the cart and sign in with your email.
+3. Choose your delivery district — the exact fee appears before payment (the [Mogadishu guide](https://hayaan.co/blog/online-shopping-in-mogadishu) lists all 20 districts).
+4. Pay with EVC Plus, Edahab, or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia).
+5. Check the order against the listing when it arrives; support@hayaan.co handles anything off the same day.
+
+## The bottom line
+
+"Electronics store near me" used to mean the shop with the closest gate. In 2026 it means the store that reaches your gate: [Hayaan Market](https://hayaan.co) carries the phones, laptops, TVs, printers, routers, air conditioners and gadgets the whole market sells — at printed USD prices, delivered to every Mogadishu district for $1.50–$3.00 and nationwide for $6.95. Furnishing a whole office or shop? The [bulk quote form](https://hayaan.co/quote) beats listed prices.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1504,6 +1606,9 @@ export const SEO_POSTS: BlogPost[] = [
   // Task 101 — HP EliteBook buying guide; prices verified against the live
   // catalog on publish day (840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310).
   { ...post17, coverImage: "https://hayaan.co/images/blog/hp-elitebook-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T09:00:00.000Z"), createdAt: "2026-10-15T09:00:00.000Z", updatedAt: "2026-10-15T09:00:00.000Z" },
+  // Task 102 — "electronics store near me" pillar; covers the owner's
+  // store/shop/near-me/online-shopping keyword clusters.
+  { ...post18, coverImage: "https://hayaan.co/images/blog/electronics-store-near-me-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T11:00:00.000Z"), createdAt: "2026-10-15T11:00:00.000Z", updatedAt: "2026-10-15T11:00:00.000Z" },
 ];
 
 

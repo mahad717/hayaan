@@ -27,6 +27,10 @@ export const SITE_FAQS: FaqEntry[] = [
     a: "Hayaan Market (hayaan.co) is a Somali online marketplace. You can buy electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, pay securely through EVC Plus, Edahab, and Card, and get your order delivered to your door.",
   },
   {
+    q: "Where can I buy electronics near me in Somalia?",
+    a: "Hayaan Market (hayaan.co) is an online electronics store that delivers to your door — every Mogadishu district for $1.50–$3.00 and anywhere else in Somalia for a flat $6.95. Phones, laptops, TVs, printers, routers, air conditioners and home gadgets are all listed at fixed USD prices, and the exact delivery fee shows at checkout before you pay.",
+  },
+  {
     q: "How do I order from Hayaan Market?",
     a: "Browse the catalog, add items to your cart, then check out with your name, phone number and delivery district. You pay securely through EVC Plus, Edahab, or Card and the order is delivered to your address. Offices, schools and hotels can also send a bulk request at hayaan.co/quote.",
   },
@@ -153,6 +157,10 @@ export const SITE_FAQS_SO: FaqEntry[] = [
   {
     q: "Maxay tahay Hayaan Market?",
     a: "Hayaan Market (hayaan.co) waa suuq online oo Soomaali ah. Waxaad ka iibsataa elektirooniks, TV-yada, kombuyuutarada, teleefoonada, koronta iyo shubista, qalabka guriga iyo xafiiska, iyo caafimaadka — qiimo USD ah oo go'an, bixin ammaan ah oo EVC Plus, Edahab iyo kaar ah, iyo gaadhitaan ilaa albaabkaada.",
+  },
+  {
+    q: "Xaggee baan u dhow ka iibsan karaa elektirooniks Soomaaliya?",
+    a: "Hayaan Market (hayaan.co) waa dukaan elektiroonik online ah oo albaabkaada kuugu keenta — degmo kasta oo Muqdisho ah $1.50–$3.00, Soomaaliya meel kastana $6.95 oo go'an. Teleefoono, laptop-yada, TV-yada, printaro, router-yada, kondasitoorada iyo agabka guriga oo dhan ayaa qiimo USD go'an leh laga helaa, khidmada gaadhitaankuna lagu tusaa checkout-ka kahor intaadan bixin.",
   },
   {
     q: "Sideen u dalban karaa Hayaan Market?",

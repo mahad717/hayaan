@@ -11,7 +11,7 @@ export const dynamic = "force-static";
 export function GET() {
   const body = `# Hayaan Market
 
-> Hayaan Market (hayaan.co) is a Somali online marketplace: electronics, TVs, laptops, phones, power and charging gear, home and office equipment, and health supplements at fixed USD prices, paid securely through EVC Plus, Edahab, or card and delivered to your door in Mogadishu or anywhere in Somalia.
+> Hayaan Market (hayaan.co) is a Somali online marketplace and the country's online electronics store: phones, laptops, TVs, printers, routers, air conditioners, power and charging gear, home and office equipment, and health supplements at fixed USD prices, paid securely through EVC Plus, Edahab, or card and delivered to your door in Mogadishu or anywhere in Somalia.
 
 Hayaan Market serves customers across Somalia. Prices are listed in US dollars with no VAT; every listing shows the exact price and stock before ordering. Delivery inside Mogadishu is priced per district ($1.50-$3.00) and costs a flat $6.95 anywhere else in the country. Payment runs through a secure hosted checkout — pay with EVC Plus, Edahab, or card. Bulk requests (offices, schools, hotels, shops) are handled via the /quote page. Support: WhatsApp ${WHATSAPP} or support@hayaan.co.
 
@@ -42,6 +42,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood, payment and ordering walkthrough.
 - [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $190 (128GB), specs, the A16/A17/A18 ladder, and how to order.
 - [HP EliteBook Price in Somalia](${SITE}/blog/hp-elitebook-price-in-somalia): every EliteBook from $310 (840 G7) to $950 (840 G9), which model to buy, and the ordering walkthrough.
+- [Electronics Store Near Me in Somalia](${SITE}/blog/electronics-store-near-me-in-somalia): the nearest electronics store is the one that delivers to your district — $1.50–$3.00 across all 20 Mogadishu districts, $6.95 nationwide.
 
 ## Key pages
 

@@ -50,7 +50,7 @@ const en = {
   "hero.title1": "Find what you need,",
   "hero.title2": "discover what you’ll love.",
   "hero.sub":
-    "Useful, well-selected finds across fashion, beauty, electronics, and home — all in one place, ready to order in minutes.",
+    "Electronics, fashion, beauty and home finds in one market — the online electronics store that delivers to your door in Mogadishu and across Somalia.",
   "hero.ctaShop": "Start shopping",
   "hero.ctaCategories": "Browse categories",
   "hero.reassure1": "Delivered to your door",
@@ -565,7 +565,7 @@ const so: Record<DictKey, string> = {
   "hero.title1": "Hel waxa aad u baahan tahay,",
   "hero.title2": "oo hel waxa aad jeceshahay.",
   "hero.sub":
-    "Alaab wanaagsan oo si fiican loo doortay — dhar, quruxda, elektirooniks iyo guryaha. Dhammaanna hal meel bay ku jiraan, waqti gaaban ayaad ku dalban kartaa.",
+    "Elektirooniks, dhar, quruxda iyo guryaha oo suuq hal meel ah — dukaanka elektiroonigka online-ka ah oo albaabkaada kuugu keenta Muqdisho iyo Soomaaliya oo dhan.",
   "hero.ctaShop": "Bilow iibsiga",
   "hero.ctaCategories": "Daawo qaybaha",
   "hero.reassure1": "Waa la keenaa albaabkaaga",

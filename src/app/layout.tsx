@@ -32,11 +32,25 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://hayaan.co"),
   title: {
-    default: "Hayaan Market — Everything You Need, All in One Market.",
+    default: "Hayaan Market — Online Electronics Store in Somalia",
     template: "%s — Hayaan Market",
   },
-  description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home at Hayaan Market — secure checkout via EVC Plus, Edahab, and card, delivered to your door.",
-  keywords: ["Hayaan Market", "online marketplace", "online shopping", "ecommerce", "Somalia", "apparel", "beauty", "electronics", "home & living"],
+  description:
+    "The online electronics store near you in Somalia — shop phones, laptops, TVs, home electronics and gadgets at fixed USD prices, pay with EVC Plus, Edahab or card, and get door delivery in every Mogadishu district and nationwide.",
+  keywords: [
+    "electronics store Somalia",
+    "online electronics store",
+    "electronics store near me",
+    "electronics shop Somalia",
+    "buy electronics online",
+    "electronics online shopping",
+    "electronic shop Mogadishu",
+    "home electronics Somalia",
+    "electronic gadgets online",
+    "consumer electronics store",
+    "Hayaan Market",
+    "online shopping Somalia",
+  ],
   authors: [{ name: "Hayaan Market" }],
   icons: {
     icon: { url: "/hayaan-logo-green.svg", type: "image/svg+xml" },
@@ -45,18 +59,20 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Hayaan Market — Everything You Need, All in One Market.",
-    description: "Shop useful, well-selected finds across apparel, beauty, electronics, and home — secure checkout via EVC Plus, Edahab, and card, delivered to your door.",
+    title: "Hayaan Market — Online Electronics Store in Somalia",
+    description:
+      "Shop phones, laptops, TVs, home electronics and gadgets at fixed USD prices — secure EVC Plus, Edahab & card checkout, door delivery in every Mogadishu district and nationwide.",
     url: "https://hayaan.co",
     siteName: "Hayaan Market",
     type: "website",
     locale: "en_US",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Hayaan Market — Everything you need to shop." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Hayaan Market — the online electronics store that delivers across Somalia" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hayaan Market",
-    description: "Everything You Need, All in One Market.",
+    title: "Hayaan Market — Online Electronics Store in Somalia",
+    description:
+      "Shop electronics online in Somalia: phones, laptops, TVs and home gadgets at fixed USD prices, delivered to your door.",
     images: ["/og.png"],
   },
   robots: {
@@ -85,6 +101,32 @@ function OrganizationJsonLd() {
             availableLanguage: ["English", "Somali"],
           },
         ],
+      },
+      {
+        "@type": "OnlineStore",
+        "@id": "https://hayaan.co/#store",
+        name: "Hayaan Market",
+        url: "https://hayaan.co",
+        logo: "https://hayaan.co/hayaan-logo-green.svg",
+        description:
+          "Online electronics store delivering phones, laptops, TVs, printers, routers, air conditioners and home gadgets across Mogadishu and Somalia at fixed USD prices.",
+        areaServed: [
+          { "@type": "City", name: "Mogadishu" },
+          { "@type": "Country", name: "Somalia" },
+        ],
+        currenciesAccepted: "USD",
+        paymentAccepted: "EVC Plus, Edahab, Credit Card",
+        knowsAbout: [
+          "smartphones",
+          "laptops",
+          "smart TVs",
+          "printers",
+          "Wi-Fi routers",
+          "air conditioners",
+          "home electronics",
+          "electronic gadgets",
+        ],
+        parentOrganization: { "@id": "https://hayaan.co/#organization" },
       },
       {
         "@type": "WebSite",
