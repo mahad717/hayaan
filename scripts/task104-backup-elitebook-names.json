@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1be68364-2ed6-4af0-9b90-ad538082bac2",
+    "name": "HP EliteBook 840 G9 Intel Core i7-12Gen",
+    "slug": "hp-elitebook-840-g9-intel-core-i7-12gen",
+    "description": "<p>HP EliteBook 840 G9 Intel Core i7-12Gen — serious performance for work, study and play, from Hayaan Market. Order today for fast delivery across Somalia with card or EVC Plus, Edahab payment methods.</p>",
+    "price": 950
+  },
+  {
+    "id": "4428bee6-31b1-48fb-be35-ea593df47ce3",
+    "name": "HP EliteBook 830 G8 Intel Core i7-11Gen",
+    "slug": "hp-elitebook-830-g8-intel-core-i7-11gen",
+    "description": "<p>Big-screen and big-power picks like the HP EliteBook 830 G8 Intel Core i7-11Gen move fast. Get yours now at Hayaan Market — nationwide delivery, card or EVC Plus, Edahab payment methods.</p>",
+    "price": 380
+  },
+  {
+    "id": "9cb20bb9-cf58-400a-8e52-1b8067139d36",
+    "name": "HP EliteBook 830 G7 Intel Core i7-10Gen",
+    "slug": "hp-elitebook-830-g7-intel-core-i7-10gen",
+    "description": "<p>HP EliteBook 830 G7 Intel Core i7-10Gen — serious performance for work, study and play, from Hayaan Market. Order today for fast delivery across Somalia with card or EVC Plus, Edahab payment methods.</p>",
+    "price": 340
+  },
+  {
+    "id": "01e2d8df-3ea6-4649-8ca5-8942c6e8a17e",
+    "name": "HP EliteBook 840 G7 Notebook",
+    "slug": "hp-elitebook-840-g7-notebook",
+    "description": "<p>Big-screen and big-power picks like the HP EliteBook 840 G7 Notebook move fast. Get yours now at Hayaan Market — nationwide delivery, card or EVC Plus, Edahab payment.</p>",
+    "price": 310
+  }
+]
