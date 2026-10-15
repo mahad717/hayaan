@@ -1374,18 +1374,20 @@ At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right
 // catalog on publish day: 840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310.
 // Model-line traits (screen sizes, CPU generations, business build) are public
 // knowledge; RAM/SSD configs deliberately hedged to the listing.
+// Task 103 correction (owner, 2026-10-16): all four EliteBooks are REFURBISHED
+// units — title, quick answer, FAQ and body rewritten to say so.
 const post17 = {
   id: "seo-hp-elitebook-price-in-somalia",
   slug: "hp-elitebook-price-in-somalia",
-  title: "HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy",
+  title: "Refurbished HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy",
   excerpt:
-    "Every HP EliteBook listed in Somalia right now — the $310 EliteBook 840 G7, $340 830 G7, $380 830 G8 and $950 840 G9 — what actually separates the four models, and how to order one to your door.",
+    "Every refurbished HP EliteBook listed in Somalia right now — the $310 EliteBook 840 G7, $340 830 G7, $380 830 G8 and $950 840 G9 — what actually separates the four models, and how to order one to your door.",
   quickAnswer:
-    "HP EliteBook laptops cost $310–$950 at Hayaan Market (hayaan.co): the 14-inch EliteBook 840 G7 at $310, the 13.3-inch 830 G7 at $340, the 830 G8 (11th-gen Core i7, Thunderbolt 4) at $380, and the 840 G9 (12th-gen Core i7) at $950. Prices are fixed USD, paid securely with EVC Plus, Edahab, or card, delivered to Mogadishu districts for $1.50–$3.00 or anywhere in Somalia for a flat $6.95.",
+    "Refurbished HP EliteBook laptops cost $310–$950 at Hayaan Market (hayaan.co): all four listed machines — the 14-inch EliteBook 840 G7 at $310, the 13.3-inch 830 G7 at $340, the 830 G8 (11th-gen Core i7, Thunderbolt 4) at $380, and the 840 G9 (12th-gen Core i7) at $950 — are refurbished business laptops, priced far below new. Prices are fixed USD, paid securely with EVC Plus, Edahab, or card, delivered to Mogadishu districts for $1.50–$3.00 or anywhere in Somalia for a flat $6.95.",
   howtoSteps: [
     {
       name: "Open the product page",
-      text: "Pick your model from the four listed below and check the live price and stock on its listing — every page shows the exact figure before you commit.",
+      text: "Pick your model from the four refurbished EliteBooks listed below and check the live price and stock on its listing — every page shows the exact figure before you commit.",
     },
     {
       name: "Add to cart and sign in",
@@ -1407,7 +1409,11 @@ const post17 = {
   faqs: [
     {
       q: "How much does an HP EliteBook cost in Somalia?",
-      a: "$310 for the EliteBook 840 G7, $340 for the 830 G7, $380 for the 830 G8, and $950 for the 840 G9 (12th-gen Core i7) at Hayaan Market — fixed USD prices with no VAT, and the live stock count shown on every listing.",
+      a: "$310 for the refurbished EliteBook 840 G7, $340 for the 830 G7, $380 for the 830 G8, and $950 for the 840 G9 (12th-gen Core i7) at Hayaan Market — fixed USD prices with no VAT, and the live stock count shown on every listing.",
+    },
+    {
+      q: "Are these EliteBooks new or refurbished?",
+      a: "All four are refurbished — pre-owned HP business laptops restored to full working order and resold at a fraction of the new price. That is why a business-class Core i7 EliteBook starts at $310 here instead of four figures, and why organizations keep buying them: the same business build at a price a small office can absorb.",
     },
     {
       q: "Which HP EliteBook is the best value?",
@@ -1426,18 +1432,18 @@ const post17 = {
       a: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout; delivery is $1.50–$3.00 by Mogadishu district and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
     },
   ],
-  content: `The laptop most Somali offices, NGOs and schools end up standardizing on is not the newest MacBook — it is HP's EliteBook line: aluminum-bodied, business-grade machines that survive daily commutes, long meetings and the occasional power cut. Four EliteBooks are [listed at Hayaan Market](https://hayaan.co/category/computers-tv-gaming) right now, spanning **$310 to $950**. This guide prices every one of them, explains what actually separates the models, and walks through ordering one to your door.
+  content: `The laptop most Somali offices, NGOs and schools end up standardizing on is not the newest MacBook — it is HP's EliteBook line: aluminum-bodied, business-grade machines that survive daily commutes, long meetings and the occasional power cut. Four refurbished EliteBooks are [listed at Hayaan Market](https://hayaan.co/category/computers-tv-gaming) right now, spanning **$310 to $950**. This guide prices every one of them, explains what actually separates the models, and walks through ordering one to your door.
 
 ## HP EliteBook price in Somalia
 
-The [HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) tops the range at **$950** — the newest of the four, built on Intel's 12th-generation Core i7. Below it, three proven value picks start at barely a third of that price:
+The [HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) tops the range at **$950** — the newest platform of the four, built on Intel's 12th-generation Core i7. Below it, three proven value picks start at barely a third of that price:
 
 - **HP EliteBook 840 G7 — $310.** The 14-inch entry point — [the cheapest business-class laptop in the shop](https://hayaan.co/product/hp-elitebook-840-g7-notebook), on Intel's 10th-generation Core platform.
 - **HP EliteBook 830 G7 — $340.** The same 10th-generation platform in the smaller, lighter 13.3-inch frame — [the 830 G7 listing](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen).
 - **HP EliteBook 830 G8 — $380.** One platform generation newer: an 11th-generation Core i7 with Thunderbolt 4 — [the 830 G8 listing](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen).
 - **HP EliteBook 840 G9 — $950.** The current-generation flagship: a 12th-generation Core i7 on Intel's newest business platform — [the 840 G9 listing](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen).
 
-Every listing is a fixed USD price with no VAT. The live stock count sits on each product page, and the delivery fee shows before you pay: $1.50–$3.00 by Mogadishu district, a flat $6.95 anywhere else in Somalia.
+All four machines are refurbished units, and every listing is a fixed USD price with no VAT. The live stock count sits on each product page, and the delivery fee shows before you pay: $1.50–$3.00 by Mogadishu district, a flat $6.95 anywhere else in Somalia.
 
 ## Which EliteBook should you buy? The $310–$950 ladder
 
@@ -1447,6 +1453,10 @@ Every listing is a fixed USD price with no VAT. The live stock count sits on eac
 4. **EliteBook 840 G9 — $950.** The long-haul pick. The 12th-generation platform, DDR5 memory and Wi-Fi 6E give it the performance headroom to stay fast for five-plus years — [the one to buy](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) if the laptop is your main work machine.
 
 > Rule of thumb: match the machine to the years you expect to keep it. A $310–$380 EliteBook comfortably covers documents, browsers and calls today; the $950 840 G9 is for anyone whose laptop IS the office.
+
+## All four EliteBooks are refurbished — here is why that is the deal
+
+Every EliteBook in this guide is a refurbished unit: a pre-owned HP business laptop restored to full working order and resold at a fraction of its original price. That is the entire reason a business-class Core i7 machine starts at $310 here instead of four figures — you are buying the previous fleet generation, not this year's retail box. Refurbished EliteBooks are also the world's most common second-life office laptop for a reason: the aluminum chassis, spill-resistant keyboard and business-grade components were built for a long service life in the first place, so the platform ages far better than a plastic consumer laptop ever does. The exact RAM and SSD configuration of each unit is stated on its listing, and support@hayaan.co confirms specifics before you order.
 
 ## What you get across the EliteBook line
 
@@ -1470,7 +1480,7 @@ It depends on the work. If the work is documents, browsers, email and video call
 
 ## The bottom line
 
-The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $950](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $75](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
+The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real refurbished business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $950](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $75](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
 };
 
 // Task 102 — "electronics store near me" pillar post (owner keyword list:
@@ -1528,7 +1538,7 @@ const post18 = {
     },
     {
       q: "Do you buy or trade in used electronics?",
-      a: "No — Hayaan Market sells new products only and does not buy or trade used devices. If you represent an office, school or shop, the bulk quote page at hayaan.co/quote is the right way to order several units at tailored prices.",
+      a: "No — Hayaan Market does not buy or trade in used devices. The catalog is new stock, with one exception: the business laptops — all four HP EliteBooks are refurbished units, from $310. If you represent an office, school or shop, the bulk quote page at hayaan.co/quote is the right way to order several units at tailored prices.",
     },
     {
       q: "Is it safe to order electronics online in Somalia?",
@@ -1546,7 +1556,7 @@ That changes the near-me question. The shop across town is only "near" if it has
 ## What's in the store: every electronics category, priced
 
 - **Phones** — smartphones from **$118** (the budget Galaxy A16) through the mid-range — the [Galaxy A18 at $190](https://hayaan.co/blog/samsung-galaxy-a18-price-in-somalia) — up to flagships; the [phones section](https://hayaan.co/category/phones-wearables) lists them all with exact prices.
-- **Laptops** — business-class [HP EliteBooks from $310](https://hayaan.co/blog/hp-elitebook-price-in-somalia) and MacBooks from $1,350, in the [Computers & TV section](https://hayaan.co/category/computers-tv-gaming).
+- **Laptops** — business-class [refurbished HP EliteBooks from $310](https://hayaan.co/blog/hp-elitebook-price-in-somalia) and MacBooks from $1,350, in the [Computers & TV section](https://hayaan.co/category/computers-tv-gaming).
 - **TVs** — smart TVs from **$175** (32-inch) to **$2,350** (85-inch Samsung); the sizing guide matches the screen to your room.
 - **Printers** — HP lasers from **$75**, with the toner pairing explained in the printer guide.
 - **Networking** — [Wi-Fi routers and access points from $15](https://hayaan.co/blog/wifi-router-price-in-somalia) for homes and offices.
@@ -1605,10 +1615,11 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post16, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-a18-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:30:00.000Z"), createdAt: "2026-10-12T10:30:00.000Z", updatedAt: "2026-10-14T08:00:00.000Z" },
   // Task 101 — HP EliteBook buying guide; prices verified against the live
   // catalog on publish day (840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310).
-  { ...post17, coverImage: "https://hayaan.co/images/blog/hp-elitebook-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T09:00:00.000Z"), createdAt: "2026-10-15T09:00:00.000Z", updatedAt: "2026-10-15T09:00:00.000Z" },
+  // Task 103 — owner correction: all four units are refurbished; copy rewritten.
+  { ...post17, coverImage: "https://hayaan.co/images/blog/hp-elitebook-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T09:00:00.000Z"), createdAt: "2026-10-15T09:00:00.000Z", updatedAt: "2026-10-16T09:00:00.000Z" },
   // Task 102 — "electronics store near me" pillar; covers the owner's
   // store/shop/near-me/online-shopping keyword clusters.
-  { ...post18, coverImage: "https://hayaan.co/images/blog/electronics-store-near-me-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T11:00:00.000Z"), createdAt: "2026-10-15T11:00:00.000Z", updatedAt: "2026-10-15T11:00:00.000Z" },
+  { ...post18, coverImage: "https://hayaan.co/images/blog/electronics-store-near-me-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T11:00:00.000Z"), createdAt: "2026-10-15T11:00:00.000Z", updatedAt: "2026-10-16T09:30:00.000Z" },
 ];
 
 

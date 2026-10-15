@@ -105,8 +105,8 @@ export const BUYING_GUIDES = {
   ),
   elitebook: G(
     "hp-elitebook-price-in-somalia",
-    "HP EliteBook Price in Somalia (2026)",
-    "Every EliteBook from $310 to $950 priced, the G7/G8/G9 differences, and how to order.",
+    "Refurbished HP EliteBook Price in Somalia (2026)",
+    "Every refurbished EliteBook from $310 to $950 priced, the G7/G8/G9 differences, and how to order.",
   ),
 } satisfies Record<string, GuideLink>;
 
