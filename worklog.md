@@ -2331,3 +2331,19 @@ Stage Summary:
 - Known limitation: headless CDP could not prove prerender ACTIVATION (fallback path measured instead); on real Chrome/Samsung Internet the activation path is instant when the prerender has finished building (needs the owner to confirm feel).
 - Artifacts: scripts/task106-back-nav-cdp.mjs, scripts/task106b-cdp.mjs, scripts/task106-pdp-shot.mjs, download/task106-activation-home.png, download/task106-pdp-backlink.png.
 - Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+---
+Task ID: 106c (addendum)
+Agent: Super Z (main agent)
+Task: Verify the Task 106 edge tier end-to-end on production and clean up the temporary diagnostics.
+
+Work Log:
+- Admin login for the debug-edge route failed: admin@hayaan.demo/admin123 now returns 401 "No account matches" (the owner evidently removed the demo admin after the Task 104 security flag — good). Pivot: temporary diagnostic header on the public Google Products feed route (reads the catalog through the same SWR), deployed in 477b767, removed in b2309be.
+- Live proof (feed response header, HKG colo): `caches=object; lastServe=edge-stale(catalog:v1:1000); edge[catalog:v1:1000]=hit-age-110930ms` — a request that MISSED tier 1 (empty isolate memory) was SERVED from tier 2 (edge), with the colo entry ~111s old. The 3-tier lifecycle works on production.
+- Final recycle proof: the cleanup deploy (b2309be) recycles every isolate; home TTFB immediately after = 0.19s / 0.19s / 0.61s (previous post-deploy colds measured 1.5-2.1s). The edge tier survives isolate recycles and colo warm-up now persists.
+- Cleanup: removed edgeDiagSnapshot + lastServeTier + the public x-hayaan-edge-diag header (kept the admin-gated /api/admin/debug-edge + edgeDiagnostics export for future health checks).
+- Deploy chain this addendum: 75b65e5 (debug route), 477b767 (temp header), b2309be (cleanup). All LINEAR-OK, live in <=1-2 min.
+
+Stage Summary:
+- Edge tier VERIFIED on production: recycled-isolate home TTFB 0.19-0.61s (was 1.5-2.1s). Together with the plain-anchor back link, the owner's two reported problems are addressed: no more frozen first tap, and shop loads no longer depend on whether the isolate happens to be warm.
+- Note: demo admin no longer exists on prod (owner cleaned it) — future admin-API scripting needs a new credential path (owner-provided or OAuth).
