@@ -9,13 +9,20 @@ import { CATEGORY_SEO_DESCRIPTIONS } from "@/lib/category-seo";
 import type { Category, Product } from "@/lib/types";
 
 /* ------------------------------------------------------------------ */
-/* Catalog read cache (Task 105)                                        */
+/* Catalog read cache (Task 105 + Task 106)                             */
 /*                                                                      */
 /* Why: every storefront request used to pay the full Worker -> Supabase */
 /* round trip for the SAME catalog data. Measured live 2026-10-16:       */
 /* GET / TTFB 1.07-2.35s, PDP TTFB 0.44-1.68s — and the owner's screen   */
 /* recording shows a ~5s full-screen "Loading the shop…" spinner on the  */
 /* PDP -> shop navigation (pre-hydration tap = full document load of /). */
+/*                                                                      */
+/* Task 106 addendum — why TWO tiers: the isolate-memory cache dies with */
+/* the isolate. This site is low-traffic, so the owner's own taps often  */
+/* land on a JUST-RECYCLED isolate and paid the full 1-2s Supabase fetch */
+/* again ("still slow" after the Task 105 fix). caches.default is shared */
+/* per data-center (colo) and OUTLIVES isolate recycles, so the second   */
+/* request in the same colo is warm even on a brand-new isolate.         */
 /*                                                                      */
 /* Contract (production/Supabase path ONLY — local Prisma dev stays     */
 /* uncached so admin edits are instant while developing):               */
@@ -29,6 +36,10 @@ import type { Category, Product } from "@/lib/types";
 /*  - Refresh failure: keep serving the last good copy (up to           */
 /*    MAX_STALE_MS, then fall through to a synchronous fetch) instead   */
 /*    of erroring the page — strictly more resilient than before.       */
+/*  - Edge tier: same timestamps and freshness logic as memory, just a  */
+/*    wider sharing scope (per colo). Every edge operation is best-     */
+/*    effort and try/catch'd — on any failure the cache silently        */
+/*    degrades to memory-only (the pre-Task-106 behavior).              */
 /*  - Freshness: storefront/catalog data can lag live DB by <= 60s.     */
 /*    Admin panel, checkout, and order writes use other (uncached)      */
 /*    paths and are unaffected.                                         */
@@ -68,45 +79,122 @@ function keepAlive(p: Promise<unknown>) {
     });
 }
 
+/* ---------------- Edge tier (Task 106): Cloudflare Cache API ---------------- */
+
+type EdgeEnvelope = { at: number; value: unknown };
+
+/** The Cache API needs an absolute URL; the production zone is fixed and
+ *  the path is never requested by real traffic. On non-hayaan.co hosts
+ *  (e.g. a workers.dev preview) put/match is cross-zone: the runtime
+ *  rejects it and every helper below falls back to memory-only. */
+const EDGE_BASE = "https://hayaan.co/__hayaan-swr/";
+
+function edgeCache(): Cache | null {
+  try {
+    const c = (globalThis as { caches?: { default?: Cache } }).caches;
+    return c && typeof c.default?.match === "function" ? c.default : null;
+  } catch {
+    return null;
+  }
+}
+
+function edgeRequest(key: string): Request {
+  return new Request(`${EDGE_BASE}${encodeURIComponent(key)}`, { method: "GET" });
+}
+
+async function edgeGet(key: string): Promise<EdgeEnvelope | null> {
+  const cache = edgeCache();
+  if (!cache) return null;
+  try {
+    const res = await cache.match(edgeRequest(key));
+    if (!res) return null;
+    const env = (await res.json()) as EdgeEnvelope | null;
+    if (!env || typeof env.at !== "number") return null;
+    return env;
+  } catch {
+    return null;
+  }
+}
+
+/** Never awaited on the request path — always wrapped in keepAlive(). */
+async function edgePut(key: string, value: unknown): Promise<void> {
+  const cache = edgeCache();
+  if (!cache) return;
+  try {
+    const body = JSON.stringify({ at: Date.now(), value } as EdgeEnvelope);
+    const res = new Response(body, {
+      headers: { "content-type": "application/json", "cache-control": "public, max-age=86400" },
+    });
+    await cache.put(edgeRequest(key), res);
+  } catch {
+    /* best effort — memory tier already holds the value */
+  }
+}
+
+/* ---------------- End edge tier ---------------- */
+
+function serveCopy<T>(value: unknown, shallowCopy: boolean): T {
+  return (shallowCopy && Array.isArray(value) ? [...value] : value) as T;
+}
+
+/** One single-flight background refresh; populates BOTH cache tiers. */
+function startRefresh(key: string, fetcher: () => Promise<unknown>): Promise<unknown> {
+  const p = fetcher()
+    .then((fresh) => {
+      catalogCache.delete(key);
+      catalogCache.set(key, { value: fresh, at: Date.now() });
+      evictOverflow();
+      keepAlive(edgePut(key, fresh));
+      return fresh;
+    })
+    .catch(() => {
+      /* keep last good copy; if it is beyond MAX_STALE_MS the next
+         request falls through to a synchronous fetch below */
+    })
+    .finally(() => inflightRefreshes.delete(key));
+  inflightRefreshes.set(key, p);
+  keepAlive(p);
+  return p;
+}
+
 async function swr<T>(key: string, fetcher: () => Promise<T>, shallowCopy = false): Promise<T> {
   // Local Prisma dev path: always live, zero staleness while developing.
   if (!isSupabaseServerEnabled) return fetcher();
 
+  // Tier 1 — isolate memory (hottest, dies with the isolate).
   const entry = catalogCache.get(key);
   if (entry) {
     const age = Date.now() - entry.at;
-    if (age < FRESH_MS) {
-      return (shallowCopy && Array.isArray(entry.value) ? [...entry.value] : entry.value) as T;
-    }
+    if (age < FRESH_MS) return serveCopy<T>(entry.value, shallowCopy);
     // Stale — start exactly one background refresh and serve the copy now.
-    if (!inflightRefreshes.has(key)) {
-      const p = fetcher()
-        .then((fresh) => {
-          catalogCache.delete(key);
-          catalogCache.set(key, { value: fresh, at: Date.now() });
-          evictOverflow();
-          return fresh;
-        })
-        .catch(() => {
-          /* keep last good copy; if it is beyond MAX_STALE_MS the next
-             request falls through to a synchronous fetch below */
-        })
-        .finally(() => inflightRefreshes.delete(key));
-      inflightRefreshes.set(key, p);
-      keepAlive(p);
-    }
-    if (age <= MAX_STALE_MS) {
-      return (shallowCopy && Array.isArray(entry.value) ? [...entry.value] : entry.value) as T;
-    }
+    if (!inflightRefreshes.has(key)) startRefresh(key, fetcher);
+    if (age <= MAX_STALE_MS) return serveCopy<T>(entry.value, shallowCopy);
     // Dangerously old (refresh kept failing for 10+ minutes) — block on it.
     const fresh = (await inflightRefreshes.get(key)) ?? (await fetcher());
-    return (shallowCopy && Array.isArray(fresh) ? [...fresh] : fresh) as T;
+    return serveCopy<T>(fresh, shallowCopy);
   }
 
+  // Tier 2 — edge (shared per colo, survives isolate recycles). A brand-new
+  // isolate hydrates its memory cache from here so the NEXT request skips
+  // even the edge read. Same freshness logic as the memory tier.
+  const edge = await edgeGet(key);
+  if (edge) {
+    catalogCache.set(key, { value: edge.value, at: edge.at });
+    evictOverflow();
+    const age = Date.now() - edge.at;
+    if (age < FRESH_MS) return serveCopy<T>(edge.value, shallowCopy);
+    if (!inflightRefreshes.has(key)) startRefresh(key, fetcher);
+    if (age <= MAX_STALE_MS) return serveCopy<T>(edge.value, shallowCopy);
+    const fresh = (await inflightRefreshes.get(key)) ?? (await fetcher());
+    return serveCopy<T>(fresh, shallowCopy);
+  }
+
+  // Tier 3 — cold: fetch once, populate both tiers.
   const fresh = await fetcher();
   catalogCache.set(key, { value: fresh, at: Date.now() });
   evictOverflow();
-  return fresh;
+  keepAlive(edgePut(key, fresh));
+  return serveCopy<T>(fresh, shallowCopy);
 }
 
 /** Task 105: fire-and-forget catalog pre-warm.
