@@ -1,0 +1,40 @@
+{
+  "s1": {
+    "clicked": true,
+    "backClicked": true,
+    "onPdp": true,
+    "pdpUrl": "/product/samsung-galaxy-a18",
+    "backDiag": {
+      "count": 2,
+      "texts": [
+        "Back to shop",
+        "Shop all products"
+      ]
+    },
+    "onHome": true,
+    "url": "/",
+    "y": 0,
+    "stuck": false,
+    "msToRestore": null
+  },
+  "s2": {
+    "hasScript": false,
+    "saved": null,
+    "clicked": true,
+    "backClicked": true,
+    "onPdp": true,
+    "pdpUrl": "/product/samsung-galaxy-a18",
+    "backDiag": {
+      "count": 2,
+      "texts": [
+        "Back to shop",
+        "Shop all products"
+      ]
+    },
+    "onHome": true,
+    "url": "/",
+    "y": 0,
+    "stuck": false,
+    "msToRestore": null
+  }
+}
