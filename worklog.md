@@ -2292,3 +2292,20 @@ Stage Summary:
 - Nothing changed visually; no client code touched; Speculation Rules prerender and tap-feedback overlay intact.
 - Known trade-off to tell the owner: a product added/edited in admin appears on the storefront's first paint within ~60s (admin panel itself is always live; in-session storefront navigation self-refreshes via /api/products immediately).
 - Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+---
+Task ID: 105b (addendum)
+Agent: Super Z (main agent)
+Task: Owner asked "Did you push the change or deployed" — confirmed both; post-deploy cold-isolate streak exposed one residual gap, fixed.
+
+Work Log:
+- Confirmed on record: Task 105 perf fix = commit ba86ba5, pushed + deployed + verified (home TTFB 0.17-0.81s warm, PDP 0.32-0.46s, owner journey 2.6s in throttled browser vs ~5s recorded).
+- UUID auto-snapshot e05990b captured this task's artifacts (CDP scripts, video frames, screenshots, worklog) — renamed to 8c84cbe "docs: Task 105 artifacts" and pushed (upload route intact, all additions).
+- The 8c84cbe docs-only push triggered a redeploy that recycled every isolate => 4 consecutive home hits at 1.5-2.0s (cold catalog). Lesson: docs pushes are not free; and low-traffic isolates go cold between visits, so SOME taps would still pay the 1-2s fetch.
+- Fix (179174e): prewarmCatalog() in products-server.ts (fire-and-forget listActiveProducts, kept alive via getCloudflareContext().ctx.waitUntil, production-only) called from ProductPage — every PDP view warms the catalog key in the background so the Back-to-shop tap lands warm in EVERY browser (Speculation Rules prerender already did this for Chromium only). swr() dedupes/skips when fresh: at most one catalog read per isolate per 60s.
+- Deploy 179174e verified: A18 PDP 0.33s -> shop 0.24s immediately after (pre-warm hit), under worst-case just-recycled-isolate conditions. Home HTML still ships full SSR catalog.
+- Artifacts commit: 8c84cbe. Perf commit: 179174e.
+
+Stage Summary:
+- Pushed + deployed + verified: ba86ba5 (SWR cache), 8c84cbe (artifacts), 179174e (PDP pre-warm). PDP->shop journey now ~0.3s + ~0.25s server-side even on cold isolates; client JS parse/paint remains the floor.
+- Standing note: docs-only pushes still trigger full redeploys (isolate recycle) — batch non-code files with code pushes when possible.
