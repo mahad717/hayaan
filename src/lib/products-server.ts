@@ -231,12 +231,13 @@ async function swr<T>(key: string, fetcher: () => Promise<T>, shallowCopy = fals
   const entry = catalogCache.get(key);
   if (entry) {
     const age = Date.now() - entry.at;
-    if (age < FRESH_MS) return serveCopy<T>(entry.value, shallowCopy);
+    if (age < FRESH_MS) { lastServeTier = `memory-fresh(${key})`; return serveCopy<T>(entry.value, shallowCopy); }
     // Stale — start exactly one background refresh and serve the copy now.
     if (!inflightRefreshes.has(key)) startRefresh(key, fetcher);
-    if (age <= MAX_STALE_MS) return serveCopy<T>(entry.value, shallowCopy);
+    if (age <= MAX_STALE_MS) { lastServeTier = `memory-stale(${key})`; return serveCopy<T>(entry.value, shallowCopy); }
     // Dangerously old (refresh kept failing for 10+ minutes) — block on it.
     const fresh = (await inflightRefreshes.get(key)) ?? (await fetcher());
+    lastServeTier = `memory-blocked-refresh(${key})`;
     return serveCopy<T>(fresh, shallowCopy);
   }
 
@@ -248,19 +249,47 @@ async function swr<T>(key: string, fetcher: () => Promise<T>, shallowCopy = fals
     catalogCache.set(key, { value: edge.value, at: edge.at });
     evictOverflow();
     const age = Date.now() - edge.at;
-    if (age < FRESH_MS) return serveCopy<T>(edge.value, shallowCopy);
+    if (age < FRESH_MS) { lastServeTier = `edge-fresh(${key})`; return serveCopy<T>(edge.value, shallowCopy); }
     if (!inflightRefreshes.has(key)) startRefresh(key, fetcher);
-    if (age <= MAX_STALE_MS) return serveCopy<T>(edge.value, shallowCopy);
+    if (age <= MAX_STALE_MS) { lastServeTier = `edge-stale(${key})`; return serveCopy<T>(edge.value, shallowCopy); }
     const fresh = (await inflightRefreshes.get(key)) ?? (await fetcher());
+    lastServeTier = `edge-blocked-refresh(${key})`;
     return serveCopy<T>(fresh, shallowCopy);
   }
 
   // Tier 3 — cold: fetch once, populate both tiers.
+  lastServeTier = `fetched(${key})`;
   const fresh = await fetcher();
   catalogCache.set(key, { value: fresh, at: Date.now() });
   evictOverflow();
   keepAlive(edgePut(key, fresh));
   return serveCopy<T>(fresh, shallowCopy);
+}
+
+/* TEMPORARY (Task 106 diagnostics) — feeding /feeds/google-products.xml's
+ * x-hayaan-edge-diag response header while the edge tier is being verified
+ * on production. REMOVE once verified. */
+let lastServeTier = "none";
+export async function edgeDiagSnapshot(key: string): Promise<string> {
+  const cachesType = (() => {
+    try { return typeof (globalThis as { caches?: unknown }).caches; } catch { return "throw"; }
+  })();
+  const cache = edgeCache();
+  let edge: string;
+  if (!cache) edge = "no-caches-global";
+  else {
+    try {
+      const res = await cache.match(edgeRequest(key));
+      if (!res) edge = "miss";
+      else {
+        const env = (await res.json().catch(() => null)) as EdgeEnvelope | null;
+        edge = env && typeof env.at === "number" ? `hit-age-${Date.now() - env.at}ms` : "hit-bad-envelope";
+      }
+    } catch (e) {
+      edge = `error:${(e instanceof Error ? e.message : String(e)).slice(0, 60)}`;
+    }
+  }
+  return `caches=${cachesType}; lastServe=${lastServeTier}; edge[${key}]=${edge}`;
 }
 
 /** Task 105: fire-and-forget catalog pre-warm.
