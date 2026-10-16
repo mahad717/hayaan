@@ -109,6 +109,34 @@ async function swr<T>(key: string, fetcher: () => Promise<T>, shallowCopy = fals
   return fresh;
 }
 
+/** Task 105: fire-and-forget catalog pre-warm.
+ *
+ *  The Speculation Rules prerender on PDPs already warms the catalog on
+ *  Chromium browsers while the visitor reads the product. Visitors on
+ *  browsers WITHOUT prerender support tap Back-to-shop with a cold catalog
+ *  key on the isolate and pay the full 1-2s Supabase fetch. Calling this
+ *  when a PDP renders closes that gap for every browser: the catalog is
+ *  fetched in the background (kept alive via ctx.waitUntil) so the tap
+ *  lands on a warm key. Cheap: one Supabase read per isolate per fresh
+ *  window; swr() dedupes and skips work when the key is still fresh. */
+export function prewarmCatalog(): void {
+  if (!isSupabaseServerEnabled) return;
+  const p = listActiveProducts().catch(() => {});
+  try {
+    void import("@opennextjs/cloudflare")
+      .then(({ getCloudflareContext }) => {
+        const ctx = (getCloudflareContext() as unknown as { ctx?: { waitUntil?: (x: Promise<unknown>) => void } })
+          ?.ctx;
+        if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(p);
+      })
+      .catch(() => {
+        /* no Workers context — best effort */
+      });
+  } catch {
+    /* best effort */
+  }
+}
+
 export function rowToProduct(row: any): Product {
   return {
     id: row.id,

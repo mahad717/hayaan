@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
-import { getProductBySlug } from "@/lib/products-server";
+import { getProductBySlug, prewarmCatalog } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { FaqSection } from "@/components/store/faq-section";
@@ -80,6 +80,12 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) notFound();
+
+  // Task 105: while the visitor reads this product, warm the catalog cache
+  // in the background so the (pre-hydration) Back-to-shop tap lands on a
+  // fast, already-rendered shop page in EVERY browser — not just the
+  // Chromium ones whose Speculation Rules prerender does the same job.
+  prewarmCatalog();
 
   // SSR in the visitor's language (same cookie mechanism as the storefront).
   const cookieLang = (await cookies()).get(LANG_COOKIE)?.value;
