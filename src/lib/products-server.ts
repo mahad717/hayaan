@@ -133,6 +133,72 @@ async function edgePut(key: string, value: unknown): Promise<void> {
 
 /* ---------------- End edge tier ---------------- */
 
+/** Admin diagnostics (Task 106): live report of the edge tier's health on
+ *  the running Worker — Cache API availability, whether the catalog key is
+ *  currently in the colo cache, and a put->match round trip on a throwaway
+ *  key. Surfaced via GET /api/admin/debug-edge. */
+export async function edgeDiagnostics(): Promise<{
+  runtime: string;
+  cachesGlobal: string;
+  catalogKey: { hit: boolean; ageMs: number | null };
+  roundTrip: { put: boolean; match: boolean; parsedAt: number | null; error: string | null };
+}> {
+  const cache = edgeCache();
+  const cachesGlobal = (() => {
+    try {
+      const c = (globalThis as { caches?: unknown }).caches;
+      return c ? typeof c : "undefined";
+    } catch {
+      return "throw";
+    }
+  })();
+
+  let catalogHit = false;
+  let catalogAge: number | null = null;
+  if (cache) {
+    try {
+      const res = await cache.match(edgeRequest("catalog:v1:500"));
+      if (res) {
+        const env = (await res.json()) as EdgeEnvelope | null;
+        if (env && typeof env.at === "number") {
+          catalogHit = true;
+          catalogAge = Date.now() - env.at;
+        }
+      }
+    } catch {
+      /* reported as a miss */
+    }
+  }
+
+  const roundTrip = { put: false, match: false, parsedAt: null as number | null, error: null as string | null };
+  if (cache) {
+    const testKey = `diag:v1:${Date.now()}`;
+    const stamp = Date.now();
+    try {
+      const res = new Response(JSON.stringify({ at: stamp, value: null } as EdgeEnvelope), {
+        headers: { "content-type": "application/json", "cache-control": "public, max-age=600" },
+      });
+      await cache.put(edgeRequest(testKey), res);
+      roundTrip.put = true;
+      const back = await cache.match(edgeRequest(testKey));
+      if (back) {
+        const env = (await back.json()) as EdgeEnvelope | null;
+        roundTrip.match = true;
+        roundTrip.parsedAt = typeof env?.at === "number" ? env.at : null;
+      }
+    } catch (err) {
+      roundTrip.error = err instanceof Error ? err.message : String(err);
+    }
+  }
+
+  return {
+    runtime: typeof (globalThis as { caches?: unknown }).caches === "undefined" ? "node-or-no-caches" : "workerlike",
+    cachesGlobal,
+    catalogKey: { hit: catalogHit, ageMs: catalogAge },
+    roundTrip,
+  };
+}
+
 function serveCopy<T>(value: unknown, shallowCopy: boolean): T {
   return (shallowCopy && Array.isArray(value) ? [...value] : value) as T;
 }
