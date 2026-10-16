@@ -18,7 +18,7 @@
 
 import { NextResponse } from "next/server";
 
-import { listActiveProducts, edgeDiagSnapshot } from "@/lib/products-server";
+import { listActiveProducts } from "@/lib/products-server";
 import { stripHtml } from "@/lib/rich-text";
 import type { Product } from "@/lib/types";
 
@@ -122,10 +122,6 @@ export async function GET() {
     );
   }
 
-  // TEMPORARY (Task 106 diagnostics, remove when verified): expose which
-  // cache tier served this request + the edge status of the catalog key.
-  const edgeDiag = await edgeDiagSnapshot("catalog:v1:1000");
-
   const items = products.map(productToItem).join("\n");
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -142,7 +138,6 @@ ${items}
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control": "public, max-age=3600",
-      "x-hayaan-edge-diag": edgeDiag,
     },
   });
 }
