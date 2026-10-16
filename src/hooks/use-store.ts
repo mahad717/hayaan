@@ -134,6 +134,15 @@ export function goToView(view: View) {
   if (window.location.pathname === "/") {
     useStore.getState().setView(view);
     if (view !== "home") window.scrollTo({ top: 0 });
+  } else if (view === "home") {
+    // Task 106: navigate to "/" EXACTLY — never "/?view=home". Every PDP
+    // prerenders "/" via Speculation Rules, and prerender ACTIVATION
+    // requires the navigation URL to match the prerendered URL; the
+    // "?view=home" variant missed the pre-built page and paid a full load
+    // every time the logo / wishlist / cart "go shopping" buttons were
+    // tapped from an SSR route. view=home is the default view anyway, so
+    // the param never carried information.
+    window.location.assign("/");
   } else {
     window.location.assign(`/?view=${view}`);
   }

@@ -151,21 +151,35 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       {initialProduct ? (
-        // Route mode — <Link prefetch> instead of router.push so the click is
-        // instant: a plain router.prefetch() only stores a PARTIAL (layout-only)
-        // payload for dynamic routes and push() discards it, still paying a full
-        // SSR round-trip (~450ms throttled, seconds on real mobile data).
-        // prefetch={true} caches the COMPLETE "/" payload (fresh for the 30s
-        // staleTimes.dynamic window in next.config.ts) — the swap needs no network.
+        // Route mode — a PLAIN anchor, NOT <Link> (Task 106).
+        //
+        // The previous <Link href="/" prefetch={true}> soft-navigated via
+        // router.push, which has two failure modes on real phones:
+        //  1. A soft navigation NEVER activates the Speculation Rules
+        //     prerender of "/" below — activation needs a real
+        //     cross-document navigation. The pre-built shop page sat unused
+        //     on every hydrated tap (Chromium = nearly all Somali phones).
+        //  2. router.push("/") fetched the home RSC payload (~1MB catalog)
+        //     over mobile data with the screen frozen on the PDP — the
+        //     "first tap does nothing, I tap again" report — and a
+        //     slow/failed fetch degraded into a hard navigation with the
+        //     "Loading the shop…" overlay.
+        // A plain anchor turns EVERY tap into a real navigation:
+        //  • prerender ready → instant ACTIVATION, zero network;
+        //  • otherwise → full document load whose SSR HTML (catalog in the
+        //    first paint since Task 47, warm TTFB since Task 105) paints
+        //    progressively instead of freezing, with the tap-feedback
+        //    overlay as honest progress. SEO unchanged — same crawlable
+        //    href as before.
         <Button
           variant="ghost"
           size="sm"
           className="mb-6 text-brand hover:bg-secondary"
           asChild
         >
-          <Link href="/" prefetch={true}>
+          <a href="/">
             <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
-          </Link>
+          </a>
         </Button>
       ) : (
         <Button
