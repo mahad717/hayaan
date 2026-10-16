@@ -13,13 +13,13 @@
     },
     "onHome": true,
     "url": "/",
-    "y": 0,
+    "y": 1084,
     "stuck": false,
     "msToRestore": null
   },
   "s2": {
-    "hasScript": false,
-    "saved": null,
+    "hasScript": true,
+    "saved": "{\"y\":1200,\"t\":1792180336813}",
     "clicked": true,
     "backClicked": true,
     "onPdp": true,
@@ -33,8 +33,29 @@
     },
     "onHome": true,
     "url": "/",
+    "y": 2323,
+    "stuck": false,
+    "msToRestore": null
+  },
+  "s3": {
     "y": 0,
     "stuck": false,
     "msToRestore": null
+  },
+  "s4": {
+    "y": 0,
+    "stuck": false,
+    "msToRestore": null
+  },
+  "s5": {
+    "y": 0,
+    "stuck": false,
+    "msToRestore": null
+  },
+  "s6": {
+    "yBefore": 0,
+    "y": 1500,
+    "stuck": true,
+    "msToRestore": 261
   }
 }
