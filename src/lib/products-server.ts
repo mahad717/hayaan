@@ -8,6 +8,107 @@ import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/ser
 import { CATEGORY_SEO_DESCRIPTIONS } from "@/lib/category-seo";
 import type { Category, Product } from "@/lib/types";
 
+/* ------------------------------------------------------------------ */
+/* Catalog read cache (Task 105)                                        */
+/*                                                                      */
+/* Why: every storefront request used to pay the full Worker -> Supabase */
+/* round trip for the SAME catalog data. Measured live 2026-10-16:       */
+/* GET / TTFB 1.07-2.35s, PDP TTFB 0.44-1.68s — and the owner's screen   */
+/* recording shows a ~5s full-screen "Loading the shop…" spinner on the  */
+/* PDP -> shop navigation (pre-hydration tap = full document load of /). */
+/*                                                                      */
+/* Contract (production/Supabase path ONLY — local Prisma dev stays     */
+/* uncached so admin edits are instant while developing):               */
+/*  - Fresh window FRESH_MS: served from isolate memory, zero Supabase  */
+/*    work. Typical request latency drops to network + render only.     */
+/*  - Past the fresh window: the stale copy is served IMMEDIATELY and   */
+/*    one background refresh is started (single-flight — concurrent     */
+/*    requests never duplicate the fetch). The Worker is kept alive     */
+/*    until the refresh settles via getCloudflareContext().ctx          */
+/*    .waitUntil when available.                                        */
+/*  - Refresh failure: keep serving the last good copy (up to           */
+/*    MAX_STALE_MS, then fall through to a synchronous fetch) instead   */
+/*    of erroring the page — strictly more resilient than before.       */
+/*  - Freshness: storefront/catalog data can lag live DB by <= 60s.     */
+/*    Admin panel, checkout, and order writes use other (uncached)      */
+/*    paths and are unaffected.                                         */
+/* ------------------------------------------------------------------ */
+
+const FRESH_MS = 60_000;
+const MAX_STALE_MS = 600_000;
+const MAX_KEYS = 400;
+
+type CacheEntry = { value: unknown; at: number };
+const catalogCache = new Map<string, CacheEntry>();
+const inflightRefreshes = new Map<string, Promise<unknown>>();
+
+/** Evict oldest entries when the per-slug keys proliferate. Map iterates
+ *  in insertion order and hot keys are re-inserted on refresh, so this
+ *  approximates LRU with almost no code. */
+function evictOverflow() {
+  while (catalogCache.size > MAX_KEYS) {
+    const oldest = catalogCache.keys().next().value;
+    if (oldest === undefined) break;
+    catalogCache.delete(oldest);
+  }
+}
+
+/** Best-effort "don't kill my background fetch" for Cloudflare Workers.
+ *  Outside Workers (local dev, node scripts) this is a no-op. */
+function keepAlive(p: Promise<unknown>) {
+  void import("@opennextjs/cloudflare")
+    .then(({ getCloudflareContext }) => {
+      const ctx = (getCloudflareContext() as unknown as { ctx?: { waitUntil?: (x: Promise<unknown>) => void } })
+        ?.ctx;
+      if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(p);
+    })
+    .catch(() => {
+      /* no Workers context — the promise may be dropped after the response;
+         the next request will simply refresh synchronously via stale logic */
+    });
+}
+
+async function swr<T>(key: string, fetcher: () => Promise<T>, shallowCopy = false): Promise<T> {
+  // Local Prisma dev path: always live, zero staleness while developing.
+  if (!isSupabaseServerEnabled) return fetcher();
+
+  const entry = catalogCache.get(key);
+  if (entry) {
+    const age = Date.now() - entry.at;
+    if (age < FRESH_MS) {
+      return (shallowCopy && Array.isArray(entry.value) ? [...entry.value] : entry.value) as T;
+    }
+    // Stale — start exactly one background refresh and serve the copy now.
+    if (!inflightRefreshes.has(key)) {
+      const p = fetcher()
+        .then((fresh) => {
+          catalogCache.delete(key);
+          catalogCache.set(key, { value: fresh, at: Date.now() });
+          evictOverflow();
+          return fresh;
+        })
+        .catch(() => {
+          /* keep last good copy; if it is beyond MAX_STALE_MS the next
+             request falls through to a synchronous fetch below */
+        })
+        .finally(() => inflightRefreshes.delete(key));
+      inflightRefreshes.set(key, p);
+      keepAlive(p);
+    }
+    if (age <= MAX_STALE_MS) {
+      return (shallowCopy && Array.isArray(entry.value) ? [...entry.value] : entry.value) as T;
+    }
+    // Dangerously old (refresh kept failing for 10+ minutes) — block on it.
+    const fresh = (await inflightRefreshes.get(key)) ?? (await fetcher());
+    return (shallowCopy && Array.isArray(fresh) ? [...fresh] : fresh) as T;
+  }
+
+  const fresh = await fetcher();
+  catalogCache.set(key, { value: fresh, at: Date.now() });
+  evictOverflow();
+  return fresh;
+}
+
 export function rowToProduct(row: any): Product {
   return {
     id: row.id,
@@ -39,15 +140,19 @@ export function rowToProduct(row: any): Product {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase
-      .from("products")
-      .select("*, category:categories(*)")
-      .eq("slug", decodeURIComponent(slug))
-      .eq("is_active", true)
-      .maybeSingle();
-    if (error) throw new Error(error.message);
-    return data ? rowToProduct(data) : null;
+    // Task 105: cached per slug (60s SWR). The PDP calls this twice per
+    // request (generateMetadata + Page) — both now share one fetch.
+    return swr(`product:v1:${decodeURIComponent(slug)}`, async () => {
+      const supabase = createServiceClient()!;
+      const { data, error } = await supabase
+        .from("products")
+        .select("*, category:categories(*)")
+        .eq("slug", decodeURIComponent(slug))
+        .eq("is_active", true)
+        .maybeSingle();
+      if (error) throw new Error(error.message);
+      return data ? rowToProduct(data) : null;
+    });
   }
 
   const product = await (await getDb()).product.findFirst({
@@ -64,15 +169,23 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
  *  hid 41 cards from the grid and sitemap. */
 export async function listActiveProducts(limit = 500): Promise<Product[]> {
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase
-      .from("products")
-      .select("*, category:categories(*)")
-      .eq("is_active", true)
-      .order("created_at", { ascending: false })
-      .limit(limit);
-    if (error) throw new Error(error.message);
-    return (data ?? []).map(rowToProduct);
+    // Task 105: the heavy one — the full catalog (~1MB JSON) fetched on
+    // EVERY home/llms/feed request before. Now 60s SWR, single-flight.
+    return swr(
+      `catalog:v1:${limit}`,
+      async () => {
+        const supabase = createServiceClient()!;
+        const { data, error } = await supabase
+          .from("products")
+          .select("*, category:categories(*)")
+          .eq("is_active", true)
+          .order("created_at", { ascending: false })
+          .limit(limit);
+        if (error) throw new Error(error.message);
+        return (data ?? []).map(rowToProduct);
+      },
+      true,
+    );
   }
 
   const products = await (await getDb()).product.findMany({
@@ -87,15 +200,21 @@ export async function listActiveProducts(limit = 500): Promise<Product[]> {
 /** Categories for the storefront filter pills — mirrors GET /api/categories. */
 export async function listCategories(): Promise<Category[]> {
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase.from("categories").select("*").order("name");
-    if (error) throw new Error(error.message);
-    return (data ?? []).map((c: any) => ({
-      id: c.id,
-      name: c.name,
-      slug: c.slug,
-      description: c.description ?? null,
-    }));
+    return swr(
+      "categories:v1",
+      async () => {
+        const supabase = createServiceClient()!;
+        const { data, error } = await supabase.from("categories").select("*").order("name");
+        if (error) throw new Error(error.message);
+        return (data ?? []).map((c: any) => ({
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          description: c.description ?? null,
+        }));
+      },
+      true,
+    );
   }
 
   const categories = await (await getDb()).category.findMany({ orderBy: { name: "asc" } });
@@ -124,16 +243,21 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
   };
 
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase
-      .from("categories")
-      .select("*")
-      .eq("slug", decoded)
-      .maybeSingle();
-    if (error) throw new Error(error.message);
-    return data
-      ? withSeoFallback({ id: data.id, name: data.name, slug: data.slug, description: data.description ?? null })
-      : null;
+    // Task 105: cache the RAW row; the SEO-description fallback runs on
+    // every request so CATEGORY_SEO_DESCRIPTIONS edits stay live.
+    const raw = await swr(`category:v1:${decoded}`, async () => {
+      const supabase = createServiceClient()!;
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .eq("slug", decoded)
+        .maybeSingle();
+      if (error) throw new Error(error.message);
+      return data
+        ? { id: data.id, name: data.name, slug: data.slug, description: data.description ?? null }
+        : null;
+    });
+    return raw ? withSeoFallback(raw) : null;
   }
 
   const category = await (await getDb()).category.findFirst({ where: { slug: decoded } });
@@ -147,16 +271,22 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 export async function listProductsByCategorySlug(slug: string, limit = 500): Promise<Product[]> {
   const decoded = decodeURIComponent(slug);
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase
-      .from("products")
-      .select("*, category:categories!inner(id, name, slug, description)")
-      .eq("is_active", true)
-      .eq("categories.slug", decoded)
-      .order("created_at", { ascending: false })
-      .limit(limit);
-    if (error) throw new Error(error.message);
-    return (data ?? []).map(rowToProduct);
+    return swr(
+      `cat-products:v1:${decoded}:${limit}`,
+      async () => {
+        const supabase = createServiceClient()!;
+        const { data, error } = await supabase
+          .from("products")
+          .select("*, category:categories!inner(id, name, slug, description)")
+          .eq("is_active", true)
+          .eq("categories.slug", decoded)
+          .order("created_at", { ascending: false })
+          .limit(limit);
+        if (error) throw new Error(error.message);
+        return (data ?? []).map(rowToProduct);
+      },
+      true,
+    );
   }
 
   const products = await (await getDb()).product.findMany({
@@ -172,14 +302,16 @@ export async function listProductsByCategorySlug(slug: string, limit = 500): Pro
  *  hub generation. */
 export async function listActiveProductSlugs(): Promise<Array<{ slug: string; updatedAt: Date | string }>> {
   if (isSupabaseServerEnabled) {
-    const supabase = createServiceClient()!;
-    const { data, error } = await supabase
-      .from("products")
-      .select("slug, updated_at")
-      .eq("is_active", true)
-      .limit(1000);
-    if (error) throw new Error(error.message);
-    return (data ?? []).map((row: any) => ({ slug: row.slug, updatedAt: row.updated_at }));
+    return swr("slugs:v1", async () => {
+      const supabase = createServiceClient()!;
+      const { data, error } = await supabase
+        .from("products")
+        .select("slug, updated_at")
+        .eq("is_active", true)
+        .limit(1000);
+      if (error) throw new Error(error.message);
+      return (data ?? []).map((row: any) => ({ slug: row.slug, updatedAt: row.updated_at }));
+    });
   }
 
   const products = await (await getDb()).product.findMany({
