@@ -128,7 +128,21 @@ function restore(){
   var d=null;try{d=JSON.parse(sessionStorage.getItem(KEY)||"null");}catch(e){}
   if(!d||!(d.y>0)||Date.now()-d.t>MAX_AGE)return;
   var y=d.y|0;
-  requestAnimationFrame(function(){requestAnimationFrame(function(){window.scrollTo(0,y);lastY=y;});});
+  // Re-anchor for ~3s after the first paint: late layout shifts on slow
+  // phones (font swap, hydration re-layout, image boxes) can clamp the
+  // restored offset DOWNWARD. Re-apply downward only — never upward, so
+  // native scroll anchoring (which keeps the same cards in view when content
+  // above grows) is not fought — and stop the instant the shopper interacts.
+  var ticks=0,touched=false;
+  function stop(){touched=true;}
+  ["wheel","touchstart","keydown","pointerdown"].forEach(function(ev){window.addEventListener(ev,stop,{passive:true,once:true});});
+  function apply(){
+    if(touched)return;
+    var max=(document.documentElement.scrollHeight|0)-window.innerHeight;
+    if((window.scrollY|0)<y&&max>=y){window.scrollTo(0,y);lastY=y;}
+    if(++ticks<12)setTimeout(apply,250);
+  }
+  requestAnimationFrame(function(){requestAnimationFrame(apply);});
 }
 if(document.prerendering){document.addEventListener("prerenderingchange",restore,{once:true});}else{restore();}
 })();`,

@@ -255,11 +255,17 @@ if (has("S3")) try {
 } catch (e) { results.s3 = { error: String(e).slice(0, 200) }; flush(); log("S3 ERROR: " + e); }
 
 // ---------- S4: product referrer arrival DOES restore ----------
+// NOTE: seed must survive the FIRST page's pagehide flush — scroll the first
+// page to the seed offset so the flush writes a consistent {y:1500} (a bare
+// sessionStorage seed on a y=0 page is clobbered to {y:0} on navigate-away,
+// which made early S4 runs read as "no restore").
 if (has("S4")) try {
   log("S4: gate — product referrer restores");
   const { targetId, sessionId } = await newTarget();
   await goto(sessionId, `${BASE}/`);
+  await evalJs(ws, sessionId, `window.scrollTo(0,1500)`);
   await evalJs(ws, sessionId, SEED(1500));
+  await sleep(500);
   await goto(sessionId, `${BASE}/`, `${BASE}/product/samsung-galaxy-a18`);
   const r = await pollScrollY(ws, sessionId, 1500);
   results.s4 = { ...r };
@@ -269,11 +275,16 @@ if (has("S4")) try {
 } catch (e) { results.s4 = { error: String(e).slice(0, 200) }; flush(); log("S4 ERROR: " + e); }
 
 // ---------- S5: stale (>30 min) save must NOT restore ----------
+// Same pagehide-flush rule as S4: the aged seed would be clobbered by a
+// fresh {y:0} flush, so scroll the first page to keep the write consistent
+// (the 31-min age still comes from the seeded t).
 if (has("S5")) try {
   log("S5: gate — stale save");
   const { targetId, sessionId } = await newTarget();
   await goto(sessionId, `${BASE}/`);
+  await evalJs(ws, sessionId, `window.scrollTo(0,1500)`);
   await evalJs(ws, sessionId, SEED(1500, 31 * 60 * 1000));
+  await sleep(500);
   await goto(sessionId, `${BASE}/`, `${BASE}/product/samsung-galaxy-a18`);
   await sleep(2500);
   const r = await pollScrollY(ws, sessionId, null, 4000);
