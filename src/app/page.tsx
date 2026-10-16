@@ -81,6 +81,59 @@ export default async function Page({
         initialProducts={initialProducts}
         initialCategories={initialCategories}
       />
+      {/* Task 107: "Back to shop" must return the shopper to WHERE THEY WERE
+          in the grid. The owner's video (XRecorder_20261016_01) shows it: the
+          phone's back button restores their grid position, but the PDP
+          "Back to shop" link — a real cross-document navigation to "/" since
+          Task 106, for prerender activation — always lands on the hero,
+          because a new document starts at scroll 0 and Next can never
+          restore a push navigation it didn't perform.
+
+          This INLINE (pre-hydration) script bridges that gap:
+          • SAVE — throttled scroll listener + pagehide flush keep the last
+            shop offset in sessionStorage. Inline (not a React effect) is the
+            whole point: on slow phones like the owner's A18, most browsing
+            happens BEFORE hydration, and a React-based saver would miss it.
+          • RESTORE — when this document was arrived at FROM a product page
+            (referrer path starts /product/ — the Back-to-shop tap, the
+            header shop button, wishlist/cart "go shopping" all navigate to
+            "/" exactly), scroll back to the saved offset. Gated to the clean
+            shop URL ("?" deep links render other views) and a 30-minute
+            freshness window; fresh visits, external referrers and category
+            hops keep the old land-at-top behavior.
+          • PRERENDER — under Speculation Rules this script also runs inside
+            the HIDDEN prerendered copy of "/", where document.prerendering
+            is true: the restore defers to prerenderingchange so the scroll
+            happens when the page is actually shown (instant activation AND
+            the right position). */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){
+if(window.__hayaanShopScroll)return;window.__hayaanShopScroll=1;
+var KEY="hayaanShopY",MAX_AGE=1800000,pend=0,lastY=-1;
+function active(){return location.pathname==="/"&&!location.search&&!document.prerendering;}
+function save(){
+  if(!active())return;
+  var y=window.scrollY|0;
+  if(y===lastY)return;
+  lastY=y;
+  try{sessionStorage.setItem(KEY,JSON.stringify({y:y,t:Date.now()}));}catch(e){}
+}
+window.addEventListener("scroll",function(){if(pend)return;pend=setTimeout(function(){pend=0;save();},250);},{passive:true});
+window.addEventListener("pagehide",function(){if(pend){clearTimeout(pend);pend=0;}save();});
+function restore(){
+  if(!active())return;
+  var r=null;try{r=new URL(document.referrer,location.href);}catch(e){}
+  if(!r||r.origin!==location.origin||r.pathname.indexOf("/product/")!==0)return;
+  var d=null;try{d=JSON.parse(sessionStorage.getItem(KEY)||"null");}catch(e){}
+  if(!d||!(d.y>0)||Date.now()-d.t>MAX_AGE)return;
+  var y=d.y|0;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){window.scrollTo(0,y);lastY=y;});});
+}
+if(document.prerendering){document.addEventListener("prerenderingchange",restore,{once:true});}else{restore();}
+})();`,
+        }}
+      />
     </>
   );
 }
