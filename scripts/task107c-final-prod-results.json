@@ -1,0 +1,51 @@
+{
+  "deploy": {
+    "commit": "5c25bca",
+    "codeCommit": "410a080 (early restore cover)",
+    "build": "Workers Builds: success",
+    "liveMarkers": {
+      "hayaan-cov": "early script @ byte ~8k (first in body)",
+      "__hayaanShopScroll": "end-of-body script"
+    }
+  },
+  "C1_real_journey": {
+    "pass": true,
+    "journey": "home -> scroll 1500 -> card (trusted click) -> PDP -> Back to shop",
+    "coverAppliedPageTimeMs": 972,
+    "fcpPageTimeMs": 1296,
+    "ttfbMs": 342,
+    "transferBytesBrotli": 46734,
+    "restoredAtPageTimeMs": 1938,
+    "finalY": 1500,
+    "heroFlash": "NONE \u2014 cover (972ms) precedes FCP (1296ms); cover-moment screenshot = cream + spinner only",
+    "verdict": "PASS"
+  },
+  "C2_external_referrer": {
+    "pass": true,
+    "coverSeen": false,
+    "referrer": "https://www.google.com/",
+    "maxY": 0,
+    "sampleCount": 15,
+    "verdict": "PASS"
+  },
+  "C3_clean_load": {
+    "pass": true,
+    "coverSeen": false,
+    "maxY": 0,
+    "sampleCount": 15,
+    "verdict": "PASS"
+  },
+  "harnessNotes": [
+    "Fresh-profile newsletter popup (\"New arrivals & deals\", Radix dialog) opens ~8-10s after load and swallows un-dismissed clicks \u2014 dismiss before journeys (returning users have it dismissed).",
+    "scripts/task107-final-verify.mjs + task107c-verify.mjs on disk have corrupted selectors ('aref^=...' missing '[h') from the sandbox recycle; production results above come from task107c-prod-verify2.mjs + task107c-fcp-probe.mjs (clean selectors).",
+    "C1 raw flashCount=3 in prod-results.json are PRE-PAINT samples (readyState=loading); FCP probe adjudicates zero real flash."
+  ],
+  "integrity": {
+    "home": "200 ttfb 0.19s, 1.06MB, markers live",
+    "a18PDP": "200, JSON-LD price 190.00",
+    "category(computers-tv-gaming)": "200 0.64s",
+    "blog": "200",
+    "api/products": "200",
+    "sitemap/llms.txt": "200"
+  }
+}

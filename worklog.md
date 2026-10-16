@@ -2408,3 +2408,27 @@ Stage Summary:
 - The owner's video CONFIRMS Task 107 works on their real phone (position restores every time); the remaining "lag" is the hero-flash before the snap + the prerender-less overlay wait. The hero-flash is now fixed locally (early restore cover) and verified in C1-C3; overlay wait is the honest cost of a real navigation until the device completes the prerender (eager rule already in place; faster devices will activate it).
 - BLOCKER for deploy: fresh GitHub token needed (write to /tmp/gh_token.txt then python3 scripts/task107-push2.py, or paste in chat). Pending local commits: a3960fa + 410a080.
 - Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+---
+Task ID: 107d (addendum)
+Agent: Super Z (main agent)
+Task: Fresh GitHub token (4th rotation) -> deploy the staged Task 107c early-restore-cover fix; verify on production end-to-end.
+
+Work Log:
+- Token (ghp_Wz4x..., user mahad717, scope repo) validated via API (200). Recreated the askpass helper; GIT_ASKPASS push failed with "Invalid username or token" despite valid API auth (credential.helper=store present, store file empty) — the proven task107-push2.py path (token -> ~/.git-credentials 0600 -> push) worked immediately. Pushed the 3 pending commits as a clean fast-forward: 84fb3da..5c25bca (a3960fa puppeteer dep + results, 410a080 EARLY RESTORE COVER code, 5c25bca snapshot).
+- Build: GitHub commit-status API lagged at "pending" but check-run "Workers Builds: hayaan" = SUCCESS; the f361274 prisma-generate fix continues to hold (no .prisma/client errors). Live within ~2 min.
+- Live markers: hayaan-cov x6 with the early script at byte ~8k (first thing in body, body opens at 4.6k) and __hayaanShopScroll x2 at byte ~839k of the 1.06MB doc — exactly the 107c architecture. hayaanCovSpin + the exact cover style string present.
+- PRODUCTION verification (chrome-headless-shell 143 + puppeteer-core, fresh context per scenario, CPU 4x / 300ms RTT / 1Mbps, viewport 1280x720):
+  * C1 real journey home -> scroll 1500 -> trusted click on a fully-visible card -> PDP -> "Back to shop": cover applied at 972ms page-time, restore to y=1500 EXACT at ~1938ms, final y=1500. FCP adjudication: first-contentful-paint 1296ms > cover 972ms => the mask ALWAYS paints before any content => hero flash NEVER visible (flashReal=false). Cover-moment screenshot: cream + green spinner only (task107c-cover-moment.png). C1 PASS.
+  * C2 external referrer (google.com) WITH a fresh valid save: cover never applied, y stays 0. PASS (referrer gate correct with the new code).
+  * C3 clean direct load: cover never applied, y stays 0. PASS.
+- Two harness findings worth recording:
+  * Fresh-profile newsletter popup ("New arrivals & deals", Radix dialog, z=50, full-viewport, pointer-events auto) opens ~8-10s after load and silently swallows clicks — it ate the card click in two runs before diagnosis (elementFromPoint showed the dialog on top). Returning users have it dismissed (localStorage), so real journeys are unaffected; the verify harness now dismisses it (click "No thanks") before clicking cards. Screenshot: task107c-stuck-dialog.png. UX side-note for the owner: on a slow first visit the popup can appear mid-scroll and swallow a first tap; standard dismissible behavior, not a bug.
+  * The sandbox recycle corrupted the selectors in scripts/task107-final-verify.mjs and scripts/task107c-verify.mjs (they read 'aref^="..."', missing the "[h" of 'a[href^="..."') — 107b's recorded V1 result predates the corruption. Fresh clean scripts used instead: task107c-prod-verify2.mjs, task107c-fcp-probe.mjs, task107c-blocker-probe.mjs, task107c-dialog-probe.mjs, task107c-dialog-timed.mjs, task107c-deploy-watch.py.
+- Integrity sweep: home 200 ttfb 0.19s (1.06MB, markers live), A18 PDP 200 JSON-LD price "190.00", /category/computers-tv-gaming 200 0.64s (/category/electronics 404 = correct, not a real slug), blog 200, /api/products 200, sitemap + llms.txt 200.
+
+Stage Summary:
+- Task 107c fix is LIVE and verified on production: "Back to shop" now restores the exact grid position (y=1500@1938ms under a harsher-than-real throttle) and the pre-parse hero flash the owner's second video showed is GONE — the mask covers the whole parse window and lifts in the same frame as the restore. Combined with 107b, the owner's journey is: tap card -> PDP <=0.5s, tap Back to shop -> cream+spinner for the parse remainder -> land at the saved position, no hero flash, no frozen soft-nav.
+- Deploy chain this addendum: 5c25bca (3 commits) — CI green on the first try thanks to f361274.
+- SECURITY: token again lives in chat plaintext — recommend the owner ROTATE/REVOKE after confirming. Local .gh-token + ~/.git-credentials to be wiped after the artifact push.
+- Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.

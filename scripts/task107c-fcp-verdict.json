@@ -1,0 +1,12 @@
+{
+  "covAppliedAtPageTime": 972,
+  "restoredAtPageTime": 1938,
+  "fcp": {
+    "fcp": 1296,
+    "ttfb": 342,
+    "docBytes": 46734,
+    "finalY": 1500
+  },
+  "flashReal": false,
+  "note": "flashReal=true would mean contentful paint happened BEFORE the cover applied"
+}

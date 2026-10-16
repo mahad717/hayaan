@@ -1,0 +1,40 @@
+{
+  "C1": {
+    "pass": false,
+    "coverSeen": true,
+    "firstCoverAt": "1020ms(page-time)",
+    "settled": {
+      "at": 1872,
+      "y": 1500,
+      "path": "/",
+      "cov": false,
+      "ready": "complete",
+      "t": 1873
+    },
+    "finalY": 1500,
+    "flashCount": 3,
+    "timeline": [
+      "623ms y=0 cov=0 / load",
+      "719ms y=0 cov=0 / load",
+      "820ms y=0 cov=0 / load",
+      "1020ms y=0 cov=1 / load",
+      "1261ms y=0 cov=1 / load",
+      "1473ms y=0 cov=1 / load",
+      "1677ms y=1500 cov=0 / inte",
+      "1873ms y=1500 cov=0 / comp"
+    ]
+  },
+  "C2": {
+    "pass": true,
+    "coverSeen": false,
+    "referrer": "https://www.google.com/",
+    "maxY": 0,
+    "sampleCount": 15
+  },
+  "C3": {
+    "pass": true,
+    "coverSeen": false,
+    "maxY": 0,
+    "sampleCount": 15
+  }
+}
