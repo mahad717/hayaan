@@ -1,0 +1,24 @@
+{
+  "c1": {
+    "sawCoverAt": 754,
+    "restoredAt": 849,
+    "uncoveredAt": 849,
+    "topFlash": null,
+    "y": 1500,
+    "cov": false,
+    "docH": 6053,
+    "pass": true
+  },
+  "c2": {
+    "y": 0,
+    "cov": false,
+    "everCovered": false,
+    "pass": true
+  },
+  "c3": {
+    "y": 0,
+    "cov": false,
+    "everCovered": false,
+    "pass": true
+  }
+}
