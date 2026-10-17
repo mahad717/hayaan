@@ -1,10 +1,10 @@
 {
-  "covAppliedAtPageTime": 972,
-  "restoredAtPageTime": 1938,
+  "covAppliedAtPageTime": 934,
+  "restoredAtPageTime": 1482,
   "fcp": {
-    "fcp": 1296,
-    "ttfb": 342,
-    "docBytes": 46734,
+    "fcp": 1068,
+    "ttfb": 79,
+    "docBytes": 30983,
     "finalY": 1500
   },
   "flashReal": false,

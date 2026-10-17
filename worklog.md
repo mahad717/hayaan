@@ -2432,3 +2432,35 @@ Stage Summary:
 - Deploy chain this addendum: 5c25bca (3 commits) — CI green on the first try thanks to f361274.
 - SECURITY: token again lives in chat plaintext — recommend the owner ROTATE/REVOKE after confirming. Local .gh-token + ~/.git-credentials to be wiped after the artifact push.
 - Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+---
+Task ID: 108
+Agent: Super Z (main agent)
+Task: Owner video XRecorder_20261017_02.mp4 (64.2s): "Functionalities okay as you can see, but speed needs boost". Forensics -> root-cause the remaining slowness -> fix.
+
+Work Log:
+- Video forensics (64 frames @1fps, 6 journeys): grid->PDP always ~1s (fine); scroll restore hit 6/6; returns split into TWO regimes — PDP visits >=3s returned near-INSTANTLY (journeys 3: ~1s, 5: ~1.5s = prerender activated), PDP visits <3s paid ~3.3-3.5s every time (journeys 1/2/4/6: PDP overlay ~1.5s + blank-cream cover ~2s). Conclusion: on the A18 the Speculation-Rules prerender of "/" takes ~2.5-3s CPU to BUILD (1.06MB doc); short PDP visits outpace it and fall back to a full 1.06MB parse.
+- Root causes addressed (both stem from the 1.06MB home document):
+  1. **bfcache blocked**: force-dynamic emitted `Cache-Control: private, no-cache, no-store` — `no-store` disqualifies Chrome/Safari's back/forward cache, so EVERY return re-parsed the document even though the browser could have restored the live page instantly. No Set-Cookie on responses, no unload/WS/IndexedDB blockers (audited) — the header was the only blocker.
+  2. **Document too big**: 1.06MB = ~0.24MB flight + ~0.8MB markup (141 SSR cards x ~4KB). Client already refetches the full catalog from edge-cached /api/products on every mount, so the SSR slice only decides the FIRST PAINT.
+- Fixes (8a41e20):
+  1. **next.config headers()**: `/`, `/product/:slug`, `/category/:slug` now emit `private, no-cache, max-age=0, must-revalidate` (no-store dropped; HTTP-cache semantics identical — always revalidate, private). bfcache now restores the LIVE page instantly on back/forward. Admin/api untouched. Verified the headers() override beats force-dynamic's default on the standalone build AND live.
+  2. **page.tsx**: `SSR_CARD_COUNT = 36` — StorefrontApp gets `initialProducts.slice(0, 36)`; CatalogItemList JSON-LD still names ALL 141 URLs (full SEO graph kept). Doc 1.06MB -> **381KB live (-64%)**; transfer 46.7KB -> 31KB brotli; prerender build ~2.5x less work.
+  3. **page.tsx restore script**: cover now reveals ONLY in the same frame as a scroll that REACHES the saved offset (or on interaction, or at the 3s tick budget) — a deep saved offset can exceed the 36-card first-paint doc until the client fetch extends it; uncovering earlier would flash the grid top.
+  4. **product-grid.tsx**: pageshow(persisted) refetch of /api/products — bfcache restores silently catch prices/stock up (~0.2s edge-cached).
+- Verification:
+  * Local standalone (18-product demo DB): L1 real journey restored deep, 0 top-flash, cover never stuck; L2 synthetic deep seed (y=99999, addScriptToEvaluateOnNewDocument to dodge the pagehide-flush clobber — 107b S4 artifact again) held the cover ~3s then deadline-lifted, no trap; L3 clean load uncovered. Results: scripts/task108-local-results.json.
+  * Production standard journey (CPU 4x/300ms/1Mbps): cover 934ms < FCP 1068ms (flashReal=false), restore y=1500 exact @1482ms (was 1938ms), TTFB 79ms, transfer 31KB. task107c-fcp-probe.mjs.
+  * Production DEEP journey: saved y=16323 (far beyond the 36-card doc) -> cover HELD while docH=6132 (first paint) -> client fetch extended docH=18543 -> **final y=16323 EXACT, topFlash=null**. scripts/task108-deep-results.json.
+  * Integrity: 8 routes 200 (home 382KB ttfb 0.31s, PDP 0.20s JSON-LD price intact, category/blog/deals/api/sitemap/llms.txt fine).
+- EXPECTED OWNER EXPERIENCE after this deploy: returns after short PDP visits go from ~3.5s to ~0.1-0.3s (bfcache, position restored natively); returns after long visits stay instant (prerender, now builds ~2.5x faster); first home loads paint the grid ~2.5x sooner; the blank-cover window shrinks proportionally.
+- TOOLING NOTE (corrects 107d): the "corrupted selectors" ('aref' missing '[h') in task107-final-verify.mjs / task107c-verify.mjs were NEVER file corruption — the files on disk are byte-correct; the chat/tool DISPLAY layer drops `[h` sequences. Verified by hexdump (61 5b 68 72 65 66 5e = a[href^). Do not rewrite scripts because of what the transcript shows.
+- HARNESS NOTE: elementHandle.click() auto-scrolls and thus CHANGES the saved offset between seed-read and click — assert behavioral outcomes (deep restore, no flash, no trap), not exact pre-click seeds, in elementHandle-based journeys.
+- Also observed: fresh-profile newsletter popup ("New arrivals & deals") opens ~8-10s after load and swallows clicks until dismissed — recorded in 107d; verify harnesses dismiss it before journeys.
+- Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+Stage Summary:
+- Task 108 LIVE and verified: home document -64% (1.06MB -> 381KB), bfcache unlocked on the three document routes (instant back/forward restores with a persisted-pageshow freshness top-up), deep restores hold the cover until the grid actually reaches the saved offset. The two remaining lag regimes from the owner's video (short-PDP-visit returns ~3.5s; long prerender builds) are both addressed at the root: the same 1.06MB document was the gate for both.
+- Deploy chain: 8a41e20, CI green first try (f361274 prisma fix holding).
+- SECURITY: token (ghp_Wz4x...) shared in chat plaintext again — recommend ROTATE/REVOKE after confirming; local token file + ~/.git-credentials wiped post-push.
+- Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.

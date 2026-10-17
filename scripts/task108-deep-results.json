@@ -1,0 +1,17 @@
+{
+  "savedY": 16323,
+  "covSeen": true,
+  "topFlashAt": null,
+  "finalY": 16323,
+  "fin": {
+    "y": 16323,
+    "docH": 18543
+  },
+  "pass": true,
+  "timeline": [
+    "900ms y=0 cov=0 docH=720 load",
+    "1831ms y=0 cov=1 docH=6132 inte",
+    "2441ms y=0 cov=1 docH=6132 comp",
+    "2922ms y=0 cov=1 docH=6132 comp"
+  ]
+}
