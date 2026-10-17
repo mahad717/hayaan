@@ -1,0 +1,35 @@
+{
+  "steps": [
+    {
+      "step": "home-ready",
+      "docH": 10119
+    },
+    {
+      "step": "scrolled",
+      "slug": "nokia-5310",
+      "scrollY": 5081,
+      "saved": {
+        "y": 5081,
+        "t": 1792228422986
+      }
+    },
+    {
+      "step": "card-click",
+      "tapToUrlMs": 574,
+      "tapToPdpContentMs": 932,
+      "pdp": "https://hayaan.co/product/nokia-5310"
+    },
+    {
+      "step": "return",
+      "overlaySamples": 0,
+      "coverSamples": 2,
+      "firstNonZeroYAtMs": 1116,
+      "finalY": 4753,
+      "savedY": 5081,
+      "yMatch": false,
+      "topCard": null,
+      "docH": 10119,
+      "returnTotalMs": 8822
+    }
+  ]
+}

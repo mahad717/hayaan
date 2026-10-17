@@ -126,6 +126,19 @@ export default async function CategoryPage({ params }: Props) {
 
   return (
     <StoreShell>
+      {/* Task 108b: prerender product pages the way the home page does — the
+          shopper taps a card from here too. `moderate` = desktop hover 200ms;
+          Chrome 143+ mobile prerenders in-view cards ~500ms after scrolling
+          stops; older mobile fires on pointerdown. The tap then ACTIVATES a
+          pre-built document instead of starting a navigation. */}
+      <script
+        type="speculationrules"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            prerender: [{ where: { href_matches: "/product/*" }, eagerness: "moderate" }],
+          }),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

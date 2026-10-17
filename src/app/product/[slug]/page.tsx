@@ -158,19 +158,21 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <StoreShell>
-      {/* Speculation Rules (Task 47): while the shopper reads this product,
-          Chrome/Samsung Internet builds the shop page in the background — a
-          "Back to shop" tap then ACTIVATES the pre-built document instantly
-          instead of a multi-second frozen reload. On browsers without
-          Speculation Rules this tag is ignored; those fall back to the SSR
-          catalog (products in the first HTML) plus the pre-hydration
-          tap-feedback overlay from the root layout. */}
+      {/* Speculation Rules: while the shopper reads this product, Chrome
+          builds the shop page in the background — a "Back to shop" tap then
+          ACTIVATES the pre-built document instantly instead of a full reload.
+          Task 108b: Chrome 143 (Oct 2026) changed `eager` from "same as
+          immediate" to anchor-interaction heuristics (hover/viewport) — a
+          LIST rule (urls:["/"]) has no anchor, so the eager prerender quietly
+          STOPPED firing and every Back-to-shop paid the full load again (the
+          owner's 20261017 video, desktop AND mobile). A DOCUMENT rule with
+          eagerness "immediate" states the same intent unambiguously: prerender
+          "/" as soon as the rules are observed, on every Chrome since 121. */}
       <script
         type="speculationrules"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            prefetch: [{ source: "list", urls: ["/"], eagerness: "eager" }],
-            prerender: [{ source: "list", urls: ["/"], eagerness: "eager" }],
+            prerender: [{ where: { href_matches: "/" }, eagerness: "immediate" }],
           }),
         }}
       />

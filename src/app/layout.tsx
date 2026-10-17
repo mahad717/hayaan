@@ -210,7 +210,57 @@ export default async function RootLayout({
             restores, and via a 10s failsafe so it can never stick. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){if(window.__hayaanTapFeedback)return;window.__hayaanTapFeedback=1;var ID="hayaan-nav-feedback";function hide(){var el=document.getElementById(ID);if(el)el.remove();var css=document.getElementById(ID+"-css");if(css)css.remove();}function show(){if(document.getElementById(ID))return;var st=document.createElement("style");st.id=ID+"-css";st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";document.head.appendChild(st);var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";var sp=document.createElement("div");sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";var lb=document.createElement("div");lb.textContent=${JSON.stringify(lang === "so" ? "Suuqa ayaa la keenayo…" : "Loading the shop…")};lb.style.cssText="font-size:14px;color:#111827";ov.appendChild(sp);ov.appendChild(lb);document.body.appendChild(ov);var iv=setInterval(function(){if(location.pathname==="/"){clearInterval(iv);hide();}},120);setTimeout(function(){clearInterval(iv);hide();},10000);window.addEventListener("pageshow",function(ev){if(ev.persisted){clearInterval(iv);hide();}});}document.addEventListener("click",function(e){try{if(e.defaultPrevented)return;var t=e.target;var a=t&&t.closest?t.closest('a[href="/"]'):null;if(!a||a.target==="_blank")return;if(location.pathname==="/")return;setTimeout(function(){if(location.pathname!=="/")show();},100);}catch(err){}});})();`,
+            __html: `(function(){
+if(window.__hayaanTapFeedback)return;window.__hayaanTapFeedback=1;
+var ID="hayaan-nav-feedback";
+function hide(){
+  var el=document.getElementById(ID);if(el)el.remove();
+  var css=document.getElementById(ID+"-css");if(css)css.remove();
+}
+function show(label){
+  if(document.getElementById(ID))return;
+  var st=document.createElement("style");st.id=ID+"-css";
+  st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";
+  document.head.appendChild(st);
+  var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");
+  ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+  var sp=document.createElement("div");
+  sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";
+  ov.appendChild(sp);
+  if(label){
+    var lb=document.createElement("div");
+    lb.textContent=${JSON.stringify(lang === "so" ? "Suuqa ayaa la keenayo…" : "Loading the shop…")};
+    lb.style.cssText="font-size:14px;color:#111827";
+    ov.appendChild(lb);
+  }
+  document.body.appendChild(ov);
+  var p0=location.pathname;
+  var iv=setInterval(function(){if(location.pathname!==p0){clearInterval(iv);hide();}},120);
+  setTimeout(function(){clearInterval(iv);hide();},10000);
+  window.addEventListener("pageshow",function(ev){if(ev.persisted){clearInterval(iv);hide();}});
+}
+document.addEventListener("click",function(e){
+  try{
+    if(e.defaultPrevented)return;
+    var t=e.target;
+    var a=t&&t.closest?t.closest('a[href="/"]'):null;
+    if(!a||a.target==="_blank")return;
+    if(location.pathname==="/")return;
+    setTimeout(function(){if(location.pathname!=="/")show(true);},100);
+  }catch(err){}
+});
+/* Task 108b: card taps are real navigations (product-card.tsx dispatches
+   this right before location.assign). When a prerender is ready the swap
+   commits well under 300ms and nothing shows; a cold open (fast flick-tap,
+   iOS Safari, first visit) gets the same instant "it's working" spinner the
+   Back-to-shop path has, instead of ~1s of frozen grid. */
+document.addEventListener("hayaan:pdp-nav",function(){
+  try{
+    var p0=location.pathname;
+    setTimeout(function(){if(location.pathname===p0)show(false);},300);
+  }catch(err){}
+});
+})();`,
           }}
         />
         <OrganizationJsonLd />

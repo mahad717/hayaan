@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Download, Star, Plus, Check, ShoppingBag } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,7 +22,6 @@ function formatPrice(price: number, currency: string) {
 }
 
 export function ProductCard({ product }: { product: Product }) {
-  const router = useRouter();
   const { setCart, toast, user, setAuthOpen } = useStore();
   const { t, lang } = useLang();
   // Brief "added" confirmation: the card's add buttons flash a check mark
@@ -59,13 +57,34 @@ export function ProductCard({ product }: { product: Product }) {
     }
   };
 
+  // Task 108b: card taps are REAL navigations (window.location.assign), not
+  // Next router soft navs. Two reasons:
+  //  1. The home/category pages declare a Speculation-Rules `moderate`
+  //     prerender for /product/* — but activation ONLY happens for real
+  //     navigations, never for router.push. With the prerender ready (desktop
+  //     hover ≥200ms; Chrome 143+ mobile ~500ms after scrolling stops) the tap
+  //     swaps to the pre-built PDP instantly instead of the soft-nav's
+  //     URL-flips-but-grid-freezes gap (~1.5s on the owner's A18).
+  //  2. A real navigation is the same path "Back to shop" already uses — one
+  //     consistent, bfcache- and prerender-friendly model in both directions.
+  // Safety: cart and wishlist live SERVER-side (/api/cart, wishlist_items) and
+  // the storefront re-bootstraps them on boot, so full documents lose nothing;
+  // the home page itself becomes bfcache-eligible (Task 108 headers), so the
+  // phone's back button still restores the grid instantly and exactly.
+  const openProductPage = () => {
+    try {
+      document.dispatchEvent(new CustomEvent("hayaan:pdp-nav"));
+    } catch {}
+    window.location.assign(`/product/${product.slug}`);
+  };
+
   return (
     <Card
       role="button"
       tabIndex={0}
-      onClick={() => router.push(`/product/${product.slug}`)}
+      onClick={openProductPage}
       onKeyDown={(e) => {
-        if (e.key === "Enter") router.push(`/product/${product.slug}`);
+        if (e.key === "Enter") openProductPage();
       }}
       className="group relative flex cursor-pointer flex-col overflow-hidden p-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f28c28] bg-white border-[#e6e2d4]"
       aria-label={t("card.viewAria", { name: product.name })}
@@ -151,12 +170,21 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground font-original">
-          {/* Real anchor → crawlable product URL (SEO). The card's onClick
-              handles taps/prokes; the link must NOT stretch over the card
-              (after:inset-0) or it would swallow the add-to-cart buttons. */}
+          {/* Real anchor → crawlable product URL (SEO). Task 108b: the click
+              escalates to a REAL navigation so a ready prerender ACTIVATES
+              (soft navs never activate one). Modifier clicks (cmd/ctrl/
+              middle-click new tab) keep the browser's default behavior. The
+              card's onClick handles taps elsewhere on the card; the link must
+              NOT stretch over the card (after:inset-0) or it would swallow
+              the add-to-cart buttons. */}
           <Link
             href={`/product/${product.slug}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.assign(`/product/${product.slug}`);
+            }}
             className="hover:text-brand"
           >
             {product.name}

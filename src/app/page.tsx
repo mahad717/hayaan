@@ -29,6 +29,18 @@ const VALID_VIEWS = ["home", "product", "checkout", "orders", "account", "wishli
 // product URL in the ItemList JSON-LD.
 const SSR_CARD_COUNT = 36;
 
+// Task 108b: the SSR slice must be the FIRST 36 of the catalog AS THE GRID
+// DISPLAYS it. ProductGrid sorts displayProducts FEATURED-FIRST (stable) in
+// its `visible` memo — both for the SSR slice and for the refetched full
+// catalog. Slicing the RAW createdAt-desc list before that sort made the
+// first-paint order differ from the post-fetch order (featured products sit
+// at different positions in the two sequences), so the grid content SHIFTED
+// under the shopper ~0.5s after paint — the owner's 20261017 video shows the
+// restored position one row off with different neighbouring cards, on desktop
+// AND mobile. Sorting with the exact same comparator BEFORE the slice makes
+// the first-paint grid a true prefix of the full-catalog grid: no shift, and
+// Task 107's scroll restore lands pixel-exact every time.
+
 export default async function Page({
   searchParams,
 }: {
@@ -143,8 +155,36 @@ if(!ok)hide();
       />
       <StorefrontApp
         viewParam={viewParam}
-        initialProducts={initialProducts?.slice(0, SSR_CARD_COUNT)}
+        initialProducts={
+          initialProducts
+            ? [...initialProducts]
+                .sort((a, b) => (a.featured === b.featured ? 0 : a.featured ? -1 : 1))
+                .slice(0, SSR_CARD_COUNT)
+            : undefined
+        }
         initialCategories={initialCategories}
+      />
+      {/* Task 108b: the owner's newest video (XRecorder_20261017_03) shows the
+          FIRST product tap taking ~1.5s to open on the A18 (URL flips via
+          pushState while the grid stays frozen — the RSC soft-nav gap).
+          Speculation Rules prerendering fixes it: with `moderate` eagerness
+          Chrome builds the PDP while the shopper is on the card (desktop:
+          200ms hover; mobile 143+: 500ms after scrolling stops for anchors in
+          view; older mobile: pointerdown), so the tap ACTIVATES a pre-built
+          document instead of starting a navigation. This requires card taps
+          to be REAL navigations (prerender activation never fires for
+          router.push soft navs) — product-card.tsx now navigates via
+          location.assign. Chrome 143 ALSO changed `eager` list rules (the
+          PDP's old `urls:["/"], eagerness:"eager"` stopped firing — video
+          shows every Back-to-shop paying the full load again), so the PDP's
+          rule moves to an `immediate` document rule there. */}
+      <script
+        type="speculationrules"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            prerender: [{ where: { href_matches: "/product/*" }, eagerness: "moderate" }],
+          }),
+        }}
       />
       {/* Task 107: "Back to shop" must return the shopper to WHERE THEY WERE
           in the grid. The owner's video (XRecorder_20261016_01) shows it: the
@@ -177,15 +217,32 @@ if(!ok)hide();
 if(window.__hayaanShopScroll)return;window.__hayaanShopScroll=1;
 var KEY="hayaanShopY",MAX_AGE=1800000,pend=0,lastY=-1;
 function active(){return location.pathname==="/"&&!location.search&&!document.prerendering;}
-function save(){
+function save(force){
   if(!active())return;
   var y=window.scrollY|0;
-  if(y===lastY)return;
+  if(y===lastY&&!force)return;
   lastY=y;
-  try{sessionStorage.setItem(KEY,JSON.stringify({y:y,t:Date.now()}));}catch(e){}
+  var d={y:y,t:Date.now()};
+  try{
+    // Task 108b: also remember WHICH card sits at the top of the viewport and
+    // at what offset, so the restore can re-align to the same PRODUCTS if the
+    // grid order ever shifts between save and restore (SSR slice vs refetched
+    // catalog, stale caches). First anchor (document order) whose box reaches
+    // below the sticky header zone = the topmost visible card.
+    var as=document.querySelectorAll('a[href^="/product/"]');
+    for(var i=0;i<as.length;i++){
+      var r=as[i].getBoundingClientRect();
+      if(r.height>10&&r.bottom>140){
+        d.top=(as[i].getAttribute("href")||"").replace("/product/","");
+        d.dy=Math.round(r.top);
+        break;
+      }
+    }
+    sessionStorage.setItem(KEY,JSON.stringify(d));
+  }catch(e){}
 }
 window.addEventListener("scroll",function(){if(pend)return;pend=setTimeout(function(){pend=0;save();},250);},{passive:true});
-window.addEventListener("pagehide",function(){if(pend){clearTimeout(pend);pend=0;}save();});
+window.addEventListener("pagehide",function(){if(pend){clearTimeout(pend);pend=0;}save(true);});
 function restore(){
   if(!active())return;
   var r=null;try{r=new URL(document.referrer,location.href);}catch(e){}
@@ -198,7 +255,7 @@ function restore(){
   // restored offset DOWNWARD. Re-apply downward only — never upward, so
   // native scroll anchoring (which keeps the same cards in view when content
   // above grows) is not fought — and stop the instant the shopper interacts.
-  var ticks=0,touched=false;
+  var ticks=0,touched=false,reached=false;
   function stop(){touched=true;}
   ["wheel","touchstart","keydown","pointerdown"].forEach(function(ev){window.addEventListener(ev,stop,{passive:true,once:true});});
   function apply(){
@@ -213,7 +270,22 @@ function restore(){
       // the 3s tick budget (fetch usually lands in <1s; the early cover's
       // own 3.5s self-lift remains the backstop).
       if(window.__hayaanShopUncover){var u=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{u();}catch(e){}}
-      window.scrollTo(0,y);lastY=y;
+      window.scrollTo(0,y);lastY=y;reached=true;
+    }
+    // Task 108b: content-anchored correction. The card TITLE link that sat
+    // at the top of the viewport at save time is tracked every tick: if it
+    // now sits elsewhere (grid re-ordered, late layout growth above the
+    // grid), snap so the SAME PRODUCTS are back in view — pixel-exact y is
+    // worthless if the cards moved. Runs only before any user interaction
+    // and only for meaningful (>80px) shifts; the ticks budget bounds it.
+    if(reached&&d.top){
+      try{
+        var ca=document.querySelector('a[href="/product/'+d.top+'"]');
+        if(ca){
+          var delta=Math.round(ca.getBoundingClientRect().top-(d.dy|0));
+          if(delta<-80||delta>80){window.scrollTo(0,(window.scrollY|0)+delta);lastY=window.scrollY|0;}
+        }
+      }catch(e){}
     }
     if(++ticks<12)setTimeout(apply,250);
     else if(window.__hayaanShopUncover){var w=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{w();}catch(e){}}

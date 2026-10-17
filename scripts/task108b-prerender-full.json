@@ -1,0 +1,12 @@
+{
+  "prerenderTargetFound": false,
+  "targets": [
+    "browser ",
+    "page about:blank",
+    "page https://hayaan.co/product/nokia-5310"
+  ],
+  "features": {
+    "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.0.0 Safari/537.36",
+    "prerenderingSupported": true
+  }
+}

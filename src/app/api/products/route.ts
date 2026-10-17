@@ -86,10 +86,12 @@ export async function GET(req: NextRequest) {
     if (q) query = query.ilike("name", `%${q}%`);
     if (category && category !== "all") query = query.eq("category_id", category);
     if (featured === "true") query = query.eq("featured", true);
-    if (sort === "price-asc") query = query.order("price", { ascending: true });
-    else if (sort === "price-desc") query = query.order("price", { ascending: false });
-    else if (sort === "rating") query = query.order("rating", { ascending: false });
-    else query = query.order("created_at", { ascending: false });
+    if (sort === "price-asc") query = query.order("price", { ascending: true }).order("id", { ascending: false });
+    else if (sort === "price-desc") query = query.order("price", { ascending: false }).order("id", { ascending: false });
+    else if (sort === "rating") query = query.order("rating", { ascending: false }).order("id", { ascending: false });
+    // Task 108b: id tiebreaker — bulk-synced rows share created_at and tied
+    // rows may come back in different order per query, desyncing SSR vs API.
+    else query = query.order("created_at", { ascending: false }).order("id", { ascending: false });
     const { data, error } = await query.limit(limit);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ products: (data ?? []).map(rowToProduct) });
@@ -105,12 +107,12 @@ export async function GET(req: NextRequest) {
     include: { category: true },
     orderBy:
       sort === "price-asc"
-        ? { price: "asc" }
+        ? [{ price: "asc" }, { id: "desc" }]
         : sort === "price-desc"
-          ? { price: "desc" }
+          ? [{ price: "desc" }, { id: "desc" }]
           : sort === "rating"
-            ? { rating: "desc" }
-            : { createdAt: "desc" },
+            ? [{ rating: "desc" }, { id: "desc" }]
+            : [{ createdAt: "desc" }, { id: "desc" }],
     take: limit,
   });
 

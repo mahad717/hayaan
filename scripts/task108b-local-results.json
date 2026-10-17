@@ -1,0 +1,32 @@
+{
+  "j1-pdp": {
+    "ms": 935,
+    "url": "http://127.0.0.1:3100/product/acct-test-widget-mtwds9di"
+  },
+  "j1-truth": {
+    "y": 3872,
+    "t": 1792229814819,
+    "top": "acct-test-widget-mtwdtbpn",
+    "dy": 215
+  },
+  "j1-final": {
+    "finalY": 8796,
+    "truthY": 3872,
+    "truthTop": "acct-test-widget-mtwdtbpn",
+    "yMatch": false,
+    "finTop": "acct-test-widget-mtwdtbpn",
+    "topMatch": true,
+    "coverSamples": 0,
+    "ms": 4157
+  },
+  "j2-order": {
+    "ssrCount": 18,
+    "postCount": 18,
+    "stablePrefix": true
+  },
+  "j3-clean": {
+    "cov": false,
+    "y": 0,
+    "pass": true
+  }
+}

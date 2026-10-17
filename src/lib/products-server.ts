@@ -362,6 +362,12 @@ export async function listActiveProducts(limit = 500): Promise<Product[]> {
           .select("*, category:categories(*)")
           .eq("is_active", true)
           .order("created_at", { ascending: false })
+          // Task 108b tiebreaker: bulk-synced rows can share created_at, and
+          // Postgres returns tied rows in arbitrary order per query/plan —
+          // the SSR page and /api/products could disagree on the sequence,
+          // shifting the grid under the shopper. `id` makes both queries
+          // deterministic and identical.
+          .order("id", { ascending: false })
           .limit(limit);
         if (error) throw new Error(error.message);
         return (data ?? []).map(rowToProduct);
@@ -373,7 +379,7 @@ export async function listActiveProducts(limit = 500): Promise<Product[]> {
   const products = await (await getDb()).product.findMany({
     where: { isActive: true },
     include: { category: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     take: limit,
   });
   return products.map(rowToProduct);
