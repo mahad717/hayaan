@@ -215,9 +215,11 @@ export default async function RootLayout({
             This runs from the first HTML byte, long before hydration: if a tap
             on a link to "/" isn't owned by React (defaultPrevented) and the
             navigation doesn't commit within 100ms (SPA swaps finish faster),
-            show an immediate full-screen "Loading the shop…" response. It
-            hides itself when the shop page becomes current, on bfcache
-            restores, and via a 10s failsafe so it can never stick. */}
+            show an immediate full-screen "Loading the shop…" response.
+            Task 110 (owner request): that response is now TEXT-ONLY — the
+            spinning wheel was removed. It hides itself when the shop page
+            becomes current, on bfcache restores, and via a 10s failsafe so
+            it can never stick. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){
@@ -228,21 +230,19 @@ function hide(){
   var css=document.getElementById(ID+"-css");if(css)css.remove();
 }
 function show(label){
+  // Task 110 (owner request): the spinning wheel is GONE site-wide. The
+  // fullscreen veil only earns its cost when it carries the label; a bare
+  // cream sheet (the old show(false)) would read as a blank page on cold
+  // loads, so show() no-ops without one and real navigations fall back to
+  // the browser's own progress UI.
+  if(!label)return;
   if(document.getElementById(ID))return;
-  var st=document.createElement("style");st.id=ID+"-css";
-  st.textContent="@keyframes hayaanSpin{to{transform:rotate(360deg)}}";
-  document.head.appendChild(st);
   var ov=document.createElement("div");ov.id=ID;ov.setAttribute("role","status");
-  ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
-  var sp=document.createElement("div");
-  sp.style.cssText="width:34px;height:34px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;animation:hayaanSpin .7s linear infinite";
-  ov.appendChild(sp);
-  if(label){
-    var lb=document.createElement("div");
-    lb.textContent=${JSON.stringify(lang === "so" ? "Suuqa ayaa la keenayo…" : "Loading the shop…")};
-    lb.style.cssText="font-size:14px;color:#111827";
-    ov.appendChild(lb);
-  }
+  ov.style.cssText="position:fixed;inset:0;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(250,248,241,.96);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+  var lb=document.createElement("div");
+  lb.textContent=${JSON.stringify(lang === "so" ? "Suuqa ayaa la keenayo…" : "Loading the shop…")};
+  lb.style.cssText="font-size:14px;color:#111827";
+  ov.appendChild(lb);
   document.body.appendChild(ov);
   var p0=location.pathname;
   var iv=setInterval(function(){if(location.pathname!==p0){clearInterval(iv);hide();}},120);
@@ -259,17 +259,11 @@ document.addEventListener("click",function(e){
     setTimeout(function(){if(location.pathname!=="/")show(true);},100);
   }catch(err){}
 });
-/* Task 108b: card taps are real navigations (product-card.tsx dispatches
-   this right before location.assign). When a prerender is ready the swap
-   commits well under 300ms and nothing shows; a cold open (fast flick-tap,
-   iOS Safari, first visit) gets the same instant "it's working" spinner the
-   Back-to-shop path has, instead of ~1s of frozen grid. */
-document.addEventListener("hayaan:pdp-nav",function(){
-  try{
-    var p0=location.pathname;
-    setTimeout(function(){if(location.pathname===p0)show(false);},300);
-  }catch(err){}
-});
+/* Task 110: the cold-open PDP veil (hayaan:pdp-nav → show(false)) is gone
+   together with its spinner (owner request — no more spinning wheels): a
+   bare cream sheet would read as a blank page on iOS's fully cold loads,
+   and the browser's own progress UI covers real navigations. product-card
+   .tsx still dispatches the event; nothing listens for it. */
 })();`,
           }}
         />

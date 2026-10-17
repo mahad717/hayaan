@@ -90,10 +90,12 @@ export default async function Page({
           pre-computes the exact restore gate (same conditions as the
           end-of-body script: clean "/", not prerendering, same-origin
           /product/ referrer, fresh saved offset) and, when a restore is
-          pending, masks the progressive paint with the site's cream +
-          spinner until the restore applies. The shopper now sees one
-          continuous loading state that resolves AT their position instead
-          of a hero flash and a jump. Safety valve: the mask self-lifts
+          pending, masks the progressive paint with the site's cream until
+          the restore applies — one continuous surface that resolves AT
+          their position instead of a hero flash and a jump.
+          Task 110 (owner request): the spinning wheel that used to sit in
+          this mask is GONE — a bare cream veil reads as the site itself,
+          not a spinner stalling it. Safety valve: the mask self-lifts
           after 3.5s and on bfcache resume, so it can never trap a page. */}
       <script
         dangerouslySetInnerHTML={{
@@ -116,8 +118,9 @@ try{
     if(r&&r.origin===location.origin&&r.pathname.indexOf("/product/")===0){
       var d=null;try{d=JSON.parse(sessionStorage.getItem(KEY)||"null");}catch(e){}
       if(d&&d.y>0&&Date.now()-d.t<=MAX_AGE){
+        // Task 110: cream veil only — the spinning wheel is removed (owner request).
         var st=document.createElement("style");st.id="hayaan-cov-style";
-        st.textContent="html.hayaan-cov{background:#faf8f1!important}html.hayaan-cov body::after{content:\\"\\";position:fixed;inset:0;z-index:2147483646;background:#faf8f1}html.hayaan-cov body::before{content:\\"\\";position:fixed;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:3px solid #e6e2d4;border-top-color:#16a34a;z-index:2147483647;animation:hayaanCovSpin .7s linear infinite}@keyframes hayaanCovSpin{to{transform:rotate(360deg)}}";
+        st.textContent="html.hayaan-cov{background:#faf8f1!important}html.hayaan-cov body::after{content:\\"\\";position:fixed;inset:0;z-index:2147483646;background:#faf8f1}";
         (document.head||document.documentElement).appendChild(st);
         document.documentElement.classList.add("hayaan-cov");
         setTimeout(hide,3500);
