@@ -10,6 +10,7 @@ import { useStore, fetchOrders } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";
 import type { Order, OrderStatus } from "@/lib/types";
+import { productImg, productImgFallback } from "@/lib/img";
 
 function formatPrice(n: number, currency = "USD") {
   try {
@@ -172,7 +173,7 @@ export function OrdersView() {
                   {o.items.map((it) => (
                     <li key={it.id} className="flex items-center gap-3 text-sm">
                       <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-md bg-muted">
-                        {it.image && <img src={it.image} alt="" className="h-full w-full object-cover" />}
+                        {it.image && <img src={productImg(it.image, 200)} onError={productImgFallback(it.image)} alt="" className="h-full w-full object-cover" />}
                       </div>
                       <div className="flex-1">
                         <p className="font-medium leading-tight">{it.name}</p>

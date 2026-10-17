@@ -17,8 +17,10 @@ import { LANG_COOKIE, isLang, type Lang } from "@/lib/i18n/dictionary";
 // the original system stack — the Regular face is deliberately NOT loaded.
 const panton = localFont({
   src: [
-    { path: "./fonts/Panton-Bold.otf", weight: "700", style: "normal" },
-    { path: "./fonts/Panton-Black.otf", weight: "900", style: "normal" },
+    // Task 109: WOFF2 builds of the same faces (103KB -> 88KB over the wire,
+    // faster CFF parse). Converted from the original .otf via fonttools.
+    { path: "./fonts/Panton-Bold.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/Panton-Black.woff2", weight: "900", style: "normal" },
   ],
   variable: "--font-panton",
   display: "swap",
@@ -198,6 +200,14 @@ export default async function RootLayout({
       className={`${panton.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
+        {/* Task 109: card/PDP images live on Supabase Storage (transform
+            endpoint) — warm the connection before the first lazy card image
+            needs it. React 19 hoists this <link> into <head>. */}
+        <link
+          rel="preconnect"
+          href="https://mqyhgyakhfhuctnvezby.supabase.co"
+          crossOrigin="anonymous"
+        />
         {/* Pre-hydration tap feedback (Task 47). On slow phones (e.g. Galaxy
             M13) a "Back to shop" tap that lands BEFORE React hydrates starts a
             full-document navigation, and the old page sits frozen with zero
@@ -274,12 +284,15 @@ document.addEventListener("hayaan:pdp-nav",function(){
             <SonnerToaster position="top-center" richColors closeButton />
           </WhatsAppNumberProvider>
         </LangProvider>
-        {/* Google Analytics 4 — loads after hydration, never blocks rendering. */}
+        {/* Google Analytics 4 — lazyOnload keeps the 191KB gtag payload and
+            its ~230ms of long tasks out of the render window (Task 109:
+            afterInteractive still fetched it inside the Lighthouse/PSI trace
+            and delayed TTI). GA collects fine from the post-load window. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-HHYT03XHG4"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="ga4-init" strategy="afterInteractive">
+        <Script id="ga4-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

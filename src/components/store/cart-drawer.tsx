@@ -16,6 +16,7 @@ import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hook
 import { useLang } from "@/components/store/language-provider";
 import { localizeThrownError } from "@/lib/i18n/api-errors";
 import { computeCartShipping, districtFee } from "@/lib/shipping";
+import { productImg, productImgFallback } from "@/lib/img";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -100,7 +101,8 @@ export function CartDrawer() {
                   <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-[#faf8f1]">
                     {it.product.images[0] ? (
                       <img
-                        src={it.product.images[0]}
+                        src={productImg(it.product.images[0], 200)}
+                        onError={productImgFallback(it.product.images[0])}
                         alt={it.product.name}
                         className="h-full w-full object-cover"
                       />

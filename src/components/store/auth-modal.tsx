@@ -10,7 +10,6 @@ import { Loader2 } from "lucide-react";
 import { hydrateWishlist, useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";
-import { createOAuthBrowserClient } from "@/lib/supabase/client";
 
 const INPUT_CLASS =
   "bg-[#faf8f1] border-brand/40 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20";
@@ -75,6 +74,10 @@ export function AuthModal() {
   const signInWithGoogle = async () => {
     setGoogleLoading(true);
     try {
+      // Task 109: the Supabase JS SDK (~88KB brotli) is only needed for the
+      // Google OAuth tap — load it on demand so it leaves the storefront's
+      // initial bundle and stops competing with first paint on mobile data.
+      const { createOAuthBrowserClient } = await import("@/lib/supabase/client");
       const supabase = createOAuthBrowserClient();
       if (!supabase) {
         toast(t("au.toastGoogleOff"), "error");

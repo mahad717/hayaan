@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping } from "@/lib/shipping";
+import { productImg, productImgFallback } from "@/lib/img";
 
 function formatPrice(price: number, currency = "USD") {
   try {
@@ -503,7 +504,8 @@ export function Checkout() {
                     <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#faf8f1]">
                       {it.product.images[0] && (
                         <img
-                          src={it.product.images[0]}
+                          src={productImg(it.product.images[0], 200)}
+                          onError={productImgFallback(it.product.images[0])}
                           alt={it.product.name}
                           className="h-full w-full object-cover"
                         />

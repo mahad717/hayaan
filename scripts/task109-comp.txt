@@ -1,0 +1,29 @@
+938 bytes  /_next/static/chunks/065q2qjq3p67i.css
+25286 bytes  /_next/static/chunks/2-3rqwr3t-v92.css
+4871 bytes  /hayaan-logo-green.svg
+0 bytes  https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&amp;auto=format&amp;fit=crop
+0 bytes  https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&amp;auto=format&amp;fit=crop
+0 bytes  https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg
+0 bytes  https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg
+4871 bytes  /hayaan-logo-orange.svg
+2475 bytes  /_next/static/chunks/0jvhpaew_uadu.js
+0 bytes  https://www.googletagmanager.com/gtag/js?id=G-HHYT03XHG4
+3853 bytes  /_next/static/chunks/0bcwdt8r-p6lp.js
+41584 bytes  /_next/static/chunks/0cz1d0mv5g_q7.js
+2475 bytes  /_next/static/chunks/0jvhpaew_uadu.js
+17221 bytes  /_next/static/chunks/0v0417ac82ula.js
+88656 bytes  /_next/static/chunks/19o6xtpp_noqp.js
+25001 bytes  /_next/static/chunks/1dly9fycms19r.js
+22089 bytes  /_next/static/chunks/1krfz3wxl3w6-.js
+44756 bytes  /_next/static/chunks/1p2xyitpgffbc.js
+12753 bytes  /_next/static/chunks/1x_xz3xa33muq.js
+3772 bytes  /_next/static/chunks/22i43cg4l4-dq.js
+9568 bytes  /_next/static/chunks/2gnw85np0lj46.js
+149 bytes  /_next/static/chunks/2hq449l4aukpz.js
+19500 bytes  /_next/static/chunks/3_ui5fdtbmg1b.js
+10007 bytes  /_next/static/chunks/3t0q6q7x9vt7b.js
+9435 bytes  /_next/static/chunks/3tz3q06owtf5-.js
+73011 bytes  /_next/static/chunks/443yg3oz2movl.js
+4553 bytes  /_next/static/chunks/turbopack-10kt1d1i4y_fv.js
+/api/products -> 14044 1.308238s
+/api/categories -> 475 1.494481s

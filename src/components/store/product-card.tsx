@@ -12,6 +12,7 @@ import { addToCart, useStore } from "@/hooks/use-store";
 import { WishlistHeartButton } from "@/components/store/wishlist-heart";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName } from "@/lib/i18n/dictionary";
+import { productImg, productImgFallback } from "@/lib/img";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -91,9 +92,15 @@ export function ProductCard({ product }: { product: Product }) {
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-[#faf8f1]">
+        {/* Task 109: serve the Supabase transform (square WebP, ~15-25KB)
+            instead of the raw upload (100-340KB); onError falls back to the
+            original URL so a missing transform can never blank the card. */}
         <img
-          src={product.images[0] ?? "/placeholder.svg"}
+          src={productImg(product.images[0], 400)}
+          onError={productImgFallback(product.images[0])}
           alt={product.name}
+          width={400}
+          height={400}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />

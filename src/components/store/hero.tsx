@@ -3,6 +3,10 @@
 import { Sparkles, ArrowRight, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/components/store/language-provider";
+import { productImg, productImgFallback } from "@/lib/img";
+
+const HERO_IMG_3 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg";
+const HERO_IMG_4 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg";
 
 export function Hero({ onShop }: { onShop: () => void }) {
   const { t } = useLang();
@@ -86,13 +90,19 @@ export function Hero({ onShop }: { onShop: () => void }) {
               className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
             <img
-              src="https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg"
+              src={productImg(HERO_IMG_3, 600)}
+              onError={productImgFallback(HERO_IMG_3)}
               alt={t("hero.alt3")}
+              width={600}
+              height={600}
               className="aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
             <img
-              src="https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg"
+              src={productImg(HERO_IMG_4, 600)}
+              onError={productImgFallback(HERO_IMG_4)}
               alt={t("hero.alt4")}
+              width={600}
+              height={600}
               className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
             />
           </div>
