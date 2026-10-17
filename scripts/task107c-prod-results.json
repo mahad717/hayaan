@@ -1,27 +1,23 @@
 {
   "C1": {
-    "pass": false,
+    "pass": true,
     "coverSeen": true,
-    "firstCoverAt": "1020ms(page-time)",
+    "firstCoverAt": "807ms(page-time)",
     "settled": {
-      "at": 1872,
+      "at": 1112,
       "y": 1500,
       "path": "/",
       "cov": false,
       "ready": "complete",
-      "t": 1873
+      "t": 1115
     },
     "finalY": 1500,
-    "flashCount": 3,
+    "flashCount": 0,
     "timeline": [
-      "623ms y=0 cov=0 / load",
-      "719ms y=0 cov=0 / load",
-      "820ms y=0 cov=0 / load",
-      "1020ms y=0 cov=1 / load",
-      "1261ms y=0 cov=1 / load",
-      "1473ms y=0 cov=1 / load",
-      "1677ms y=1500 cov=0 / inte",
-      "1873ms y=1500 cov=0 / comp"
+      "807ms y=0 cov=1 / load",
+      "901ms y=0 cov=1 / load",
+      "1040ms y=1500 cov=0 / load",
+      "1115ms y=1500 cov=0 / comp"
     ]
   },
   "C2": {
