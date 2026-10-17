@@ -2483,3 +2483,29 @@ Stage Summary:
 - EXPECTED OWNER EXPERIENCE: tap a product -> PDP near-instant (was ~1.5s); Back to shop -> near-instant with the exact same cards in view (was 1-2s overlay + one row off). On iOS Safari/no-prerender browsers product opens fall back to a real PDP load (SSR, ~68KB doc) with the 300ms spinner.
 - SECURITY: token wiped locally after the push; owner advised (again) to rotate — it has now crossed the chat in plaintext 5+ times.
 - Still queued: $75 free-shipping removal site-wide; Somali translation; blog batch (AC guide / TV sizes / Mogadishu); 4 Norman UX fixes; test-user cleanup; ratings/reviews; digital goods; KarmaLinks submit; Zoho DKIM+DMARC; RESEND_API_KEY; Orders tab proposal.
+
+---
+Task ID: 109 (+109b addendum, same session)
+Agent: Super Z (main agent)
+Task: Owner: "It's getting better parts we were improving, but overall site performance speed decreased before it was 77" + PSI mobile screenshots (Performance 65, render-blocking ~560ms, LCP request discovery, image delivery 415KiB, network payload 2,772KiB, JS exec 1.8s). Reproduce with Lighthouse, root-cause the score drop, fix, deploy, verify.
+
+Work Log:
+- Local PSI-equivalent baseline (lighthouse 12.8.2 mobile/simulated, production): score 59, LCP 6.3s (score 0.1), TBT 680ms, TTI 8.1s, total transfer 2,785KB. LCP element = the hero subtitle <p> (system font). So the owner's 65 (and the old 77) live on this same curve — the storefront's growing weight (feature-rich client bundle + raw image uploads) drifted the lab score down across many deploys, not one regression.
+- Paint forensics (chrome-headless-shell + CDP throttle CPU 4x / 300ms / 1Mbps + filmstrip): first paint 4.6-5.0s on live; A/B experiments — CPU 4x on fast network paints at 0.5s, and slow network with ALL /_next chunks blocked paints at 0.7s => the paint gate is NETWORK bytes during the load window, not CPU/JS parse. Biggest bytes in the window: 341KB raw Supabase hero JPG (React 19 auto-preloads it), 191KB gtag, ~103KB Panton OTF fonts, and ~1.9MB of raw full-size product uploads for card thumbnails.
+- KEY DISCOVERY: the Supabase project has Image Transformations ENABLED (verified: /storage/v1/render/image/...?width=400&height=400&resize=cover&quality=75&format=webp returns real resized WebP; the 341KB sample -> 48KB, square-cropped). No derivative pre-generation needed.
+- Fixes (commit 1933a20, src/lib/img.ts + 6 components + layout):
+  1. productImg(url, size) helper: every card-sized surface (product-card grid, hero 2 Supabase tiles, cart-drawer, checkout, orders-view) now serves the square WebP transform; onError falls back to the original URL so a missing source can never blank a card. Non-Supabase URLs pass through.
+  2. Panton Bold/Black OTF -> WOFF2 (103KB -> 88KB over the wire, faster parse), layout.tsx localFont paths updated.
+  3. GA4 gtag afterInteractive -> lazyOnload (191KB third-party + ~230ms long tasks out of the render window).
+  4. auth-modal: supabase-js SDK (~88KB brotli, was 73KB unused) now a dynamic import() inside the Google-OAuth handler — leaves the storefront's initial bundle entirely.
+  5. <link rel=preconnect> to the Supabase storage host (React 19 hoists it).
+- Cache fix (commit 528b256, public/_headers + next.config worker-fallback rule): hashed /_next/static assets served `max-age=0, must-revalidate` (and an old CSS 404-fallback even hit `no-store`) — every repeat visit re-downloaded ~450KB. Now `public, max-age=31536000, immutable` on CSS/JS/woff2, 1-7d on images/logos. Verified live on all three types.
+- HARNESS NOTES: (1) `npx lighthouse` with CHROME_PATH=chrome-headless-shell works fine in this sandbox (PSI-equivalent mobile config, 90-150s per run); (2) the stale :3100 standalone-server trap bit again (old next-server pid 7993 survived pkill) — kill by port/pid and verify served bytes; (3) my task109-ci-watch.py prints FAILED on success — compare conclusion case-insensitively; (4) probe CSS cache headers only against the CURRENT build's hashed names (old names 404 after a deploy).
+- PRODUCTION verification: markers live (40 render/image URLs in SSR HTML, preconnect 1, woff2 2, .otf 0, gtag 1 ref = flight metadata only). Lighthouse AFTER: score 80 (from 59 baseline / owner's 65), LCP 3.5s (was 6.3), Speed Index 1.8s score=1.0 (was 3.1), TBT 400ms (was 680), TTI 6.2s (was 8.1), enormous-network-payloads audit GONE, only remaining opportunity = 127KB unused framework JS (~150ms).
+- Integrity: full C1/C2/C3 restoration journey re-run on prod (task107c-prod-verify2.mjs): cover 807ms -> y=1500 EXACT restored @1040ms, 0 top-flash; external/clean gates pass. Home img census 147 imgs / 0 broken / 20 transform-loaded; category 22 product links / 0 broken; A18 PDP title + JSON-LD price "190.00" intact (JSON-LD intentionally keeps original image URLs for Google).
+
+Stage Summary:
+- Task 109 LIVE: PSI mobile lab score 59 -> 80 in our controlled runs (owner's 65 -> expected high-70s/80 on their next test, modulo PSI run variance), LCP -44%, Speed Index -42%, TBT -41%, payload -60%+, and repeat visits stop re-downloading ~450KB of unchanged statics. The REAL-device win is bigger than the lab: raw 100-341KB uploads per card tile are now 15-50KB WebP — that is the owner's actual mobile data burn.
+- Root cause of "score decreased from 77": accumulated storefront weight (raw image uploads + eager SDKs + fonts), NOT a single bad deploy; the parts the owner said are improving (restoration, PDP opens) were re-verified working after this change.
+- Queued next levers (not started): SSR slice 36 -> ~12-16 cards (doc 388KB -> ~250KB, LCP 3.5 -> ~3.0s — needs a careful re-check of the 108b deep-restore mechanics), PDP gallery thumbs via transform, remaining 127KB unused framework JS, HTML edge caching (TTFB ~1.1s simulated).
+- SECURITY: token again in chat plaintext — ROTATE after confirming; local .gh-token wiped below.
