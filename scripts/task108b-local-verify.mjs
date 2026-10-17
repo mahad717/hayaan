@@ -7,7 +7,7 @@ import puppeteer from "puppeteer-core";
 import fs from "node:fs";
 
 const SHELL = process.env.HOME + "/.cache/ms-playwright/chromium_headless_shell-1200/chrome-headless-shell-linux64/chrome-headless-shell";
-const BASE = "http://127.0.0.1:3100";
+const BASE = process.env.TBASE || "http://127.0.0.1:3100";
 const out = {};
 const log = (k, v) => { out[k] = v; console.log(k, JSON.stringify(v)); };
 
