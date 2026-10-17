@@ -1,0 +1,30 @@
+# Task 109 — long-lived caching for immutable static assets.
+#
+# Every file under /_next/static is content-hashed by the build: a changed
+# source produces a new filename, so serving these for a year is always safe.
+# Before this file, hashed JS/CSS/fonts shipped `max-age=0, must-revalidate`
+# (CSS even `no-store`), forcing every repeat visit to re-download ~450KB of
+# unchanged bytes — visible on the owner's mobile data and flagged by
+# PageSpeed Insights ("Use efficient cache lifetimes").
+#
+# Cloudflare Workers Static Assets reads this file from the assets root
+# (OpenNext copies public/* into .open-next/assets, so this file ships with
+# the deploy). Unmatched paths keep the platform defaults.
+#
+# NOTE: hashed fingerprint files (next/font media) also live under
+# /_next/static — covered by the same rule.
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/hayaan-logo-green.svg
+  Cache-Control: public, max-age=86400
+
+/hayaan-logo-orange.svg
+  Cache-Control: public, max-age=86400
+
+/og.png
+  Cache-Control: public, max-age=604800

@@ -52,6 +52,14 @@ const nextConfig: NextConfig = {
       { source: "/", headers: bfcacheFriendly },
       { source: "/product/:slug", headers: bfcacheFriendly },
       { source: "/category/:slug", headers: bfcacheFriendly },
+      // Task 109: belt-and-suspenders for the fallback path where the Worker
+      // itself answers a static request (assets-binding miss) — hashed
+      // filenames are immutable, so a year of caching is always safe. The
+      // primary mechanism is public/_headers on the Cloudflare assets side.
+      {
+        source: "/_next/static/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
     ];
   },
 };
