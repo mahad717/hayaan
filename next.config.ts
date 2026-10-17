@@ -32,6 +32,28 @@ const nextConfig: NextConfig = {
       dynamic: 30,
     },
   },
+
+  // Task 108 — bfcache eligibility for the storefront's document routes.
+  // force-dynamic emits `Cache-Control: private, no-cache, no-store, ...`
+  // and `no-store` DISQUALIFIES the page from Chrome/Safari's back/forward
+  // cache — which is why every "Back to shop" re-parsed the whole document
+  // on the owner's A18 (video forensics 20261017: 3.3-3.5s returns whenever
+  // the Speculation-Rules prerender hadn't finished building, vs instant
+  // returns once it had). Dropping `no-store` while KEEPING `no-cache +
+  // max-age=0 + must-revalidate` preserves the exact freshness semantics of
+  // the HTTP cache (browser must revalidate every time; `private` keeps
+  // shared caches out) while letting the browser snapshot the live page for
+  // instant back/forward restores. Stale-snapshot risk on restore is covered
+  // by a pageshow(persisted) catalog refetch in product-grid.tsx. Admin and
+  // /api routes are intentionally untouched.
+  async headers() {
+    const bfcacheFriendly = [{ key: "Cache-Control", value: "private, no-cache, max-age=0, must-revalidate" }];
+    return [
+      { source: "/", headers: bfcacheFriendly },
+      { source: "/product/:slug", headers: bfcacheFriendly },
+      { source: "/category/:slug", headers: bfcacheFriendly },
+    ];
+  },
 };
 
 export default nextConfig;

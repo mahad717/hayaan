@@ -1,0 +1,35 @@
+{
+  "_seed": "{\"y\":7882,\"t\":1792223010589}",
+  "L1": {
+    "pass": true,
+    "finalY": 11295,
+    "seedAtRead": 7882,
+    "restored": true,
+    "flashCount": 0,
+    "n": 219
+  },
+  "L2": {
+    "pass": true,
+    "coverHeldMs": 1920,
+    "liftedAt": 1941,
+    "finalY": 0,
+    "note": "expect cover held ~3s (tick budget) because the local doc can never reach the seeded offset"
+  },
+  "L3": {
+    "pass": true,
+    "s1": {
+      "y": 0,
+      "cov": false,
+      "path": "/",
+      "ready": "complete",
+      "t": 8337
+    },
+    "s2": {
+      "y": 0,
+      "cov": false,
+      "path": "/",
+      "ready": "complete",
+      "t": 9839
+    }
+  }
+}

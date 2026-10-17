@@ -15,6 +15,20 @@ export const dynamic = "force-dynamic";
 // storefront-app.tsx. Only the home view displays the catalog.
 const VALID_VIEWS = ["home", "product", "checkout", "orders", "account", "wishlist"];
 
+// Task 108: how many product cards go into the SSR HTML. The full catalog
+// (141 cards) made the home document ~1.06MB, and on the owner's A18 that
+// document IS the speed ceiling: the full-load path parses it for ~2s behind
+// the restore cover, and the Speculation-Rules prerender of "/" needs ~3s of
+// CPU to build (owner video 20261017: returns after <3s on the PDP paid the
+// full price; longer visits activated the prerender instantly — so build
+// time is the gate). The client already refetches the FULL catalog from the
+// edge-cached /api/products on every mount (product-grid.tsx), so the SSR
+// slice only decides what the FIRST PAINT holds: 36 cards (~18 rows on the
+// 2-col grid) is far past the fold, and the remaining cards stream in within
+// ~0.5s. SEO keeps the full graph: CatalogItemList below still names every
+// product URL in the ItemList JSON-LD.
+const SSR_CARD_COUNT = 36;
+
 export default async function Page({
   searchParams,
 }: {
@@ -129,7 +143,7 @@ if(!ok)hide();
       />
       <StorefrontApp
         viewParam={viewParam}
-        initialProducts={initialProducts}
+        initialProducts={initialProducts?.slice(0, SSR_CARD_COUNT)}
         initialCategories={initialCategories}
       />
       {/* Task 107: "Back to shop" must return the shopper to WHERE THEY WERE
@@ -188,13 +202,21 @@ function restore(){
   function stop(){touched=true;}
   ["wheel","touchstart","keydown","pointerdown"].forEach(function(ev){window.addEventListener(ev,stop,{passive:true,once:true});});
   function apply(){
-    // Task 107c: lift the early cover in the SAME frame as the first scroll
-    // attempt, so the reveal shows the restored position — never scroll 0.
-    if(window.__hayaanShopUncover){var u=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{u();}catch(e){}}
-    if(touched)return;
+    if(touched){if(window.__hayaanShopUncover){var v=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{v();}catch(e){}}return;}
     var max=(document.documentElement.scrollHeight|0)-window.innerHeight;
-    if((window.scrollY|0)<y&&max>=y){window.scrollTo(0,y);lastY=y;}
+    if((window.scrollY|0)<y&&max>=y){
+      // Task 108: reveal ONLY in the same frame as a scroll that actually
+      // reaches the saved offset. With the SSR grid now holding a slice of
+      // the catalog, a DEEP saved offset can exceed the first-paint document
+      // height until the client fetch extends it — uncovering earlier would
+      // flash the top of the grid before the snap-down. Holds at worst for
+      // the 3s tick budget (fetch usually lands in <1s; the early cover's
+      // own 3.5s self-lift remains the backstop).
+      if(window.__hayaanShopUncover){var u=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{u();}catch(e){}}
+      window.scrollTo(0,y);lastY=y;
+    }
     if(++ticks<12)setTimeout(apply,250);
+    else if(window.__hayaanShopUncover){var w=window.__hayaanShopUncover;window.__hayaanShopUncover=null;try{w();}catch(e){}}
   }
   requestAnimationFrame(function(){requestAnimationFrame(apply);});
 }

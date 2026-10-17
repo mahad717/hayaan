@@ -80,6 +80,30 @@ export function ProductGrid({
   const displayProducts = products.length > 0 ? products : initialProducts ?? [];
   const displayCategories = categories.length > 0 ? categories : initialCategories ?? [];
 
+  // Task 108: bfcache freshness top-up. Dropping `no-store` (next.config
+  // headers) makes the shop page back/forward-cache eligible, so a
+  // "Back to shop" tap restores the LIVE snapshot instantly instead of
+  // re-parsing the document. The snapshot's React state travels with it —
+  // including the catalog — so on a persisted restore we silently refetch
+  // the edge-cached catalog (~0.2s) to catch prices/stock up. Normal loads
+  // (persisted=false) already refetch in the effect above.
+  useEffect(() => {
+    let alive = true;
+    const onShow = (ev: PageTransitionEvent) => {
+      if (!ev.persisted) return;
+      fetchProducts()
+        .then((p) => {
+          if (alive && p.length) setProducts(p);
+        })
+        .catch(() => {});
+    };
+    window.addEventListener("pageshow", onShow);
+    return () => {
+      alive = false;
+      window.removeEventListener("pageshow", onShow);
+    };
+  }, [setProducts]);
+
   const visible = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     let out = displayProducts.filter((p) => {
