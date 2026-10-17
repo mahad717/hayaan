@@ -2509,3 +2509,22 @@ Stage Summary:
 - Root cause of "score decreased from 77": accumulated storefront weight (raw image uploads + eager SDKs + fonts), NOT a single bad deploy; the parts the owner said are improving (restoration, PDP opens) were re-verified working after this change.
 - Queued next levers (not started): SSR slice 36 -> ~12-16 cards (doc 388KB -> ~250KB, LCP 3.5 -> ~3.0s — needs a careful re-check of the 108b deep-restore mechanics), PDP gallery thumbs via transform, remaining 127KB unused framework JS, HTML edge caching (TTFB ~1.1s simulated).
 - SECURITY: token again in chat plaintext — ROTATE after confirming; local .gh-token wiped below.
+
+---
+Task ID: 110
+Agent: Super Z (main agent)
+Task: Owner: "Please remove spinning loading wheel" + fresh GitHub token (saved to .gh-token, 0600). Remove the spinning wheels we added across the shop/PDP journey, deploy, verify on production.
+
+Work Log:
+- Audit found TWO custom wheels: (1) hayaanCovSpin in the early restore cover (page.tsx — cream mask + 34px green-top wheel shown on "/" arrivals from /product/ while the restore pends); (2) hayaanSpin in the pre-hydration tap-feedback overlay (layout.tsx Task 47 — Back-to-shop "Loading the shop…" veil; Task 108b had also added a wheel-only show(false) variant behind hayaan:pdp-nav for cold PDP opens).
+- page.tsx: cover style is now cream-only — body::after veil kept, body::before wheel rule + @keyframes hayaanCovSpin deleted; the 3.5s self-lift, bfcache uncover and all gate logic untouched. JSX comment updated.
+- layout.tsx: wheel element + @keyframes hayaanSpin removed; show() now early-returns without a label, so the veil only ever appears as the TEXT-ONLY "Loading the shop…" response (en/so copy unchanged). The hayaan:pdp-nav cold-open listener was removed entirely — a bare cream sheet would read as a blank page on iOS's fully cold loads, and real navigations keep the browser's own progress UI. product-card.tsx still dispatches the event; nothing listens. Task 47/108b comments updated.
+- scripts/task110-syntax-check.mjs: extracts each inline template from the TSX, evaluates it exactly as emitted (reproducing \\\\" escaping + ${} interpolation), node --check + asserts wheels absent / gates intact. All three pass (cover 1393B, restore 4375B untouched, tap 2149B emitted).
+- next build passes; commit 3404dcc pushed via task107-push2.py with the new token (bcd1be4..3404dcc); Workers Builds check-run completed success (~90s). Also added scripts/task110-ci-watch.py (correct conclusion comparison).
+- Prod HTML probe: hayaanCovSpin / animation:hayaanSpin / keyframes hayaanSpin / "hayaan-cov body::before" = 0 occurrences; cream veil rule, __hayaanShopCover, __hayaanShopScroll, if(!label)return gate and "Loading the shop" all present. Doc 391KB.
+- Live journey re-run (task107c-prod-verify2.mjs): C1 coverSeen @521ms -> settled y=1500 EXACT @775ms cov=0, flashCount 0, 108b anchor seed (top/dy) intact; C2 external referrer no cover; C3 clean load no cover; PDP open + back-to-shop exercised end-to-end.
+
+Stage Summary:
+- Task 110 LIVE: the site's custom spinning wheels are gone everywhere — the restore cover is a bare cream veil (reads as the site itself, not a spinner), Back-to-shop slow-nav feedback is text-only, and the 108b PDP cold-open spinner fallback is retired by owner request. Restore mechanics (save/anchor/restore/uncover) are byte-identical and re-verified on production.
+- If the owner wants the cream VEIL itself gone too (not just the wheel), it is a one-line change in the cover script — but that reintroduces the hero-flash-then-teleport jank 107c was built to fix.
+- Deploy/verify kit unchanged: task107-push2.py + .gh-token (0600) + task107c-prod-verify2.mjs; stale origin/main tracking ref makes local `git status` show "ahead 298" — HTTPS helper pushes are authoritative.
