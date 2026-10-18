@@ -11,6 +11,7 @@ import { guidesForProduct } from "@/lib/product-guides";
 import { brandForProduct, genericPdpDescription, genericPdpTitle, pdpSeoFor, type PdpSeoCtx } from "@/lib/pdp-seo";
 import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
+import { listApprovedReviews } from "@/lib/reviews";
 
 // SSR per request — catalog changes are visible immediately and crawlers
 // always see fresh content.
@@ -111,6 +112,11 @@ export default async function ProductPage({ params }: Props) {
   const override = pdpSeoFor(product.slug);
   const seoCtx: PdpSeoCtx = { price: product.price, inStock: product.stock > 0 };
   const faqs = override ? override.faqs(seoCtx) : null;
+  // Task 113: the newest approved reviews ride in the Product JSON-LD —
+  // Google's review snippets read the individual Review nodes (author +
+  // rating + body), not just the aggregate. Fails soft: a missing
+  // product_reviews table or any fetch error simply omits the array.
+  const reviewsForSchema = await listApprovedReviews(product.id, 5).catch(() => []);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -129,6 +135,23 @@ export default async function ProductPage({ params }: Props) {
                 ratingValue: product.rating,
                 reviewCount: product.reviewCount,
               },
+            }
+          : {}),
+        ...(reviewsForSchema.length > 0
+          ? {
+              review: reviewsForSchema.map((r) => {
+                const published = r.createdAt ? new Date(r.createdAt) : null;
+                return {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: r.authorName || "Hayaan customer" },
+                  datePublished:
+                    published && !Number.isNaN(published.getTime())
+                      ? published.toISOString().slice(0, 10)
+                      : undefined,
+                  reviewBody: r.comment || undefined,
+                  reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+                };
+              }),
             }
           : {}),
         offers: {

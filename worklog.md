@@ -2576,3 +2576,19 @@ Work Log:
 Stage Summary:
 - Both owner asks CONFIRMED LIVE on hayaan.co: backlog pushed + all-141 price-in-Somalia templates deployed and CI-green. Nothing further to ship for Task 112.
 - Token hygiene enforced: .gh-token and ~/.git-credentials wiped after this verification.
+
+---
+Task ID: 113
+Agent: Super Z (main agent)
+Task: Owner "do both" — (A) $75 free-shipping change, (B) reviews/ratings to unlock star rich results.
+
+Work Log:
+- (A) VERIFIED ALREADY DONE: Task 97 (d46ce26) removed the free-shipping-over-$75 rule site-wide and is deployed (ancestor of pushed main). Sources clean (shipping.ts charges every order; EN+SO FAQs answer "Is shipping free?" with "No — charged on every order"); live homepage shows the post-75 language (40x "$1.50–$3.00", 42x "flat $6.95", 3x "delivery is charged", 0 free-shipping-promo remnants). No code changes needed.
+- (B) Discovery: the reviews feature (Task 85) is fully built AND the prod Supabase product_reviews table EXISTS (live API returns healthy empty state, not the pre-migration degradation) — zero reviews is a usage gap, not a feature gap. PDP review UI, admin moderation, aggregateRating wiring all live.
+- (B) Code addition: Product JSON-LD now carries the newest 5 approved reviews as individual review[] nodes (author/datePublished/reviewBody/reviewRating bestRating=5/worstRating=1) — Google review snippets read the individual Review nodes, not just the aggregate. Fails soft (.catch → omits array); one indexed query per SSR (productId+status+createdAt index, take 5).
+- Local runtime check (scripts/task113-local-verify.mjs): seeded review on local seed product → next start → PDP JSON-LD shows full review[] + aggregateRating reviewCount 1; no-review PDP omits both (its stray aggregateRating match was seed data's hardcoded 4.6 rating); cleanup restored rating 0 and deleted the QA user; db/custom.db churn restored from HEAD.
+- Build gate: npx next build PASS.
+
+Stage Summary:
+- Both jobs closed: $75 removal confirmed live; reviews pipeline confirmed LIVE (write path to be E2E-proven on prod right after deploy with a self-deleting QA review).
+- Star rich results unlock the moment the first REAL customer review lands (aggregateRating + review[] both fire at reviewCount>0). No fabricated reviews were or will be seeded on prod (Google structured-data policy).
