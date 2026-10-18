@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";  // Task 115
 
 export function SifaloReturnActions({
   orderId,
@@ -37,7 +38,9 @@ export function SifaloReturnActions({
       }
       setNote(
         (data?.state === "pending" && t("sf.pendingNote")) ||
-          (data?.error ?? t("sf.notConfirmed")),
+          // Task 115: known API messages are localized; unknown ones still get
+          // the human fallback instead of raw gateway/technical English.
+          (localizeApiError(data?.error, t) || t("sf.notConfirmed")),
       );
     } catch {
       setNote(t("ord.verifyNetwork"));

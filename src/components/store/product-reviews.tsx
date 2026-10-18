@@ -230,7 +230,16 @@ export function ProductReviews({ productId }: { productId: string }) {
                     aria-label={t("reviews.commentAria")}
                   />
                   <div className="mt-3 flex items-center gap-2">
-                    <Button className="btn-accent flex-1" onClick={submit} disabled={submitting}>
+                    {/* Task 115 (Norman, constraint over punishment): the button
+                        explains its own state instead of erroring after the
+                        tap — disabled until a star rating exists, with the
+                        hint saying exactly what is missing. */}
+                    <Button
+                      className="btn-accent flex-1"
+                      onClick={submit}
+                      disabled={submitting || rating < 1}
+                      aria-disabled={submitting || rating < 1}
+                    >
                       {submitting ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <PenLine className="mr-1.5 h-4 w-4" />}
                       {myReview ? t("reviews.update") : t("reviews.submit")}
                     </Button>
@@ -247,7 +256,11 @@ export function ProductReviews({ productId }: { productId: string }) {
                       </Button>
                     )}
                   </div>
-                  {myReview && <p className="mt-2 text-xs text-muted-foreground">{t("reviews.editHint")}</p>}
+                  {rating < 1 ? (
+                    <p className="mt-2 text-xs text-muted-foreground">{t("reviews.pickStarsHint")}</p>
+                  ) : (
+                    myReview && <p className="mt-2 text-xs text-muted-foreground">{t("reviews.editHint")}</p>
+                  )}
                 </div>
               )}
             </div>

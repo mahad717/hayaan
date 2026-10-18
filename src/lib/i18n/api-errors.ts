@@ -36,6 +36,7 @@ const MAP: Record<string, DictKey> = {
   "Please sign in to download your purchase.": "err.signIn",
   "Sign in to write a review.": "err.signInReview",
   "Sign in to save items to your wishlist.": "err.signInWishlist",
+  "Sign in to update your wishlist.": "err.signInWishlist",  // Task 115: PATCH /api/wishlist gate
 
   // Orders / checkout (src/app/api/orders/*, /api/payments/sifalo/*)
   "Order not found": "err.orderNotFound",
@@ -48,12 +49,32 @@ const MAP: Record<string, DictKey> = {
   "Failed to update cart": "err.cartFail",
   "Failed to remove item": "err.cartFail",
   "Failed to clear cart": "err.cartFail",
+  "We couldn't find your cart — please refresh and try again.": "err.cartFail",  // Task 115
 
   // Wishlist (API + hook fallbacks)
   "Failed to save the item": "err.wishlistFail",
   "Failed to save the item.": "err.wishlistFail",
   "Failed to update the wishlist": "err.wishlistFail",
+  "Failed to update your wishlist.": "err.wishlistFail",  // Task 115: PATCH fallback text
   "Failed to load your wishlist.": "err.generic",
+
+  // Digital downloads (Task 115: /api/digital/download — the orders-view
+  // download button now fetches and toasts, so these MUST be localized)
+  "Download not found for this account.": "err.downloadMissing",
+  "This download unlocks as soon as your payment is confirmed.": "err.downloadLocked",
+  "This item is not a digital download.": "err.notDigital",
+  "Could not generate the download link — try again.": "err.downloadFail",
+  "This product's download link is misconfigured — please contact support@hayaan.co.": "err.downloadFail",  // Task 115
+
+  // Order validation (Task 115: /api/orders 400s that reach the checkout toast)
+  "Please add your full name so we can record the order.": "err.fullName",
+  "Please complete your shipping details so we know where to deliver.": "err.shippingDetails",
+  "Your cart is empty — add an item before checking out.": "err.cartEmpty",
+  "Payments are not configured on this deployment.": "err.payNotConfigured",
+
+  // Misc customer-facing (Task 115)
+  "Too many submissions — please try again later.": "err.tooMany",
+  "Email, password, and name are required.": "err.emailPwRequired",
 
   // Reviews (src/app/api/products/[id]/reviews)
   "Rating must be a whole number from 1 to 5.": "err.ratingRange",
@@ -63,6 +84,7 @@ const MAP: Record<string, DictKey> = {
 
   // Account
   "Name cannot be empty.": "err.nameEmpty",
+  "SUPABASE_SERVICE_ROLE_KEY is missing at runtime — cannot write the profile.": "err.generic",  // Task 115: misconfig must not leak jargon to the shopper
 
   // Leads (quote / popup / newsletter / deals forms)
   "Please tell us your name.": "err.tellName",
@@ -81,8 +103,13 @@ export function localizeApiError(
   t: TFn,
 ): string {
   if (!msg) return "";
-  const key = MAP[msg.trim()];
-  return key ? t(key) : msg;
+  const trimmed = msg.trim();
+  const key = MAP[trimmed];
+  if (key) return t(key);
+  // Task 115: the reviews route interpolates the limit into the message
+  // ("Comments are limited to 2000 characters.") — match the stable prefix.
+  if (trimmed.startsWith("Comments are limited to ")) return t("err.commentLong");
+  return msg;
 }
 
 /** Convenience for catch blocks: map a thrown Error's message. */

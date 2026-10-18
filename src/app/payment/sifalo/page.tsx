@@ -15,6 +15,7 @@ import { CheckCircle2, Clock3, XCircle, HelpCircle } from "lucide-react";
 import { getServerUser } from "@/lib/current-user";
 import { getOwnedOrder, verifyAndApplyToOrder } from "@/lib/sifalo-server";
 import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
+import { localizeApiError } from "@/lib/i18n/api-errors";
 import { SifaloReturnActions } from "./sifalo-return-client";
 
 export const dynamic = "force-dynamic";
@@ -108,7 +109,10 @@ export default async function SifaloReturnPage({
           <ResultHead
             icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
             title={t("sf.cantCheckTitle")}
-            body={applied.error}
+            // Task 115 (Norman): never print the raw server error at the money
+            // moment — map the known messages into the visitor's language and
+            // fall back to the same human "can't check" copy otherwise.
+            body={localizeApiError(applied.error, (key) => translate(lang, key)) || t("sf.cantCheckBody")}
           />
           <SifaloReturnActions orderId={orderId} initialState="unknown" />
           <BackActions lang={lang} />

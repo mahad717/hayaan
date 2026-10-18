@@ -208,7 +208,9 @@ export function AccountView() {
       });
       const data = await res.json();
       if (!res.ok) {
-        toast(data.error ?? t("acc.toastSaveFail"), "error");
+        // Task 115: map known API messages so the toast follows the active
+        // language (the raw English body still lands in logs/support).
+        toast(localizeApiError(data.error, t) || t("acc.toastSaveFail"), "error");
         return;
       }
       setUser(data.user);

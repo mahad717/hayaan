@@ -39,6 +39,12 @@ function parseStorageRef(url: string): { bucket: string; path: string } | null {
 }
 
 export async function GET(req: NextRequest) {
+  // Task 115 (Norman): `?json=1` asks the route to answer with { url } instead
+  // of a 302. The orders-view download button uses this so failures land in a
+  // localized in-page toast (never raw JSON in a new tab) while the success
+  // path still hands the browser the real URL natively — same signed link,
+  // no CORS round-trip through JS.
+  const wantsJson = new URL(req.url).searchParams.get("json") === "1";
   const user = await getCurrentUser(req);
   if (!user) {
     return NextResponse.json({ error: "Please sign in to download your purchase." }, { status: 401 });
@@ -76,10 +82,10 @@ export async function GET(req: NextRequest) {
       if (error || !data?.signedUrl) {
         return NextResponse.json({ error: "Could not generate the download link — try again." }, { status: 500 });
       }
-      return NextResponse.redirect(data.signedUrl, 302);
+      return wantsJson ? NextResponse.json({ url: data.signedUrl }) : NextResponse.redirect(data.signedUrl, 302);
     }
     if (/^https?:\/\//i.test(trimmed)) {
-      return NextResponse.redirect(trimmed, 302);
+      return wantsJson ? NextResponse.json({ url: trimmed }) : NextResponse.redirect(trimmed, 302);
     }
     return NextResponse.json(
       { error: "This product's download link is misconfigured — please contact support@hayaan.co." },
@@ -106,7 +112,7 @@ export async function GET(req: NextRequest) {
   const target = item.product.digitalUrl.trim();
   // Local preview has no Supabase Storage; external https links still work.
   if (/^https?:\/\//i.test(target)) {
-    return NextResponse.redirect(target, 302);
+    return wantsJson ? NextResponse.json({ url: target }) : NextResponse.redirect(target, 302);
   }
   return NextResponse.json(
     { error: "This product's download link is misconfigured — please contact support@hayaan.co." },

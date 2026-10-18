@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
+import { localizeApiError } from "@/lib/i18n/api-errors";  // Task 115: toasts must not leak English API strings
 import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping } from "@/lib/shipping";
 import { productImg, productImgFallback } from "@/lib/img";
 
@@ -300,7 +301,7 @@ export function Checkout() {
       } else {
         setPayError(t("co.errGeneric"));
       }
-      toast(msg, "error");
+      toast(localizeApiError(msg, t) || t("co.errGeneric"), "error");
       requestAnimationFrame(() => {
         payErrorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       });

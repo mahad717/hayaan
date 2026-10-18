@@ -103,6 +103,37 @@ and document it — consistent convention beats cleverness.
 - Lead popup timing itself (18s) is a business lever — Norman would prefer
   engagement-triggered; owner's call, left as-is.
 
+**Second pass (Task 115, 2026-10-18) — the surfaces shipped after Task 90,
+audited against the same book; all four shipped EN + SO:**
+1. ~~Raw JSON error tab for digital downloads~~ → the orders-view Download
+   button used to be a plain `<a target="_blank">`, so any failure (payment
+   not confirmed, missing file) painted `{"error":…}` into a new tab. The
+   button now resolves the link first (API `?json=1` mode returning `{url}`),
+   shows a busy spinner, then hands the browser the real URL natively —
+   same signed-link semantics, no CORS detour — and failures become
+   localized in-page toasts (`orders-view.tsx`, `api/digital/download`).
+   Lesson: the 302-redirect download pattern silently converts every server
+   rejection into raw JSON; any endpoint a browser Navigates to must decide
+   what its error BODY looks like as a page.
+2. ~~Technical error text at the money moment~~ → the Sifalo return page
+   printed `applied.error` verbatim; it now maps known messages into the
+   visitor's language and falls back to human recovery copy (order is safe,
+   check again, WhatsApp) — server-side via the same `localizeApiError` map
+   with a `translate`-bound t (`payment/sifalo/page.tsx`,
+   `sifalo-return-client.tsx`).
+3. ~~Punishment instead of constraint (reviews)~~ → the review submit button
+   used to let a shopper tap Post with zero stars and then error-toast.
+   Constraint-first: disabled until a star rating exists, with a hint line
+   saying exactly what is missing (`product-reviews.tsx`, Task 90 rule
+   extended to the reviews surface).
+4. ~~Localized panel + raw-English toast, same failure~~ → checkout and
+   account-save toasts printed the raw API message beside (or instead of)
+   the already-localized recovery copy; both now go through
+   `localizeApiError` so the same failure reads the same way everywhere
+   (conceptual-model consistency). The Task 115 audit harness
+   (`scripts/task115-api-error-diff.mjs`) diffs every API error string
+   against the MAP so new routes get flagged before they leak English.
+
 **Case study from this task (the paradox of technology, live):** while
 verifying the checkout hints we caught a REAL display bug — `/api/cart`
 items carried the price only under `product`, the client shipping helper

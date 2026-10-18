@@ -140,6 +140,7 @@ const en = {
   "reviews.verified": "Verified purchase",
   "reviews.you": "You",
   "reviews.needStars": "Please pick a star rating first.",
+  "reviews.pickStarsHint": "Pick a star rating above to enable posting.",
   "reviews.posted": "Thanks! Your review is live.",
   "reviews.deleted": "Review deleted.",
   "reviews.error": "Something went wrong. Please try again.",
@@ -429,6 +430,7 @@ const en = {
   "sf.notFoundTitle": "Order not found",
   "sf.notFoundBody": "This order doesn’t exist or belongs to a different account.",
   "sf.cantCheckTitle": "Couldn’t check your payment",
+  "sf.cantCheckBody": "We hit a problem while verifying this payment. Your order is safe — try checking again in a moment, or contact us on WhatsApp if it keeps happening.",
   "sf.pendingTitle": "Payment pending approval",
   "sf.pendingBody":
     "{msg} Your order {ref} is saved — we’ll confirm it as soon as the network approves the transaction. You can safely check again.",
@@ -536,6 +538,16 @@ const en = {
   "err.describe": "Please describe what you need.",
   "err.leaveContact": "Leave a phone number or email so we can send the quote.",
   "err.emailLooks": "That email address doesn’t look right.",
+  "err.downloadMissing": "We couldn’t find that download in your account.",
+  "err.downloadLocked": "This download unlocks as soon as your payment is confirmed.",
+  "err.notDigital": "This item is not a digital download.",
+  "err.downloadFail": "The download could not be prepared — please try again.",
+  "err.fullName": "Please add your full name so we can record the order.",
+  "err.shippingDetails": "Please complete your shipping details so we know where to deliver.",
+  "err.cartEmpty": "Your cart is empty — add an item before checking out.",
+  "err.tooMany": "Too many attempts — please wait a moment and try again.",
+  "err.commentLong": "That review is too long — please shorten it a little.",
+  "err.payNotConfigured": "Online payment isn’t available right now — please try again later or contact us on WhatsApp.",
 } as const;
 
 export type DictKey = keyof typeof en;
@@ -656,6 +668,7 @@ const so: Record<DictKey, string> = {
   "reviews.verified": "Iib la xaqijiyay",
   "reviews.you": "Adiga",
   "reviews.needStars": "Fadlan marka hore dooro xiddig.",
+  "reviews.pickStarsHint": "Fadlan dooro xiddig kore si aad u qorto faallada.",
   "reviews.posted": "Mahadsanid! Faalladaada hadda waa muuqataa.",
   "reviews.deleted": "Faallada waa la tirtiray.",
   "reviews.error": "Wax qalad ah ayaa dhacay. Fadlan isku day mar kale.",
@@ -945,6 +958,7 @@ const so: Record<DictKey, string> = {
   "sf.notFoundTitle": "Dalab lama helin",
   "sf.notFoundBody": "Dalabkan ma jiro ama waa ka tirsan akoon kale.",
   "sf.cantCheckTitle": "Bixinta lama xaqiijin karo",
+  "sf.cantCheckBody": "Wax qalad ah ayaa dhacay markii aan bixinta xaqiijinaynay. Dalabkaagu waa badbaadan — sug wax yar oo isku day mar kale, ama nala soo xiriir WhatsApp haddii ay sii jirto.",
   "sf.pendingTitle": "Bixinta waa sugaysa ansixinta",
   "sf.pendingBody":
     "{msg} Dalabkaaga {ref} waa kaydsan yahay — waxaan xaqiijinaynaa marka shabakadu ay ansixiso. Si ammaan ayaad mar kale u xaqiijin kartaa.",
@@ -1041,6 +1055,16 @@ const so: Record<DictKey, string> = {
   "err.describe": "Fadlan noo sharax waxa aad u baahan tahay.",
   "err.leaveContact": "Fadlan ka tag number ama iimayl si aan kuu dirno qiimaynta.",
   "err.emailLooks": "Iimaylkaasu ma muuqdo mid sax ah.",
+  "err.downloadMissing": "Soo dejintaasi lama helin akoonkaaga.",
+  "err.downloadLocked": "Soo dejintu way furmayso marka bixintaada la xaqiijiyo.",
+  "err.notDigital": "Alaabtaani ma ahan wax dijitaal ah oo la soo dejiyo.",
+  "err.downloadFail": "Soo dejinta lama diyaarin karin — fadlan isku day mar kale.",
+  "err.fullName": "Fadlan ku dar magacaaga oo buuxa si aan dalabka u diiwaangalno.",
+  "err.shippingDetails": "Fadlan buuxi xogta gaadhitaanka si aan ogaano halka aad ku soo dirayno.",
+  "err.cartEmpty": "Gaadhigaagu waa madhan yahay — ku dar alaab ka hor intaadan bixin.",
+  "err.tooMany": "Isku dayyo badan — fadlan sug dabayaaqadii oo isku day mar kale.",
+  "err.commentLong": "Faalladaasi waa mid aad u dheer — fadlan gaabsi yar samee.",
+  "err.payNotConfigured": "Bixinta onlayn hadda lama heli karo — fadlan mar dambe isku day, ama nala soo xiriir WhatsApp.",
 };
 
 export const dictionaries: Record<Lang, Record<DictKey, string>> = { en, so };

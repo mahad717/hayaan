@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useStore, fetchOrders } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
-import { localizeApiError } from "@/lib/i18n/api-errors";
+import { localizeApiError, localizeThrownError } from "@/lib/i18n/api-errors";
 import type { Order, OrderStatus } from "@/lib/types";
 import { productImg, productImgFallback } from "@/lib/img";
 
@@ -36,13 +36,61 @@ function orderIsCollected(o: Order): boolean {
   return ["paid", "shipped", "delivered"].includes(o.status) || o.paymentStatus === "paid";
 }
 
+/**
+ * Task 115 (Norman): the download used to be a plain <a target="_blank">, so
+ * any failure (payment not confirmed, missing file) painted RAW JSON into a
+ * new tab — English, technical, and seemingly from nowhere. The button now
+ * resolves the link first (the API's ?json=1 mode) and only then hands the
+ * browser the real URL natively; failures become localized in-page toasts.
+ */
+async function resolveDownloadUrl(item: { id: string }): Promise<string> {
+  const res = await fetch(`/api/digital/download?item=${encodeURIComponent(item.id)}&json=1`, {
+    credentials: "include",
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok || !data?.url || typeof data.url !== "string") {
+    // Localize the known English messages; unknown ones pass through.
+    throw new Error((data?.error as string) || "Could not generate the download link — try again.");
+  }
+  return data.url;
+}
+
 export function OrdersView() {
-  const { user, setView, setAuthOpen, bootReady } = useStore();
+  const { user, setView, setAuthOpen, bootReady, toast } = useStore();
   const { t, lang } = useLang();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [checkingId, setCheckingId] = useState<string | null>(null);
   const [verifyNote, setVerifyNote] = useState<string | null>(null);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+
+  // Task 115 (Norman): fetch the real link first (busy spinner on the button),
+  // then navigate to it the same way the old <a> did — attachment responses
+  // download, previews open — with failures as localized toasts instead of a
+  // raw JSON tab.
+  const handleDownload = async (it: { id: string }) => {
+    if (downloadingId) return;
+    setDownloadingId(it.id);
+    try {
+      const url = await resolveDownloadUrl(it);
+      if (/^https?:\/\/[^/]+/i.test(url) && !url.startsWith("/")) {
+        // External deliverable (drive link, landing page…) — keep the new-tab
+        // behavior the old target="_blank" had; signed storage links download.
+        window.open(url, "_blank", "noopener,noreferrer");
+      } else {
+        const a = document.createElement("a");
+        a.href = url;
+        a.rel = "noopener";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    } catch (err) {
+      toast(localizeThrownError(err, t), "error");
+    } finally {
+      setDownloadingId(null);
+    }
+  };
 
   // Sifalo Pay orders can sit in "pending" if the customer paid but closed the
   // tab before the return page loaded — this re-checks the gateway live.
@@ -193,14 +241,15 @@ export function OrdersView() {
                         )}
                       </div>
                       {it.isDigital && orderIsCollected(o) && (
-                        <a
-                          href={`/api/digital/download?item=${encodeURIComponent(it.id)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-dark"
+                        <button
+                          type="button"
+                          onClick={() => handleDownload(it)}
+                          disabled={downloadingId === it.id}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60"
                         >
-                          <Download className="h-3.5 w-3.5" /> {t("ord.download")}
-                        </a>
+                          {downloadingId === it.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+                          {t("ord.download")}
+                        </button>
                       )}
                       {/* Task 114: "review your purchase" — collected orders
                           only (the honest moment), real navigation to the SSR
