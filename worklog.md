@@ -2544,3 +2544,20 @@ Work Log:
 Stage Summary:
 - Answer to owner: SEO baseline = YES for all 141 products (automated, verified live); AEO = strong at site level (llms.txt/llms-full.txt, 12 AI crawlers allowed, site FAQs, 18 buyer-guide posts) but per-product depth only on A18. Biggest levers: category-level title/description templates w/ live price (Task 99 architecture supports it), reviews->stars, PDP FAQ expansion.
 - scripts/task111-pdp-seo-audit.py saved as the repeatable PDP SEO auditor; worklog+script committed with this entry.
+
+---
+Task ID: 112 (+112b clamp fix)
+Agent: Super Z (main agent)
+Task: Owner approved "roll out the price-in-Somalia title/description templates across all 141 products" + fresh token.
+
+Work Log:
+- pdp-seo.ts: added generic template layer beside Task 99 per-slug overrides — genericPdpTitle ("{Name} Price in Somalia — $X", "| Hayaan Market" suffix only when the WHOLE title fits ≤68 so the price is never the truncated part), genericPdpDescription (160-char budget: "{Name} price in Somalia: $X at Hayaan Market." + word-boundary-clipped product description + stock-aware CTA), formatUsd ($190/$6.95/$1,899). clipWords includes the ellipsis in its max (off-by-one found by unit test).
+- product/[slug]/page.tsx generateMetadata: en + no-override + price>0 path uses the templates for title/og:title/twitter:title/description; Somali path unchanged; overrides always win. Offer JSON-LD gains priceValidUntil (+90d, refreshed per SSR request).
+- 112b: imported listings with 100+ char names (AliExpress French monsters) blew titles to 129 chars — names >60 chars now clip at word boundary in title AND description so the keyword+price pattern always stays visible (max title 129 -> 86).
+- Pushed fc5dcb1 + 48abd54 (also carried pending Task 111 artifacts); Workers Builds PASS both times.
+- Full post-deploy audit (scripts/task112-rollout-audit.py, ALL 141 live PDPs, 0 fetch errors): "Price in Somalia" in title 141/141, live price in title 141/141, keyword desc 141/141, canonical==URL 141/141, priceValidUntil 141/141, duplicate titles 0, desc >160 = 2 raw but 156/157 unescaped (HTML-entity measurement artifact, 0 real), A18 hand-tuned override intact ($190 title exact).
+
+Stage Summary:
+- Task 112 LIVE: every product on hayaan.co now has a keyword-led, price-bearing SERP title + description generated from live catalog data — the exact pattern Somalia shoppers search ("… price in Somalia"). No fabricated specs; visible page content untouched; Somali-language behavior unchanged.
+- Remaining SEO/AEO levers (queued): reviews -> aggregateRating stars (needs the ratings feature), PDP FAQ expansion beyond A18, logo img alt="".
+- Owner token in chat plaintext again — rotate when convenient; local copy wiped after pushes.
