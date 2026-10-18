@@ -2694,3 +2694,21 @@ Work Log:
 
 Stage Summary:
 - Prod Supabase is down to exactly 5 real identities (owner + 4 real customers), zero test residue, zero orphan rows. The long-open test-user cleanup decision (queued since Task 76) is CLOSED. First real review confirmed earning stars — no action needed, the pipeline did its job.
+
+---
+Task ID: 118
+Agent: Super Z (main agent)
+Task: Owner picked "1" — blog batch (the long-queued "AC/TV/Mogadishu" line).
+
+Work Log:
+- Scope recovery first: the queued AC/TV/Mogadishu trio was ALREADY live from Task 87 (and batch 3 — routers/printers/Hargeisa — from Task 93; the queue string was stale). Followed the Task 93 precedent instead: pick batch 4 from catalog gaps. Audit showed 17 posts live and three sizable clusters with zero coverage: Power & Charging (26 SKUs), Nokia feature phones (8 SKUs), projectors (3 SKUs + screen).
+- Prices verified against the live catalog on publish day (2026-10-18, /api/products?limit=250): Porodo 5K $15 / Aston $22 / Pocket Volt $22 / Maxvolt $24 / Chrome Volt $25 / Anker Zolo $45 / MagGo $48 / Lion Ultra-Thin 20K 120W $49.90 / Green Lion 80K $65; WiWU 65W $18 / 25W PD $4.50 / Apple 20W $25 / Anker Prime 100W $65; Nokia 105 4G $16, 125 $25, 5310 $37, 6310 4G $40, 2660 Flip $47, 235 4G $48, 5710 $50, 8210 4G $53; Maxwell Spectra $120, Epson CO-W01 $350, screen $90, stabilizer $11.50, L208 speaker $70, Aputure $330. Apple 20W slug percent-encoded (%28original%29) per the Task 86 parens lesson.
+- Wrote 3 guides in blog-seo-posts.ts (posts 19-21) with the full Task 86 AEO recipe: 40-60-word quickAnswer, question-shaped H2s, 5 FAQs mirroring visible content, 5-step howtoSteps each (HowTo JSON-LD), staggered publishedAt 2026-10-18T09:00/09:30/10:00, internal links to router/AC/TV/payments/how-it-works/Mogadishu guides, current per-order delivery-fee copy (no free-threshold claims). Fixed 3 pre-existing broken "ayaan.co]" markdown links in posts 8/15/18 (missing "[" — parser-output confusion had hidden them; verified zero remain via regex).
+- Covers: 3 AI-generated 1344x768 raws (scripts/task118-blog-covers.mjs, no-text constraints) — visual QA passed all three (power banks lineup; feature phones with keypads; projector beaming on wall) — optimized to 1200x675 progressive JPGs (75/122/71 KB) in public/images/blog/. NOTE: the SDK response field is data[0].base64 (probe saved as task118-sdk-probe.mjs; the old b64_json guess fails silently).
+- llms.txt: 3 new buyer-guide entries added to the hardcoded section (llms-full.txt auto-enumerates; sitemap auto-carries posts).
+- Verification: next build PASS; local SSR smoke 10/10 (scripts/task118-local-smoke.py): all 3 posts 200 with title/quick-answer/FAQPage/HowTo/cover/no-raw-markdown, /blog index 3/3 cards, sitemap + llms.txt carry the slugs, encoded paren link intact.
+- Environment notes: the sandbox reset wiped .env AGAIN (service-role key supplied during Task 117 is gone — nothing pending needs it; re-supply for future DB ops). Sandbox file reads showed one transient stale-cache contradiction during the typo fixes (od saw fixed bytes while rg saw stale) — resolved as flaky cache, final state verified byte-exact.
+- Committed locally as 17aea5d (+ worklog autocommit). NOT pushed — GitHub token wiped after Task 115 per protocol; awaiting a fresh token.
+
+Stage Summary:
+- Blog stands at 20 code-shipped guides: batch 4 claims the power-bank, Nokia and projector clusters (Somalia outage-kit intent, low keyword competition, all priced live). Local smoke green end to end; one push away from live.
