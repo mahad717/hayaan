@@ -8,7 +8,7 @@ import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { FaqSection } from "@/components/store/faq-section";
 import { guidesForProduct } from "@/lib/product-guides";
-import { brandForProduct, pdpSeoFor, type PdpSeoCtx } from "@/lib/pdp-seo";
+import { brandForProduct, genericPdpDescription, genericPdpTitle, pdpSeoFor, type PdpSeoCtx } from "@/lib/pdp-seo";
 import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 
@@ -34,20 +34,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const plainDesc = looksLikeHtml(soDesc) ? stripHtml(soDesc) : soDesc;
   // Task 99: slug-keyed SEO override wins for targeted products — its meta
   // description interpolates the LIVE price, so a reprice can never go stale.
+  // Task 112: every OTHER listing gets the generic keyword template
+  // ("{Product} Price in Somalia — $X", live price/stock) for English;
+  // Somali keeps the existing name + translated-description behavior.
   const override = pdpSeoFor(product.slug);
   const seoCtx: PdpSeoCtx = { price: product.price, inStock: product.stock > 0 };
+  const customTitle = override
+    ? override.title(seoCtx)
+    : lang === "en" && product.price > 0
+      ? genericPdpTitle(product.name, product.price, product.currency)
+      : null;
   const description =
     override && lang === "en"
       ? override.metaDescription(seoCtx)
-      : plainDesc.length > 157
-        ? `${plainDesc.slice(0, 157)}…`
-        : plainDesc;
+      : lang === "en" && product.price > 0
+        ? genericPdpDescription(product.name, product.price, product.currency, plainDesc, product.stock > 0)
+        : plainDesc.length > 157
+          ? `${plainDesc.slice(0, 157)}…`
+          : plainDesc;
   const image = product.images[0];
 
   return {
-    // { absolute } bypasses the layout's "%s — Hayaan Market" template — the
-    // keyword title already carries the brand suffix itself.
-    title: override ? { absolute: override.title(seoCtx) } : product.name,
+    // { absolute } bypasses the layout's "%s — Hayaan Market" template —
+    // the keyword title already carries the brand suffix itself.
+    title: customTitle ? { absolute: customTitle } : product.name,
     description,
     alternates: { canonical: `/product/${product.slug}` },
     other: {
@@ -56,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "product:price:currency": product.currency,
     },
     openGraph: {
-      title: override ? override.title(seoCtx) : product.name,
+      title: customTitle ?? product.name,
       description,
       url: `/product/${product.slug}`,
       // NOTE: Next rejects openGraph.type "product" at runtime (Next 16
@@ -69,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: override ? override.title(seoCtx) : product.name,
+      title: customTitle ?? product.name,
       description,
       images: image ? [image] : undefined,
     },
@@ -126,6 +136,9 @@ export default async function ProductPage({ params }: Props) {
           url: `https://hayaan.co/product/${product.slug}`,
           priceCurrency: product.currency,
           price: product.price.toFixed(2),
+          // Google recommends a validity horizon on Offer.price — 90 days
+          // from render, refreshed on every SSR request.
+          priceValidUntil: new Date(Date.now() + 90 * 864e5).toISOString().slice(0, 10),
           availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
           itemCondition: "https://schema.org/NewCondition",
           seller: { "@type": "Organization", name: "Hayaan Market" },

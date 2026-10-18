@@ -67,6 +67,62 @@ export function pdpSeoFor(slug: string): PdpSeoOverride | null {
 }
 
 /**
+ * Task 112 — generic per-product SEO templates.
+ *
+ * The Task 99 layer above hand-tunes individual slugs; this layer gives
+ * EVERY other listing a keyword-led <title> / meta description built from
+ * LIVE catalog data (name, price, stock) — the same
+ * "{Product} Price in Somalia — $X" pattern shoppers actually type into
+ * Google, without fabricating specs we don't have. Only the <title>, meta
+ * description and og/twitter titles change; the visible page (h1, body
+ * copy) is untouched. Per-slug overrides above always win.
+ */
+
+/** $190, $6.95, $1,899 — integer prices drop the decimals. */
+export function formatUsd(n: number): string {
+  const [int, dec] = n.toFixed(2).split(".");
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return dec === "00" ? `$${grouped}` : `$${grouped}.${dec}`;
+}
+
+function money(price: number, currency: string): string {
+  return currency === "USD" ? formatUsd(price) : `${price.toFixed(2)} ${currency}`;
+}
+
+/** Word-boundary clip; result is never longer than max (ellipsis included). */
+function clipWords(s: string, max: number): string | null {
+  const t = s.replace(/\s+/g, " ").trim();
+  if (!t) return null;
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  const at = cut.lastIndexOf(" ");
+  return `${(at > 20 ? cut.slice(0, at) : cut).replace(/[,;:.\-]+$/, "")}…`;
+}
+
+export function genericPdpTitle(name: string, price: number, currency: string): string {
+  const base = `${name} Price in Somalia — ${money(price, currency)}`;
+  // Google truncates ~60-65 chars: keep the "| Hayaan Market" suffix only
+  // when the WHOLE title still fits, so the price is never the part cut.
+  return base.length <= 52 ? `${base} | Hayaan Market` : base;
+}
+
+export function genericPdpDescription(
+  name: string,
+  price: number,
+  currency: string,
+  plainDesc: string,
+  inStock: boolean,
+): string {
+  const base = `${name} price in Somalia: ${money(price, currency)} at Hayaan Market.`;
+  const cta = inStock ? " Order online." : " Check back soon.";
+  // Spend the remaining 160-char budget on the product's own description
+  // (specs sell), clipped at a word boundary — never mid-spec.
+  const budget = 160 - base.length - cta.length - 1;
+  const snippet = budget >= 24 ? clipWords(plainDesc, budget) : null;
+  return `${base}${snippet ? ` ${snippet}` : ""}${cta}`;
+}
+
+/**
  * Brand for Product JSON-LD. The seller (Hayaan Market) is NOT the brand of
  * a Samsung/Apple/HP product — Google's product rich results read `brand`,
  * and "Samsung" is what reinforces brand+model queries like
