@@ -2661,3 +2661,19 @@ Work Log:
 Stage Summary:
 - Task 115 CLOSED end-to-end: Somali pass #2 (443/443 keys, all customer-facing error paths localized) and Norman pass #2 (no raw JSON tabs, no jargon at the money moment, constraint-first review submit, consistent localized toasts) are implemented, CI-green, and live-verified on hayaan.co.
 - Queue unchanged: test-user cleanup, blog batch, digital goods, KarmaLinks, Zoho DKIM+DMARC, RESEND_API_KEY, Orders tab proposal. Task 114 (review-your-purchase prompt) shipped earlier at 72e8e64 and is included in this deploy.
+
+---
+Task ID: 117
+Agent: Super Z (main agent)
+Task: Owner picked "1" — test-user cleanup (the long-queued prod Supabase decision).
+
+Work Log:
+- Rebuilt the candidate list from worklog history: customer@shop.demo, task83-probe@hayaan-testing.com (Task 83 probe), t85-reviewer@hayaan-testing.com, t88-probe@shop.demo (Task 88), t90-norman@shop.demo (Task 90 browser signup, 1 cart item), qa.task113@hayaan.co + qa.task113b@hayaan.co (Task 113 E2E). KEEP set: gabeyre80@gmail.com (owner), baashaalecade@gmail.com (real customer), admin@shop.demo (demo admin).
+- Access check: .env holds only DATABASE_URL — the service-role key was lost in the Task 82 sandbox reset and never re-supplied; no user-management admin API exists in the app (auth.admin calls are only in signup/password/account/seed/diag).
+- CASCADE re-audit of schema.sql + migrations: public.orders/carts -> public.users ON DELETE CASCADE (order_items, cart_items, payments, order_item_costs chain from there); product_reviews + wishlist_items -> auth.users ON DELETE CASCADE; public.users has no FK to auth.users. Net: the whole cleanup is exactly two DELETEs per account.
+- Live audit over HTTP (no keys needed): customer@shop.demo login 200 with ZERO orders (the 29 old demo orders are gone — nothing to preserve anymore); qa.task113b login 200; signup-oracle (Supabase branch maps every createUser error to 400, so verdicts read the error body) confirmed task83-probe, t88-probe, t90-norman, qa.task113 all still registered. t85-reviewer had NEVER existed in prod (it was local-E2E-only) — the oracle created it (id c3500b5c-cc95-4bac-b150-d11c395ec404, password Task117Audit-X); it joins the delete list, disclosed here.
+- Built two execution paths: scripts/task117-cleanup.sql (dashboard SQL editor: pre-audit SELECTs with per-account orders/reviews/wishlist counts -> guarded DELETEs -> post-check, idempotent) and scripts/task117-cleanup.mjs (service-key path, dry-run default, --execute, skips any candidate that unexpectedly has orders, full post-check). Both hard-code the exact 7-email allowlist.
+- BLOCKED on execution authority: deleting auth.users needs the service-role key (sandbox has none) or a dashboard paste. Owner asked to choose: re-supply SUPABASE_SERVICE_ROLE_KEY (script runs end-to-end with audit) or paste the SQL (established 30-second migration pattern).
+
+Stage Summary:
+- Cleanup is fully staged and audited: 7 accounts confirmed (6 pre-existing + 1 oracle-created), zero order/review data anywhere, zero risk to real accounts. Awaiting either the service-role key or the owner's SQL paste — then post-check + worklog close-out.
