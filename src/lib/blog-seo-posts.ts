@@ -1585,6 +1585,300 @@ Home electronics, office electronics, gadgets — the shelves the big stores car
 "Electronics store near me" used to mean the shop with the closest gate. In 2026 it means the store that reaches your gate: [Hayaan Market](https://hayaan.co) carries the phones, laptops, TVs, printers, routers, air conditioners and gadgets the whole market sells — at printed USD prices, delivered to every Mogadishu district for $1.50–$3.00 and nationwide for $6.95. Furnishing a whole office or shop? The [bulk quote form](https://hayaan.co/quote) beats listed prices.`,
 };
 
+// Task 118 — batch 4 (power banks, Nokia feature phones, projectors) — prices
+// verified against the live catalog on publish day (2026-10-18): Porodo 5K $15,
+// Anker MagGo $48, Green Lion 80K $65; Nokia 105 4G $16 … 8210 4G $53; Maxwell
+// Spectra $120, Epson CO-W01 $350, screen $90.
+const post19 = {
+  id: "seo-power-bank-price-somalia",
+  slug: "power-bank-price-in-somalia",
+  title: "Power Bank Price in Somalia (2026): From $15 to $65, Matched to Your Day",
+  excerpt:
+    "Load-shedding-proof charging: every power bank we stock, from a $15 Porodo to a 80,000mAh monster, what the mAh numbers really mean, and the chargers that fill them fast.",
+  quickAnswer:
+    "Power banks at Hayaan Market run from $15 (Porodo 5,000mAh) to $65 (Green Lion Thunder 80,000mAh), with 10,000mAh daily-carry models from Porodo, Maxvolt and Aston at $22–$25 and premium Anker units at $45–$48. Fixed USD prices, paid via EVC Plus, Edahab or card, delivered to your Mogadishu district for $1.50–$3.00.",
+  faqs: [
+    {
+      q: "How much does a good power bank cost in Somalia?",
+      a: "At Hayaan Market, $15 buys the Porodo 5,000mAh, $22–$25 covers 10,000mAh daily-carry models (Porodo, Maxvolt, Aston), $45–$48 buys premium Anker 10,000mAh units, and $65 gets the Green Lion Thunder 80,000mAh.",
+    },
+    {
+      q: "How many mAh do I actually need?",
+      a: "5,000mAh tops a phone up about once; 10,000mAh recharges most phones two to three times and rides out a day of cuts; 20,000mAh and above covers multi-day outages and can fast-charge laptops with the right cable.",
+    },
+    {
+      q: "Are the Anker and Porodo power banks original?",
+      a: "Every Hayaan listing states the exact model and condition with real photos and a live stock count, and your payment runs through the secure hosted checkout — a documented purchase, not a street gamble.",
+    },
+    {
+      q: "How long does a power bank take to charge a phone?",
+      a: "A 10,000mAh bank paired with a 20W or faster charger refills most phones in roughly two hours; the bank itself recharges fastest from a wall adapter of 18W or more, so pair it with one.",
+    },
+    {
+      q: "Do you deliver power banks outside Mogadishu?",
+      a: "Yes — delivery is priced per district inside Mogadishu ($1.50–$3.00) and costs a flat $6.95 anywhere else in Somalia. The exact fee shows at checkout before you pay.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Pick your capacity",
+      text: "5,000mAh for occasional top-ups, 10,000mAh for a full day of cuts, 20,000mAh or more for shops, travel and multi-day outages — the price ladder below matches each tier.",
+    },
+    {
+      name: "Read the listing",
+      text: "Open the product page and check the exact model, condition, live stock count and real photos, so you know precisely which unit arrives at your door.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add the power bank (and a fast charger — watts matter as much as mAh) to the cart, then sign in with your email so the order stays attached to your account.",
+    },
+    {
+      name: "Choose your district",
+      text: "Pick your delivery district at checkout — Mogadishu districts run $1.50–$3.00 and anywhere else in Somalia is a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay and track",
+      text: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout. Your order lands in your account history, and support@hayaan.co handles anything that looks off.",
+    },
+  ],
+  content: `When the lights go, the phone is the last thing standing — until its battery dies too. In Somalia a power bank is not a gadget, it is infrastructure: it keeps the phone that runs your mobile money alive through the evening, keeps the family connected through an outage, and turns any café table into a charging point. This guide walks through every power bank Hayaan Market stocks right now, what each one is for, and the charger that fills it fastest.
+
+## What does a power bank cost in Somalia right now?
+
+The live ladder at the time of writing:
+
+1. **Budget top-up tier — $15–$25.** The [Porodo 5,000mAh with Lightning cable built in](https://hayaan.co/product/power-bank-porodo-5,000mah-with-lightning) at $15 is the classic pocket unit; the [Aston MagSafe 10,000mAh](https://hayaan.co/product/power-bank-aston-magsafe-10,000mah) and [Porodo Pocket Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-pocket-volt-10,000mah) at $22, the [Maxvolt 10,000mAh](https://hayaan.co/product/power-bank-maxvolt-10,000mah) at $24 and the [Porodo Chrome Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-chrome-volt-10,000mah) at $25 all hold a full day of phone charging.
+2. **Premium daily tier — $45–$50.** The [Anker Zolo 10,000mAh](https://hayaan.co/product/power-bank-anker-zolo-10,000mah) at $45 and [Anker MagGo 10,000mAh](https://hayaan.co/product/power-bank-anker-maggo-10,000mah) at $48 are the reliability picks — Anker's cells and circuitry age better than any budget brand. The [Lion Ultra-Thin 20,000mAh 120W](https://hayaan.co/product/power-bank-lion-ultra-thin-20,000mah-120w) at $49.90 jumps tiers entirely: laptop-grade capacity and output in a slab you can still pocket.
+3. **The big tank — $65.** The [Green Lion Thunder 80,000mAh](https://hayaan.co/product/power-bank-green-lion-thunder-80,000mah) is not a pocket accessory; it is a shop counter, wedding marquee or extended-outage reserve that refills dozens of phones before it asks for a wall socket.
+
+Prices are fixed USD, no VAT, and the exact figure is printed on every listing before you order.
+
+## How many mAh do you actually need?
+
+Manufacturers advertise capacity generously, so use honest math:
+
+- **5,000mAh — the pocket spare.** Roughly one full refill for a modern phone. Enough for an evening out or a short cut; not enough as your only backup.
+- **10,000mAh — the daily driver.** Two to three refills for most phones. This is the right size for one person's whole day of load-shedding, and it still fits a jacket pocket. Most buyers should start here.
+- **20,000mAh+ — the household reserve.** Four to six phone refills, or a couple of phone refills plus a laptop top-up over USB-C. The [20,000mAh 120W Lion](https://hayaan.co/product/power-bank-lion-ultra-thin-20,000mah-120w) is the sweet spot for families and field workers.
+- **80,000mAh — the institution.** For kiosks, wedding marquees, clinics and anywhere a dozen people will ask "do you have a charger?" — the [Green Lion Thunder](https://hayaan.co/product/power-bank-green-lion-thunder-80,000mah) answers yes, all day.
+
+## Don't forget the charger — watts decide speed
+
+A big bank with a weak wall charger refills overnight. Match it properly:
+
+- [Adaptor USB-C 25W PD](https://hayaan.co/product/adaptor-usb-c-25w-pd) — **$4.50**, the budget fast-charge workhorse.
+- [WiWU Helix 65W Fast Charger](https://hayaan.co/product/wiwu-helix-65w-fast-charger) — **$18**, refills the bank and a laptop from one brick.
+- [Apple 20W USB-C Power Adapter](https://hayaan.co/product/apple-20w-usb-c-power-adapter-%28original%29) — **$25**, the original option for iPhone users.
+- [Anker Prime 100W 3-Port GaN Wall Charger](https://hayaan.co/product/anker-prime-100w-3-port-gan-wall-charger) — **$65**, the desk command center: bank, phone and laptop at full speed simultaneously.
+
+Rule of thumb: a 20W+ charger refills most phones in about two hours, and the same charger will bring a 10,000mAh bank back overnight instead of in a day and a half.
+
+## Power cuts: what a power bank can and can't do
+
+A bank keeps phones, earbuds, and USB-powered routers alive — that covers money, calls and often the internet. It will not run a TV, a fridge or an air conditioner. For the things it can't carry:
+
+- Protect sensitive electronics from unstable voltage with the [Lightwave Digital Voltage Stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) at $11.50 — cheap insurance for compressors and screens.
+- Keep the home internet up through short cuts: the [Wi-Fi router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) covers which routers pair well with a USB power bank.
+- For the big appliances, the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) explains sizing and the stabilizer pairing.
+
+## Why buy the bank online instead of the street kiosk?
+
+Because capacity is the easiest number to fake. A kiosk "20,000mAh" unit that costs $10 is almost always a relabeled 2,000mAh cell. Every Hayaan listing names the exact model with real photos and a fixed price — the [how-it-works guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) covers the whole flow — and your payment goes through the documented checkout, not a personal wallet.
+
+## Ready to order?
+
+Start in the [power & charging category](https://hayaan.co/category/power-charging-audio): pick the capacity tier that matches your day, add a fast charger, and check out. Delivery to your Mogadishu district runs $1.50–$3.00 and a flat $6.95 nationwide — the exact fee appears at checkout before you pay. If you're kitting out a shop or office, the [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+};
+
+const post20 = {
+  id: "seo-nokia-phones-somalia",
+  slug: "nokia-phones-price-in-somalia",
+  title: "Nokia Phones in Somalia (2026): Feature Phones From $16 That Outlast Any Smartphone",
+  excerpt:
+    "Eight Nokia models from $16 to $53 — the backup phone with days of battery, dual SIMs and 4G calling that survives the week your smartphone doesn't.",
+  quickAnswer:
+    "Nokia feature phones at Hayaan Market run $16–$53: the Nokia 105 4G at $16 for calls, torch and FM radio, the music-focused 5310 at $37, the flip-style 2660 at $47, and the 5710 XpressAudio at $50 with wireless earbuds built into the body. Fixed USD prices, dual SIM, and battery life measured in days.",
+  faqs: [
+    {
+      q: "How much does a Nokia feature phone cost in Somalia?",
+      a: "Between $16 and $53 at Hayaan: Nokia 105 4G at $16, Nokia 125 at $25, Nokia 5310 at $37, Nokia 6310 4G at $40, Nokia 2660 Flip at $47, Nokia 235 4G at $48, Nokia 5710 XpressAudio at $50 and Nokia 8210 4G at $53.",
+    },
+    {
+      q: "What is the best backup phone for power cuts?",
+      a: "The Nokia 105 4G at $16 — it runs for days on one charge, keeps dual SIMs active, and carries a torch and FM radio, which is exactly what an outage takes away.",
+    },
+    {
+      q: "Do Nokia feature phones support WhatsApp?",
+      a: "No — these are true feature phones built for calls, SMS, FM radio, torch and camera. For apps you still want a smartphone; the phones buying guide covers those from about $110 up.",
+    },
+    {
+      q: "Why does 4G matter on a feature phone?",
+      a: "Networks are phasing out older 2G service, so a 4G Nokia (105, 6310, 235, 2660 Flip, 5710, 8210) keeps making clear calls as carriers retire the old bands.",
+    },
+    {
+      q: "Do you deliver Nokia phones outside Mogadishu?",
+      a: "Yes — delivery is priced per district inside Mogadishu ($1.50–$3.00) and a flat $6.95 anywhere else in Somalia, with the exact fee shown at checkout before you pay.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Pick your Nokia",
+      text: "Match the model to the job — the $16 105 4G for pure backup, the 5310 or 5710 for music, the 2660 Flip for easy pressing, or the 8210 4G for the classic look with modern 4G inside.",
+    },
+    {
+      name: "Read the listing",
+      text: "Open the product page for the exact model name, condition, live stock count and real photos, so you know precisely which phone arrives at your door.",
+    },
+    {
+      name: "Add to cart and sign in",
+      text: "Add the phone to the cart and sign in with your email so the order and its history stay attached to your account.",
+    },
+    {
+      name: "Choose your district",
+      text: "Pick your delivery district at checkout — Mogadishu districts run $1.50–$3.00 and anywhere else in Somalia is a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay and track",
+      text: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout. The order lands in your account history, and support@hayaan.co handles anything that looks off.",
+    },
+  ],
+  content: `Every household in Somalia runs on a smartphone — and every smartphone dies by evening when the power is off. The fix costs less than a pizza: a Nokia feature phone that stays charged for days, takes two SIM cards, and keeps calls, SMS, the torch and FM radio alive through the longest outage. Hayaan Market stocks eight current Nokia models from $16 to $53, and this guide matches each one to the job it does best.
+
+## How much does a Nokia cost in Somalia right now?
+
+The live ladder at the time of writing:
+
+1. [Nokia 105 4G](https://hayaan.co/product/nokia-105-4g) — **$16**. The pure backup: calls, SMS, torch, FM radio, days of standby.
+2. [Nokia 125](https://hayaan.co/product/nokia-125) — **$25**. The same idea with a bigger body and a brighter torch.
+3. [Nokia 5310](https://hayaan.co/product/nokia-5310) — **$37**. The music remake — twin loudspeakers and dedicated music keys for shops, taxis and weddings.
+4. [Nokia 6310 4G](https://hayaan.co/product/nokia-6310-4g) — **$40**. The classic brick, rebuilt with a 4G modem and a big, bright screen.
+5. [Nokia 2660 Flip](https://hayaan.co/product/nokia-2660-flip) — **$47**. The flip phone: big buttons, big fonts, and a design grandparents already know how to use.
+6. [Nokia 235 4G](https://hayaan.co/product/nokia-235-4g) — **$48**. The largest display in the range for messages and menus that are easy to read.
+7. [Nokia 5710 XpressAudio](https://hayaan.co/product/nokia-5710-xpressaudio) — **$50**. Wireless earbuds stored inside the phone itself — the boldest idea Nokia has shipped in years.
+8. [Nokia 8210 4G](https://hayaan.co/product/nokia-8210-4g) — **$53**. The icon, remade in fresh colors with 4G data inside.
+
+All fixed USD, no VAT, with the exact price and live stock printed on every listing.
+
+## Why buy a feature phone in 2026?
+
+Because the backup that costs $16 saves the day the $1,000 phone cannot:
+
+- **Battery measured in days, not hours.** A 105 4G idles for days on one charge. It is the phone in the drawer that works when everything else is dead.
+- **Two SIMs, always on.** Keep EVC Plus on one SIM and Edahab on the other; a feature phone holds both lines active for a week without a charger.
+- **The tools outages take away.** Torch for the dark hour, FM radio for the news, a loud ringer that hears a call from the next room — all built in.
+- **It survives the life it's given.** No glass slab, no battery swelling behind a cracked screen from daily charging. A feature phone in a drawer is still fine a year later.
+
+## Which Nokia fits you?
+
+- **The household backup:** [105 4G at $16](https://hayaan.co/product/nokia-105-4g) — buy two, they are cheap enough.
+- **The taxi, bus or shop phone:** [5310 at $37](https://hayaan.co/product/nokia-5310) — loudspeakers that fill a room.
+- **The parent or grandparent:** [2660 Flip at $47](https://hayaan.co/product/nokia-2660-flip) — big buttons, answer by opening, hang up by closing.
+- **The music lover:** [5710 XpressAudio at $50](https://hayaan.co/product/nokia-5710-xpressaudio) — earbuds that live in the phone, charged by the phone.
+- **The classic taste:** [8210 4G at $53](https://hayaan.co/product/nokia-8210-4g) — the silhouette everyone remembers, with a data connection nobody expected.
+
+## 4G calling: why it matters on a $16 phone
+
+Somali carriers are retiring the old 2G bands that feature phones have used for twenty years. A 4G Nokia keeps working as that shutdown spreads — clear VoLTE calls on the new networks — while cheap non-Nokia feature phones on 2G-only radios become paperweights. Six of the eight models above (105, 6310, 235, 2660 Flip, 5710, 8210) carry 4G; the 125 and 5310 are the budget exceptions at $25 and $37.
+
+## Pair it with the rest of the outage kit
+
+A Nokia covers voice and radio; the full kit adds the [power bank guide](https://hayaan.co/blog/power-bank-price-in-somalia) for the smartphone, the [router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) for the home internet, and the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) so the checkout itself needs no explanation. Feature phones and smartphones ship the same way: fixed USD price at checkout, EVC Plus, Edahab or card, and delivery to your Mogadishu district for $1.50–$3.00 or $6.95 nationwide.
+
+## Ready to order?
+
+Browse the [phones & wearables category](https://hayaan.co/category/phones-wearables) and pick the model that fits. If this is your first order, the [how-it-works guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) walks the whole flow — order, pay, delivery, support — in five minutes.`,
+};
+
+const post21 = {
+  id: "seo-projector-price-somalia",
+  slug: "projector-price-in-somalia",
+  title: "Projector Price in Somalia (2026): Home Cinema From $120, Events From $350",
+  excerpt:
+    "The Maxwell Spectra at $120 for movie nights, the Epson CO-W01 at $350 for bright rooms and halls, plus the $90 screen — what each projector is good for and how to order one.",
+  quickAnswer:
+    "Projectors at Hayaan Market start at $120 for the Maxwell Spectra — big-screen movie nights in darkened rooms — and $350 for the Epson CO-W01, bright enough for classrooms, mosques and event halls; add the manual 180×180cm screen at $90. Fixed USD prices paid via EVC Plus, Edahab or card, with Mogadishu delivery at $1.50–$3.00 per district.",
+  faqs: [
+    {
+      q: "How much does a projector cost in Somalia?",
+      a: "At Hayaan Market the Maxwell Spectra is $120 and the Epson CO-W01 is $350, with the manual 180×180cm projector screen at $90 — fixed USD prices shown on every listing.",
+    },
+    {
+      q: "Projector or TV — which is better for a living room?",
+      a: "A TV wins in bright daytime rooms and stays sharp up close; a projector wins when you want a cinema-size image on a budget. The TV size guide matches panels from $175 to $1,290 if you go that way.",
+    },
+    {
+      q: "Which projector works for a school, mosque or event hall?",
+      a: "The Epson CO-W01 at $350 — its higher brightness holds up in rooms with ambient light, and paired with the $90 screen it reaches the back of a mid-size hall.",
+    },
+    {
+      q: "Do projectors work during power cuts?",
+      a: "No — a projector needs wall power, so pair it with the $11.50 Lightwave voltage stabilizer to survive unstable voltage, and keep phones alive through the cut itself with a power bank.",
+    },
+    {
+      q: "How do I order a projector from Hayaan?",
+      a: "Add the projector (and screen) to your cart, sign in, pick your delivery district — $1.50–$3.00 in Mogadishu, $6.95 nationwide — and pay with EVC Plus, Edahab, or card through the secure checkout.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Pick the brightness class",
+      text: "Dark room, movie nights: the $120 Maxwell Spectra. Classrooms, mosques, halls and anywhere with daylight: the $350 Epson CO-W01.",
+    },
+    {
+      name: "Add the screen",
+      text: "A plain white wall works, but the $90 manual 180×180cm screen keeps the image square, bright and free of wall texture — worth it for anything public.",
+    },
+    {
+      name: "Read the listing and add to cart",
+      text: "Open the product page for the exact model, condition and live stock, then add the projector and screen to the cart and sign in with your email.",
+    },
+    {
+      name: "Choose your district",
+      text: "Pick your delivery district at checkout — Mogadishu districts run $1.50–$3.00 and anywhere else in Somalia is a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay and set up",
+      text: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout. On delivery, place the projector square to the screen, focus, and you are showing.",
+    },
+  ],
+  content: `A projector is the cheapest big screen you can buy: one box turns a blank wall into a two-meter cinema for a fraction of what a TV that size costs. In Somalia that plays out three ways — movie nights at home, football and matches at cafés and events, and lessons or khutbas in schools and mosques. Hayaan Market stocks two projectors and the screen to match, and this guide picks the right pair for your room.
+
+## What does a projector cost in Somalia right now?
+
+The live prices at the time of writing:
+
+1. [Maxwell Spectra projector](https://hayaan.co/product/projector-maxwell-spectra) — **$120**. The home-cinema entry: plug in a stick or laptop, dim the room, and the wall becomes the screen.
+2. [Epson CO-W01 projector](https://hayaan.co/product/projector-epson-co-w01) — **$350**. The serious one — Epson optics and enough brightness to survive rooms that are not fully dark. This is the classroom, mosque and events pick.
+3. [Manual projector screen 180×180cm](https://hayaan.co/product/projector-screen-manual-180x180cm) — **$90**. Pull-down screen for a square, bright, texture-free image wherever you set up.
+
+Fixed USD, no VAT, exact price and live stock on every listing.
+
+## Which projector fits your room?
+
+- **Living room movie nights:** the [Spectra at $120](https://hayaan.co/product/projector-maxwell-spectra). Blackout curtains or nighttime use, USB/HDMI source, and the whole family watches something bigger than any TV under $450.
+- **School, mosque, training hall or event marquee:** the [Epson CO-W01 at $350](https://hayaan.co/product/projector-epson-co-w01). These rooms have windows and lights, and brightness is the spec that decides whether the back row sees anything. Pair it with the [$90 screen](https://hayaan.co/product/projector-screen-manual-180x180cm) and the image holds even with ambient light.
+- **The honest line:** a $120 projector in a bright room will disappoint. If the room cannot be darkened, either buy the Epson class or read the [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) instead — bright-room daytime viewing is what TVs are for.
+
+## Do you need the $90 screen?
+
+For a bedroom wall, no — any smooth white wall works and the Spectra will surprise you. For anything public, buy the screen: the [180×180cm pull-down](https://hayaan.co/product/projector-screen-manual-180x180cm) keeps the geometry square, the brightness even and the surface free of the cracks and paint texture every real wall has. It is the difference between "watchable" and "professional" for about a tenth of the projector's price.
+
+## Power, placement and the outage question
+
+- **A projector needs wall power** — it will not run off a power bank. Pair it with the [Lightwave Digital Voltage Stabilizer at $11.50](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) so unstable voltage never reaches the lamp and board.
+- **Distance and focus:** the smaller the room, the closer the unit sits to the wall; both projectors focus mechanically, and the screen's 180×180cm size matches the Spectra's sweet spot.
+- **Sound:** built-in speakers carry a bedroom; for a hall, add the [L208 100W outdoor speaker at $70](https://hayaan.co/product/speaker-outdoor-l208-100w) and the back row hears as well as it sees.
+- **Content creators:** filming product videos or interviews? The [Aputure Amaran 200XS studio light at $330](https://hayaan.co/product/aputure-amaran-200xs-studio-light) is the lighting half of that setup.
+
+## Why order the projector online?
+
+Because "projector for sale" at a market stall comes with no model name, no return path and a price that moves with your face. Every Hayaan listing states the exact model and condition with real photos and a printed USD price — the [how-it-works guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) covers the whole flow — and payment goes through the documented secure checkout, not a personal wallet.
+
+## Ready to order?
+
+Pick your class in the [computers, TV & gaming category](https://hayaan.co/category/computers-tv-gaming): Spectra for the living room, Epson for the hall, and the screen for whichever room it is. Delivery to your Mogadishu district runs $1.50–$3.00 and $6.95 nationwide — the exact fee shows at checkout before you pay. Outfitting a school, mosque or event business? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1620,6 +1914,11 @@ export const SEO_POSTS: BlogPost[] = [
   // Task 102 — "electronics store near me" pillar; covers the owner's
   // store/shop/near-me/online-shopping keyword clusters.
   { ...post18, coverImage: "https://hayaan.co/images/blog/electronics-store-near-me-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T11:00:00.000Z"), createdAt: "2026-10-15T11:00:00.000Z", updatedAt: "2026-10-16T09:30:00.000Z" },
+  // Task 118 — October 2026 batch 4 (power banks, Nokia feature phones, projectors)
+  // — prices verified against the live catalog on publish day.
+  { ...post19, coverImage: "https://hayaan.co/images/blog/power-bank-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T09:00:00.000Z"), createdAt: "2026-10-18T09:00:00.000Z", updatedAt: "2026-10-18T09:00:00.000Z" },
+  { ...post20, coverImage: "https://hayaan.co/images/blog/nokia-phones-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T09:30:00.000Z"), createdAt: "2026-10-18T09:30:00.000Z", updatedAt: "2026-10-18T09:30:00.000Z" },
+  { ...post21, coverImage: "https://hayaan.co/images/blog/projector-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T10:00:00.000Z"), createdAt: "2026-10-18T10:00:00.000Z", updatedAt: "2026-10-18T10:00:00.000Z" },
 ];
 
 

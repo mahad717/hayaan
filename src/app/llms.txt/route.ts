@@ -43,6 +43,9 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $190 (128GB), specs, the A16/A17/A18 ladder, and how to order.
 - [Refurbished HP EliteBook Price in Somalia](${SITE}/blog/hp-elitebook-price-in-somalia): every refurbished EliteBook from $310 (840 G7) to $950 (840 G9), which model to buy, and the ordering walkthrough.
 - [Electronics Store Near Me in Somalia](${SITE}/blog/electronics-store-near-me-in-somalia): the nearest electronics store is the one that delivers to your district — $1.50–$3.00 across all 20 Mogadishu districts, $6.95 nationwide.
+- [Power Bank Price in Somalia](${SITE}/blog/power-bank-price-in-somalia): every power bank from $15 (Porodo 5,000mAh) to $65 (Green Lion 80,000mAh), honest mAh math, and the chargers that fill them fast.
+- [Nokia Phones in Somalia](${SITE}/blog/nokia-phones-price-in-somalia): eight feature phones from $16 to $53 — days of battery, dual SIM, 4G calling — and which one fits the backup job.
+- [Projector Price in Somalia](${SITE}/blog/projector-price-in-somalia): Maxwell Spectra at $120 for home cinema, Epson CO-W01 at $350 for schools and halls, plus the $90 screen.
 
 ## Key pages
 
