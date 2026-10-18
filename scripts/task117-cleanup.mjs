@@ -16,6 +16,7 @@
 import { readFileSync } from 'node:fs';
 
 const EXECUTE = process.argv.includes('--execute');
+const ALLOW_ORDERS = process.argv.includes('--allow-orders'); // explicit override after human audit (Task 117: customer@shop.demo's 32 orders are unpaid test artifacts, backed up first)
 const env = Object.fromEntries(
   readFileSync('/home/z/my-project/.env', 'utf8')
     .split('\n').filter(l => l.includes('=') && !l.startsWith('#'))
@@ -72,12 +73,12 @@ const count = async (table, col) => {
 };
 const orders = await req('GET', `/rest/v1/orders?select=id,user_id&user_id=in.${ids}`);
 const orderList = Array.isArray(orders.body) ? orders.body : [];
-const perUserOrders = new Map(orderList.reduce((m, o) => m.set(o.user_id, (m.get(o.user_id) || 0) + 1), []));
+const perUserOrders = orderList.reduce((m, o) => m.set(o.user_id, (m.get(o.user_id) || 0) + 1), new Map());
 console.log(`footprint: orders=${orderList.length} carts=${await count('carts', 'user_id')} reviews=${await count('product_reviews', 'user_id')} wishlist=${await count('wishlist_items', 'user_id')}`);
 
-const blocked = found.filter(u => perUserOrders.get(u.id));
+const blocked = found.filter(u => !ALLOW_ORDERS && perUserOrders.get(u.id));
 for (const u of blocked) console.log(`  SKIP (has ${perUserOrders.get(u.id)} orders — needs human eyes): ${u.email}`);
-const deletable = found.filter(u => !perUserOrders.get(u.id));
+const deletable = found.filter(u => ALLOW_ORDERS || !perUserOrders.get(u.id));
 console.log(`deletable now: ${deletable.length}/${found.length}`);
 
 if (!EXECUTE) {
