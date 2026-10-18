@@ -2561,3 +2561,18 @@ Stage Summary:
 - Task 112 LIVE: every product on hayaan.co now has a keyword-led, price-bearing SERP title + description generated from live catalog data — the exact pattern Somalia shoppers search ("… price in Somalia"). No fabricated specs; visible page content untouched; Somali-language behavior unchanged.
 - Remaining SEO/AEO levers (queued): reviews -> aggregateRating stars (needs the ratings feature), PDP FAQ expansion beyond A18, logo img alt="".
 - Owner token in chat plaintext again — rotate when convenient; local copy wiped after pushes.
+
+---
+Task ID: 112-verify
+Agent: Super Z (main agent)
+Task: Owner follow-up "do both now" + same token re-sent — re-verify the completed Task 112 rollout after context reset, then wipe token.
+
+Work Log:
+- Context reset recovered: the prior session had ALREADY implemented + pushed Task 112/112b and the Task 111 backlog (remote main == local HEAD 14d8ce0), so this session was verification-only.
+- Ground-truth checks (no trust in stale notes): git ls-remote with owner token -> remote main 14d8ce0 == local HEAD; GitHub check-run for 14d8ce0 -> "Workers Builds: hayaan" completed/success 07:53:01Z.
+- Re-ran scripts/task112-rollout-audit.py live, ALL 141 PDPs, 0 fetch errors: "Price in Somalia" in title 141/141, live price in title 141/141, keyword desc 141/141, canonical==URL 141/141, priceValidUntil 141/141, duplicate titles 0, max title 86 (clamped French imports), max desc 162 (known HTML-entity artifact, 2 rows).
+- A18 hand-tuned override intact: "Samsung Galaxy A18 Price in Somalia — $190 | Hayaan Market".
+
+Stage Summary:
+- Both owner asks CONFIRMED LIVE on hayaan.co: backlog pushed + all-141 price-in-Somalia templates deployed and CI-green. Nothing further to ship for Task 112.
+- Token hygiene enforced: .gh-token and ~/.git-credentials wiped after this verification.
