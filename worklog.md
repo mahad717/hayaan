@@ -2641,3 +2641,23 @@ Stage Summary:
 - Somali pass #2: every customer-facing error path (checkout, account, Sifalo return client+server, digital downloads, order validation, rate limits) now speaks the visitor's language; dictionary 443/443; unknown strings still fall through untouched by design (gateway message bodies, admin English).
 - Norman pass #2: the four worst DOET violations on post-Task-90 surfaces are gone — no raw JSON tabs, no technical jargon at the money moment, no punishment-instead-of-constraint on reviews, no localized-panel/English-toast contradictions. UX-PRINCIPLES.md gained the "second pass" section with the lessons.
 - Remaining follow-ups unchanged: test-user cleanup (incl. qa-local-115@hayaan.test — local only, never existed in prod), blog batch, digital goods, KarmaLinks, Zoho DKIM+DMARC, RESEND_API_KEY, Orders tab proposal.
+
+---
+Task ID: 115-verify
+Agent: Super Z (main agent)
+Task: Owner sent a fresh GitHub token — push the already-verified Task 115 work and close it out on prod.
+
+Work Log:
+- Context recovery: local HEAD (242d350 = bd51c52 Task 115 + worklog autocommit) was 2 ahead of remote main (72e8e64 = Task 114); the "not pushed yet" note in the Task 115 entry was still accurate. Token saved to .gh-token (0600).
+- Push via task107-push2.py: 72e8e64..242d350 main -> main, rc 0.
+- CI watch (task110-ci-watch.py): "Workers Builds: hayaan" in_progress 09:24:58 -> completed/success 09:26:20 UTC. Build+deploy is one pipeline, so the Workers deploy started immediately. Token wiped right after CI green (rm .gh-token ~/.git-credentials).
+- Prod verification (scripts/task115-prod-verify.py, PASS on first attempt ~2 min after CI green — propagation already done):
+  - 4/4 content-hashed chunk markers live: EN "Pick a star rating above to enable posting." (Norman #3), SO "Fadlan dooro xiddig kore si aad u qorto faallada." (Somali dict), "Too many attempts" (api-errors MAP, Norman #4), "&json=1" (orders-view resolve-first download, Norman #1).
+  - SSR Somali regression clean: / with hayaan_lang=so renders lang="so", H1 differs from EN (dictionary 443/443 intact).
+  - /payment/sifalo?order_id=bogus anonymous: 200, zero raw exception output (Norman #2 context).
+  - /api/digital/download?item=x&json=1 anonymous: 401 {"error":"Please sign in to download your purchase."} — the exact mapped copy.
+  - Note: /checkout and /account 404 anonymously (route guard) — irrelevant, all markers were found in the 18 chunks from / and the PDP.
+
+Stage Summary:
+- Task 115 CLOSED end-to-end: Somali pass #2 (443/443 keys, all customer-facing error paths localized) and Norman pass #2 (no raw JSON tabs, no jargon at the money moment, constraint-first review submit, consistent localized toasts) are implemented, CI-green, and live-verified on hayaan.co.
+- Queue unchanged: test-user cleanup, blog batch, digital goods, KarmaLinks, Zoho DKIM+DMARC, RESEND_API_KEY, Orders tab proposal. Task 114 (review-your-purchase prompt) shipped earlier at 72e8e64 and is included in this deploy.
