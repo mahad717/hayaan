@@ -100,7 +100,10 @@ function clipWords(s: string, max: number): string | null {
 }
 
 export function genericPdpTitle(name: string, price: number, currency: string): string {
-  const base = `${name} Price in Somalia — ${money(price, currency)}`;
+  // A few catalog names run 100+ chars (imported listings) — clamped so the
+  // "Price in Somalia — $X" pattern the shopper scans for stays visible.
+  const nm = name.length > 60 ? clipWords(name, 60)! : name;
+  const base = `${nm} Price in Somalia — ${money(price, currency)}`;
   // Google truncates ~60-65 chars: keep the "| Hayaan Market" suffix only
   // when the WHOLE title still fits, so the price is never the part cut.
   return base.length <= 52 ? `${base} | Hayaan Market` : base;
@@ -113,7 +116,8 @@ export function genericPdpDescription(
   plainDesc: string,
   inStock: boolean,
 ): string {
-  const base = `${name} price in Somalia: ${money(price, currency)} at Hayaan Market.`;
+  const nm = name.length > 60 ? clipWords(name, 60)! : name;
+  const base = `${nm} price in Somalia: ${money(price, currency)} at Hayaan Market.`;
   const cta = inStock ? " Order online." : " Check back soon.";
   // Spend the remaining 160-char budget on the product's own description
   // (specs sell), clipped at a word boundary — never mid-spec.
