@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download, Package, ChevronLeft, RefreshCw, Clock3, XCircle, Loader2 } from "lucide-react";
+import { Download, Package, ChevronLeft, RefreshCw, Clock3, XCircle, Loader2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -133,6 +133,16 @@ export function OrdersView() {
         <p className="mb-4 rounded-md border border-[#e6e2d4] bg-[#faf8f1] px-3 py-2 text-xs text-brand-dark">{verifyNote}</p>
       )}
 
+      {/* Task 114: post-delivery review nudge — shows while a delivered order
+          sits in the list. Real reviews are what unlock the star ratings
+          other shoppers (and Google rich results) read. */}
+      {!loading && orders.some((o) => o.status === "delivered") && (
+        <div className="mb-4 flex items-start gap-2 rounded-lg border border-brand/25 bg-[#eef5ec] px-4 py-3 text-xs leading-relaxed text-brand-dark">
+          <Star className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 fill-brand text-brand" aria-hidden />
+          <p>{t("ord.reviewNudge")}</p>
+        </div>
+      )}
+
       {loading ? (
         <div className="flex flex-col gap-4">
           {[1, 2].map((i) => (
@@ -190,6 +200,18 @@ export function OrdersView() {
                           className="inline-flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-dark"
                         >
                           <Download className="h-3.5 w-3.5" /> {t("ord.download")}
+                        </a>
+                      )}
+                      {/* Task 114: "review your purchase" — collected orders
+                          only (the honest moment), real navigation to the SSR
+                          PDP so the browser lands on #pdp-reviews natively,
+                          same one-navigation model as the product cards. */}
+                      {orderIsCollected(o) && it.productSlug && (
+                        <a
+                          href={`/product/${it.productSlug}#pdp-reviews`}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-brand/40 bg-white px-2.5 py-1.5 text-xs font-semibold text-brand transition hover:bg-[#eef5ec]"
+                        >
+                          <Star className="h-3.5 w-3.5" /> {t("ord.review")}
                         </a>
                       )}
                       {it.isDigital && !orderIsCollected(o) && (

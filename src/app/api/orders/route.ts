@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     const supabase = createServiceClient()!;
     const { data, error } = await supabase
       .from("orders")
-      .select("*, items:order_items(*, product:products(product_type, digital_instructions))")
+      .select("*, items:order_items(*, product:products(product_type, digital_instructions, slug))")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -43,6 +43,8 @@ export async function GET(req: NextRequest) {
           // the download URL itself stays server-side (gated endpoint).
           isDigital: it.product?.product_type === "digital",
           digitalInstructions: it.product?.digital_instructions ?? null,
+          // Task 114: slug for the "Review your purchase" deep link.
+          productSlug: it.product?.slug ?? null,
         })),
         createdAt: o.created_at,
       })),
@@ -50,7 +52,7 @@ export async function GET(req: NextRequest) {
   }
   const orders = await (await getDb()).order.findMany({
     where: { userId: user.id },
-    include: { items: { include: { product: { select: { productType: true, digitalInstructions: true } } } } },
+    include: { items: { include: { product: { select: { productType: true, digitalInstructions: true, slug: true } } } } },
     orderBy: { createdAt: "desc" },
   });
   const out: Order[] = orders.map((o) => ({
@@ -77,6 +79,8 @@ export async function GET(req: NextRequest) {
       image: it.image,
       isDigital: it.product.productType === "digital",
       digitalInstructions: it.product.digitalInstructions ?? null,
+      // Task 114: slug for the "Review your purchase" deep link.
+      productSlug: it.product.slug ?? null,
     })),
     createdAt: o.createdAt.toISOString(),
   }));

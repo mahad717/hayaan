@@ -118,6 +118,10 @@ export interface OrderItem {
   // the download URL itself is never on the order item.
   isDigital?: boolean;
   digitalInstructions?: string | null;
+  // Task 114: live product slug from the join — lets the Orders list link a
+  // collected purchase straight to its PDP reviews section. null when the
+  // product row is gone (deleted listing), so the button can hide itself.
+  productSlug?: string | null;
 }
 
 export interface Order {

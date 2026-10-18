@@ -2607,3 +2607,17 @@ Work Log:
 Stage Summary:
 - Star rich results: UNLOCKED. Everything fires automatically on the first genuine review — aggregateRating + individual review[] nodes in Product JSON-LD, stars on cards/PDP, sort-by-rating. Zero manual steps.
 - Scripts kept as the repeatable harness: task113-prod-e2e-v2.py (login+post+delete), task113-prod-e2e-v3.py (staleness characterization).
+
+---
+Task ID: 114
+Agent: Super Z (main agent)
+Task: Owner approved the "review your purchase" post-delivery prompt (Task 113 follow-up).
+
+Work Log:
+- Orders API (GET /api/orders, both Supabase + Prisma paths): the existing product join now also selects slug; each item carries productSlug (null when the listing row is gone). types.ts OrderItem gained productSlug?: string | null. The [id] route (payment-return consumer) untouched.
+- OrdersView: per-item "Review / Qiimee" button (Star icon, outline style, next to the Download button) on COLLECTED orders only (paid/shipped/delivered per the existing orderIsCollected gate) and only when productSlug exists — the honest post-purchase moment. Plain <a href="/product/{slug}#pdp-reviews"> — the same real-navigation model as product cards (Task 108b), native anchor scroll to the SSR-rendered reviews section, no SPA surgery.
+- Post-delivery nudge banner above the list while any delivered order exists (soft sage-green card, Star icon), EN + SO copy in dictionary.ts ("ord.review", "ord.reviewNudge"; Somali phrasing refined once for naturalness).
+- Build gate PASS. Local API check (scripts/task114-local-verify.mjs): seeded delivered+paid order -> login -> GET /api/orders asserts productSlug present (first run caught a real seed bug: plaintext password vs bcrypt login — fixed with hashSync). Anchor id="pdp-reviews" confirmed present in LIVE PDP HTML. db/custom.db churn restored from HEAD; local QA rows cleaned.
+
+Stage Summary:
+- Loop closed: delivered order -> Orders tab nudge + per-item Review button -> PDP #pdp-reviews (write form ready for signed-in buyers, verifiedPurchase flag auto-set) -> stars + review[] JSON-LD light up within seconds (Task 113 proof). First real customer review now has a paved road from the moment delivery lands.
