@@ -2528,3 +2528,19 @@ Stage Summary:
 - Task 110 LIVE: the site's custom spinning wheels are gone everywhere — the restore cover is a bare cream veil (reads as the site itself, not a spinner), Back-to-shop slow-nav feedback is text-only, and the 108b PDP cold-open spinner fallback is retired by owner request. Restore mechanics (save/anchor/restore/uncover) are byte-identical and re-verified on production.
 - If the owner wants the cream VEIL itself gone too (not just the wheel), it is a one-line change in the cover script — but that reintroduces the hero-flash-then-teleport jank 107c was built to fix.
 - Deploy/verify kit unchanged: task107-push2.py + .gh-token (0600) + task107c-prod-verify2.mjs; stale origin/main tracking ref makes local `git status` show "ahead 298" — HTTPS helper pushes are authoritative.
+
+---
+Task ID: 111
+Agent: Super Z (main agent)
+Task: Owner asked "Are all the products seo and AEO optimized" — audit the real state, answer with evidence.
+
+Work Log:
+- Audited src/lib/pdp-seo.ts (Task 99 override system), product/[slug]/page.tsx (generateMetadata + @graph), sitemap.ts, robots.ts, llms.txt + llms-full.txt routes, category-seo.ts / blog-seo-posts.ts.
+- Live verification: sitemap.xml = 141 product URLs (DB-driven, lastmod, per-request); llms-full.txt = 141 products (1:1 with sitemap); live PDP audits via scripts/task111-pdp-seo-audit.py on samsung-galaxy-a18 (override) and samsung-galaxy-z-flip7 (generic).
+- Live PDP findings (both): canonical, index/follow, og:title/desc/image, twitter:card, product:price:amount/currency metas, single h1, Product JSON-LD (name/desc/image/sku/productID/brand/offers with price+currency+InStock+NewCondition+seller+url), BreadcrumbList (3 levels). A18 additionally: keyword title w/ live $190, tuned meta description, FAQPage x4 visible+schema.
+- Homepage: Organization + OnlineStore + WebSite + ItemList(schema) present; alt census 42 imgs = 40 named product alts, 2 empty (logo SVGs), 0 missing attr.
+- Gaps identified: (1) aggregateRating null everywhere — zero reviews in DB, so no star rich results (schema code already conditionally supports it); (2) only 1/141 products hand-optimized (A18) — generic titles are "Name — Hayaan Market" and descriptions are raw spec dumps truncated mid-word; (3) FAQPage JSON-LD on PDPs only where override exists; (4) minor: no priceValidUntil in Offer, logo imgs alt="", OG images raw originals.
+
+Stage Summary:
+- Answer to owner: SEO baseline = YES for all 141 products (automated, verified live); AEO = strong at site level (llms.txt/llms-full.txt, 12 AI crawlers allowed, site FAQs, 18 buyer-guide posts) but per-product depth only on A18. Biggest levers: category-level title/description templates w/ live price (Task 99 architecture supports it), reviews->stars, PDP FAQ expansion.
+- scripts/task111-pdp-seo-audit.py saved as the repeatable PDP SEO auditor; worklog+script committed with this entry.
