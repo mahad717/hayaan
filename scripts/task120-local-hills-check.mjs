@@ -51,10 +51,10 @@ await sleep(8000); // lazy chunk + hydration + first frames
 console.log("hero canvas count:", await ev(`document.querySelectorAll("section canvas").length`));
 console.log("canvas size:", await ev(`(() => { const c = document.querySelector("section canvas"); if (!c) return "NO CANVAS"; const r = c.getBoundingClientRect(); return { w: r.width, h: r.height, buf: c.width + "x" + c.height }; })()`));
 console.log("webgl context:", await ev(`(() => { const c = document.querySelector("section canvas"); return !!c && !!(c.getContext("webgl2") || c.getContext("webgl")); })()`));
-// Geometry intent: canvas lives in the LOWER part of the hero, bottom-anchored.
+// Geometry intent: bottom-anchored, top no higher than ~25% of the hero (owner-marked mobile start = just below the headline ~32%).
 // (Top ~42% of the canvas is dissolved by the wrapper mask, so overlap with
 // copy is invisible — screenshots prove legibility, don't re-derive it here.)
-console.log("canvas base-pinned:", await ev(`(() => { const c = document.querySelector("section canvas"); const s = document.querySelector("section"); if (!c || !s) return false; const cr = c.getBoundingClientRect(), sr = s.getBoundingClientRect(); return cr.top >= sr.top + sr.height * 0.35 && cr.bottom <= sr.bottom + 2; })()`));
+console.log("canvas base-pinned:", await ev(`(() => { const c = document.querySelector("section canvas"); const s = document.querySelector("section"); if (!c || !s) return false; const cr = c.getBoundingClientRect(), sr = s.getBoundingClientRect(); return cr.top >= sr.top + sr.height * 0.25 && cr.bottom <= sr.bottom + 2; })()`));
 await shot(process.env.HILLS_SHOT || "/home/z/my-project/download/task120-hero-hills-local.png");
 console.log("console exceptions:", errors.length, errors.slice(0, 3));
 chrome.kill();

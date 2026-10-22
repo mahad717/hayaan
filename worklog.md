@@ -2871,3 +2871,17 @@ Work Log:
 Stage Summary:
 - Task 121 closed end-to-end: hills softened to alpha 0.45 and base-pinned with dissolved top edge - live on hayaan.co for desktop and mobile.
 - Session pattern reminder: next dep addition must use "bun add" (never npm install).
+
+---
+Task ID: 122
+Agent: Super Z (main)
+Task: Owner: "can we bring it the position i marked for you" (mobile screenshot, red line just below the headline marking where the hills should start).
+
+Work Log:
+- hero.tsx hills wrapper: mobile now top-[32%] bottom-0 (covers everything below the marked line); desktop unchanged (md:top-auto md:h-[62%]). Mask fade (transparent 0% -> black 42%) keeps the newly covered paragraph/button zone subtle; alpha stays 0.45.
+- Harness base-pinned threshold 0.35 -> 0.25 (mobile canvas top now 32%).
+- Stale-server lesson repeat: next-server RENAMES its process - pkill by "next" name misses it; check ss -ltnp and kill by port/name "next-server", or just use a fresh port per run (used 3211 this time). EADDRINUSE made the first check run hit a stale old-build server -> ChunkLoadError/0 canvas.
+- Local CDP (390 + 1440): 1 canvas, WebGL true, base-pinned true, 0 exceptions both. Mobile screenshot: ridges begin at the red-line position and strengthen toward the collage; text contrast holds.
+
+Stage Summary:
+- Hills now start at the owner-marked position (just below the mobile headline), desktop untouched. Committed; pushing with the supplied token.

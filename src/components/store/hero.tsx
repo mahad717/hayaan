@@ -31,11 +31,12 @@ export function Hero({ onShop }: { onShop: () => void }) {
         aria-hidden
       />
 
-      {/* Animated GLSL hills — pinned to the hero BASE (not sweeping behind
-          copy/images), top edge dissolved by a mask fade, softened alpha so
-          text/buttons keep full contrast. */}
+      {/* Animated GLSL hills — owner-marked position (mobile screenshot: red
+          line just below the headline): container starts ~1/3 down on mobile
+          and covers everything below; desktop stays base-pinned. The mask
+          fade keeps the marked zone gentle so text contrast holds. */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] md:h-[62%]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[32%] md:top-auto md:h-[62%]"
         aria-hidden
         style={{
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 42%)",
