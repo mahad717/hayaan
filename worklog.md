@@ -2897,3 +2897,19 @@ Work Log:
 
 Stage Summary:
 - Task 122 closed end-to-end. Hills vertical placement now matches the owner's mobile marking; alpha 0.45 + mask fade keep text contrast intact.
+
+---
+Task ID: 123
+Agent: Super Z (main)
+Task: Owner: "replace with this animation" — swap the hero GLSL hills for Aceternity background-beams-with-collision (framer-motion component package supplied).
+
+Work Log:
+- src/components/ui/background-beams-with-collision.tsx: upstream copy adapted for the Hayaan hero — beam X positions are fractions of a ResizeObserver-measured container width (upstream hardcoded 10..1200px pushed most beams off-screen on phones; 7 beams now spread across 390px and 1440px alike); gradient re-tinted brand-green (from-emerald-600 via-#14532d) instead of upstream indigo/purple; floor bar kept for collision math but rendered transparent (no neutral-100 band/boxShadow across the hero base); beams mount only after width measure AND useInView (margin 160px) so the 50ms collision polls burn nothing when scrolled away; MotionConfig reducedMotion="user" for prefers-reduced-motion; data-beams-root/-beam/-floor probe attributes for the CDP harness.
+- three/@types/three removed via bun remove (glsl-hills.tsx deleted; hills were the only consumer) — bun.lock stays frozen-lockfile safe. framer-motion was already a repo dependency.
+- hero.tsx: hills wrapper replaced by a pointer-events-none absolute inset-0 layer mounting the beams under the z-10 copy; className "h-full bg-none md:h-full" strips the component's white gradient bg + fixed h-96/h-[40rem] heights. SSR untouched: nothing beam-related renders until client-side width measure.
+- Verify harness scripts/task123-beams-check.mjs (env BEAMS_BASE/W/H/SHOT): hills-canvas-gone, beams-root present, root covers hero (rect match ±2px), beam count == 7, floor present, animation liveness (informational — staggered repeatDelays can idle all beams briefly), 0 page exceptions.
+- LOCAL LESSON (new): this sandbox reaps detached background processes between tool calls (nohup AND setsid+disown) — a server started in one call is dead by the next (early harness runs hit ERR_CONNECTION_REFUSED and produced vacuous PASSes on chrome error pages; one standalone-server run also served unstyled because output:"standalone" needs the manual .next/static copy step). Working pattern: start `next start` + poll + run harness + kill, all in ONE tool call; despite the output:standalone warning, `next start` serves the fresh build WITH static assets (CSS/JS 200).
+- Local CDP (single-call server+harness): desktop 1440x2400 + mobile 390x844 — ALL PASS (hills gone, root covers hero, 7 beams, animating true, 0 exceptions). Beam geometry proves the fraction spread: first beam x=29/1440 (2%) vs x=8/390 (2%). Screenshots download/task123-beams-local-{desktop,mobile}.png — brand-green beams fall behind the copy, subtle under text, pill CTA pair + collage intact, no floor band.
+
+Stage Summary:
+- Hero animation swapped: hills out, brand-green beams-with-collision in, production-hardened (measure-gated, in-view gated, reduced-motion safe, three.js dropped). Local-verified both viewports; committing + pushing with the supplied token.

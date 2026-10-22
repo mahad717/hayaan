@@ -1,18 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Sparkles, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonWithIcon } from "@/components/ui/button-with-icon";
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { useLang } from "@/components/store/language-provider";
 import { productImg, productImgFallback } from "@/lib/img";
-
-// GLSL wireframe hills behind the hero copy. Lazy client-only chunk (three
-// is ~150KB gz) — loads after first paint, silent no-op without WebGL.
-const GLSLHills = dynamic(
-  () => import("@/components/ui/glsl-hills").then((m) => m.GLSLHills),
-  { ssr: false },
-);
 
 const HERO_IMG_3 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg";
 const HERO_IMG_4 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg";
@@ -31,19 +24,13 @@ export function Hero({ onShop }: { onShop: () => void }) {
         aria-hidden
       />
 
-      {/* Animated GLSL hills — owner-marked position (mobile screenshot: red
-          line just below the headline): container starts ~1/3 down on mobile
-          and covers everything below; desktop stays base-pinned. The mask
-          fade keeps the marked zone gentle so text contrast holds. */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[32%] md:top-auto md:h-[62%]"
-        aria-hidden
-        style={{
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 42%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 42%)",
-        }}
-      >
-        <GLSLHills lineOpacity={0.45} />
+      {/* Animated light beams with floor collision (Aceternity
+          background-beams-with-collision) — owner swap for the GLSL hills.
+          Decorative full-section layer under the copy: brand-green beams fall
+          from the top and burst at the hero base. Client-mounted after width
+          measure, paused off-screen, reduced-motion safe → SSR/LCP untouched. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <BackgroundBeamsWithCollision className="h-full bg-none md:h-full" />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
