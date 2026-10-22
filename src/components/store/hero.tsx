@@ -54,7 +54,7 @@ export function Hero({ onShop }: { onShop: () => void }) {
               size="lg"
               variant="outline"
               onClick={onShop}
-              className="border-brand text-brand hover:bg-brand hover:text-white"
+              className="h-12 rounded-full border-brand px-6 text-brand hover:bg-brand hover:text-white"
             >
               {t("hero.ctaCategories")}
             </Button>

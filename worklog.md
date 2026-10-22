@@ -2780,3 +2780,15 @@ Work Log:
 
 Stage Summary:
 - Hero pill confirmed live on hayaan.co: "Start shopping" renders in the #14532d pill with the #faf8f1 arrow disc; hover animation classes deployed. Lesson stored: Tailwind v4 selector-escaping when grepping compiled CSS.
+
+---
+Task ID: 119b
+Agent: Super Z (main)
+Task: Owner: "Also, make the other button the same shape" (screenshot circles hero "Browse categories"; w.png = plain capsule outline, green border on cream).
+
+Work Log:
+- Hero secondary CTA reshaped to match the primary pill: h-12 rounded-full px-6 on the outline variant (border-brand + hover green fill + label flip kept exactly as before). No arrow disc, no padding-swap anim - owner asked for SHAPE parity only.
+- Build gate green; hover:bg-brand + rounded-full confirmed in compiled css.
+
+Stage Summary:
+- Both hero CTAs are now capsules of identical height (h-12): filled #14532d sliding-arrow pill + green-outline pill.
