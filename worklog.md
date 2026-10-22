@@ -2885,3 +2885,15 @@ Work Log:
 
 Stage Summary:
 - Hills now start at the owner-marked position (just below the mobile headline), desktop untouched. Committed; pushing with the supplied token.
+
+---
+Task ID: 122-verify
+Agent: Super Z (main)
+Task: Production verification for Task 122.
+
+Work Log:
+- CI success on 344e875. Prod CDP vs hayaan.co, both viewports: 1 canvas, WebGL true, base-pinned true, 0 exceptions.
+- Prod screenshots download/task122-hills-prod-{mobile,desktop}.png: mobile ridges begin just below the headline (owner's red-line position) and strengthen toward the collage/base; desktop composition unchanged.
+
+Stage Summary:
+- Task 122 closed end-to-end. Hills vertical placement now matches the owner's mobile marking; alpha 0.45 + mask fade keep text contrast intact.
