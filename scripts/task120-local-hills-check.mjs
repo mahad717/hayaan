@@ -50,7 +50,7 @@ console.log("hero canvas count:", await ev(`document.querySelectorAll("section c
 console.log("canvas size:", await ev(`(() => { const c = document.querySelector("section canvas"); if (!c) return "NO CANVAS"; const r = c.getBoundingClientRect(); return { w: r.width, h: r.height, buf: c.width + "x" + c.height }; })()`));
 console.log("webgl context:", await ev(`(() => { const c = document.querySelector("section canvas"); return !!c && !!(c.getContext("webgl2") || c.getContext("webgl")); })()`));
 console.log("canvas behind copy:", await ev(`(() => { const c = document.querySelector("section canvas"); const h1 = document.querySelector("h1"); return !!c && !!h1 && c.getBoundingClientRect().top <= h1.getBoundingClientRect().top; })()`));
-await shot("/home/z/my-project/download/task120-hero-hills-local.png");
+await shot(process.env.HILLS_SHOT || "/home/z/my-project/download/task120-hero-hills-local.png");
 console.log("console exceptions:", errors.length, errors.slice(0, 3));
 chrome.kill();
 console.log("DONE");

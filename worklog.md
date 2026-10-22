@@ -2830,3 +2830,16 @@ Work Log:
 
 Stage Summary:
 - bun.lock updated with three; npm lockfile purged; local full-pipeline build green. Re-pushing e09c488 fix as a follow-up commit.
+
+---
+Task ID: 120-verify
+Agent: Super Z (main)
+Task: Production verification for Task 120.
+
+Work Log:
+- CI green on 563e10a (bun.lock fix). CDP prod check vs https://hayaan.co: 1 hero canvas, 1425x840, WebGL context true, canvas behind copy true, 0 exceptions - attempt 1.
+- Prod screenshot download/task120-hero-hills-prod.png: green ridges sweep behind hero copy + collage, text fully legible, pill CTA pair intact, real 141-product catalog below.
+- Harness fix: screenshot path now honors HILLS_SHOT env (was hardcoded, first prod run silently overwrote the local shot).
+
+Stage Summary:
+- GLSL hills live on production hero. three ships as a lazy client chunk; SSR HTML/LCP untouched; hills pause off-screen + static under reduced motion.
