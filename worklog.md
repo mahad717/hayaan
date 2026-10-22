@@ -2817,3 +2817,16 @@ Work Log:
 
 Stage Summary:
 - Hero now carries the animated brand-green GLSL hills behind copy/images; lazy chunk keeps LCP unaffected (SSR HTML unchanged, canvas paints post-hydration). Pending: push, CI, prod CDP verify.
+
+---
+Task ID: 120-ci-fix
+Agent: Super Z (main)
+Task: CI failure on e09c488 (Workers Builds: hayaan -> failure).
+
+Work Log:
+- Root cause: repo is bun-managed (bun.lock + CF build command "bun run build"). My "npm install three" created a NEW npm package-lock.json (never tracked before) while bun.lock stayed stale without three -> Cloudflare's frozen-lockfile bun install hit a package.json/bun.lock mismatch and failed.
+- Fix: removed package-lock.json from repo+disk, ran bun install to regenerate bun.lock with three/@types/three (Saved lockfile). Full CF-equivalent gate "bun run build" (prisma generate && next build && opennextjs-cloudflare build) passes locally: Worker saved in .open-next/worker.js.
+- LESSON: this repo installs ONLY via bun - never run npm install; add deps with "bun add".
+
+Stage Summary:
+- bun.lock updated with three; npm lockfile purged; local full-pipeline build green. Re-pushing e09c488 fix as a follow-up commit.
