@@ -2926,3 +2926,17 @@ Work Log:
 
 Stage Summary:
 - Task 123 closed end-to-end. Hero background is now the brand-green beams-with-collision animation on production for desktop and mobile; GLSL hills and the three.js dependency are fully removed.
+
+---
+Task ID: 124
+Agent: Super Z (main)
+Task: Owner (mobile screenshot, "Start shopping" circled): "I want the button I marked for you, his font to panton font like the button next him" — font parity between the hero's primary pill CTA and the sibling outline CTA.
+
+Work Log:
+- Root cause (two layers): shadcn Button base ships "font-black font-panton", but ButtonWithIcon overrode with "text-sm font-medium" — tw-merge strips base font-black (same weight group) while font-panton survives. With Panton localFont shipping Bold(700)/Black(900) faces only, the primary requested weight 500 → face matching landed on the lighter Bold face while the sibling rendered Black — visibly "a different font".
+- Fix: button-with-icon.tsx now pins "text-sm font-black font-panton" explicitly (with an explanatory comment). ButtonWithIcon is only used in the hero, so no other surfaces affected.
+- New harness scripts/task124-cta-font-check.mjs (env BASE/W/H/SHOT): awaits document.fonts.ready, finds both CTAs by label text, asserts identical computed font-family AND font-weight, primary weight 900, Panton face actually loaded (fonts.check), 0 page exceptions; screenshot.
+- Local CDP (single-call server+harness on :3215, desktop 1440 + mobile 390): ALL PASS — both CTAs computed "panton, panton Fallback" @ 900, face loaded, 0 exceptions. Screenshots download/task124-cta-font-local-{desktop,mobile}.png — "Start shopping" and "Browse categories" now show matching heavy Panton letterforms.
+
+Stage Summary:
+- Hero primary CTA label now renders the exact same Panton Black as its sibling (family + weight pinned). Local-verified both viewports; committing + pushing with the supplied token.

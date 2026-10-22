@@ -31,7 +31,12 @@ const ButtonWithIcon = React.forwardRef<HTMLButtonElement, ButtonWithIconProps>(
         className={cn(
           "relative h-12 w-fit cursor-pointer overflow-hidden rounded-full p-1 ps-6 pe-14",
           "bg-[#14532d] text-[#faf8f1] hover:bg-[#14532d]",
-          "text-sm font-medium transition-all duration-500",
+          // font-black + font-panton: explicit parity with the shadcn Button
+          // base ("Browse categories"). Without font-black here, the old
+          // font-medium would tailwind-merge-strip the base font-black and
+          // Panton (Bold/Black faces only) rendered the lighter Bold face —
+          // visibly a "different font" next to its Black-weight sibling.
+          "text-sm font-black font-panton transition-all duration-500",
           "group hover:ps-14 hover:pe-6",
           className,
         )}
