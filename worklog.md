@@ -2913,3 +2913,16 @@ Work Log:
 
 Stage Summary:
 - Hero animation swapped: hills out, brand-green beams-with-collision in, production-hardened (measure-gated, in-view gated, reduced-motion safe, three.js dropped). Local-verified both viewports; committing + pushing with the supplied token.
+
+---
+Task ID: 123-verify
+Agent: Super Z (main)
+Task: Production verification for Task 123.
+
+Work Log:
+- Pushed c3a1ea3..7197d01; CI Workers Builds success in ~90s.
+- Prod CDP vs https://hayaan.co, BOTH viewports on attempt 1: hills canvas gone, beams root present, root covers hero, beam count == 7, animating true, 0 exceptions. Same geometry signature as local (first beam x=29/1440, x=8/390 — fraction spread holds).
+- Prod screenshots download/task123-beams-prod-{desktop,mobile}.png: brand-green beams fall behind hero copy (subtle under headline/paragraph), pill CTA pair + collage + real 141-product catalog render intact, no floor band, full styling.
+
+Stage Summary:
+- Task 123 closed end-to-end. Hero background is now the brand-green beams-with-collision animation on production for desktop and mobile; GLSL hills and the three.js dependency are fully removed.
