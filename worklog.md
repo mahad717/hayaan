@@ -2858,3 +2858,16 @@ Work Log:
 
 Stage Summary:
 - Hills softened (alpha 0.45) and re-anchored to the hero base with a dissolved top edge; text/button contrast restored on desktop AND mobile. Local-verified end to end; awaiting token to push.
+
+---
+Task ID: 121-push
+Agent: Super Z (main)
+Task: Token received -> push Task 121 (e801383 + screenshot autocommit), CI, prod verify.
+
+Work Log:
+- Pushed 4f9ab3e..fea5b7e; CI Workers Builds success (~3min).
+- Prod CDP vs https://hayaan.co, BOTH viewports: 1 canvas, WebGL true, base-pinned true, 0 exceptions. Screenshots download/task121-hills-prod-{desktop,mobile}.png - ridges hug the hero base, mask fade clean, copy/CTAs on full-contrast cream, real 141-product catalog rendering below.
+
+Stage Summary:
+- Task 121 closed end-to-end: hills softened to alpha 0.45 and base-pinned with dissolved top edge - live on hayaan.co for desktop and mobile.
+- Session pattern reminder: next dep addition must use "bun add" (never npm install).
