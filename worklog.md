@@ -2940,3 +2940,16 @@ Work Log:
 
 Stage Summary:
 - Hero primary CTA label now renders the exact same Panton Black as its sibling (family + weight pinned). Local-verified both viewports; committing + pushing with the supplied token.
+
+---
+Task ID: 124-verify
+Agent: Super Z (main)
+Task: Production verification for Task 124.
+
+Work Log:
+- Pushed 028d2f0..872a695; CI Workers Builds success in ~85s.
+- Prod CDP vs https://hayaan.co, BOTH viewports on attempt 1: both CTAs found, identical computed font-family ("panton, panton Fallback") AND font-weight 900, Panton face loaded (fonts.check true), 0 exceptions.
+- Prod screenshots download/task124-cta-font-prod-{desktop,mobile}.png: "Start shopping" pill now shows the same heavy Panton Black letterforms as "Browse categories"; beams animation and rest of the hero unaffected.
+
+Stage Summary:
+- Task 124 closed end-to-end. Hero primary CTA is font-identical to its sibling on production, desktop and mobile.
