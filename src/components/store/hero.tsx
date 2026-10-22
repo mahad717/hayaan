@@ -1,10 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Sparkles, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonWithIcon } from "@/components/ui/button-with-icon";
 import { useLang } from "@/components/store/language-provider";
 import { productImg, productImgFallback } from "@/lib/img";
+
+// GLSL wireframe hills behind the hero copy. Lazy client-only chunk (three
+// is ~150KB gz) — loads after first paint, silent no-op without WebGL.
+const GLSLHills = dynamic(
+  () => import("@/components/ui/glsl-hills").then((m) => m.GLSLHills),
+  { ssr: false },
+);
 
 const HERO_IMG_3 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg";
 const HERO_IMG_4 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg";
@@ -23,7 +31,12 @@ export function Hero({ onShop }: { onShop: () => void }) {
         aria-hidden
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
+      {/* Animated GLSL hills — brand-green wireframe ridges on the cream bg */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <GLSLHills />
+      </div>
+
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
         {/* Copy */}
         <div className="flex flex-col gap-5">
           <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-brand shadow-sm ring-1 ring-[#e6e2d4]">

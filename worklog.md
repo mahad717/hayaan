@@ -2803,3 +2803,17 @@ Work Log:
 
 Stage Summary:
 - Hero now ships a matched capsule pair: filled #14532d sliding-arrow pill ("Start shopping") + green-outline pill ("Browse categories", same h-12 shape). Live on hayaan.co.
+
+---
+Task ID: 120
+Agent: Super Z (main)
+Task: Owner: "I want this animation in the hero" (GLSL wireframe hills, three.js cnoise ridge demo).
+
+Work Log:
+- Installed three + @types/three. New src/components/ui/glsl-hills.tsx: upstream shader kept byte-identical (caught + reverted one accidental vec4->vec3 edit before shipping), component adapted for production hero use: container-sized (ResizeObserver, not window), line color prop defaulting to Hayaan green #14532d (upstream gray 0.6 was tuned for dark pages - invisible on our cream), DPR cap 1.5, IntersectionObserver + visibilitychange pause when off-screen, prefers-reduced-motion static frame, silent no-op without WebGL, full dispose on unmount.
+- hero.tsx: GLSLHills lazy-loaded via next/dynamic ssr:false (three ~150KB gz stays out of the main bundle), absolute pointer-events-none layer between the botanical gradient and the copy grid; content grid now z-10.
+- Local runtime check (scripts/task120-local-hills-check.mjs, CDP + SwiftShader WebGL against next start:3210): 1 canvas in hero, 1425x840, webgl context true, canvas behind copy true, 0 exceptions. Screenshot confirms green ridges sweep behind the copy with full text legibility; pill CTA pair intact. NOTE: headless chrome versions rotated - harness updated to 155 paths.
+- Build gate green (next build).
+
+Stage Summary:
+- Hero now carries the animated brand-green GLSL hills behind copy/images; lazy chunk keeps LCP unaffected (SSR HTML unchanged, canvas paints post-hydration). Pending: push, CI, prod CDP verify.
