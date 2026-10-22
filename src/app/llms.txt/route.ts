@@ -30,7 +30,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Buying Health Supplements Online in Somalia](${SITE}/blog/buying-health-supplements-online-in-somalia): how to read labels and choose a good multivitamin.
 - [Setting Up a Home Office in Somalia](${SITE}/blog/setting-up-a-home-office-in-somalia): the essential shopping list, printer + toner pairing included.
 - [Online Shopping in Somalia: How It Works](${SITE}/blog/online-shopping-in-somalia-how-it-works): delivery, payment and support explained step by step.
-- [PS5 Price in Somalia](${SITE}/blog/ps5-price-in-somalia): PlayStation 5 Digital Slim ($720) vs Pro 2TB ($1,180), which edition to buy, and how to order one.
+- [PS5 Price in Somalia](${SITE}/blog/ps5-price-in-somalia): PlayStation 5 Digital Slim ($850) vs Pro 2TB ($1,180), which edition to buy, and how to order one.
 - [iPhone Price in Somalia](${SITE}/blog/iphone-price-in-somalia): every current iPhone from $990 (iPhone 17) to $1,550 (17 Pro Max), physical-SIM notes included.
 - [How to Pay Online in Somalia](${SITE}/blog/how-to-pay-online-in-somalia): EVC Plus, Edahab and card through a secure checkout, step by step.
 - [Best Smartwatches to Buy Online in Somalia](${SITE}/blog/best-smartwatches-online-in-somalia): Apple Watch, Galaxy Watch, Huawei and Amazfit from $55 to $440, matched to your phone.
@@ -38,10 +38,10 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [What Size TV Should You Buy in Somalia](${SITE}/blog/what-size-tv-to-buy-in-somalia): every TV from $175 (32") to $2,350 (85") and the viewing-distance rule that picks the right size.
 - [Online Shopping in Mogadishu](${SITE}/blog/online-shopping-in-mogadishu): delivery fees for all 20 districts ($1.50–$3.00) and how to order step by step.
 - [Wi-Fi Router Price in Somalia](${SITE}/blog/wifi-router-price-in-somalia): routers, extenders and access points from $15 to $145, matched to homes and offices, with placement and power-cut notes.
-- [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $75, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
+- [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $165, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
 - [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood, payment and ordering walkthrough.
 - [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $190 (128GB), specs, the A16/A17/A18 ladder, and how to order.
-- [Refurbished HP EliteBook Price in Somalia](${SITE}/blog/hp-elitebook-price-in-somalia): every refurbished EliteBook from $310 (840 G7) to $950 (840 G9), which model to buy, and the ordering walkthrough.
+- [Refurbished HP EliteBook Price in Somalia](${SITE}/blog/hp-elitebook-price-in-somalia): every refurbished EliteBook from $310 (840 G7) to $990 (840 G9), which model to buy, and the ordering walkthrough.
 - [Electronics Store Near Me in Somalia](${SITE}/blog/electronics-store-near-me-in-somalia): the nearest electronics store is the one that delivers to your district — $1.50–$3.00 across all 20 Mogadishu districts, $6.95 nationwide.
 - [Power Bank Price in Somalia](${SITE}/blog/power-bank-price-in-somalia): every power bank from $15 (Porodo 5,000mAh) to $65 (Green Lion 80,000mAh), honest mAh math, and the chargers that fill them fast.
 - [Nokia Phones in Somalia](${SITE}/blog/nokia-phones-price-in-somalia): eight feature phones from $16 to $53 — days of battery, dual SIM, 4G calling — and which one fits the backup job.

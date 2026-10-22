@@ -1,0 +1,1224 @@
+{
+ "adaptor-usb-c-25w-pd": {
+  "our_name": "Adaptor USB-C 25W PD",
+  "our_price": 4.5,
+  "candidates": [
+   {
+    "slug": "adaptor-usb-c-25w-pd-normal",
+    "name": "Adaptor USB-C 25W PD Normal",
+    "price": 4.5,
+    "score": 0.84,
+    "how": "tok0.83+dif0.85"
+   }
+  ]
+ },
+ "anker-boom-3i-outdoor-bluetooth-speaker": {
+  "our_name": "Anker Boom 3i Outdoor Bluetooth Speaker",
+  "our_price": 16.7,
+  "candidates": [
+   {
+    "slug": "bluetooth-speaker-anker-boom-3i-outdoor",
+    "name": "Bluetooth Speaker Anker Boom 3i Outdoor",
+    "price": 95.0,
+    "score": 0.815,
+    "how": "tok1.00+dif0.54"
+   }
+  ]
+ },
+ "apple-20w-usb-c-power-adapter-(original)": {
+  "our_name": "Apple 20W USB-C Power Adapter (Original)",
+  "our_price": 25,
+  "candidates": [
+   {
+    "slug": "apple-20w-usb-c-power-adapter-org",
+    "name": "Apple 20W USB-C Power Adapter Org",
+    "price": 25.0,
+    "score": 0.822,
+    "how": "tok0.75+dif0.93"
+   },
+   {
+    "slug": "adapter-power-usb-c-30w",
+    "name": "Adapter Power USB-C 30w",
+    "price": 45.0,
+    "score": 0.431,
+    "how": "tok0.50+dif0.33"
+   },
+   {
+    "slug": "adapter-power-usb-c-61w",
+    "name": "Adapter Power USB-C 61w",
+    "price": 48.0,
+    "score": 0.431,
+    "how": "tok0.50+dif0.33"
+   }
+  ]
+ },
+ "aputure-amaran-200xs-studio-light": {
+  "our_name": "Aputure Amaran 200XS Studio Light",
+  "our_price": 330,
+  "candidates": [
+   {
+    "slug": "aputure-amaran-200xs",
+    "name": "Aputure Amaran 200XS",
+    "price": 330.0,
+    "score": 0.662,
+    "how": "tok0.60+dif0.75"
+   }
+  ]
+ },
+ "asus-tuf-fx507-gaming-i7-13gen": {
+  "our_name": "Asus TUF FX507 Gaming i7-13Gen",
+  "our_price": 1320,
+  "candidates": []
+ },
+ "battery-case-iphone-16-pro-max-7000mah": {
+  "our_name": "Battery Case iPhone 16 Pro Max 7000mAh",
+  "our_price": 45,
+  "candidates": [
+   {
+    "slug": "battery-case-for-iphone-16-pro-max-7000mah",
+    "name": "Battery Case for iPhone 16 Pro Max 7000mAh",
+    "price": 45.0,
+    "score": 0.905,
+    "how": "tok0.88+dif0.95"
+   },
+   {
+    "slug": "battery-case-for-iphone-17-pro-max-7000mah",
+    "name": "Battery Case for iPhone 17 Pro Max 7000mAh",
+    "price": 56.0,
+    "score": 0.77,
+    "how": "tok0.67+dif0.93"
+   },
+   {
+    "slug": "battery-case-for-iphone-14-pro-max-6000mah",
+    "name": "Battery Case for iPhone 14 Pro Max 6000mAh",
+    "price": 35.0,
+    "score": 0.66,
+    "how": "tok0.50+dif0.90"
+   }
+  ]
+ },
+ "battery-case-iphone-17-pro-max-7000mah": {
+  "our_name": "Battery Case iPhone 17 Pro Max 7000mAh",
+  "our_price": 56,
+  "candidates": [
+   {
+    "slug": "battery-case-for-iphone-17-pro-max-7000mah",
+    "name": "Battery Case for iPhone 17 Pro Max 7000mAh",
+    "price": 56.0,
+    "score": 0.905,
+    "how": "tok0.88+dif0.95"
+   },
+   {
+    "slug": "battery-case-for-iphone-16-pro-max-7000mah",
+    "name": "Battery Case for iPhone 16 Pro Max 7000mAh",
+    "price": 45.0,
+    "score": 0.77,
+    "how": "tok0.67+dif0.93"
+   },
+   {
+    "slug": "battery-case-for-iphone-14-pro-max-6000mah",
+    "name": "Battery Case for iPhone 14 Pro Max 6000mAh",
+    "price": 35.0,
+    "score": 0.66,
+    "how": "tok0.50+dif0.90"
+   }
+  ]
+ },
+ "cable-charge-usb-c-1m": {
+  "our_name": "Cable Charge USB-C 1M",
+  "our_price": 3,
+  "candidates": [
+   {
+    "slug": "cable-charge-60w-usb-c-1m",
+    "name": "Cable Charge 60W USB-C 1M",
+    "price": 22.0,
+    "score": 0.865,
+    "how": "tok0.83+dif0.91"
+   },
+   {
+    "slug": "cable-charge-usb-c-1m-normal",
+    "name": "Cable Charge USB-C 1M Normal",
+    "price": 3.0,
+    "score": 0.843,
+    "how": "tok0.83+dif0.86"
+   },
+   {
+    "slug": "cable-charge-240w-usb-c-2m",
+    "name": "Cable Charge 240W USB-C 2M",
+    "price": 25.0,
+    "score": 0.683,
+    "how": "tok0.57+dif0.85"
+   }
+  ]
+ },
+ "cable-charge-usb-c-to-lightning-1m": {
+  "our_name": "Cable Charge USB-C to Lightning 1M",
+  "our_price": 2,
+  "candidates": [
+   {
+    "slug": "cable-charge-usb-c-to-lightning-1m-normal",
+    "name": "Cable Charge USB-C To Lightning 1M Normal",
+    "price": 2.0,
+    "score": 0.888,
+    "how": "tok0.88+dif0.91"
+   },
+   {
+    "slug": "cable-charge-60w-usb-c-1m",
+    "name": "Cable Charge 60W USB-C 1M",
+    "price": 22.0,
+    "score": 0.66,
+    "how": "tok0.62+dif0.71"
+   },
+   {
+    "slug": "cable-charge-usb-c-1m-normal",
+    "name": "Cable Charge USB-C 1M Normal",
+    "price": 3.0,
+    "score": 0.646,
+    "how": "tok0.62+dif0.68"
+   }
+  ]
+ },
+ "e6s-sans-fil-bluetooth-couteurs-tws-bluetooth-casque-sans-fil-couteurs-antibruit-avec-microphone-casque---aliexpress-44": {
+  "our_name": "E6S Wireless Bluetooth Earbuds TWS Bluetooth Wireless Headphones Noise Cancelling Earphones with Microphone",
+  "our_price": 6,
+  "candidates": []
+ },
+ "earphone-samsung-3.5mm-jack": {
+  "our_name": "Earphone Samsung 3.5mm Jack",
+  "our_price": 1.5,
+  "candidates": [
+   {
+    "slug": "earphone-for-samsung-3-5mm-jack",
+    "name": "Earphone For Samsung 3.5mm Jack",
+    "price": 1.5,
+    "score": 0.872,
+    "how": "tok0.83+dif0.93"
+   }
+  ]
+ },
+ "geepas-coffee-maker-1.5l": {
+  "our_name": "Geepas Coffee Maker 1.5L",
+  "our_price": 35,
+  "candidates": [
+   {
+    "slug": "geepas-coffee-maker-1-5l",
+    "name": "Geepas-Coffee Maker, 1.5L",
+    "price": 35.0,
+    "score": 1.0,
+    "how": "exact"
+   }
+  ]
+ },
+ "geepas-electric-kettle": {
+  "our_name": "Geepas Electric Kettle",
+  "our_price": 15,
+  "candidates": [
+   {
+    "slug": "electric-kettle-geepas",
+    "name": "Electric Kettle Geepas",
+    "price": 15.0,
+    "score": 0.873,
+    "how": "tok1.00+dif0.68"
+   }
+  ]
+ },
+ "hot-air-styler-tp-5+1": {
+  "our_name": "Hot Air Styler TP-5+1",
+  "our_price": 10,
+  "candidates": [
+   {
+    "slug": "hot-air-styler-tp-51",
+    "name": "Hot Air Styler Tp- 5+1",
+    "price": 10.0,
+    "score": 1.0,
+    "how": "exact"
+   }
+  ]
+ },
+ "huawei-watch-gt-6-gps-46mm": {
+  "our_name": "Huawei Watch GT 6 GPS 46mm",
+  "our_price": 230,
+  "candidates": [
+   {
+    "slug": "huawei-watch-gt-6-gps-46-mm",
+    "name": "HUAWEI Watch GT 6 GPS 46 mm",
+    "price": 230.0,
+    "score": 0.767,
+    "how": "tok0.62+dif0.98"
+   }
+  ]
+ },
+ "iphone-17-(physical-sim)": {
+  "our_name": "iPhone 17 (Physical SIM)",
+  "our_price": 990,
+  "candidates": [
+   {
+    "slug": "iphone-17-physical",
+    "name": "iPhone 17 Physical",
+    "price": 990.0,
+    "score": 0.81,
+    "how": "tok0.75+dif0.90"
+   }
+  ]
+ },
+ "iphone-17-pro-(physical-sim)": {
+  "our_name": "iPhone 17 Pro (Physical SIM)",
+  "our_price": 1420,
+  "candidates": [
+   {
+    "slug": "iphone-17-physical",
+    "name": "iPhone 17 Physical",
+    "price": 990.0,
+    "score": 0.687,
+    "how": "tok0.60+dif0.82"
+   }
+  ]
+ },
+ "iphone-17-pro-max-esim": {
+  "our_name": "iPhone 17 Pro Max (eSIM)",
+  "our_price": 1380,
+  "candidates": [
+   {
+    "slug": "iphone-17pro-max-esim",
+    "name": "iPhone 17Pro Max eSim",
+    "price": 1380.0,
+    "score": 0.691,
+    "how": "tok0.50+dif0.98"
+   },
+   {
+    "slug": "iphone-15-pro-max",
+    "name": "iPhone 15 Pro Max",
+    "price": 1170.0,
+    "score": 0.628,
+    "how": "tok0.50+dif0.82"
+   },
+   {
+    "slug": "iphone-16-pro-max",
+    "name": "iPhone 16 Pro Max",
+    "price": 1240.0,
+    "score": 0.628,
+    "how": "tok0.50+dif0.82"
+   }
+  ]
+ },
+ "iphone-17-pro-max-(physical-sim)": {
+  "our_name": "iPhone 17 Pro Max (Physical SIM)",
+  "our_price": 1550,
+  "candidates": [
+   {
+    "slug": "iphone-17-physical",
+    "name": "iPhone 17 Physical",
+    "price": 990.0,
+    "score": 0.6,
+    "how": "tok0.50+dif0.75"
+   }
+  ]
+ },
+ "iphone-18-pro-256gb-black-esim": {
+  "our_name": "iPhone 18 Pro 256GB Black (eSIM)",
+  "our_price": 1530,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-256gb-black-esim",
+    "name": "iPhone 18Pro 256GB Black eSim",
+    "price": 1530.0,
+    "score": 0.736,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-256gb-black-esim",
+    "name": "iPhone 18Pro Max 256GB Black eSim",
+    "price": 1850.0,
+    "score": 0.668,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-256gb-burgundy-esim": {
+  "our_name": "iPhone 18 Pro 256GB Burgundy (eSIM)",
+  "our_price": 1550,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-256gb-burgundy-esim",
+    "name": "iPhone 18Pro 256GB Burgundy eSim",
+    "price": 1550.0,
+    "score": 0.737,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-256gb-burgundy-esim",
+    "name": "iPhone 18Pro Max 256GB Burgundy eSim",
+    "price": 1950.0,
+    "score": 0.671,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-256gb-glacier-esim": {
+  "our_name": "iPhone 18 Pro 256GB Glacier (eSIM)",
+  "our_price": 1530,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-256gb-glacier-esim",
+    "name": "iPhone 18Pro 256GB Glacier eSim",
+    "price": 1530.0,
+    "score": 0.737,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-256gb-glacier-esim",
+    "name": "iPhone 18Pro Max 256GB Glacier eSim",
+    "price": 1830.0,
+    "score": 0.67,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-256gb-silver-esim": {
+  "our_name": "iPhone 18 Pro 256GB Silver (eSIM)",
+  "our_price": 1500,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-256gb-silver-esim",
+    "name": "iPhone 18Pro 256GB Silver eSim",
+    "price": 1500.0,
+    "score": 0.736,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-256gb-silver-esim",
+    "name": "iPhone 18Pro Max 256GB Silver eSim",
+    "price": 1780.0,
+    "score": 0.669,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-512gb-black-esim": {
+  "our_name": "iPhone 18 Pro 512GB Black (eSIM)",
+  "our_price": 1850,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-512gb-black-esim",
+    "name": "iPhone 18Pro 512GB Black eSim",
+    "price": 1850.0,
+    "score": 0.736,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-512gb-black-esim",
+    "name": "iPhone 18Pro Max 512GB Black eSim",
+    "price": 2030.0,
+    "score": 0.668,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-512gb-burgundy-esim": {
+  "our_name": "iPhone 18 Pro 512GB Burgundy (eSIM)",
+  "our_price": 1850,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-512gb-burgundy-esim",
+    "name": "iPhone 18Pro 512GB Burgundy eSim",
+    "price": 1850.0,
+    "score": 0.737,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-512gb-burgundy-esim",
+    "name": "iPhone 18Pro Max 512GB Burgundy eSim",
+    "price": 2050.0,
+    "score": 0.671,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-512gb-glacier-esim": {
+  "our_name": "iPhone 18 Pro 512GB Glacier (eSIM)",
+  "our_price": 1830,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-512gb-glacier-esim",
+    "name": "iPhone 18Pro 512GB Glacier eSim",
+    "price": 1830.0,
+    "score": 0.737,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-512gb-glacier-esim",
+    "name": "iPhone 18Pro Max 512GB Glacier eSim",
+    "price": 1980.0,
+    "score": 0.67,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-512gb-silver-esim": {
+  "our_name": "iPhone 18 Pro 512GB Silver (eSIM)",
+  "our_price": 1780,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-512gb-silver-esim",
+    "name": "iPhone 18Pro 512GB Silver eSim",
+    "price": 1780.0,
+    "score": 0.736,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "iphone-18pro-max-512gb-silver-esim",
+    "name": "iPhone 18Pro Max 512GB Silver eSim",
+    "price": 1950.0,
+    "score": 0.669,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-max-1tb-black-esim": {
+  "our_name": "iPhone 18 Pro Max 1TB Black (eSIM)",
+  "our_price": 2650,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-1tb-black-esim",
+    "name": "iPhone 18Pro Max 1TB Black eSim",
+    "price": 2650.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.98"
+   }
+  ]
+ },
+ "iphone-18-pro-max-1tb-burgundy-esim": {
+  "our_name": "iPhone 18 Pro Max 1TB Burgundy (eSIM)",
+  "our_price": 2650,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-1tb-burgundy-esim",
+    "name": "iPhone 18Pro Max 1TB Burgundy eSim",
+    "price": 2650.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   }
+  ]
+ },
+ "iphone-18-pro-max-1tb-glacier-esim": {
+  "our_name": "iPhone 18 Pro Max 1TB Glacier (eSIM)",
+  "our_price": 2600,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-1tb-glacier-esim",
+    "name": "iPhone 18Pro Max 1TB Glacier eSim",
+    "price": 2600.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   }
+  ]
+ },
+ "iphone-18-pro-max-1tb-silver-esim": {
+  "our_name": "iPhone 18 Pro Max 1TB Silver (eSIM)",
+  "our_price": 2600,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-1tb-silver-esim",
+    "name": "iPhone 18Pro Max 1TB Silver eSim",
+    "price": 2600.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.98"
+   }
+  ]
+ },
+ "iphone-18-pro-max-256gb-black-esim": {
+  "our_name": "iPhone 18 Pro Max 256GB Black (eSIM)",
+  "our_price": 1850,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-256gb-black-esim",
+    "name": "iPhone 18Pro Max 256GB Black eSim",
+    "price": 1850.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-256gb-black-esim",
+    "name": "iPhone 18Pro 256GB Black eSim",
+    "price": 1530.0,
+    "score": 0.668,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-max-256gb-burgundy-esim": {
+  "our_name": "iPhone 18 Pro Max 256GB Burgundy (eSIM)",
+  "our_price": 1950,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-256gb-burgundy-esim",
+    "name": "iPhone 18Pro Max 256GB Burgundy eSim",
+    "price": 1950.0,
+    "score": 0.77,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-256gb-burgundy-esim",
+    "name": "iPhone 18Pro 256GB Burgundy eSim",
+    "price": 1550.0,
+    "score": 0.671,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-max-256gb-glacier-esim": {
+  "our_name": "iPhone 18 Pro Max 256GB Glacier (eSIM)",
+  "our_price": 1830,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-256gb-glacier-esim",
+    "name": "iPhone 18Pro Max 256GB Glacier eSim",
+    "price": 1830.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-256gb-glacier-esim",
+    "name": "iPhone 18Pro 256GB Glacier eSim",
+    "price": 1530.0,
+    "score": 0.67,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-max-256gb-silver-esim": {
+  "our_name": "iPhone 18 Pro Max 256GB Silver (eSIM)",
+  "our_price": 1780,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-256gb-silver-esim",
+    "name": "iPhone 18Pro Max 256GB Silver eSim",
+    "price": 1780.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-256gb-silver-esim",
+    "name": "iPhone 18Pro 256GB Silver eSim",
+    "price": 1500.0,
+    "score": 0.669,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-max-512gb-black-esim": {
+  "our_name": "iPhone 18 Pro Max 512GB Black (eSIM)",
+  "our_price": 2030,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-512gb-black-esim",
+    "name": "iPhone 18Pro Max 512GB Black eSim",
+    "price": 2030.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-512gb-black-esim",
+    "name": "iPhone 18Pro 512GB Black eSim",
+    "price": 1850.0,
+    "score": 0.668,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "iphone-18-pro-max-512gb-burgundy-esim": {
+  "our_name": "iPhone 18 Pro Max 512GB Burgundy (eSIM)",
+  "our_price": 2050,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-512gb-burgundy-esim",
+    "name": "iPhone 18Pro Max 512GB Burgundy eSim",
+    "price": 2050.0,
+    "score": 0.77,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-512gb-burgundy-esim",
+    "name": "iPhone 18Pro 512GB Burgundy eSim",
+    "price": 1850.0,
+    "score": 0.671,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-max-512gb-glacier-esim": {
+  "our_name": "iPhone 18 Pro Max 512GB Glacier (eSIM)",
+  "our_price": 1980,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-512gb-glacier-esim",
+    "name": "iPhone 18Pro Max 512GB Glacier eSim",
+    "price": 1980.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-512gb-glacier-esim",
+    "name": "iPhone 18Pro 512GB Glacier eSim",
+    "price": 1830.0,
+    "score": 0.67,
+    "how": "tok0.50+dif0.93"
+   }
+  ]
+ },
+ "iphone-18-pro-max-512gb-silver-esim": {
+  "our_name": "iPhone 18 Pro Max 512GB Silver (eSIM)",
+  "our_price": 1950,
+  "candidates": [
+   {
+    "slug": "iphone-18pro-max-512gb-silver-esim",
+    "name": "iPhone 18Pro Max 512GB Silver eSim",
+    "price": 1950.0,
+    "score": 0.769,
+    "how": "tok0.62+dif0.99"
+   },
+   {
+    "slug": "iphone-18pro-512gb-silver-esim",
+    "name": "iPhone 18Pro 512GB Silver eSim",
+    "price": 1780.0,
+    "score": 0.669,
+    "how": "tok0.50+dif0.92"
+   }
+  ]
+ },
+ "macbook-air-m5": {
+  "our_name": "MacBook Air M5",
+  "our_price": 1530,
+  "candidates": [
+   {
+    "slug": "apple-macbook-air-m5",
+    "name": "Apple MacBook Air M5",
+    "price": 1530.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   }
+  ]
+ },
+ "macbook-pro-m3": {
+  "our_name": "MacBook Pro M3",
+  "our_price": 1350,
+  "candidates": [
+   {
+    "slug": "apple-macbook-pro-m3-2",
+    "name": "Apple MacBook Pro M3",
+    "price": 1785.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   },
+   {
+    "slug": "apple-macbook-pro-m3-3",
+    "name": "Apple MacBook Pro M3",
+    "price": 1350.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   }
+  ]
+ },
+ "macbook-pro-m4": {
+  "our_name": "MacBook Pro M4",
+  "our_price": 1720,
+  "candidates": [
+   {
+    "slug": "apple-macbook-pro-m4",
+    "name": "Apple MacBook Pro M4",
+    "price": 1850.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   },
+   {
+    "slug": "apple-macbook-pro-m4-2",
+    "name": "Apple MacBook Pro M4",
+    "price": 1720.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   }
+  ]
+ },
+ "macbook-pro-m5": {
+  "our_name": "MacBook Pro M5",
+  "our_price": 1900,
+  "candidates": [
+   {
+    "slug": "apple-macbook-pro-m5",
+    "name": "Apple MacBook Pro M5",
+    "price": 2150.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   },
+   {
+    "slug": "apple-macbook-pro-m5-2",
+    "name": "Apple MacBook Pro M5",
+    "price": 2350.0,
+    "score": 0.779,
+    "how": "tok0.75+dif0.82"
+   }
+  ]
+ },
+ "maxwell-smart-watch-(budget-line)": {
+  "our_name": "Maxwell Smart Watch (budget line)",
+  "our_price": 55,
+  "candidates": [
+   {
+    "slug": "maxwell-lynx-smart-watch",
+    "name": "Maxwell Lynx Smart Watch",
+    "price": 55.0,
+    "score": 0.576,
+    "how": "tok0.50+dif0.69"
+   },
+   {
+    "slug": "maxwell-libra-smart-watch",
+    "name": "Maxwell Libra Smart Watch",
+    "price": 55.0,
+    "score": 0.571,
+    "how": "tok0.50+dif0.68"
+   },
+   {
+    "slug": "maxwell-titan-smart-watch",
+    "name": "Maxwell Titan Smart Watch",
+    "price": 55.0,
+    "score": 0.571,
+    "how": "tok0.50+dif0.68"
+   }
+  ]
+ },
+ "multivitamines-pour-hommes--boost-immunitaire-aux-vitamines-a-b12-c-d--nergie-quotidienne-et-non-ogm": {
+  "our_name": "Men's Multivitamins \u2013 Immune Boost with Vitamins A, B12, C, D | Daily Energy & Non-GMO",
+  "our_price": 6.5,
+  "candidates": []
+ },
+ "mikrotik-l009-series-router": {
+  "our_name": "MikroTik L009 series Router",
+  "our_price": 135,
+  "candidates": [
+   {
+    "slug": "mikrotik-l009-series",
+    "name": "MikroTik L009 series",
+    "price": 135.0,
+    "score": 0.79,
+    "how": "tok0.75+dif0.85"
+   }
+  ]
+ },
+ "nokia-5710-xpressaudio": {
+  "our_name": "Nokia 5710 XpressAudio",
+  "our_price": 50,
+  "candidates": []
+ },
+ "multivitamines-organiques-pour-femmes--nourriture-entire-avec-complexe-b-vitamine-c-d3-et-k2-pour-l": {
+  "our_name": "Organic Multivitamins for Women \u2013 Whole Food with B Complex, Vitamin C, D3 and K2 for the",
+  "our_price": 6.5,
+  "candidates": []
+ },
+ "power-bank-anker-maggo-10,000mah": {
+  "our_name": "Power Bank Anker MagGo 10,000mAh",
+  "our_price": 48,
+  "candidates": [
+   {
+    "slug": "power-bank-anker-zolo-10000mah",
+    "name": "Power Bank Anker Zolo 10,000mAh",
+    "price": 45.0,
+    "score": 0.754,
+    "how": "tok0.67+dif0.89"
+   },
+   {
+    "slug": "power-bank-anker-maggo-10000-mah",
+    "name": "Power Bank Anker MagGo 10000 mAh",
+    "price": 48.0,
+    "score": 0.737,
+    "how": "tok0.57+dif0.98"
+   },
+   {
+    "slug": "power-bank-nuru-10000mah",
+    "name": "Power Bank Nuru 10000Mah",
+    "price": 21.0,
+    "score": 0.62,
+    "how": "tok0.50+dif0.80"
+   }
+  ]
+ },
+ "power-bank-anker-zolo-10,000mah": {
+  "our_name": "Power Bank Anker Zolo 10,000mAh",
+  "our_price": 45,
+  "candidates": [
+   {
+    "slug": "power-bank-anker-zolo-10000mah",
+    "name": "Power Bank Anker Zolo 10,000mAh",
+    "price": 45.0,
+    "score": 1.0,
+    "how": "exact"
+   }
+  ]
+ },
+ "power-bank-aston-magsafe-10,000mah": {
+  "our_name": "Power Bank Aston MagSafe 10,000mAh",
+  "our_price": 22,
+  "candidates": [
+   {
+    "slug": "power-bank-aston-10000mah-magsafe",
+    "name": "Power Bank Aston 10000mAh MagSafe",
+    "price": 22.0,
+    "score": 0.903,
+    "how": "tok1.00+dif0.76"
+   },
+   {
+    "slug": "power-bank-magsafe-10000mah",
+    "name": "Power Bank Magsafe 10000mAh",
+    "price": 26.0,
+    "score": 0.84,
+    "how": "tok0.80+dif0.90"
+   },
+   {
+    "slug": "power-bank-magsafe-maxgo-10000mah",
+    "name": "Power Bank Magsafe Maxgo 10000mAh",
+    "price": 28.0,
+    "score": 0.727,
+    "how": "tok0.67+dif0.82"
+   }
+  ]
+ },
+ "power-bank-green-lion-thunder-80,000mah": {
+  "our_name": "Power Bank Green Lion Thunder 80,000mAh",
+  "our_price": 65,
+  "candidates": [
+   {
+    "slug": "power-bank-green-lion-thunder-80000mah",
+    "name": "Power Bank Green Lion Thunder 80,000mAh",
+    "price": 65.0,
+    "score": 1.0,
+    "how": "exact"
+   }
+  ]
+ },
+ "power-bank-lion-ultra-thin-20,000mah-120w": {
+  "our_name": "Power Bank Lion Ultra-Thin 20,000mAh 120W",
+  "our_price": 49.9,
+  "candidates": [
+   {
+    "slug": "power-bank-20000mah-lion-ultra-thin-120w",
+    "name": "Power Bank 20000mAh Lion Ultra Thin 120W",
+    "price": 49.9,
+    "score": 0.91,
+    "how": "tok1.00+dif0.78"
+   }
+  ]
+ },
+ "power-bank-maxvolt-10,000mah": {
+  "our_name": "Power Bank Maxvolt 10,000mAh",
+  "our_price": 24,
+  "candidates": [
+   {
+    "slug": "power-bank-magsafe-10000mah",
+    "name": "Power Bank Magsafe 10000mAh",
+    "price": 26.0,
+    "score": 0.686,
+    "how": "tok0.60+dif0.81"
+   },
+   {
+    "slug": "power-bank-nuru-10000mah",
+    "name": "Power Bank Nuru 10000Mah",
+    "price": 21.0,
+    "score": 0.674,
+    "how": "tok0.60+dif0.78"
+   },
+   {
+    "slug": "power-bank-anker-zolo-10000mah",
+    "name": "Power Bank Anker Zolo 10,000mAh",
+    "price": 45.0,
+    "score": 0.623,
+    "how": "tok0.50+dif0.81"
+   }
+  ]
+ },
+ "power-bank-porodo-5,000mah-with-lightning": {
+  "our_name": "Power Bank Porodo 5,000mAh with Lightning",
+  "our_price": 15,
+  "candidates": [
+   {
+    "slug": "power-bank-5000mah-porodo-with-lightning",
+    "name": "Power Bank 5000mAh Porodo with Lightning",
+    "price": 15.0,
+    "score": 0.93,
+    "how": "tok1.00+dif0.82"
+   }
+  ]
+ },
+ "power-bank-porodo-chrome-volt-10,000mah": {
+  "our_name": "Power Bank Porodo Chrome Volt 10,000mAh",
+  "our_price": 25,
+  "candidates": [
+   {
+    "slug": "power-bank-10000mah-porodo-chrome-volt",
+    "name": "Power Bank 10000mAh Porodo Chrome Volt",
+    "price": 25.0,
+    "score": 0.905,
+    "how": "tok1.00+dif0.76"
+   },
+   {
+    "slug": "power-bank-10000mah-porodo-pocket-volt",
+    "name": "Power Bank 10000mAh Porodo Pocket Volt",
+    "price": 22.0,
+    "score": 0.629,
+    "how": "tok0.71+dif0.50"
+   }
+  ]
+ },
+ "power-bank-porodo-pocket-volt-10,000mah": {
+  "our_name": "Power Bank Porodo Pocket Volt 10,000mAh",
+  "our_price": 22,
+  "candidates": [
+   {
+    "slug": "power-bank-10000mah-porodo-pocket-volt",
+    "name": "Power Bank 10000mAh Porodo Pocket Volt",
+    "price": 22.0,
+    "score": 0.905,
+    "how": "tok1.00+dif0.76"
+   },
+   {
+    "slug": "power-bank-10000mah-porodo-chrome-volt",
+    "name": "Power Bank 10000mAh Porodo Chrome Volt",
+    "price": 25.0,
+    "score": 0.629,
+    "how": "tok0.71+dif0.50"
+   }
+  ]
+ },
+ "hp-elitebook-840-g9-intel-core-i7-12gen": {
+  "our_name": "Refurbished HP EliteBook 840 G9 Intel Core i7-12Gen",
+  "our_price": 950,
+  "candidates": [
+   {
+    "slug": "hp-elitebook-840-intel-core-i7-12gen",
+    "name": "HP EliteBook 840 Intel\u00ae Core\u2122 i7-12Gen",
+    "price": 990.0,
+    "score": 0.774,
+    "how": "tok0.67+dif0.94"
+   },
+   {
+    "slug": "hp-elitebook-840-g9-intel-core-i7-1255u",
+    "name": "Hp EliteBook 840 G9 Intel\u00ae Core\u2122 i7-1255U",
+    "price": 950.0,
+    "score": 0.72,
+    "how": "tok0.60+dif0.90"
+   },
+   {
+    "slug": "hp-elitebook-840-intel-core-i7-13gen",
+    "name": "HP EliteBook 840 Intel\u00ae Core\u2122 i7 13Gen",
+    "price": 1180.0,
+    "score": 0.664,
+    "how": "tok0.50+dif0.91"
+   }
+  ]
+ },
+ "rice-cooker-geepas-with-steamer": {
+  "our_name": "Rice Cooker Geepas with Steamer",
+  "our_price": 46,
+  "candidates": [
+   {
+    "slug": "rice-cooker-geepas-electric-with-steamer",
+    "name": "Rice Cooker Geepas Electric with Steamer",
+    "price": 46.0,
+    "score": 0.849,
+    "how": "tok0.83+dif0.87"
+   }
+  ]
+ },
+ "samsung-galaxy-a57-5g-12gb256gb": {
+  "our_name": "Samsung Galaxy A57 5G (12GB/256GB)",
+  "our_price": 440,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-a57-5g",
+    "name": "Samsung Galaxy A57 5G",
+    "price": 375.0,
+    "score": 0.717,
+    "how": "tok0.67+dif0.79"
+   },
+   {
+    "slug": "samsung-galaxy-a57-5g-2",
+    "name": "Samsung Galaxy A57 5G",
+    "price": 440.0,
+    "score": 0.717,
+    "how": "tok0.67+dif0.79"
+   }
+  ]
+ },
+ "samsung-galaxy-a57-5g-8gb256gb": {
+  "our_name": "Samsung Galaxy A57 5G (8GB/256GB)",
+  "our_price": 375,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-a57-5g",
+    "name": "Samsung Galaxy A57 5G",
+    "price": 375.0,
+    "score": 0.723,
+    "how": "tok0.67+dif0.81"
+   },
+   {
+    "slug": "samsung-galaxy-a57-5g-2",
+    "name": "Samsung Galaxy A57 5G",
+    "price": 440.0,
+    "score": 0.723,
+    "how": "tok0.67+dif0.81"
+   }
+  ]
+ },
+ "samsung-galaxy-s25-ultra-256gb": {
+  "our_name": "Samsung Galaxy S25 Ultra 256GB",
+  "our_price": 830,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-s25-ultra",
+    "name": "Samsung Galaxy S25 Ultra",
+    "price": 1090.0,
+    "score": 0.836,
+    "how": "tok0.80+dif0.89"
+   },
+   {
+    "slug": "samsung-galaxy-s25-ultra-2",
+    "name": "Samsung Galaxy S25 Ultra",
+    "price": 830.0,
+    "score": 0.836,
+    "how": "tok0.80+dif0.89"
+   },
+   {
+    "slug": "samsung-galaxy-s26-ultra",
+    "name": "Samsung Galaxy S26 Ultra",
+    "price": 999.0,
+    "score": 0.641,
+    "how": "tok0.50+dif0.85"
+   }
+  ]
+ },
+ "samsung-galaxy-s25-ultra-512gb": {
+  "our_name": "Samsung Galaxy S25 Ultra 512GB",
+  "our_price": 1090,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-s25-ultra",
+    "name": "Samsung Galaxy S25 Ultra",
+    "price": 1090.0,
+    "score": 0.836,
+    "how": "tok0.80+dif0.89"
+   },
+   {
+    "slug": "samsung-galaxy-s25-ultra-2",
+    "name": "Samsung Galaxy S25 Ultra",
+    "price": 830.0,
+    "score": 0.836,
+    "how": "tok0.80+dif0.89"
+   },
+   {
+    "slug": "samsung-galaxy-s26-ultra",
+    "name": "Samsung Galaxy S26 Ultra",
+    "price": 999.0,
+    "score": 0.641,
+    "how": "tok0.50+dif0.85"
+   }
+  ]
+ },
+ "samsung-galaxy-z-fold7-256gb": {
+  "our_name": "Samsung Galaxy Z Fold7 256GB",
+  "our_price": 1330,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-z-fold7",
+    "name": "Samsung Galaxy Z Fold7",
+    "price": 1330.0,
+    "score": 0.832,
+    "how": "tok0.80+dif0.88"
+   },
+   {
+    "slug": "samsung-galaxy-z-fold7-2",
+    "name": "Samsung Galaxy Z Fold7",
+    "price": 1500.0,
+    "score": 0.832,
+    "how": "tok0.80+dif0.88"
+   },
+   {
+    "slug": "samsung-galaxy-z-trifold",
+    "name": "Samsung Galaxy Z TriFold",
+    "price": 4900.0,
+    "score": 0.623,
+    "how": "tok0.50+dif0.81"
+   }
+  ]
+ },
+ "samsung-galaxy-z-fold7-512gb": {
+  "our_name": "Samsung Galaxy Z Fold7 512GB",
+  "our_price": 1500,
+  "candidates": [
+   {
+    "slug": "samsung-galaxy-z-fold7",
+    "name": "Samsung Galaxy Z Fold7",
+    "price": 1330.0,
+    "score": 0.832,
+    "how": "tok0.80+dif0.88"
+   },
+   {
+    "slug": "samsung-galaxy-z-fold7-2",
+    "name": "Samsung Galaxy Z Fold7",
+    "price": 1500.0,
+    "score": 0.832,
+    "how": "tok0.80+dif0.88"
+   },
+   {
+    "slug": "samsung-galaxy-z-trifold",
+    "name": "Samsung Galaxy Z TriFold",
+    "price": 4900.0,
+    "score": 0.623,
+    "how": "tok0.50+dif0.81"
+   }
+  ]
+ },
+ "tp-link-840n-wi-fi-router": {
+  "our_name": "TP-Link 840N Wi-Fi Router",
+  "our_price": 15,
+  "candidates": [
+   {
+    "slug": "tp-link-n450-wi-fi-router",
+    "name": "TP-Link  N450 Wi-Fi Router",
+    "price": 25.0,
+    "score": 0.797,
+    "how": "tok0.71+dif0.92"
+   },
+   {
+    "slug": "tp-link-840n",
+    "name": "TP-Link 840N",
+    "price": 15.0,
+    "score": 0.559,
+    "how": "tok0.50+dif0.65"
+   }
+  ]
+ },
+ "tp-link-omada-ac1350-access-point": {
+  "our_name": "TP-Link Omada AC1350 Access Point",
+  "our_price": 85,
+  "candidates": [
+   {
+    "slug": "tp-link-omada-ac1350-wireless-access-point",
+    "name": "Tp Link Omada AC1350 Wireless  Access Point",
+    "price": 85.0,
+    "score": 0.866,
+    "how": "tok0.86+dif0.88"
+   }
+  ]
+ },
+ "wiwu-helix-65w-fast-charger": {
+  "our_name": "WiWU Helix 65W Fast Charger",
+  "our_price": 18,
+  "candidates": [
+   {
+    "slug": "fast-charge-adapter-wiwu-helix-65w",
+    "name": "Fast Charge Adapter Wiwu Helix 65w",
+    "price": 18.0,
+    "score": 0.526,
+    "how": "tok0.57+dif0.46"
+   }
+  ]
+ }
+}

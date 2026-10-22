@@ -91,7 +91,7 @@ export const BUYING_GUIDES = {
   printer: G(
     "printer-price-in-somalia",
     "Printer Price in Somalia (2026)",
-    "HP lasers from $75, print-only vs MFP, and the toner math before you order.",
+    "HP lasers from $165, print-only vs MFP, and the toner math before you order.",
   ),
   hargeisa: G(
     "online-shopping-in-hargeisa",
@@ -106,7 +106,7 @@ export const BUYING_GUIDES = {
   elitebook: G(
     "hp-elitebook-price-in-somalia",
     "Refurbished HP EliteBook Price in Somalia (2026)",
-    "Every refurbished EliteBook from $310 to $950 priced, the G7/G8/G9 differences, and how to order.",
+    "Every refurbished EliteBook from $310 to $990 priced, the G7/G8/G9 differences, and how to order.",
   ),
 } satisfies Record<string, GuideLink>;
 

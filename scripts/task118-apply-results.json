@@ -1,0 +1,203 @@
+{
+ "ranAt": "2026-10-22T09:44:30.191Z",
+ "apply": true,
+ "results": [
+  {
+   "slug": "hp-toner-cartridge-651a-original-set",
+   "name": "HP Toner Cartridge 651A Original Set",
+   "old": 277,
+   "price": 1580,
+   "id": "67c63987-3d76-49af-9aa8-4609946e751c",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "macbook-pro-m5",
+   "name": "MacBook Pro M5",
+   "old": 1900,
+   "price": 2150,
+   "id": "3f74e41d-ec9a-47d1-ad24-c4baa12d97ae",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "sony-playstation-5-digital-edition-slim",
+   "name": "Sony PlayStation 5 Digital Edition (Slim)",
+   "old": 720,
+   "price": 850,
+   "id": "2b4ea4ec-01db-41f6-9a33-cb8311363ee6",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "microphone-dji-mic-mini-2",
+   "name": "Microphone DJI Mic Mini 2",
+   "old": 33.3,
+   "price": 125,
+   "id": "37aa868b-4dc4-49ce-b74b-4f76fe71480c",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "hp-printer-laser-107a",
+   "name": "HP Printer Laser 107A",
+   "old": 75,
+   "price": 165,
+   "id": "05318c07-25be-4a50-9f16-7106e20d634d",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "anker-boom-3i-outdoor-bluetooth-speaker",
+   "name": "Anker Boom 3i Outdoor Bluetooth Speaker",
+   "old": 16.7,
+   "price": 95,
+   "id": "dab219ab-7376-4855-ba1b-4b28e545444f",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "hp-printer-laser-mfp-135a",
+   "name": "HP Printer Laser MFP 135A",
+   "old": 165,
+   "price": 224.9,
+   "id": "29c170fa-9afd-48fb-9d3a-09f7500cf530",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "digital-voltage-stabilizer-lightwave",
+   "name": "Digital Voltage Stabilizer Lightwave",
+   "old": 11.5,
+   "price": 65,
+   "id": "f3dbe1f9-76cb-4080-b199-1779785dcaba",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "hp-elitebook-840-g9-intel-core-i7-12gen",
+   "name": "Refurbished HP EliteBook 840 G9 Intel Core i7-12Gen",
+   "old": 950,
+   "price": 990,
+   "id": "1be68364-2ed6-4af0-9b90-ad538082bac2",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "samsung-galaxy-a16",
+   "name": "Samsung Galaxy A16",
+   "old": 118,
+   "price": 145,
+   "id": "7798dbd3-0942-426b-b338-6fb831a68bc2",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "samsung-galaxy-a07",
+   "name": "Samsung Galaxy A07",
+   "old": 125,
+   "price": 140,
+   "id": "9da7722a-2ea5-465c-a05d-346211bf724f",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "samsung-galaxy-a06",
+   "name": "Samsung Galaxy A06",
+   "old": 110,
+   "price": 118,
+   "id": "87f4a5d5-99a4-4b11-aef6-f2e401e8cb56",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "power-bank-aston-magsafe-10,000mah",
+   "name": "Power Bank Aston MagSafe 10,000mAh",
+   "old": 22,
+   "price": 26,
+   "id": "7f858c70-cbcd-4516-a9c1-bb6a737aa2c1",
+   "status": "updated",
+   "http": 200
+  }
+ ],
+ "verify": [
+  {
+   "slug": "hp-toner-cartridge-651a-original-set",
+   "expected": 1580,
+   "public": 1580,
+   "match": true
+  },
+  {
+   "slug": "macbook-pro-m5",
+   "expected": 2150,
+   "public": 2150,
+   "match": true
+  },
+  {
+   "slug": "sony-playstation-5-digital-edition-slim",
+   "expected": 850,
+   "public": 850,
+   "match": true
+  },
+  {
+   "slug": "microphone-dji-mic-mini-2",
+   "expected": 125,
+   "public": 125,
+   "match": true
+  },
+  {
+   "slug": "hp-printer-laser-107a",
+   "expected": 165,
+   "public": 165,
+   "match": true
+  },
+  {
+   "slug": "anker-boom-3i-outdoor-bluetooth-speaker",
+   "expected": 95,
+   "public": 95,
+   "match": true
+  },
+  {
+   "slug": "hp-printer-laser-mfp-135a",
+   "expected": 224.9,
+   "public": 224.9,
+   "match": true
+  },
+  {
+   "slug": "digital-voltage-stabilizer-lightwave",
+   "expected": 65,
+   "public": 65,
+   "match": true
+  },
+  {
+   "slug": "hp-elitebook-840-g9-intel-core-i7-12gen",
+   "expected": 990,
+   "public": 990,
+   "match": true
+  },
+  {
+   "slug": "samsung-galaxy-a16",
+   "expected": 145,
+   "public": 145,
+   "match": true
+  },
+  {
+   "slug": "samsung-galaxy-a07",
+   "expected": 140,
+   "public": 140,
+   "match": true
+  },
+  {
+   "slug": "samsung-galaxy-a06",
+   "expected": 118,
+   "public": 118,
+   "match": true
+  },
+  {
+   "slug": "power-bank-aston-magsafe-10,000mah",
+   "expected": 26,
+   "public": 26,
+   "match": true
+  }
+ ]
+}

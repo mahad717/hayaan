@@ -65,8 +65,8 @@ The same applies across other shelves: phones and watches, power and audio gear,
 Prices for the same TV or laptop can vary wildly between sellers. As a rule of thumb at the time of writing:
 
 1. **Smart TVs** — LG 43-inch from about $450, LG 55-inch around $650, LG 65-inch near $850, and the 75–85 inch tier from $1,290. Not sure which size? The [TV size guide](https://hayaan.co/blog/what-size-tv-to-buy-in-somalia) matches every panel to your room.
-2. **MacBooks** — Air M5 around $1,530, Pro M4 around $1,720, Pro M5 around $1,900. Anything dramatically cheaper than that should make you ask questions.
-3. **PlayStation 5** — the Digital Slim edition near $720 and the Pro 2TB around $1,180. The [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) picks the right edition.
+2. **MacBooks** — Air M5 around $1,530, Pro M4 around $1,720, Pro M5 around $2,150. Anything dramatically cheaper than that should make you ask questions.
+3. **PlayStation 5** — the Digital Slim edition near $850 and the Pro 2TB around $1,180. The [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) picks the right edition.
 
 If a deal looks too good to be true — a "new" iPhone at half the market price — it almost always is.
 
@@ -98,7 +98,7 @@ const post2 = {
   excerpt:
     "iPhone or Galaxy, physical SIM or eSIM, $118 or $2,650 — a plain-language guide to ordering a phone online in Somalia with confidence.",
   quickAnswer:
-    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A16 start around $118, flagships from $990 up to $2,650 for the iPhone 18 Pro Max 1TB. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3) or anywhere in Somalia for $6.95.",
+    "To buy a phone online in Somalia, browse Hayaan Market's Phones & Wearables section: budget Android models like the Galaxy A06 start around $118, flagships from $990 up to $2,650 for the iPhone 18 Pro Max 1TB. Check the exact model and band support, pay with EVC Plus, Edahab, or card, and get delivery to your Mogadishu district ($1.50–$3) or anywhere in Somalia for $6.95.",
   faqs: [
     {
       q: "Can I buy an iPhone or Samsung online in Somalia?",
@@ -106,7 +106,7 @@ const post2 = {
     },
     {
       q: "What is the cheapest way to buy a phone online in Somalia?",
-      a: "Budget models like the Galaxy A16 (around $118) are the entry point; ordering from a storefront with listed prices avoids the haggling and uncertainty of social-media sellers.",
+      a: "Budget models like the Galaxy A06 (around $118) are the entry point; ordering from a storefront with listed prices avoids the haggling and uncertainty of social-media sellers.",
     },
     {
       q: "Do phones bought online work with Somali SIM cards?",
@@ -123,7 +123,7 @@ const post2 = {
 
 At the time of writing, the [phones and wearables](https://hayaan.co/category/phones-wearables) shelf splits roughly like this:
 
-1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $118 and the Galaxy A17 at $165. Big batteries, modern software, honest prices.
+1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $145 and the Galaxy A17 at $165. Big batteries, modern software, honest prices.
 2. **$180–$450** — mid-range, fresh releases and wearables: the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $190, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $320, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
 3. **$900 and up** — current flagships like the iPhone 17 at $990, the iPhone 18 Pro from $1,500, and the iPhone 18 Pro Max at up to $2,650, for buyers who want the top of the market.
 
@@ -249,9 +249,9 @@ const post4 = {
 
 The single most requested home-office device is a printer — and the hidden cost is never the printer, it is the consumables. That is why the [home office category](https://hayaan.co/category/home-office) pairs machines with their supplies:
 
-- The [HP Laser 107A](https://hayaan.co/product/hp-printer-laser-107a) at $75 — the classic no-nonsense monochrome laser for documents.
-- The [HP Laser MFP 135A](https://hayaan.co/product/hp-printer-laser-mfp-135a) at $165 — adds scanning and copying, which every small business eventually needs.
-- The [original HP 651A toner set](https://hayaan.co/product/hp-toner-cartridge-651a-original-set) at $277 — buying original toner alongside the printer is cheaper than replacing a damaged drum unit later.
+- The [HP Laser 107A](https://hayaan.co/product/hp-printer-laser-107a) at $165 — the classic no-nonsense monochrome laser for documents.
+- The [HP Laser MFP 135A](https://hayaan.co/product/hp-printer-laser-mfp-135a) at $224.90 — adds scanning and copying, which every small business eventually needs.
+- The [original HP 651A toner set](https://hayaan.co/product/hp-toner-cartridge-651a-original-set) at $1,580 — the original-cartridge option for bigger office Color LaserJets; match the exact cartridge number before you order.
 
 > Buy the printer and its toner in the same order. It is the one purchase where planning ahead saves real money.
 
@@ -261,7 +261,7 @@ If you take video calls, teach online, or record content, light and sound matter
 
 ## Power stability: plan for the grid, not against it
 
-Somali offices live with outages, so power gear belongs in the office budget, not the "nice to have" pile. The [power & charging category](https://hayaan.co/category/power-charging-audio) covers the essentials — voltage stabilizers from about $11.50, and audio gear like the [outdoor speaker at $70](https://hayaan.co/product/speaker-outdoor-l208-100w) that doubles as venue equipment for shops and cafés. A stabilizer in front of your printer and computer is cheap insurance against the surges that follow every blackout.
+Somali offices live with outages, so power gear belongs in the office budget, not the "nice to have" pile. The [power & charging category](https://hayaan.co/category/power-charging-audio) covers the essentials — voltage stabilizers from $65, and audio gear like the [outdoor speaker at $70](https://hayaan.co/product/speaker-outdoor-l208-100w) that doubles as venue equipment for shops and cafés. A stabilizer in front of your printer and computer is cheap insurance against the surges that follow every blackout.
 
 ## The one-cart rule
 
@@ -378,13 +378,13 @@ const post6 = {
   slug: "ps5-price-in-somalia",
   title: "PS5 Price in Somalia (2026): Slim vs Pro and How to Order One Today",
   excerpt:
-    "What a PlayStation 5 really costs in Somalia right now — the Digital Slim at $720 and the Pro 2TB at $1,180 — plus which edition suits you and how to get it delivered free to your door.",
+    "What a PlayStation 5 really costs in Somalia right now — the Digital Slim at $850 and the Pro 2TB at $1,180 — plus which edition suits you and how to get it delivered to your door (fees shown at checkout).",
   quickAnswer:
-    "The PS5 price in Somalia starts at $720 for the PlayStation 5 Digital Edition (Slim) and $1,180 for the PS5 Pro 2TB at Hayaan Market (hayaan.co). Both are new and listed in USD with no VAT, paid securely via EVC Plus, Edahab, or card — with delivery shown at checkout ($1.50–$3.00 by Mogadishu district, flat $6.95 nationwide).",
+    "The PS5 price in Somalia starts at $850 for the PlayStation 5 Digital Edition (Slim) and $1,180 for the PS5 Pro 2TB at Hayaan Market (hayaan.co). Both are new and listed in USD with no VAT, paid securely via EVC Plus, Edahab, or card — with delivery shown at checkout ($1.50–$3.00 by Mogadishu district, flat $6.95 nationwide).",
   howtoSteps: [
     {
       name: "Pick your edition",
-      text: "Choose the Digital Edition Slim at $720 for a disc-free, download-everything console, or the PS5 Pro 2TB at $1,180 for double storage and the upgraded GPU — both new, with the DualSense controller included.",
+      text: "Choose the Digital Edition Slim at $850 for a disc-free, download-everything console, or the PS5 Pro 2TB at $1,180 for double storage and the upgraded GPU — both new, with the DualSense controller included.",
     },
     {
       name: "Read the product listing",
@@ -406,11 +406,11 @@ const post6 = {
   faqs: [
     {
       q: "How much is a PS5 in Somalia?",
-      a: "The PlayStation 5 Digital Edition (Slim) is $720 and the PS5 Pro 2TB is $1,180 at Hayaan Market — fixed USD prices with no VAT, and the delivery fee is shown before you confirm the order.",
+      a: "The PlayStation 5 Digital Edition (Slim) is $850 and the PS5 Pro 2TB is $1,180 at Hayaan Market — fixed USD prices with no VAT, and the delivery fee is shown before you confirm the order.",
     },
     {
       q: "Which PS5 edition should I buy?",
-      a: "The Digital Slim ($720) suits players who download their games and want the best-value entry; the Pro 2TB ($1,180) adds a 2TB SSD and an upgraded GPU with AI upscaling for the best picture on large 4K TVs.",
+      a: "The Digital Slim ($850) suits players who download their games and want the best-value entry; the Pro 2TB ($1,180) adds a 2TB SSD and an upgraded GPU with AI upscaling for the best picture on large 4K TVs.",
     },
     {
       q: "Is the PS5 new and sealed?",
@@ -431,7 +431,7 @@ const post6 = {
 
 At the time of writing, Hayaan Market carries two editions, both listed at fixed USD prices:
 
-1. **PlayStation 5 Digital Edition (Slim) — $720.** The slim redesign with no disc drive: games download from the PlayStation Store. Same fast SSD, same DualSense controller, same library of digital titles.
+1. **PlayStation 5 Digital Edition (Slim) — $850.** The slim redesign with no disc drive: games download from the PlayStation Store. Same fast SSD, same DualSense controller, same library of digital titles.
 2. **PlayStation 5 Pro 2TB — $1,180.** The flagship. Double the storage at 2TB, an upgraded GPU with advanced ray tracing, and PSSR — Sony's AI upscaling — for smoother frame rates at near-4K quality.
 
 Both prices are final: no VAT is added at checkout, and delivery is charged per order — $1.50–$3.00 by Mogadishu district or a flat $6.95 anywhere else in Somalia, always shown before you pay.
@@ -440,14 +440,14 @@ Both prices are final: no VAT is added at checkout, and delivery is charged per 
 
 ## Slim or Pro — which one should you buy?
 
-- **Choose the Digital Slim ($720)** if you buy games digitally anyway and would rather spend the difference on an extra controller or a stack of games. It is the best-value way into current-generation gaming.
+- **Choose the Digital Slim ($850)** if you buy games digitally anyway and would rather spend the difference on an extra controller or a stack of games. It is the best-value way into current-generation gaming.
 - **Choose the Pro 2TB ($1,180)** if you play on a large 4K TV, care about higher and more stable frame rates, and want the 2TB SSD so you stop deleting games to make space.
 
 Either way you get the same DualSense wireless controller with haptic feedback, and both editions connect to any modern TV. If your TV is due an upgrade too, the [43-inch LG smart TV](https://hayaan.co/product/tv-lg-43-inch-smart) at $450 and the [55-inch LG](https://hayaan.co/product/tv-lg-55-inch-smart) at $650 are popular pairings — see the full [Computers & TV](https://hayaan.co/category/computers-tv-gaming) section for the larger sizes up to the Samsung 85-inch.
 
 ## How to order a PS5 online in Somalia
 
-1. **Pick your edition** on the product page: the [PS5 Digital Slim](https://hayaan.co/product/sony-playstation-5-digital-edition-slim) at $720 or the [PS5 Pro 2TB](https://hayaan.co/product/sony-playstation-5-pro-2tb) at $1,180.
+1. **Pick your edition** on the product page: the [PS5 Digital Slim](https://hayaan.co/product/sony-playstation-5-digital-edition-slim) at $850 or the [PS5 Pro 2TB](https://hayaan.co/product/sony-playstation-5-pro-2tb) at $1,180.
 2. **Read the listing** — exact model, condition, live stock count, and real photos, so you know precisely what arrives.
 3. **Add to cart and sign in** with your email so the order and its history stay attached to your account.
 4. **Pay through the secure checkout** with EVC Plus, Edahab, or card. The total is confirmed before you approve it — no surprises, no VAT.
@@ -483,7 +483,7 @@ const post7 = {
     },
     {
       q: "What is the cheapest current-generation iPhone I can buy online?",
-      a: "The iPhone 17 at $990 is the cheapest current-generation model; the iPhone 15 Pro Max at $1,170 is the least expensive Pro-class flagship. For tighter budgets, Samsung Galaxy models start at $110.",
+      a: "The iPhone 17 at $990 is the cheapest current-generation model; the iPhone 15 Pro Max at $1,170 is the least expensive Pro-class flagship. For tighter budgets, Samsung Galaxy models start at $118.",
     },
     {
       q: "Is buying an iPhone online in Somalia safe?",
@@ -701,7 +701,7 @@ const post10 = {
   excerpt:
     "Every air conditioner price in Somalia right now — 9,000 to 24,000 BTU, which size fits your room, why a voltage stabilizer matters, and how to order one online.",
   quickAnswer:
-    "Air conditioner prices in Somalia at Hayaan Market (hayaan.co) start at $260 for the Lightwave 9,000 BTU unit, with 12,000 BTU at $280, 18,000 BTU at $390, and 24,000 BTU at $460 — fixed USD prices, no VAT, delivery shown at checkout. Size the unit to the room: 9K BTU cools a bedroom up to about 20 m², 12K a living room of 20–30 m², 18K–24K large halls and shops — and a voltage stabilizer ($11.50) protects the compressor.",
+    "Air conditioner prices in Somalia at Hayaan Market (hayaan.co) start at $260 for the Lightwave 9,000 BTU unit, with 12,000 BTU at $280, 18,000 BTU at $390, and 24,000 BTU at $460 — fixed USD prices, no VAT, delivery shown at checkout. Size the unit to the room: 9K BTU cools a bedroom up to about 20 m², 12K a living room of 20–30 m², 18K–24K large halls and shops — and a voltage stabilizer ($65) protects the compressor.",
   howtoSteps: [
     {
       name: "Measure the room",
@@ -713,7 +713,7 @@ const post10 = {
     },
     {
       name: "Add a voltage stabilizer",
-      text: "The $11.50 Lightwave digital stabilizer protects the compressor from the voltage swings that come with grid and generator power.",
+      text: "The $65 Lightwave digital stabilizer protects the compressor from the voltage swings that come with grid and generator power.",
     },
     {
       name: "Order online",
@@ -735,7 +735,7 @@ const post10 = {
     },
     {
       q: "Do I need a voltage stabilizer with the AC?",
-      a: "Strongly recommended. Grid and generator voltage swings stress the compressor; a stabilizer (the Lightwave digital unit is $11.50 in the shop) sits between the wall and the unit and absorbs the spikes.",
+      a: "Strongly recommended. Grid and generator voltage swings stress the compressor; a stabilizer (the Lightwave digital unit is $65 in the shop) sits between the wall and the unit and absorbs the spikes.",
     },
     {
       q: "How is delivery charged for an air conditioner?",
@@ -770,9 +770,9 @@ Bigger is not automatically better — an oversized unit short-cycles (cools fas
 
 Two Somalia-specific adjustments: if the room is a sun-baked top floor or faces west all afternoon, step up one size. And if the room connects to an open hallway, you are cooling the hallway too — close it off or size up.
 
-## The $11.50 accessory that protects your $460 AC
+## The $65 accessory that protects your $460 AC
 
-Compressors die from voltage swings, and Mogadishu power — grid or generator — swings. The [Lightwave digital voltage stabilizer at $11.50](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) sits between the wall socket and the unit, absorbing the spikes and dips that would otherwise slowly cook the compressor. On a $260–$460 appliance it is the cheapest insurance you will ever buy.
+Compressors die from voltage swings, and Mogadishu power — grid or generator — swings. The [Lightwave digital voltage stabilizer at $65](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) sits between the wall socket and the unit, absorbing the spikes and dips that would otherwise slowly cook the compressor. On a $260–$460 appliance it is the cheapest insurance you will ever buy.
 
 > Rule: the AC is the appliance; the stabilizer is what keeps it an appliance.
 
@@ -1067,7 +1067,7 @@ A router in a steel cabinet, under the TV, or at one end of a long concrete hous
 
 ## The power-cut reality
 
-When the power goes, the router goes with it — and comes back by itself when it returns. Nothing to fix. What actually damages networking gear over time is the voltage swing at the moment power returns, so put the [$11.50 Lightwave stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) between the wall and the router — the same insurance the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) recommends for compressors.
+When the power goes, the router goes with it — and comes back by itself when it returns. Nothing to fix. What actually damages networking gear over time is the voltage swing at the moment power returns, so put the [$65 Lightwave stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) between the wall and the router — the same insurance the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) recommends for compressors.
 
 > Rule: the router shares the internet; placement decides how far it reaches, and the stabilizer decides how long it lives.
 
@@ -1084,11 +1084,11 @@ Delivery is a flat **$6.95 nationwide** — inside Mogadishu it is priced by dis
 const post14 = {
   id: "seo-printer-somalia",
   slug: "printer-price-in-somalia",
-  title: "Printer Price in Somalia (2026): HP Lasers From $75, Plus What Toner Really Costs",
+  title: "Printer Price in Somalia (2026): HP Lasers From $165, Plus What Toner Really Costs",
   excerpt:
     "The two HP lasers homes, schools and shops actually buy, why laser beats inkjet in this climate, and the toner math to know before you order.",
   quickAnswer:
-    "Printer prices in Somalia at Hayaan Market (hayaan.co) start at $75 for the HP Laser 107A (print-only mono laser) with the HP Laser MFP 135A — print, scan and copy — at $165. Both are USB-connected mono lasers; original HP toner sets, like the 651A set at $277, are stocked. Fixed USD prices, no VAT, delivery shown at checkout.",
+    "Printer prices in Somalia at Hayaan Market (hayaan.co) start at $165 for the HP Laser 107A (print-only mono laser) with the HP Laser MFP 135A — print, scan and copy — at $224.90. Both are USB-connected mono lasers; original HP toner sets, like the 651A set at $1,580, are stocked. Fixed USD prices, no VAT, delivery shown at checkout.",
   howtoSteps: [
     {
       name: "Estimate your monthly pages",
@@ -1096,7 +1096,7 @@ const post14 = {
     },
     {
       name: "Print-only or MFP",
-      text: "Print only: the 107A at $75. Scan and copy too — schools, shops, clinics: the MFP 135A at $165 replaces two machines.",
+      text: "Print only: the 107A at $165. Scan and copy too — schools, shops, clinics: the MFP 135A at $224.90 replaces two machines.",
     },
     {
       name: "Budget the toner with the printer",
@@ -1114,11 +1114,11 @@ const post14 = {
   faqs: [
     {
       q: "How much does a printer cost in Somalia?",
-      a: "At Hayaan Market the HP Laser 107A is $75 and the HP Laser MFP 135A (print, scan, copy) is $165 — fixed USD prices, no VAT.",
+      a: "At Hayaan Market the HP Laser 107A is $165 and the HP Laser MFP 135A (print, scan, copy) is $224.90 — fixed USD prices, no VAT.",
     },
     {
       q: "Which printer should a home or student buy?",
-      a: "The HP Laser 107A at $75 covers essays, forms and tickets. If the household also needs photocopies and scanning, the MFP 135A at $165 is the better single purchase.",
+      a: "The HP Laser 107A at $165 covers essays, forms and tickets. If the household also needs photocopies and scanning, the MFP 135A at $224.90 is the better single purchase.",
     },
     {
       q: "Why buy a laser instead of an inkjet?",
@@ -1126,7 +1126,7 @@ const post14 = {
     },
     {
       q: "How much is printer toner in Somalia?",
-      a: "The 107A and MFP 135A take the HP 106A cartridge. Original HP toner sets for larger office Color LaserJets — like the 651A set at $277 — are also stocked. Match the exact cartridge number printed for your model.",
+      a: "The 107A and MFP 135A take the HP 106A cartridge. Original HP toner sets for larger office Color LaserJets — like the 651A set at $1,580 — are also stocked. Match the exact cartridge number printed for your model.",
     },
     {
       q: "Can the printer connect over Wi-Fi?",
@@ -1141,9 +1141,9 @@ The two lasers below are what homes, schools and shops actually buy. Here is wha
 
 Live on the [home & office shelf](https://hayaan.co/category/home-office), fixed USD prices:
 
-1. **HP Laser 107A — $75.** The home and student pick: a mono laser that prints about 20 pages a minute, month after month, without drama.
-2. **HP Laser MFP 135A — $165.** The same laser engine plus scan and copy — for shops, schools and clinics that used to queue at a photocopy stand.
-3. **HP 651A Original Toner Set — $277.** Original HP cartridges for bigger office Color LaserJets — the example of what "original toner" looks like on the shelf.
+1. **HP Laser 107A — $165.** The home and student pick: a mono laser that prints about 20 pages a minute, month after month, without drama.
+2. **HP Laser MFP 135A — $224.90.** The same laser engine plus scan and copy — for shops, schools and clinics that used to queue at a photocopy stand.
+3. **HP 651A Original Toner Set — $1,580.** Original HP cartridges for bigger office Color LaserJets — the example of what "original toner" looks like on the shelf.
 
 Every price above is the final price — no VAT added at checkout.
 
@@ -1155,14 +1155,14 @@ An inkjet sprays liquid ink through tiny nozzles. Heat and dust are exactly what
 
 ## Print-only or MFP?
 
-- **HP Laser 107A ($75):** printing only. Students, home offices, anyone whose copies happen twice a year.
-- **HP Laser MFP 135A ($165):** printing, scanning and copying in one box. If the household pays a photocopy stand even twice a week, the MFP pays for itself inside a few months — and the kids' school forms get scanned and sent instead of lost.
+- **HP Laser 107A ($165):** printing only. Students, home offices, anyone whose copies happen twice a year.
+- **HP Laser MFP 135A ($224.90):** printing, scanning and copying in one box. If the household pays a photocopy stand even twice a week, the MFP pays for itself inside a few months — and the kids' school forms get scanned and sent instead of lost.
 
 ## The toner math, before you order
 
 Both printers take the **HP 106A cartridge** (about a thousand pages), and each ships with one in the box. The mistake to avoid is buying the printer and forgetting the toner — put a spare cartridge in the same cart so the machine never sits idle.
 
-Two rules protect your money: buy **original** cartridges (compatibles are the reason cheap printers get thrown away), and match the **exact number** printed for your model — the [651A original set at $277](https://hayaan.co/product/hp-toner-cartridge-651a-original-set) fits the bigger office Color LaserJets, not these two.
+Two rules protect your money: buy **original** cartridges (compatibles are the reason cheap printers get thrown away), and match the **exact number** printed for your model — the [651A original set at $1,580](https://hayaan.co/product/hp-toner-cartridge-651a-original-set) fits the bigger office Color LaserJets, not these two.
 
 ## Setup and ordering
 
@@ -1255,7 +1255,7 @@ Payment happens in the hosted secure checkout, before the parcel leaves — EVC 
 
 - **Phones and wearables** — the [phones & wearables section](https://hayaan.co/category/phones-wearables) runs from budget Galaxy A models to the iPhone 18 lineup; the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) lists every model and its SIM type.
 - **TVs and gaming** — [smart TVs from $175 to $2,350](https://hayaan.co/category/computers-tv-gaming) and the [PS5 buyer's guide](https://hayaan.co/blog/ps5-price-in-somalia) for the two console editions.
-- **Office and school gear** — the [printer guide](https://hayaan.co/blog/printer-price-in-somalia) covers HP lasers from $75 and the toner math, while the [router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) builds the network behind it.
+- **Office and school gear** — the [printer guide](https://hayaan.co/blog/printer-price-in-somalia) covers HP lasers from $165 and the toner math, while the [router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) builds the network behind it.
 
 ## Outside the capital, outside Hargeisa
 
@@ -1312,7 +1312,7 @@ const post16 = {
     },
     {
       q: "Is the Galaxy A18 better than the Galaxy A17 or A16?",
-      a: "It is the newest of the three: the A18 ($190) runs Samsung's Exynos 1610, carries an IP64 rating and stereo speakers, and is promised updates until 2032. The A17 ($165) and A16 ($118) remain solid buys for tighter budgets — the A18 is worth the step up if you keep phones for years.",
+      a: "It is the newest of the three: the A18 ($190) runs Samsung's Exynos 1610, carries an IP64 rating and stereo speakers, and is promised updates until 2032. The A17 ($165) and A16 ($145) remain solid buys for tighter budgets — the A18 is worth the step up if you keep phones for years.",
     },
     {
       q: "How much storage and RAM does the Galaxy A18 have?",
@@ -1343,9 +1343,9 @@ The listing terms are the same as everything on the shop: live stock count on th
 - **Android 17 with updates promised until 2032** — six major OS upgrades, the longest software runway of the budget Galaxys.
 - **128GB storage, expandable** — a microSD slot takes the space further as your photo, video and music library grows.
 
-## A16, A17 or A18? The $118–$190 ladder
+## A16, A17 or A18? The $145–$190 ladder
 
-1. **Galaxy A16 — $118.** The budget anchor: big battery, honest price — [the cheapest way into a new Samsung](https://hayaan.co/product/samsung-galaxy-a16).
+1. **Galaxy A16 — $145.** The budget anchor: big battery, honest price — [the cheapest way into a new Samsung](https://hayaan.co/product/samsung-galaxy-a16).
 2. **Galaxy A17 — $165.** The middle step: a newer take on the same formula for a modest jump — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
 3. **Galaxy A18 — $190.** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise — [the A18 listing](https://hayaan.co/product/samsung-galaxy-a18).
 
@@ -1365,13 +1365,13 @@ The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday
 
 ## The bottom line
 
-At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $118](https://hayaan.co/product/samsung-galaxy-a16) and [A17 at $165](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $145](https://hayaan.co/product/samsung-galaxy-a16) and [A17 at $165](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
 };
 
 // Task 101 — HP EliteBook buying guide (owner request: SEO/AEO-optimized
 // EliteBook post). Targets "hp elitebook price in somalia", "hp laptop price
 // in somalia", "business laptop somalia". Prices verified against the live
-// catalog on publish day: 840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310.
+// catalog prices: 840 G9 $990 (Task 118) / 830 G8 $380 / 830 G7 $340 / 840 G7 $310.
 // Model-line traits (screen sizes, CPU generations, business build) are public
 // knowledge; RAM/SSD configs deliberately hedged to the listing.
 // Task 103 correction (owner, 2026-10-16): all four EliteBooks are REFURBISHED
@@ -1379,11 +1379,11 @@ At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right
 const post17 = {
   id: "seo-hp-elitebook-price-in-somalia",
   slug: "hp-elitebook-price-in-somalia",
-  title: "Refurbished HP EliteBook Price in Somalia (2026): $310–$950, Which Model to Buy",
+  title: "Refurbished HP EliteBook Price in Somalia (2026): $310–$990, Which Model to Buy",
   excerpt:
-    "Every refurbished HP EliteBook listed in Somalia right now — the $310 EliteBook 840 G7, $340 830 G7, $380 830 G8 and $950 840 G9 — what actually separates the four models, and how to order one to your door.",
+    "Every refurbished HP EliteBook listed in Somalia right now — the $310 EliteBook 840 G7, $340 830 G7, $380 830 G8 and $990 840 G9 — what actually separates the four models, and how to order one to your door.",
   quickAnswer:
-    "Refurbished HP EliteBook laptops cost $310–$950 at Hayaan Market (hayaan.co): all four listed machines — the 14-inch EliteBook 840 G7 at $310, the 13.3-inch 830 G7 at $340, the 830 G8 (11th-gen Core i7, Thunderbolt 4) at $380, and the 840 G9 (12th-gen Core i7) at $950 — are refurbished business laptops, priced far below new. Prices are fixed USD, paid securely with EVC Plus, Edahab, or card, delivered to Mogadishu districts for $1.50–$3.00 or anywhere in Somalia for a flat $6.95.",
+    "Refurbished HP EliteBook laptops cost $310–$990 at Hayaan Market (hayaan.co): all four listed machines — the 14-inch EliteBook 840 G7 at $310, the 13.3-inch 830 G7 at $340, the 830 G8 (11th-gen Core i7, Thunderbolt 4) at $380, and the 840 G9 (12th-gen Core i7) at $990 — are refurbished business laptops, priced far below new. Prices are fixed USD, paid securely with EVC Plus, Edahab, or card, delivered to Mogadishu districts for $1.50–$3.00 or anywhere in Somalia for a flat $6.95.",
   howtoSteps: [
     {
       name: "Open the product page",
@@ -1409,7 +1409,7 @@ const post17 = {
   faqs: [
     {
       q: "How much does an HP EliteBook cost in Somalia?",
-      a: "$310 for the refurbished EliteBook 840 G7, $340 for the 830 G7, $380 for the 830 G8, and $950 for the 840 G9 (12th-gen Core i7) at Hayaan Market — fixed USD prices with no VAT, and the live stock count shown on every listing.",
+      a: "$310 for the refurbished EliteBook 840 G7, $340 for the 830 G7, $380 for the 830 G8, and $990 for the 840 G9 (12th-gen Core i7) at Hayaan Market — fixed USD prices with no VAT, and the live stock count shown on every listing.",
     },
     {
       q: "Are these EliteBooks new or refurbished?",
@@ -1417,7 +1417,7 @@ const post17 = {
     },
     {
       q: "Which HP EliteBook is the best value?",
-      a: "The EliteBook 830 G8 at $380 is the sweet spot for most office work — an 11th-gen Core i7 with Thunderbolt 4 in a roughly 1.24 kg aluminum body. Tighter budgets get the 840 G7 at $310; heavy multitaskers and anyone keeping the machine for five-plus years should step up to the 840 G9 at $950.",
+      a: "The EliteBook 830 G8 at $380 is the sweet spot for most office work — an 11th-gen Core i7 with Thunderbolt 4 in a roughly 1.24 kg aluminum body. Tighter budgets get the 840 G7 at $310; heavy multitaskers and anyone keeping the machine for five-plus years should step up to the 840 G9 at $990.",
     },
     {
       q: "What is the difference between the EliteBook 830 and the 840?",
@@ -1432,27 +1432,27 @@ const post17 = {
       a: "Pay with EVC Plus, Edahab, or card through the secure hosted checkout; delivery is $1.50–$3.00 by Mogadishu district and a flat $6.95 anywhere else in Somalia. The total you approve at checkout is the total that is charged.",
     },
   ],
-  content: `The laptop most Somali offices, NGOs and schools end up standardizing on is not the newest MacBook — it is HP's EliteBook line: aluminum-bodied, business-grade machines that survive daily commutes, long meetings and the occasional power cut. Four refurbished EliteBooks are [listed at Hayaan Market](https://hayaan.co/category/computers-tv-gaming) right now, spanning **$310 to $950**. This guide prices every one of them, explains what actually separates the models, and walks through ordering one to your door.
+  content: `The laptop most Somali offices, NGOs and schools end up standardizing on is not the newest MacBook — it is HP's EliteBook line: aluminum-bodied, business-grade machines that survive daily commutes, long meetings and the occasional power cut. Four refurbished EliteBooks are [listed at Hayaan Market](https://hayaan.co/category/computers-tv-gaming) right now, spanning **$310 to $990**. This guide prices every one of them, explains what actually separates the models, and walks through ordering one to your door.
 
 ## HP EliteBook price in Somalia
 
-The [HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) tops the range at **$950** — the newest platform of the four, built on Intel's 12th-generation Core i7. Below it, three proven value picks start at barely a third of that price:
+The [HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) tops the range at **$990** — the newest platform of the four, built on Intel's 12th-generation Core i7. Below it, three proven value picks start at barely a third of that price:
 
 - **HP EliteBook 840 G7 — $310.** The 14-inch entry point — [the cheapest business-class laptop in the shop](https://hayaan.co/product/hp-elitebook-840-g7-notebook), on Intel's 10th-generation Core platform.
 - **HP EliteBook 830 G7 — $340.** The same 10th-generation platform in the smaller, lighter 13.3-inch frame — [the 830 G7 listing](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen).
 - **HP EliteBook 830 G8 — $380.** One platform generation newer: an 11th-generation Core i7 with Thunderbolt 4 — [the 830 G8 listing](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen).
-- **HP EliteBook 840 G9 — $950.** The current-generation flagship: a 12th-generation Core i7 on Intel's newest business platform — [the 840 G9 listing](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen).
+- **HP EliteBook 840 G9 — $990.** The current-generation flagship: a 12th-generation Core i7 on Intel's newest business platform — [the 840 G9 listing](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen).
 
 All four machines are refurbished units, and every listing is a fixed USD price with no VAT. The live stock count sits on each product page, and the delivery fee shows before you pay: $1.50–$3.00 by Mogadishu district, a flat $6.95 anywhere else in Somalia.
 
-## Which EliteBook should you buy? The $310–$950 ladder
+## Which EliteBook should you buy? The $310–$990 ladder
 
 1. **EliteBook 840 G7 — $310.** The budget anchor. A 14-inch business screen, the full EliteBook keyboard and aluminum chassis, at a price that undercuts most consumer laptops — [the right pick for students and start-ups](https://hayaan.co/product/hp-elitebook-840-g7-notebook).
 2. **EliteBook 830 G7 — $340.** The portability pick. Same platform as the 840 G7 in a 13.3-inch body around 1.24 kg — the machine for consultants and field staff who live out of a bag.
 3. **EliteBook 830 G8 — $380.** The sweet spot. An 11th-generation Core i7, Thunderbolt 4 and Wi-Fi 6 for $40 more than the G7 — [the best value of the four](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) for everyday office work.
-4. **EliteBook 840 G9 — $950.** The long-haul pick. The 12th-generation platform, DDR5 memory and Wi-Fi 6E give it the performance headroom to stay fast for five-plus years — [the one to buy](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) if the laptop is your main work machine.
+4. **EliteBook 840 G9 — $990.** The long-haul pick. The 12th-generation platform, DDR5 memory and Wi-Fi 6E give it the performance headroom to stay fast for five-plus years — [the one to buy](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) if the laptop is your main work machine.
 
-> Rule of thumb: match the machine to the years you expect to keep it. A $310–$380 EliteBook comfortably covers documents, browsers and calls today; the $950 840 G9 is for anyone whose laptop IS the office.
+> Rule of thumb: match the machine to the years you expect to keep it. A $310–$380 EliteBook comfortably covers documents, browsers and calls today; the $990 840 G9 is for anyone whose laptop IS the office.
 
 ## All four EliteBooks are refurbished — here is why that is the deal
 
@@ -1480,7 +1480,7 @@ It depends on the work. If the work is documents, browsers, email and video call
 
 ## The bottom line
 
-The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real refurbished business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $950](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $75](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
+The EliteBook ladder at Hayaan Market covers every serious laptop budget in Somalia: the [840 G7 at $310](https://hayaan.co/product/hp-elitebook-840-g7-notebook) and [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) put real refurbished business laptops under $400, the [830 G8 at $380](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) is the value sweet spot, and the [840 G9 at $990](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) buys the newest platform outright. Pair either with one of the [HP laser printers from $165](https://hayaan.co/blog/printer-price-in-somalia) and the [home-office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) covers everything else on the desk.`,
 };
 
 // Task 102 — "electronics store near me" pillar post (owner keyword list:
@@ -1488,7 +1488,7 @@ The EliteBook ladder at Hayaan Market covers every serious laptop budget in Soma
 // Targets the near-me + generic-store + online-shopping clusters with the
 // local-intent reframe: the nearest store is the one that comes to you.
 // Prices verified against the live catalog (phones $118+, EliteBook $310+,
-// TVs $175+, printers $75+, routers $15+, AC $260+, PS5 $720).
+// TVs $175+, printers $165+, routers $15+, AC $260+, PS5 $850).
 const post18 = {
   id: "seo-electronics-store-near-me-in-somalia",
   slug: "electronics-store-near-me-in-somalia",
@@ -1496,7 +1496,7 @@ const post18 = {
   excerpt:
     "Searching for an electronics store near you? The nearest one is the phone in your hand: Hayaan Market delivers phones, laptops, TVs and home electronics to every Mogadishu district and nationwide — at fixed USD prices.",
   quickAnswer:
-    "The nearest electronics store in Somalia is the one that comes to you: Hayaan Market (hayaan.co) is an online electronics store delivering to every Mogadishu district for $1.50–$3.00 and anywhere else in the country for a flat $6.95. Phones from $118, laptops from $310, TVs from $175, printers from $75 — all at fixed USD prices paid with EVC Plus, Edahab, or card.",
+    "The nearest electronics store in Somalia is the one that comes to you: Hayaan Market (hayaan.co) is an online electronics store delivering to every Mogadishu district for $1.50–$3.00 and anywhere else in the country for a flat $6.95. Phones from $118, laptops from $310, TVs from $175, printers from $165 — all at fixed USD prices paid with EVC Plus, Edahab, or card.",
   howtoSteps: [
     {
       name: "Open the store on your phone",
@@ -1530,7 +1530,7 @@ const post18 = {
     },
     {
       q: "What electronics can I buy at Hayaan Market?",
-      a: "The catalog covers every category an electronics store carries: smartphones from $118, business laptops from $310 (MacBooks from $1,350), smart TVs from $175 to $2,350, HP laser printers from $75, Wi-Fi routers from $15, split air conditioners from $260, PS5 consoles from $720, projectors, power banks and audio gear.",
+      a: "The catalog covers every category an electronics store carries: smartphones from $118, business laptops from $310 (MacBooks from $1,350), smart TVs from $175 to $2,350, HP laser printers from $165, Wi-Fi routers from $15, split air conditioners from $260, PS5 consoles from $850, projectors, power banks and audio gear.",
     },
     {
       q: "Do you deliver electronics to my district?",
@@ -1555,13 +1555,13 @@ That changes the near-me question. The shop across town is only "near" if it has
 
 ## What's in the store: every electronics category, priced
 
-- **Phones** — smartphones from **$118** (the budget Galaxy A16) through the mid-range — the [Galaxy A18 at $190](https://hayaan.co/blog/samsung-galaxy-a18-price-in-somalia) — up to flagships; the [phones section](https://hayaan.co/category/phones-wearables) lists them all with exact prices.
+- **Phones** — smartphones from **$118** (the budget Galaxy A06) through the mid-range — the [Galaxy A18 at $190](https://hayaan.co/blog/samsung-galaxy-a18-price-in-somalia) — up to flagships; the [phones section](https://hayaan.co/category/phones-wearables) lists them all with exact prices.
 - **Laptops** — business-class [refurbished HP EliteBooks from $310](https://hayaan.co/blog/hp-elitebook-price-in-somalia) and MacBooks from $1,350, in the [Computers & TV section](https://hayaan.co/category/computers-tv-gaming).
 - **TVs** — smart TVs from **$175** (32-inch) to **$2,350** (85-inch Samsung); the sizing guide matches the screen to your room.
-- **Printers** — HP lasers from **$75**, with the toner pairing explained in the printer guide.
+- **Printers** — HP lasers from **$165**, with the toner pairing explained in the printer guide.
 - **Networking** — [Wi-Fi routers and access points from $15](https://hayaan.co/blog/wifi-router-price-in-somalia) for homes and offices.
 - **Cooling** — [split air conditioners from $260](https://hayaan.co/blog/air-conditioner-price-in-somalia), room-sizing included.
-- **Gaming & more** — [PS5 from $720](https://hayaan.co/blog/ps5-price-in-somalia), projectors from $350, plus the [power, charging and audio section](https://hayaan.co/category/power-charging-audio) for power banks, chargers and speakers.
+- **Gaming & more** — [PS5 from $850](https://hayaan.co/blog/ps5-price-in-somalia), projectors from $350, plus the [power, charging and audio section](https://hayaan.co/category/power-charging-audio) for power banks, chargers and speakers.
 
 Home electronics, office electronics, gadgets — the shelves the big stores carry, with the prices the big stores print.
 
@@ -1596,11 +1596,11 @@ const post19 = {
   excerpt:
     "Load-shedding-proof charging: every power bank we stock, from a $15 Porodo to a 80,000mAh monster, what the mAh numbers really mean, and the chargers that fill them fast.",
   quickAnswer:
-    "Power banks at Hayaan Market run from $15 (Porodo 5,000mAh) to $65 (Green Lion Thunder 80,000mAh), with 10,000mAh daily-carry models from Porodo, Maxvolt and Aston at $22–$25 and premium Anker units at $45–$48. Fixed USD prices, paid via EVC Plus, Edahab or card, delivered to your Mogadishu district for $1.50–$3.00.",
+    "Power banks at Hayaan Market run from $15 (Porodo 5,000mAh) to $65 (Green Lion Thunder 80,000mAh), with 10,000mAh daily-carry models from Porodo, Maxvolt and Aston at $22–$26 and premium Anker units at $45–$48. Fixed USD prices, paid via EVC Plus, Edahab or card, delivered to your Mogadishu district for $1.50–$3.00.",
   faqs: [
     {
       q: "How much does a good power bank cost in Somalia?",
-      a: "At Hayaan Market, $15 buys the Porodo 5,000mAh, $22–$25 covers 10,000mAh daily-carry models (Porodo, Maxvolt, Aston), $45–$48 buys premium Anker 10,000mAh units, and $65 gets the Green Lion Thunder 80,000mAh.",
+      a: "At Hayaan Market, $15 buys the Porodo 5,000mAh, $22–$26 covers 10,000mAh daily-carry models (Porodo, Maxvolt, Aston), $45–$48 buys premium Anker 10,000mAh units, and $65 gets the Green Lion Thunder 80,000mAh.",
     },
     {
       q: "How many mAh do I actually need?",
@@ -1647,7 +1647,7 @@ const post19 = {
 
 The live ladder at the time of writing:
 
-1. **Budget top-up tier — $15–$25.** The [Porodo 5,000mAh with Lightning cable built in](https://hayaan.co/product/power-bank-porodo-5,000mah-with-lightning) at $15 is the classic pocket unit; the [Aston MagSafe 10,000mAh](https://hayaan.co/product/power-bank-aston-magsafe-10,000mah) and [Porodo Pocket Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-pocket-volt-10,000mah) at $22, the [Maxvolt 10,000mAh](https://hayaan.co/product/power-bank-maxvolt-10,000mah) at $24 and the [Porodo Chrome Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-chrome-volt-10,000mah) at $25 all hold a full day of phone charging.
+1. **Budget top-up tier — $15–$26.** The [Porodo 5,000mAh with Lightning cable built in](https://hayaan.co/product/power-bank-porodo-5,000mah-with-lightning) at $15 is the classic pocket unit; the [Porodo Pocket Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-pocket-volt-10,000mah) at $22, the [Maxvolt 10,000mAh](https://hayaan.co/product/power-bank-maxvolt-10,000mah) at $24, the [Porodo Chrome Volt 10,000mAh](https://hayaan.co/product/power-bank-porodo-chrome-volt-10,000mah) at $25 and the [Aston MagSafe 10,000mAh](https://hayaan.co/product/power-bank-aston-magsafe-10,000mah) at $26 all hold a full day of phone charging.
 2. **Premium daily tier — $45–$50.** The [Anker Zolo 10,000mAh](https://hayaan.co/product/power-bank-anker-zolo-10,000mah) at $45 and [Anker MagGo 10,000mAh](https://hayaan.co/product/power-bank-anker-maggo-10,000mah) at $48 are the reliability picks — Anker's cells and circuitry age better than any budget brand. The [Lion Ultra-Thin 20,000mAh 120W](https://hayaan.co/product/power-bank-lion-ultra-thin-20,000mah-120w) at $49.90 jumps tiers entirely: laptop-grade capacity and output in a slab you can still pocket.
 3. **The big tank — $65.** The [Green Lion Thunder 80,000mAh](https://hayaan.co/product/power-bank-green-lion-thunder-80,000mah) is not a pocket accessory; it is a shop counter, wedding marquee or extended-outage reserve that refills dozens of phones before it asks for a wall socket.
 
@@ -1677,7 +1677,7 @@ Rule of thumb: a 20W+ charger refills most phones in about two hours, and the sa
 
 A bank keeps phones, earbuds, and USB-powered routers alive — that covers money, calls and often the internet. It will not run a TV, a fridge or an air conditioner. For the things it can't carry:
 
-- Protect sensitive electronics from unstable voltage with the [Lightwave Digital Voltage Stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) at $11.50 — cheap insurance for compressors and screens.
+- Protect sensitive electronics from unstable voltage with the [Lightwave Digital Voltage Stabilizer](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) at $65 — cheap insurance for compressors and screens.
 - Keep the home internet up through short cuts: the [Wi-Fi router guide](https://hayaan.co/blog/wifi-router-price-in-somalia) covers which routers pair well with a USB power bank.
 - For the big appliances, the [air conditioner guide](https://hayaan.co/blog/air-conditioner-price-in-somalia) explains sizing and the stabilizer pairing.
 
@@ -1709,7 +1709,7 @@ const post20 = {
     },
     {
       q: "Do Nokia feature phones support WhatsApp?",
-      a: "No — these are true feature phones built for calls, SMS, FM radio, torch and camera. For apps you still want a smartphone; the phones buying guide covers those from about $110 up.",
+      a: "No — these are true feature phones built for calls, SMS, FM radio, torch and camera. For apps you still want a smartphone; the phones buying guide covers those from about $118 up.",
     },
     {
       q: "Why does 4G matter on a feature phone?",
@@ -1812,7 +1812,7 @@ const post21 = {
     },
     {
       q: "Do projectors work during power cuts?",
-      a: "No — a projector needs wall power, so pair it with the $11.50 Lightwave voltage stabilizer to survive unstable voltage, and keep phones alive through the cut itself with a power bank.",
+      a: "No — a projector needs wall power, so pair it with the $65 Lightwave voltage stabilizer to survive unstable voltage, and keep phones alive through the cut itself with a power bank.",
     },
     {
       q: "How do I order a projector from Hayaan?",
@@ -1865,7 +1865,7 @@ For a bedroom wall, no — any smooth white wall works and the Spectra will surp
 
 ## Power, placement and the outage question
 
-- **A projector needs wall power** — it will not run off a power bank. Pair it with the [Lightwave Digital Voltage Stabilizer at $11.50](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) so unstable voltage never reaches the lamp and board.
+- **A projector needs wall power** — it will not run off a power bank. Pair it with the [Lightwave Digital Voltage Stabilizer at $65](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) so unstable voltage never reaches the lamp and board.
 - **Distance and focus:** the smaller the room, the closer the unit sits to the wall; both projectors focus mechanically, and the screen's 180×180cm size matches the Spectra's sweet spot.
 - **Sound:** built-in speakers carry a bedroom; for a hall, add the [L208 100W outdoor speaker at $70](https://hayaan.co/product/speaker-outdoor-l208-100w) and the back row hears as well as it sees.
 - **Content creators:** filming product videos or interviews? The [Aputure Amaran 200XS studio light at $330](https://hayaan.co/product/aputure-amaran-200xs-studio-light) is the lighting half of that setup.
@@ -1908,7 +1908,7 @@ export const SEO_POSTS: BlogPost[] = [
   // GSMArena/SamMobile/DigitalTrends, prices verified against the live catalog.
   { ...post16, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-a18-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-12T10:30:00.000Z"), createdAt: "2026-10-12T10:30:00.000Z", updatedAt: "2026-10-14T08:00:00.000Z" },
   // Task 101 — HP EliteBook buying guide; prices verified against the live
-  // catalog on publish day (840 G9 $950 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310).
+  // catalog prices (840 G9 $990 since Task 118 / 830 G8 $380 / 830 G7 $340 / 840 G7 $310).
   // Task 103 — owner correction: all four units are refurbished; copy rewritten.
   { ...post17, coverImage: "https://hayaan.co/images/blog/hp-elitebook-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-15T09:00:00.000Z"), createdAt: "2026-10-15T09:00:00.000Z", updatedAt: "2026-10-16T09:00:00.000Z" },
   // Task 102 — "electronics store near me" pillar; covers the owner's

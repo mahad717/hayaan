@@ -1,0 +1,119 @@
+[
+ {
+  "slug": "anker-boom-3i-outdoor-bluetooth-speaker",
+  "sanguni_slug": "bluetooth-speaker-anker-boom-3i-outdoor",
+  "our": 16.7,
+  "card": 95.0,
+  "pdp": 95.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "digital-voltage-stabilizer-lightwave",
+  "sanguni_slug": "digital-voltage-stabilizer-lightwave",
+  "our": 11.5,
+  "card": 65.0,
+  "pdp": 65.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "hp-printer-laser-107a",
+  "sanguni_slug": "hp-printer-laser-107a",
+  "our": 75,
+  "card": 165.0,
+  "pdp": 165.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "hp-printer-laser-mfp-135a",
+  "sanguni_slug": "hp-printer-laser-mfp-135a",
+  "our": 165,
+  "card": 224.9,
+  "pdp": 224.9,
+  "stock": "http://schema.org/OutOfStock",
+  "confirm": true
+ },
+ {
+  "slug": "hp-toner-cartridge-651a-original-set",
+  "sanguni_slug": "hp-toner-cartridge-651a-original-set",
+  "our": 277,
+  "card": 1580.0,
+  "pdp": 1580.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "macbook-pro-m5",
+  "sanguni_slug": "apple-macbook-pro-m5",
+  "our": 1900,
+  "card": 2150.0,
+  "pdp": 2150.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "microphone-dji-mic-mini-2",
+  "sanguni_slug": "microphone-dji-mic-mini-2",
+  "our": 33.3,
+  "card": 125.0,
+  "pdp": 125.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "power-bank-aston-magsafe-10,000mah",
+  "sanguni_slug": "power-bank-magsafe-10000mah",
+  "our": 22,
+  "card": 26.0,
+  "pdp": 26.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "hp-elitebook-840-g9-intel-core-i7-12gen",
+  "sanguni_slug": "hp-elitebook-840-intel-core-i7-12gen",
+  "our": 950,
+  "card": 990.0,
+  "pdp": 990.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "samsung-galaxy-a06",
+  "sanguni_slug": "samsung-galaxy-a06",
+  "our": 110,
+  "card": 118.0,
+  "pdp": 118.0,
+  "stock": "http://schema.org/OutOfStock",
+  "confirm": true
+ },
+ {
+  "slug": "samsung-galaxy-a07",
+  "sanguni_slug": "samsung-galaxy-a07",
+  "our": 125,
+  "card": 140.0,
+  "pdp": 140.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ },
+ {
+  "slug": "samsung-galaxy-a16",
+  "sanguni_slug": "samsung-galaxy-a16",
+  "our": 118,
+  "card": 145.0,
+  "pdp": 145.0,
+  "stock": "http://schema.org/OutOfStock",
+  "confirm": true
+ },
+ {
+  "slug": "sony-playstation-5-digital-edition-slim",
+  "sanguni_slug": "playstation5-digital-edition-slim",
+  "our": 720,
+  "card": 850.0,
+  "pdp": 850.0,
+  "stock": "http://schema.org/InStock",
+  "confirm": true
+ }
+]
