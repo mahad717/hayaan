@@ -22,6 +22,8 @@ interface GLSLHillsProps {
   planeSize?: number;
   speed?: number;
   lineColor?: string;
+  /** Multiplier on the ridge alpha (upstream 0.6). Lower = more transparent. */
+  lineOpacity?: number;
 }
 
 const GLSLHills = ({
@@ -31,6 +33,7 @@ const GLSLHills = ({
   planeSize = 256,
   speed = 0.5,
   lineColor = "#14532d",
+  lineOpacity = 0.6,
 }: GLSLHillsProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -168,7 +171,7 @@ const GLSLHills = ({
         varying vec3 vPosition;
 
         void main(void) {
-          float opacity = (96.0 - length(vPosition)) / 256.0 * 0.6;
+          float opacity = (96.0 - length(vPosition)) / 256.0 * ${lineOpacity.toFixed(3)};
           vec3 color = ${colorVec3};
           gl_FragColor = vec4(color, opacity);
         }
@@ -270,7 +273,7 @@ const GLSLHills = ({
       material.dispose();
       renderer.dispose();
     };
-  }, [cameraZ, planeSize, speed, lineColor]);
+  }, [cameraZ, planeSize, speed, lineColor, lineOpacity]);
 
   return (
     <div ref={containerRef} style={{ position: "relative", width, height }}>

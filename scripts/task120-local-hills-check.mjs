@@ -11,6 +11,8 @@ const CHROME_CANDIDATES = [
 ];
 const DEBUG_PORT = 9351;
 const BASE = process.env.HILLS_BASE || "http://127.0.0.1:3210";
+const VP_W = Number(process.env.HILLS_W || 1440);
+const VP_H = Number(process.env.HILLS_H || 2400);
 
 const CHROME = CHROME_CANDIDATES.find((p) => existsSync(p));
 if (!CHROME) { console.error("FATAL: no chrome"); process.exit(1); }
@@ -21,7 +23,7 @@ const chrome = spawn(CHROME, [
   "--disable-dev-shm-usage",
   "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader",
   `--user-data-dir=/tmp/chrome-t120-${Date.now()}`,
-  "--window-size=1440,2400", "about:blank",
+  `--window-size=${VP_W},${VP_H}`, "about:blank",
 ], { stdio: "ignore" });
 let v = null;
 for (let i = 0; i < 40; i++) { await sleep(500); try { v = await (await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/version`)).json(); break; } catch {} }
@@ -41,7 +43,7 @@ ws.addEventListener("message", (e) => {
 });
 const ev = async (e) => { const r = await send("Runtime.evaluate", { expression: e, returnByValue: true, awaitPromise: true }); if (r.exceptionDetails) throw new Error(JSON.stringify(r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result?.value; };
 const shot = async (path) => { const r = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(path, Buffer.from(r.data, "base64")); };
-await send("Emulation.setDeviceMetricsOverride", { width: 1440, height: 2400, deviceScaleFactor: 1, mobile: false });
+await send("Emulation.setDeviceMetricsOverride", { width: VP_W, height: VP_H, deviceScaleFactor: 1, mobile: VP_W < 640 });
 
 await send("Page.navigate", { url: `${BASE}/` });
 await sleep(8000); // lazy chunk + hydration + first frames
@@ -49,7 +51,10 @@ await sleep(8000); // lazy chunk + hydration + first frames
 console.log("hero canvas count:", await ev(`document.querySelectorAll("section canvas").length`));
 console.log("canvas size:", await ev(`(() => { const c = document.querySelector("section canvas"); if (!c) return "NO CANVAS"; const r = c.getBoundingClientRect(); return { w: r.width, h: r.height, buf: c.width + "x" + c.height }; })()`));
 console.log("webgl context:", await ev(`(() => { const c = document.querySelector("section canvas"); return !!c && !!(c.getContext("webgl2") || c.getContext("webgl")); })()`));
-console.log("canvas behind copy:", await ev(`(() => { const c = document.querySelector("section canvas"); const h1 = document.querySelector("h1"); return !!c && !!h1 && c.getBoundingClientRect().top <= h1.getBoundingClientRect().top; })()`));
+// Geometry intent: canvas lives in the LOWER part of the hero, bottom-anchored.
+// (Top ~42% of the canvas is dissolved by the wrapper mask, so overlap with
+// copy is invisible — screenshots prove legibility, don't re-derive it here.)
+console.log("canvas base-pinned:", await ev(`(() => { const c = document.querySelector("section canvas"); const s = document.querySelector("section"); if (!c || !s) return false; const cr = c.getBoundingClientRect(), sr = s.getBoundingClientRect(); return cr.top >= sr.top + sr.height * 0.35 && cr.bottom <= sr.bottom + 2; })()`));
 await shot(process.env.HILLS_SHOT || "/home/z/my-project/download/task120-hero-hills-local.png");
 console.log("console exceptions:", errors.length, errors.slice(0, 3));
 chrome.kill();

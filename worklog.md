@@ -2843,3 +2843,18 @@ Work Log:
 
 Stage Summary:
 - GLSL hills live on production hero. three ships as a lazy client chunk; SSR HTML/LCP untouched; hills pause off-screen + static under reduced motion.
+
+---
+Task ID: 121
+Agent: Super Z (main)
+Task: Owner feedback on hills: "add some transparent so the text and buttons contrast increases, also look the location of the background animation" (mobile + desktop screenshots show ridges sweeping through the hero middle behind copy/images).
+
+Work Log:
+- glsl-hills.tsx: new lineOpacity prop (multiplier on ridge alpha, upstream 0.6) injected into the fragment shader; hero passes 0.45 (~25% softer).
+- hero.tsx: hills wrapper moved from inset-0 (full section) to inset-x-0 bottom-0 h-[45%] md:h-[62%] - ridges now hug the hero BASE like landscape; CSS mask linear-gradient(to bottom, transparent 0%, black 42%) dissolves the top edge so ridges emerge instead of cutting off.
+- Full CF-equivalent gate bun run build green (Worker saved). Local CDP checks (desktop 1440 + mobile 390): 1 canvas, WebGL true, base-pinned true, 0 exceptions. Screenshots: download/task121-hills-desktop.png + task121-hills-mobile.png - headline/buttons/reassurance on clean cream; ridges only along the base + behind collage bottom edge, both fading in via mask.
+- Debug note: ChunkLoadError on first check run was a STALE next-server (pid 2178) still bound to :3210 serving old chunk manifests while .next was rebuilt - pkill by name pattern missed it (process renames to "next-server (v...)"). Kill by port, not by name. Harness: "canvas behind copy" check replaced with mask-aware base-pinned assertion (top 42% of canvas is invisible by design).
+- NOT pushed: no GitHub token this session. One commit ready (src x2 + harness + worklog) - task107-push2.py + CI watch ready to fire on token receipt.
+
+Stage Summary:
+- Hills softened (alpha 0.45) and re-anchored to the hero base with a dissolved top edge; text/button contrast restored on desktop AND mobile. Local-verified end to end; awaiting token to push.

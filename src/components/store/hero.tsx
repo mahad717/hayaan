@@ -31,9 +31,18 @@ export function Hero({ onShop }: { onShop: () => void }) {
         aria-hidden
       />
 
-      {/* Animated GLSL hills — brand-green wireframe ridges on the cream bg */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <GLSLHills />
+      {/* Animated GLSL hills — pinned to the hero BASE (not sweeping behind
+          copy/images), top edge dissolved by a mask fade, softened alpha so
+          text/buttons keep full contrast. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] md:h-[62%]"
+        aria-hidden
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 42%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 42%)",
+        }}
+      >
+        <GLSLHills lineOpacity={0.45} />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
