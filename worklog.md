@@ -2768,3 +2768,15 @@ Work Log:
 
 Stage Summary:
 - Hero-only button style shipped: pill "Start shopping" in deep Hayaan green #14532d with cream #faf8f1 arrow disc; site-wide button styles unchanged.
+
+---
+Task ID: 119-verify
+Agent: Super Z (main)
+Task: Production verification for Task 119 hero pill.
+
+Work Log:
+- scripts/task119-prod-verify.py: checks SSR HTML (pill classes around "Start shopping") + ALL css chunks for escaped Tailwind selectors.
+- First run false-failed: grabbed the first of TWO css chunks and probed raw bracket syntax - Tailwind v4 escapes [ ( ) ] # in selectors (bg-\\[\\#14532d\\], right-\\[calc\\(100\\%-44px\\)\\]). Script fixed in place, re-run: ALL CHECKS PASS on attempt 1 (HTML classes, pill-wrapping regex, 5 css probes incl. calc slide / ps-14 swap / both colors / rotate-45).
+
+Stage Summary:
+- Hero pill confirmed live on hayaan.co: "Start shopping" renders in the #14532d pill with the #faf8f1 arrow disc; hover animation classes deployed. Lesson stored: Tailwind v4 selector-escaping when grepping compiled CSS.
