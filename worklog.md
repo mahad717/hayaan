@@ -2792,3 +2792,14 @@ Work Log:
 
 Stage Summary:
 - Both hero CTAs are now capsules of identical height (h-12): filled #14532d sliding-arrow pill + green-outline pill.
+
+---
+Task ID: 119b-verify
+Agent: Super Z (main)
+Task: Production verification for Task 119b.
+
+Work Log:
+- scripts/task119b-prod-verify.py first run false-failed: probe expected a <span> wrapper around the label, but plain shadcn <Button> renders children directly (<button ...>Browse categories</button>). Fixed probe, re-run: ALL CHECKS PASS attempt 1 (h-12 rounded-full border-brand px-6 on the live button, label unwrapped, primary #14532d pill intact beside it).
+
+Stage Summary:
+- Hero now ships a matched capsule pair: filled #14532d sliding-arrow pill ("Start shopping") + green-outline pill ("Browse categories", same h-12 shape). Live on hayaan.co.
