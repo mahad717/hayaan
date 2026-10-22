@@ -2736,3 +2736,19 @@ Stage Summary:
 - Hayaan catalog re-synced to sanguni.so on 2026-10-22: 13 price increases applied and verified live (public API + PDP JSON-LD spot checks 850/990/118 OK); 124/141 prices already matched the supplier. All shipped price-bearing content patched to match; A18 shadow row re-synced in place.
 - Pending owner action: fresh GitHub token to push d54524b (content price strings + scripts; deploy then re-verify blog pages).
 - Sanguni OOS watch: A06, A16, HP MFP 135A are out of stock upstream — prices synced but fulfillment depends on sanguni restocking.
+
+---
+Task ID: 118-push
+Agent: Super Z (main)
+Task: Owner supplied fresh GitHub token -> push Task 118 stack (d54524b + 6 more commits), watch CI, verify the shipped content price strings live, close the loop.
+
+Work Log:
+- Token written to .gh-token (0600); remote main was at 242d350 (Task 115) -> 7 commits ahead: blog batch 4 (17aea5d), Task 118 price-sync content (d54524b), session autocommits (crawl cache + worklog).
+- Pushed 242d350..74aca6a via task107-push2.py: rc 0. CI "Workers Builds: hayaan" completed success in ~90s (task110-ci-watch.py).
+- Post-deploy verification (new scripts/task118-postdeploy-verify.py, 7-min propagation retry loop, task115 pattern): 6/6 PASS on attempt 1 - printer post title "HP Lasers From $165", EliteBook post $310/$990 (no $950), power-bank tier $15-$26, A18 post $145 ladder with no $118 ladder (DB row + code both live), llms.txt printer + EliteBook lines, PS5 Digital Slim PDP at $850.
+- Task 118 fully closed: DB price changes were live pre-push; shipped content price strings now confirmed live post-deploy.
+
+Stage Summary:
+- Sanguni.so price sync (Task 118) is END-TO-END DONE: 13 price increases live in DB, 70+ content references patched, deployed, and verified on production (hayaan.co).
+- Also shipped with this push: blog batch 4 (power banks, Nokia feature phones, projectors) -> 20 code-shipped guides now live.
+- Token wiped post-push per protocol; working tree clean, remote == local main.
