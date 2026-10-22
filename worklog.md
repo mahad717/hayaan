@@ -2752,3 +2752,19 @@ Stage Summary:
 - Sanguni.so price sync (Task 118) is END-TO-END DONE: 13 price increases live in DB, 70+ content references patched, deployed, and verified on production (hayaan.co).
 - Also shipped with this push: blog batch 4 (power banks, Nokia feature phones, projectors) -> 20 code-shipped guides now live.
 - Token wiped post-push per protocol; working tree clean, remote == local main.
+
+---
+Task ID: 119
+Agent: Super Z (main)
+Task: Owner: "i want this button style in the hero section only; make the button color #14532d the arrow circle color #faf8f1" + new GitHub token.
+
+Work Log:
+- Integrated the sliding-arrow pill CTA (shadcn Button + ArrowUpRight disc, paddings swap + disc slides right-to-left + rotates 45deg on hover).
+- New reusable component src/components/ui/button-with-icon.tsx (ButtonProps-based, forwardRef, colors pinned: bg #14532d, disc #faf8f1, arrow #14532d, label #faf8f1; className overrides still win via cn). Repo already shadcn-complete (ui dir, utils, @radix-ui/react-slot, cva, lucide-react all present) - no installs needed.
+- Hero swap (src/components/store/hero.tsx): primary CTA "Start shopping" now <ButtonWithIcon onClick={onShop}>; removed btn-accent + ArrowRight translate-x micro-anim from that button ONLY. "Browse categories" outline button untouched; btn-accent kept in globals.css (used by product-card, lead-popup, admin, reviews, wishlist).
+- Somali label flows via i18n (hero.ctaShop = "Bilow iibsiga"); EN/SO both verified in dictionary.
+- Build gate green (next build); compiled CSS confirmed to contain bg-[#14532d], group-hover:right-[calc(...)] and hover:ps-14 selectors.
+- Pushed with the new token (saved .gh-token 0600); CI watch + production hero spot-check below.
+
+Stage Summary:
+- Hero-only button style shipped: pill "Start shopping" in deep Hayaan green #14532d with cream #faf8f1 arrow disc; site-wide button styles unchanged.

@@ -1,7 +1,8 @@
 "use client";
 
-import { Sparkles, ArrowRight, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
+import { Sparkles, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ButtonWithIcon } from "@/components/ui/button-with-icon";
 import { useLang } from "@/components/store/language-provider";
 import { productImg, productImgFallback } from "@/lib/img";
 
@@ -42,12 +43,9 @@ export function Hero({ onShop }: { onShop: () => void }) {
             {t("hero.sub")}
           </p>
 
-          {/* CTAs — primary green, secondary outlined green */}
-          <div className="flex flex-wrap gap-3">
-            <Button size="lg" onClick={onShop} className="btn-accent group">
-              {t("hero.ctaShop")}
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
+          {/* CTAs — primary sliding-arrow pill (hero-only style), secondary outlined green */}
+          <div className="flex flex-wrap items-center gap-3">
+            <ButtonWithIcon onClick={onShop}>{t("hero.ctaShop")}</ButtonWithIcon>
             {/* Label flip to white on the brand-green hover fill lives in
                 globals.css (.hover\:bg-brand:hover) — a utilities-layer
                 hover:text-white! can't win there (important-inverts-layer
