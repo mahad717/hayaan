@@ -2968,3 +2968,17 @@ Work Log:
 
 Stage Summary:
 - The invisible white-on-cream post-tap state is fixed at the CSS layer for every brand-outline CTA on the site; hover on desktop unchanged (fill+white), touch taps now inert with readable press feedback. Local-verified deterministically; committing + pushing with the supplied token.
+
+---
+Task ID: 125-verify
+Agent: Super Z (main)
+Task: Production verification for Task 125.
+
+Work Log:
+- Pushed cead509..0820763; CI Workers Builds success in ~82s.
+- Prod CDP vs https://hayaan.co — desktop MODE attempt 1: forced :hover yields green fill rgb(20,83,45) + white label, 0 exceptions. Mobile MODE: first 8 attempts failed with chrome spawn EAGAIN / CA-cert aborts — sandbox exhaustion from 63 stray chrome processes accumulated across the session's harness runs; pkill'd them (freed ~1.1GB), attempt 1 after cleanup: sticky-hover label stays green + rest look, :active press green-dark + white, 0 exceptions.
+- NEW OPS LESSON: harness chrome.kill() does not reap all children — stray chrome processes accumulate across many runs until the sandbox can't spawn new ones (spawn EAGAIN). After each verify session, pkill -f chrome remnants and check free -m before diagnosing further.
+- Prod screenshots download/task125-hover-prod-{desktop,mobile}.png: desktop hover = full brand-green fill with white label; mobile post-tap state = readable green label on cream (rest look), press = darker fill with white label.
+
+Stage Summary:
+- Task 125 closed end-to-end. The white-on-cream post-tap state is gone on production for desktop and mobile; brand outline CTAs now behave correctly for both pointer classes.
