@@ -99,13 +99,14 @@ async function force(states) {
 // Real activation: mouse down on the button center -> the button (activation
 // target) carries :active, so .active:* on it and .group-active:* on the disc
 // engage exactly like on a real device press.
-async function realPress() {
+async function realPress(shotPath) {
   const ctr = JSON.parse(await ev(`(() => { const r = document.querySelector('[data-t126="1"]').getBoundingClientRect(); return JSON.stringify({ x: Math.round(r.x + r.width / 2), y: Math.round(r.y + r.height / 2) }); })()`));
   await send("Input.dispatchMouseEvent", { type: "mousePressed", x: ctr.x, y: ctr.y, button: "left", clickCount: 1 });
   await sleep(800); // 200ms active attack + margin
   const down = await probe();
+  if (shotPath) await shot(shotPath); // evidence must be captured WHILE pressed — after release the click smooth-scrolls #catalog away from the hero
   await send("Input.dispatchMouseEvent", { type: "mouseReleased", x: ctr.x, y: ctr.y, button: "left", clickCount: 1 });
-  await sleep(800); // release eases back at 500ms
+  await sleep(1600); // release eases back at 500ms, but the click also smooth-scrolls #catalog — on desktop the scroll can slide the button out from under the stationary cursor, dropping :hover and starting the reverse LATE; leave time for scroll + reverse to settle
   const up = await probe();
   return { down, up };
 }
@@ -142,11 +143,10 @@ if (MODE === "desktop") {
   await sleep(400);
   // REAL press while the media env says coarse/no-hover: :active must play
   // the full choreography even though hover: is inert.
-  const p = await realPress();
+  const p = await realPress(SHOT);
   console.log("touch press:", JSON.stringify(p.down), "release:", JSON.stringify(p.up));
   results["touch press: :active engaged"] = p.down?.act === true;
   results["touch press: paddings 56/24 + disc slides left + rotate 45"] = isAnim(p.down);
-  await shot(SHOT);
   results["touch release: back to rest"] = isRest(p.up);
 }
 

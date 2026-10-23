@@ -2982,3 +2982,34 @@ Work Log:
 
 Stage Summary:
 - Task 125 closed end-to-end. The white-on-cream post-tap state is gone on production for desktop and mobile; brand outline CTAs now behave correctly for both pointer classes.
+
+---
+Task ID: 126
+Agent: Super Z (main)
+Task: Owner follow-up ("Also the button I marked for you in the version his animation is not working", mobile screenshot circling the solid-green "Start shopping" pill): the ButtonWithIcon signature animation never played on touch.
+
+Work Log:
+- Root cause: the entire choreography (hover:ps-14/pe-6 padding swap + group-hover disc slide/rotate-45) lives in Tailwind v4 hover: variants, which v4 wraps in @media(hover:hover) — on the owner's touch phone they never fire, and there was no active: fallback at all. (Task 125 fixed the outline CTA's white-on-cream tap state; this is the sibling solid CTA's "no animation" report.)
+- Fix (src/components/ui/button-with-icon.tsx, hero-only component): mirrored the hover choreography for presses — active:ps-14 active:pe-6 active:duration-200 on the button, group-active:right-[calc(100%-44px)] group-active:rotate-45 group-active:duration-200 on the disc. 200ms attack while pressed (snappier touch feedback; also snappier desktop click completion), release eases back at the base 500ms. group-active is keyed on the activated button itself, so it is bulletproof for real touch; desktop unchanged (hover and active agree on the same targets).
+- Harness scripts/task126-cta-touch-anim-check.mjs: rest asserts (paddings 24/56, disc computed right 4px, rotate 0), forced :hover (desktop animated / touch inert — Task 125 semantics preserved), and a REAL activation press via Input.dispatchMouseEvent mousePressed asserting :active engaged + paddings 56/24 + disc right = width-44px + rotate 45deg while pressed, then rest after release; 0 page exceptions; screenshots.
+- Harness lesson 1: Input.dispatchTouchEvent does NOT engage :active in this headless (touchStart landed, no active, no click) — a real mousePressed produces exactly the same :active activation state a finger does; the touch-vs-desktop difference is carried by the pinned blink media settings (hover:none/pointer:coarse vs hover:hover/pointer:fine).
+- Harness lesson 2: the release probe needs 1600ms, not 800ms — the click smooth-scrolls #catalog, which on desktop slides the button out from under the stationary cursor, dropping :hover and starting the 500ms reverse LATE (prod attempt 1 sampled the reverse at ~98%: ps 24.53 / dr 6.06 / angle 0.75deg).
+- Harness lesson 3: capture the pressed-state screenshot WHILE pressed — after release the smooth scroll takes the hero out of frame (the first prod touch shot showed the catalog grid).
+- Tooling gotcha: a failed edit inside a MultiEdit batch left the harness half-merged (desktop block merged into the touch else); re-read and re-applied before rerunning.
+- Local CDP (single-call server+harness on :3218): desktop + touch ALL PASS with exact values (disc right 128.53px = width-44, angle 45deg), 0 exceptions.
+
+Stage Summary:
+- The hero "Start shopping" animation now plays for touch users: press = full disc slide + 45deg rotation + padding swap (200ms attack), release eases back; desktop hover/press unchanged; sticky hover stays inert on touch. Local verified for both pointer classes.
+
+---
+Task ID: 126-verify
+Agent: Super Z (main)
+Task: Production verification for Task 126.
+
+Work Log:
+- Pushed 5ccf5ec..3c74f63; CI Workers Builds success in ~2.5min.
+- Prod CDP vs https://hayaan.co — touch MODE attempt 1: sticky hover inert, real press = :active engaged + full choreography (paddings 56/24, disc right 128.53px, rotate 45deg), release to rest, 0 exceptions. Desktop MODE: attempt 1 passed everything except the release probe (mid-reverse sample — harness timing, lesson above); attempt 2 after the 1600ms release wait: ALL PASS, 0 exceptions. Touch re-run with the shot-while-pressed fix: ALL PASS, 0 exceptions.
+- Prod screenshots download/task126-cta-anim-prod-{desktop,touch}.png: desktop shows the disc parked left + rotated arrow under hover/press; mobile press shows the disc slid to the pill's left edge with the rotated arrow while the label shifts right.
+
+Stage Summary:
+- Task 126 closed end-to-end: the marked button's animation now works on the owner's phone (press anywhere on the pill = the full signature choreography), desktop behavior unchanged, no regressions to the Task 125 touch semantics.
