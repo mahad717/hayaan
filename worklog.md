@@ -2953,3 +2953,18 @@ Work Log:
 
 Stage Summary:
 - Task 124 closed end-to-end. Hero primary CTA is font-identical to its sibling on production, desktop and mobile.
+
+---
+Task ID: 125
+Agent: Super Z (main)
+Task: Owner (mobile screenshot, "Browse categories" circled): "After you click that button the text color becomes white, which makes you unable to see" — post-tap sticky hover rendered the outline CTA white-on-cream.
+
+Work Log:
+- Root cause (prod CSS forensics on the shipped chunks): Tailwind v4 wraps hover: utilities in @media (hover:hover) — the green fill (.hover\:bg-brand:hover{background-color:var(--primary)}, utilities) never applies on touch devices; but the hand-written components-layer flip (.hover\:bg-brand:hover{color:#fff!important}) was UNCONDITIONAL. Mobile Chrome keeps :hover stuck after a tap → flip without fill = white text on cream. Desktop was unaffected (media matches there).
+- Fix (globals.css, centralized for hero + checkout + Sifalo + admin + product grid/reviews secondary actions): the flip rule is now gated in @media (hover: hover) and (pointer: fine) AND carries the green fill itself (fill+label atomic, no longer dependent on the utility); added unconditional .hover\:bg-brand:active (green-dark fill + white label) so touch presses get readable feedback with fill and label changing together.
+- Harness scripts/task125-cta-hover-check.mjs: CDP CSS.forcePseudoState on the "Browse categories" button — desktop MODE: forced :hover must yield fill rgb(20,83,45) + white label; mobile MODE: forced :hover must keep the label green rgb(20,83,45) (sticky-hover inert) and forced :active must yield green-dark rgb(11,59,34) + white; 0 page exceptions; screenshots.
+- Harness lessons: (a) this headless defaults to hover:none/pointer:coarse — pinned per mode via --blink-settings primaryHoverType/availableHoverTypes/primaryPointerType/availablePointerTypes (2/2/4/4 desktop, 1/1/2/2 touch); Emulation.setEmulatedMedia features did NOT affect matchMedia here. (b) sample computed styles ≥700ms after forcing — the 500ms transition-all otherwise lands mid-blend (read rgb(13,60,35) at ~97%). (c) CDP flatten sessions: sessionId must be a TOP-LEVEL message field, and Runtime domain enablement per session — a side experiment script burned three iterations on this.
+- Local CDP (single-call server+harness on :3217): desktop + mobile ALL PASS (exact rgb matches, 0 exceptions). Screenshots download/task125-hover-{desktop,mobile}.png — desktop hover shows the full green fill with white label; touch states stay readable.
+
+Stage Summary:
+- The invisible white-on-cream post-tap state is fixed at the CSS layer for every brand-outline CTA on the site; hover on desktop unchanged (fill+white), touch taps now inert with readable press feedback. Local-verified deterministically; committing + pushing with the supplied token.

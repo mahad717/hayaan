@@ -242,8 +242,21 @@
      !important keeps it dark green on the dark fill — invisible. An
      !important utilities-layer rule (hover:text-white!) can NOT win: for
      !important declarations the EARLIER cascade layer wins, and components
-     sits before utilities. Same layer + higher specificity does. */
-  .hover\:bg-brand:hover {
+     sits before utilities. Same layer + higher specificity does.
+     Gate + fill live here, not just in the tailwind utility: v4 wraps hover:
+     utilities in @media(hover:hover), so on touch devices the fill never
+     applied while this flip DID — a tap left white text on cream (owner
+     report 2026-10-23). Media-gating the flip keeps touch taps inert, and
+     writing the fill beside it keeps label + fill atomic. */
+  @media (hover: hover) and (pointer: fine) {
+    .hover\:bg-brand:hover {
+      background-color: var(--primary) !important;
+      color: #ffffff !important;
+    }
+  }
+  /* Touch press feedback: fill and label flip together while pressed. */
+  .hover\:bg-brand:active {
+    background-color: var(--hayaan-green-dark) !important;
     color: #ffffff !important;
   }
   .bg-brand-dark {
