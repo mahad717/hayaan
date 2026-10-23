@@ -10,6 +10,10 @@ import { cn } from "@/lib/utils";
  * Rest state: label sits at the start, arrow disc parked at the right edge.
  * Hover: paddings swap, the disc slides across to the left and rotates 45°,
  * turning the arrow to point up-left-to-right… (ArrowUpRight rotated once).
+ * Touch press: hover: never fires on mobile (v4 wraps hover utilities in
+ * @media(hover:hover) — owner report 2026-10-23: "his animation is not
+ * working"), so :active / group-active: replay the same choreography with a
+ * snappier 200ms attack while the finger is down; release eases back at 500ms.
  *
  * Colors are pinned to the hero palette per owner spec:
  * - button  #14532d (deep Hayaan green)
@@ -37,7 +41,7 @@ const ButtonWithIcon = React.forwardRef<HTMLButtonElement, ButtonWithIconProps>(
           // Panton (Bold/Black faces only) rendered the lighter Bold face —
           // visibly a "different font" next to its Black-weight sibling.
           "text-sm font-black font-panton transition-all duration-500",
-          "group hover:ps-14 hover:pe-6",
+          "group hover:ps-14 hover:pe-6 active:ps-14 active:pe-6 active:duration-200",
           className,
         )}
         {...props}
@@ -45,7 +49,7 @@ const ButtonWithIcon = React.forwardRef<HTMLButtonElement, ButtonWithIconProps>(
         <span className="relative z-10 transition-all duration-500">{children}</span>
         <div
           aria-hidden
-          className="absolute right-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#faf8f1] text-[#14532d] transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45"
+          className="absolute right-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#faf8f1] text-[#14532d] transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45 group-active:right-[calc(100%-44px)] group-active:rotate-45 group-active:duration-200"
         >
           <ArrowUpRight size={16} />
         </div>
