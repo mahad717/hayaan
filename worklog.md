@@ -3013,3 +3013,20 @@ Work Log:
 
 Stage Summary:
 - Task 126 closed end-to-end: the marked button's animation now works on the owner's phone (press anywhere on the pill = the full signature choreography), desktop behavior unchanged, no regressions to the Task 125 touch semantics.
+
+---
+Task ID: 127
+Agent: Super Z (main)
+Task: "Create blog posts optimized for seo and aeo" — new shipped buyer guides for the blog.
+
+Work Log:
+- Mechanism: shipped guides live in src/lib/blog-seo-posts.ts (SEO_POSTS, merged with DB posts in lib/blog.ts; DB wins on slug collision). Page template auto-emits BlogPosting + FAQPage + HowTo JSON-LD, canonical, OG/Twitter cards; sitemap.xml and llms-full.txt pick posts up automatically; llms.txt buyer-guide list is hand-maintained.
+- Topic selection: fetched the live catalog (hayaan.co/api/products, 100 SKUs) and picked three UNOCCUPIED keyword clusters with catalog depth — laptops (MacBook Air/Pro $1,350-$2,150, Asus TUF FX507 $1,320, EliteBooks $310-$990), Galaxy foldables (Flip6 $678 -> Z TriFold $4,900, 7 SKUs), home & kitchen appliances (Geepas $15-$75, water dispenser $120, ACs from $260). All 45 candidate product/category/blog/tool URLs verified HTTP 200 against prod BEFORE writing content.
+- Wrote post22 laptop-price-in-somalia, post23 samsung-galaxy-z-fold-price-in-somalia, post24 home-appliances-price-in-somalia — each ~800 words, question-style H2s, 40-60-word quickAnswer, 5 FAQs (FAQPage schema), 5 howtoSteps (HowTo schema), product price lists with links, > rule-of-the-market quote, cross-links; registered in SEO_POSTS with covers + staggered 2026-10-26 publish stamps. llms.txt buyer guides +3 entries.
+- Covers: scripts/task127-blog-covers.mjs (z-ai-web-dev-sdk 1344x768, cream editorial series style, screens-off/no-text prompts) -> task127-optimize-covers.py (1200x675 JPG q82) -> public/images/blog/<slug>.jpg x3, visually reviewed.
+- Harness scripts/task127-blog-check.mjs: per-post page-200/h1/quick-answer/JSON-LD @graph (parses ALL ld+json blocks — the first is the site shell's Organization/OnlineStore/WebSite, lesson recorded)/canonical/og:image/cover-JPEG checks, blog index + sitemap.xml + llms.txt + llms-full.txt inclusion, and a whole-page internal-link resolver; CDP screenshots per post.
+- Local (single-call server on :3219): 26/26 PASS. Note: post cover <img> is blank in LOCAL screenshots by design — cover URLs are absolute hayaan.co (og:image/JSON-LD need absolute), so the file only exists on prod after deploy.
+- PUSH BLOCKED: token ghp_VFC...38m37tLq8 now returns HTTP 401 "Bad credentials" (worked at 10:19 today; auto-revoked by GitHub secret scanning after repeated chat exposure). Commit dcb14c3 (11 files, +539) is ready on local main; prod verify pending push.
+
+Stage Summary:
+- Three SEO/AEO guides complete, locally verified 26/26, covers shipped, llms.txt updated. Blocked at push: NEED A FRESH GitHub token from the owner. On arrival: save .gh-token, push dcb14c3, CI watch, run task127-blog-check.mjs vs https://hayaan.co (WITHOUT SKIP_LINKS — the 50-link check must run against prod), commit prod screenshots + 127-verify worklog entry, wipe token.
