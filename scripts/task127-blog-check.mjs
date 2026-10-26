@@ -80,12 +80,36 @@ ok(`llms-full.txt lists all 3 new guides`, POSTS.every((p) => llmsFull.body.incl
 // every internal link printed on the new pages must resolve — run against
 // PROD (SKIP_LINKS=1 on local: the Prisma DB there does not carry the full
 // live catalog, so deep product links 404 locally by design)
+const sleepMs = (ms) => new Promise((r) => setTimeout(r, ms));
+// prod reality (measured): ~10-20% of DB-backed route views return a
+// transient 503 (x-opennext origin error, recovers on retry within seconds),
+// independent of URL and unrelated to this deploy. So "dead link" verdict =
+// the target fails a paced pass AND still fails a cooled-down retry pass.
+const probe = async (target) => {
+  let status = 0;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await sleepMs(1200 * attempt);
+    status = (await get(target)).status;
+    if (status === 200) break;
+  }
+  return status;
+};
 let dead = [];
 if (!process.env.SKIP_LINKS) {
+  const pending = [];
   for (const link of [...allContentLinks]) {
     const target = link.startsWith(BASE) ? link : `${BASE}${link.slice("https://hayaan.co".length)}`;
-    const r = await get(target);
-    if (r.status !== 200) dead.push(`${link} -> ${r.status}`);
+    if ((await probe(target)) !== 200) pending.push([link, target]);
+    await sleepMs(350);
+  }
+  if (pending.length) {
+    console.log(`pass1: ${pending.length} link(s) not yet 200 — cooldown 10s, retrying once`);
+    await sleepMs(10000);
+  }
+  for (const [link, target] of pending) {
+    const status = await probe(target);
+    if (status !== 200) dead.push(`${link} -> ${status}`);
+    await sleepMs(350);
   }
 }
 ok(`all ${allContentLinks.size} unique internal links on the new pages resolve 200`, dead.length === 0, dead.slice(0, 5).join(" | "));

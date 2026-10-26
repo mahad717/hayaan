@@ -3030,3 +3030,21 @@ Work Log:
 
 Stage Summary:
 - Three SEO/AEO guides complete, locally verified 26/26, covers shipped, llms.txt updated. Blocked at push: NEED A FRESH GitHub token from the owner. On arrival: save .gh-token, push dcb14c3, CI watch, run task127-blog-check.mjs vs https://hayaan.co (WITHOUT SKIP_LINKS — the 50-link check must run against prod), commit prod screenshots + 127-verify worklog entry, wipe token.
+
+---
+Task ID: 127-verify
+Agent: Super Z (main)
+Task: Push Task 127 (fresh token arrived), CI watch, verify the three SEO/AEO guides against production, close out.
+
+Work Log:
+- Fresh token saved to .gh-token; ls-remote confirmed GitHub main = a14a64e (stale local tracking ref again) — only dcb14c3 + 2b05ef3 needed to go up. Pushed a14a64e..2b05ef3; Workers Builds success in ~90s.
+- Prod harness attempt 1 (BASE=https://hayaan.co, full 50-link check): 25/26 PASS, the link check FAILED with 503s on 5 links.
+- 503 investigation: failing set CHANGES between runs (product/category/DB-blog pages only — the 3 new static posts always 200); individually paced requests still show ~10-20% random 503s (control URL 503'd once while the previously-failing URL went 200x5); burst test: 1-2 of 12 concurrent requests 503; a captured 503 carries x-opennext: 1 + server: cloudflare -> error originates INSIDE the OpenNext worker (origin), not CF edge. Transient, recovers in seconds, pre-existing, unrelated to this deploy (commit only adds static data + images). Likely candidates for the owner to check: Cloudflare Workers Logs on a 503 occurrence, Supabase pooler/REST limits. NOT a dead-link problem and NOT a Task 127 regression.
+- Harness upgraded (task127-blog-check.mjs): link verdict is now two-pass — paced pass with 503 backoff, then a 10s-cooldown retry pass; a link counts as dead only if BOTH passes fail. Semantics now match measured prod reality.
+- Prod re-run: 26/26 VERDICT PASS — all 3 posts 200 with h1/quick-answer/JSON-LD @graph (site shell Organization/OnlineStore/WebSite + post BlogPosting/FAQPage/HowTo)/canonical/og:image; covers 200 image/jpeg; /blog index + sitemap.xml + llms.txt + llms-full.txt all include the new guides; all 50 unique internal links resolve 200 (3 needed the cooled-down retry pass).
+- Prod screenshots download/task127-blog-prod-<slug>.png reviewed: cover images render on prod (absolute-URL covers were blank locally by design), question-style H2s, Quick answer box, numbered price lists with linked SKUs.
+- This commit: harness two-pass upgrade + 3 prod screenshots + worklog. Token wiped after push.
+
+Stage Summary:
+- Task 127 CLOSED: three SEO/AEO buyer guides live on hayaan.co/blog (laptop / Galaxy foldables / home appliances prices in Somalia), structured data (BlogPosting+FAQPage+HowTo), sitemap + llms.txt + llms-full.txt all carrying them, zero dead internal links. Verified 26/26 on production.
+- Flagged for owner (separate from 127): intermittent ~10-20% transient 503 on DB-backed prod routes (x-opennext origin error; static routes unaffected). Recommend checking Cloudflare Workers Logs + Supabase metrics; a worker-side retry or CF cache policy on product pages would mask it from users.
