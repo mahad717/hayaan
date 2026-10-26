@@ -46,6 +46,9 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Power Bank Price in Somalia](${SITE}/blog/power-bank-price-in-somalia): every power bank from $15 (Porodo 5,000mAh) to $65 (Green Lion 80,000mAh), honest mAh math, and the chargers that fill them fast.
 - [Nokia Phones in Somalia](${SITE}/blog/nokia-phones-price-in-somalia): eight feature phones from $16 to $53 — days of battery, dual SIM, 4G calling — and which one fits the backup job.
 - [Projector Price in Somalia](${SITE}/blog/projector-price-in-somalia): Maxwell Spectra at $120 for home cinema, Epson CO-W01 at $350 for schools and halls, plus the $90 screen.
+- [Laptop Price in Somalia](${SITE}/blog/laptop-price-in-somalia): MacBooks from $1,350, the Asus TUF gaming i7 at $1,320, refurbished EliteBooks from $310 — which class fits the work.
+- [Samsung Galaxy Z Fold & Flip Price in Somalia](${SITE}/blog/samsung-galaxy-z-fold-price-in-somalia): the full foldable ladder — Flip6 $678 to the Z TriFold $4,900 — with care and buying notes.
+- [Home & Kitchen Appliances Price in Somalia](${SITE}/blog/home-appliances-price-in-somalia): Geepas kitchen machines from $15, the Lightwave water dispenser at $120, and the stabilizer that protects them.
 
 ## Key pages
 

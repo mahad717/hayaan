@@ -1879,6 +1879,303 @@ Because "projector for sale" at a market stall comes with no model name, no retu
 Pick your class in the [computers, TV & gaming category](https://hayaan.co/category/computers-tv-gaming): Spectra for the living room, Epson for the hall, and the screen for whichever room it is. Delivery to your Mogadishu district runs $1.50–$3.00 and $6.95 nationwide — the exact fee shows at checkout before you pay. Outfitting a school, mosque or event business? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
 };
 
+// Task 127 — October 2026 batch 5: laptops, Galaxy foldables, home & kitchen
+// appliances. Prices verified against the live catalog on publish day; every
+// product/category/blog link verified HTTP 200 before shipping.
+
+const post22 = {
+  id: "seo-laptop-price-somalia",
+  slug: "laptop-price-in-somalia",
+  title: "Laptop Price in Somalia (2026): MacBooks, Business & Gaming Laptops From $310",
+  excerpt:
+    "MacBook Air and Pro from $1,350, the Asus TUF gaming i7 at $1,320, refurbished HP EliteBooks from $310 — every laptop you can order online in Somalia, with real prices.",
+  quickAnswer:
+    "Laptops at Hayaan Market start at $310 for the refurbished HP EliteBook 840 G7, with the rest of the EliteBook line from $340 to $990; MacBooks run $1,350–$2,150 and the Asus TUF FX507 gaming i7 is $1,320. Fixed USD prices paid via EVC Plus, Edahab or card, delivered across Somalia.",
+  faqs: [
+    {
+      q: "How much does a laptop cost in Somalia?",
+      a: "At Hayaan Market, refurbished HP EliteBooks start at $310 (840 G7) and reach $990 (840 G9 i7), MacBooks run from $1,350 (Pro M3) to $2,150 (Pro M5), and the Asus TUF FX507 gaming laptop is $1,320 — all fixed USD prices.",
+    },
+    {
+      q: "Is a refurbished laptop safe to buy online?",
+      a: "Yes, when the listing says so plainly. Hayaan marks every refurbished unit in the title — the EliteBook line — with the exact generation, CPU and price, so you know precisely what you are paying for before you order.",
+    },
+    {
+      q: "Which laptop is best for students in Somalia?",
+      a: "The refurbished HP EliteBook 830 G7 at $340 or 830 G8 at $380 — light 13.3-inch business machines with i7 CPUs that handle classes, browsers and Office without the flagship price.",
+    },
+    {
+      q: "Which laptop should a gamer or creator buy?",
+      a: "The Asus TUF FX507 with a 13th-gen i7 at $1,320 is the gaming pick; for video editing and design, the MacBook Pro M4 at $1,720 or M5 at $2,150 is the machine creators reach for.",
+    },
+    {
+      q: "How is delivery charged for laptops?",
+      a: "Mogadishu delivery runs $1.50–$3.00 by district; anywhere else in Somalia is a flat $6.95. The exact fee shows at checkout before you pay.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Set your budget class",
+      text: "Under $400: the refurbished EliteBook line ($310–$990). Above $1,300: new MacBooks ($1,350–$2,150) or the Asus TUF gaming i7 ($1,320).",
+    },
+    {
+      name: "Match the machine to the work",
+      text: "Browsers, documents and classes: an EliteBook. Video editing and design: MacBook Pro. Games: the TUF FX507. Buying the right class matters more than any spec sheet.",
+    },
+    {
+      name: "Read the listing carefully",
+      text: "Check the exact model, condition (new or refurbished) and live stock on the product page — every Hayaan listing states all three up front.",
+    },
+    {
+      name: "Order and choose your district",
+      text: "Add the laptop to the cart, sign in, and pick your delivery district — Mogadishu runs $1.50–$3.00, the rest of Somalia a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay through the secure checkout",
+      text: "Pay with EVC Plus, Edahab or card and keep your order number — it is your reference for support and any follow-up questions.",
+    },
+  ],
+  content: `A laptop is the biggest single purchase most people make online, which is exactly why the price question matters so much: "how much is a laptop in Somalia?" has a different answer on every street corner, and half of them are guesses. Online flips that — the price is printed, the model is exact, and the machine arrives at your door. Here is what the market actually looks like right now.
+
+## What does a laptop cost in Somalia right now?
+
+The live prices at the time of writing, all at [Hayaan Market](https://hayaan.co/category/computers-tv-gaming):
+
+1. [Refurbished HP EliteBook 840 G7](https://hayaan.co/product/hp-elitebook-840-g7-notebook) — **$310**. The cheapest serious laptop on the shelf: 14-inch business build, i7-class CPU.
+2. [Refurbished HP EliteBook 830 G7](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) — **$340**. The 13.3-inch sibling, even easier to carry.
+3. [Refurbished HP EliteBook 830 G8](https://hayaan.co/product/hp-elitebook-830-g8-intel-core-i7-11gen) — **$380**. One generation newer, still under $400.
+4. [Refurbished HP EliteBook 840 G9](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) — **$990**. The late-model flagship of the line: 14-inch, i7-12Gen.
+5. [MacBook Pro M3](https://hayaan.co/product/macbook-pro-m3) — **$1,350**. The entry into Apple silicon.
+6. [MacBook Air M5](https://hayaan.co/product/macbook-air-m5) — **$1,530**. Silent, fanless, all-day battery — the everyday Apple pick.
+7. [MacBook Pro M4](https://hayaan.co/product/macbook-pro-m4) — **$1,720**. The creator's baseline.
+8. [Asus TUF FX507 gaming i7-13Gen](https://hayaan.co/product/asus-tuf-fx507-gaming-i7-13gen) — **$1,320**. The gaming rig.
+9. [MacBook Pro M5](https://hayaan.co/product/macbook-pro-m5) — **$2,150**. The top of the range.
+
+Fixed USD, no VAT, exact price and live stock on every listing.
+
+## MacBooks in Somalia: which one makes sense?
+
+Apple silicon changed the used-vs-new math: even the entry [MacBook Pro M3 at $1,350](https://hayaan.co/product/macbook-pro-m3) is silent, cool and lasts a full working day on battery — which matters in a city where power hours are not guaranteed. The [Air M5 at $1,530](https://hayaan.co/product/macbook-air-m5) is the no-compromise everyday machine: light enough for university bags, strong enough for real work. Step up to the [M4 at $1,720](https://hayaan.co/product/macbook-pro-m4) or [M5 at $2,150](https://hayaan.co/product/macbook-pro-m5) when the work is video, music or design and render time is money.
+
+## Business on a budget: the refurbished EliteBook line
+
+Four refurbished EliteBooks cover the $310–$990 range, and they are the honest answer to "what laptop should my team use?" — business-class builds, i7 CPUs, and prices a new consumer laptop cannot touch. The full comparison lives in the [HP EliteBook buying guide](https://hayaan.co/blog/hp-elitebook-price-in-somalia); the short version: [830 G7 at $340](https://hayaan.co/product/hp-elitebook-830-g7-intel-core-i7-10gen) for students and mobile staff, [840 G9 at $990](https://hayaan.co/product/hp-elitebook-840-g9-intel-core-i7-12gen) for managers and power users. Outfitting a whole office? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.
+
+## The gaming pick
+
+The [Asus TUF FX507 at $1,320](https://hayaan.co/product/asus-tuf-fx507-gaming-i7-13gen) is the machine for after-hours: 13th-gen i7 muscle, a chassis built to take heat and travel, and a price that undercuts the MacBooks while playing in a completely different arena. Pair it with the [PS5 Digital Slim at $850](https://hayaan.co/blog/ps5-price-in-somalia) and the whole household is covered.
+
+## New or refurbished — how to decide
+
+- **Buy refurbished (EliteBooks)** when the work is documents, browsers, email and classes — you save 60–70% against new business machines and the listing states the exact generation you are getting.
+- **Buy new (MacBooks, TUF)** when the work is creative or the machine needs to stay current for five years: Apple silicon's resale value and battery life carry the price difference.
+
+> Rule of the market: buy the class of machine your work needs, not the badge your neighbor admires — a $340 EliteBook that flies through your day beats a $2,150 machine that idles.
+
+## Five checks before you pay
+
+- **Confirm the exact model and condition** — new-sealed and refurbished are different products at different prices, and every Hayaan title says which one it is.
+- **Check the live stock count** on the listing before you send someone to collect money for it.
+- **Use a payment method with a receipt** — EVC Plus, Edahab or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia), never an informal transfer on a big order.
+- **Look at the delivery fee before checkout** — $1.50–$3.00 in Mogadishu by district, $6.95 nationwide.
+- **Keep the order number** — it is your reference for support, warranty questions and follow-ups.
+
+## Ready to order?
+
+Browse the full [computers, TV & gaming category](https://hayaan.co/category/computers-tv-gaming) for live prices, or jump straight to the [EliteBook guide](https://hayaan.co/blog/hp-elitebook-price-in-somalia) if a business laptop is the mission. Setting up a whole desk — chair, printer, monitor? The [home office guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) has the complete list, and the [deals page](https://hayaan.co/deals) is where price drops land first.`,
+};
+
+const post23 = {
+  id: "seo-galaxy-fold-price-somalia",
+  slug: "samsung-galaxy-z-fold-price-in-somalia",
+  title: "Samsung Galaxy Z Fold & Flip Price in Somalia (2026): Foldables From $678",
+  excerpt:
+    "Z Flip6 at $678, Z Fold7 from $1,330, the Fold8 Ultra at $2,150 and the Z TriFold at $4,900 — every Galaxy foldable you can order online in Somalia, with real prices.",
+  quickAnswer:
+    "Galaxy foldables at Hayaan Market: the Z Flip6 is $678, Flip7 $830, Flip8 $950, the Z Fold7 $1,330 (256GB) or $1,500 (512GB), the Z Fold8 Ultra $2,150 and the tri-folding Z TriFold $4,900. Fixed USD prices paid via EVC Plus, Edahab or card, delivered across Mogadishu and Somalia.",
+  faqs: [
+    {
+      q: "How much is the Galaxy Z Fold in Somalia?",
+      a: "The Z Fold7 is $1,330 (256GB) and $1,500 (512GB), the Z Fold8 Ultra is $2,150, and the tri-folding Galaxy Z TriFold tops the range at $4,900 — all with fixed USD prices on hayaan.co.",
+    },
+    {
+      q: "How much is the Galaxy Z Flip in Somalia?",
+      a: "The Z Flip6 is $678, the Z Flip7 is $830, and the newest Z Flip8 is $950 — pocket-size foldables that open into a full-height smartphone screen.",
+    },
+    {
+      q: "Are foldable phones durable enough for daily use?",
+      a: "Yes, with ordinary care: keep sand and grit away from the hinge, don't force the fold past its stop, and leave the factory screen protector on. Treated like the precision device it is, a modern Galaxy foldable handles daily Mogadishu life fine.",
+    },
+    {
+      q: "Fold or Flip — which should I buy?",
+      a: "Flip if you want a normal pocket phone that folds in half — the Flip6 at $678 is the cheapest entry. Fold if you want a tablet-size inner screen for work, split-screen apps and reading — the Fold7 at $1,330 is the productivity pick.",
+    },
+    {
+      q: "How do I order a foldable from Hayaan?",
+      a: "Open the listing for the exact model and storage, add it to the cart, sign in, pick your delivery district — $1.50–$3.00 in Mogadishu, $6.95 nationwide — and pay with EVC Plus, Edahab or card.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Pick your foldable class",
+      text: "Flip ($678–$950) for a pocket phone that folds smaller; Fold ($1,330–$2,150) for a tablet-size inner screen; the Z TriFold ($4,900) for the outright statement piece.",
+    },
+    {
+      name: "Choose your storage",
+      text: "The Fold7 comes in 256GB at $1,330 and 512GB at $1,500 — the extra $170 buys a lifetime of offline video and photos before any cloud plan does.",
+    },
+    {
+      name: "Read the listing",
+      text: "Check the exact model, color, condition and live stock on the product page — every Hayaan listing states all of them up front.",
+    },
+    {
+      name: "Order and choose your district",
+      text: "Add it to the cart, sign in, and pick your delivery district — Mogadishu runs $1.50–$3.00, the rest of Somalia a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay and inspect on delivery",
+      text: "Pay with EVC Plus, Edahab or card through the secure checkout. On arrival, open and close the hinge a few times and check both screens before you sign off.",
+    },
+  ],
+  content: `Two years ago a foldable in Mogadishu was a rumor somebody's cousin imported. Today the whole Samsung Galaxy foldable ladder — from the pocket-size Flip to the tri-folding flagship — is on the shelf with printed prices, live stock and door delivery. This guide walks the ladder and helps you pick the right rung.
+
+## What do Galaxy foldables cost in Somalia right now?
+
+The live prices at the time of writing, all at [Hayaan Market](https://hayaan.co/category/phones-wearables):
+
+1. [Galaxy Z Flip6 5G](https://hayaan.co/product/samsung-galaxy-z-flip6-5g) — **$678**. The cheapest foldable on the shelf.
+2. [Galaxy Z Flip7](https://hayaan.co/product/samsung-galaxy-z-flip7) — **$830**. One generation newer, bigger cover screen.
+3. [Galaxy Z Flip8 5G](https://hayaan.co/product/samsung-galaxy-z-flip8-5g) — **$950**. The current Flip.
+4. [Galaxy Z Fold7 256GB](https://hayaan.co/product/samsung-galaxy-z-fold7-256gb) — **$1,330**. The tablet-in-your-pocket.
+5. [Galaxy Z Fold7 512GB](https://hayaan.co/product/samsung-galaxy-z-fold7-512gb) — **$1,500**. Double the storage.
+6. [Galaxy Z Fold8 Ultra 5G](https://hayaan.co/product/samsung-galaxy-z-fold8-ultra-5g) — **$2,150**. The big-screen flagship.
+7. [Galaxy Z TriFold](https://hayaan.co/product/samsung-galaxy-z-trifold) — **$4,900**. Folds twice — phone to tablet in one motion.
+
+Fixed USD, no VAT, exact price and live stock on every listing.
+
+## Flip or Fold: which one is yours?
+
+- **Flip people** want a phone that is a phone — it just folds in half and disappears into a pocket or small bag. The [Flip6 at $678](https://hayaan.co/product/samsung-galaxy-z-flip6-5g) is the entry; the [Flip8 at $950](https://hayaan.co/product/samsung-galaxy-z-flip8-5g) is the one to buy new if you plan to keep it three years.
+- **Fold people** use the big screen for real work: split-screen WhatsApp next to email, contracts and Quran pages at readable size, videos that fill the inner panel. The [Fold7 at $1,330](https://hayaan.co/product/samsung-galaxy-z-fold7-256gb) is the work machine; the [512GB at $1,500](https://hayaan.co/product/samsung-galaxy-z-fold7-512gb) if you carry a media library offline.
+- **The statement pieces:** the [Fold8 Ultra at $2,150](https://hayaan.co/product/samsung-galaxy-z-fold8-ultra-5g) for the largest refined Fold screen yet, and the [Z TriFold at $4,900](https://hayaan.co/product/samsung-galaxy-z-trifold) for the one-and-only tri-folder — a phone that becomes a full tablet.
+
+## Living with a foldable in Somalia
+
+- **Heat and sun are fine; sand is not.** Keep the hinge away from beach sand and construction dust — grit in the hinge is the one enemy of every foldable.
+- **Leave the factory screen protector on.** It is part of the design, not packaging.
+- **Power cuts are a non-issue** — charge it like any phone, and keep a [power bank](https://hayaan.co/blog/power-bank-price-in-somalia) for the grid hours.
+- **Spare the pocket habit:** the Flip closed is thicker than a slab phone; the Fold closed is two screens thick. Loose pockets and folded phones argue — a slim case settles it.
+
+## What to check before you pay
+
+- **The exact variant** — model, storage and color, all printed on the listing. A "Fold7" is not one product; the 256GB at $1,330 and the 512GB at $1,500 are.
+- **Band and SIM needs** — the listings spec each unit's SIM setup; newer Galaxy foldables add eSIM alongside the physical tray.
+- **Payment with a receipt** — EVC Plus, Edahab or card through the [secure checkout](https://hayaan.co/blog/how-to-pay-online-in-somalia); at this ticket size, never an informal transfer.
+- **Delivery terms** — $1.50–$3.00 by district in Mogadishu, $6.95 nationwide, shown before you pay ([district guide](https://hayaan.co/blog/online-shopping-in-mogadishu)).
+- **Inspect the hinge on arrival** — open, close, check both screens. It takes ten seconds and closes the loop.
+
+> Rule of the market: a foldable rewards buyers who know their class — pick Flip for the pocket, Fold for the desk, and pay the printed price, not the bazaar price.
+
+## Ready to order?
+
+Browse the full [phones & wearables category](https://hayaan.co/category/phones-wearables) for the live foldable line-up. If the foldable budget feels far away, the [Galaxy A18 at $190](https://hayaan.co/blog/samsung-galaxy-a18-price-in-somalia) is the sensible rung below — and if the iPhone camp is calling, the [iPhone price guide](https://hayaan.co/blog/iphone-price-in-somalia) compares apples to apples. The [deals page](https://hayaan.co/deals) is where foldable price drops land first.`,
+};
+
+const post24 = {
+  id: "seo-home-appliances-price-somalia",
+  slug: "home-appliances-price-in-somalia",
+  title: "Home & Kitchen Appliances Price in Somalia (2026): From $15",
+  excerpt:
+    "Kettles from $15, blenders from $25, a 48L mini oven at $75 and a water dispenser at $120 — the home and kitchen appliances you can order online in Somalia, with real prices.",
+  quickAnswer:
+    "Home and kitchen appliances at Hayaan Market start at $15 for a Geepas electric kettle: blenders from $25, coffee maker $35, rice cooker $46, 48L mini oven and grill $75, water dispenser $120, with Lightwave split air conditioners from $260. Fixed USD prices via EVC Plus, Edahab or card, delivered across Somalia.",
+  faqs: [
+    {
+      q: "How much do kitchen appliances cost in Somalia?",
+      a: "At Hayaan Market: electric kettle $15, popcorn maker $20, sandwich maker $25, 2-in-1 blender $25, 4-in-1 blender $39.90, coffee maker $35, rice cooker $46, 48L mini oven and grill $75, and the water dispenser $120 — all fixed USD prices.",
+    },
+    {
+      q: "Which appliance brands are available in Somalia?",
+      a: "The Hayaan range is led by Geepas for kitchen machines (kettles, blenders, ovens, rice cookers) and Lightwave for the bigger loads — water dispensers and split air conditioners from $260 to $460.",
+    },
+    {
+      q: "Do appliances survive Somalia's unstable voltage?",
+      a: "Pair anything with a heating element or motor with the Lightwave digital voltage stabilizer at $65 — it guards ovens, dispensers and AC compressors from the surges and dips that end appliance life early.",
+    },
+    {
+      q: "How much is delivery for home appliances?",
+      a: "Mogadishu delivery is $1.50–$3.00 by district and $6.95 anywhere else in Somalia, shown at checkout before you pay — heavy items like the water dispenser travel the same door-to-door way.",
+    },
+    {
+      q: "Can I order appliances for a restaurant or office?",
+      a: "Yes — the bulk quote form prices multi-unit orders of kettles, ovens, dispensers and AC units, and usually beats the listed price for volume.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "List what your kitchen actually needs",
+      text: "Daily speed: kettle ($15) and blender ($25). Family meals: rice cooker ($46) and the 48L mini oven ($75). Drinking water: the dispenser ($120).",
+    },
+    {
+      name: "Match the size to the household",
+      text: "A 48L oven feeds a family; a two-slice sandwich maker feeds a desk lunch. Buying the right size is the cheapest upgrade of all.",
+    },
+    {
+      name: "Add voltage protection",
+      text: "Put the Lightwave digital voltage stabilizer ($65) between the wall and anything with a motor or heating element — it pays for itself the first bad power day.",
+    },
+    {
+      name: "Order and choose your district",
+      text: "Add everything to the cart, sign in, pick your delivery district — Mogadishu runs $1.50–$3.00, the rest of Somalia a flat $6.95, shown before you pay.",
+    },
+    {
+      name: "Pay securely and keep the order number",
+      text: "Pay with EVC Plus, Edahab or card through the secure checkout — the order number is your reference for support and follow-ups.",
+    },
+  ],
+  content: `Appliances are where online shopping quietly wins in Somalia: a blender is heavy, a mini oven is heavier, and carrying either across town costs time and taxi money that no discount covers. Ordered online, they arrive at the door at printed prices. Here is what the shelf looks like right now.
+
+## What does each appliance cost in Somalia?
+
+The live prices at the time of writing, all at [Hayaan Market](https://hayaan.co/category/home-office):
+
+1. [Geepas electric kettle](https://hayaan.co/product/geepas-electric-kettle) — **$15**. The cheapest machine in the kitchen and the most used: shaha, coffee, noodles, boiling water in minutes.
+2. [Geepas popcorn maker](https://hayaan.co/product/popcorn-maker-geepas) — **$20**. Hot-air popped, no oil — the snack machine.
+3. [Geepas 2-in-1 blender](https://hayaan.co/product/geepas-blender-2in1) — **$25**. Daily smoothies and spice pastes.
+4. [Geepas sandwich maker](https://hayaan.co/product/sandwich-maker-geepas) — **$25**. Seals, toasts, done in three minutes.
+5. [Geepas coffee maker 1.5L](https://hayaan.co/product/geepas-coffee-maker-1.5l) — **$35**. Drip coffee for the whole table.
+6. [Geepas 4-in-1 blender](https://hayaan.co/product/geepas-blender-4in1) — **$39.90**. Blender, mill, chopper and grater in one base.
+7. [Geepas rice cooker with steamer](https://hayaan.co/product/rice-cooker-geepas-with-steamer) — **$46**. Rice on its own timer, bariis never watched again.
+8. [Geepas mini oven and grill 48L](https://hayaan.co/product/geepas-mini-oven-and-grill-48l) — **$75**. The family workhorse: bakes, grills, roasts — a full oven that fits on a counter.
+9. [Lightwave water dispenser](https://hayaan.co/product/water-dispenser-light-wave) — **$120**. Hot and cold on tap for home or office.
+
+Fixed USD, no VAT, exact price and live stock on every listing.
+
+## The big comfort: air conditioning from $260
+
+Appliances do not stop at the kitchen. The Lightwave split AC line runs [9K at $260](https://hayaan.co/product/air-conditioner-lightwave-9k), 12K at $280, 18K at $390 and 24K at $460 — the full BTU-matching walkthrough (which room needs which size) lives in the [air conditioner price guide](https://hayaan.co/blog/air-conditioner-price-in-somalia). A kettle to an AC in one cart, one checkout, one delivery.
+
+## Why Geepas and Lightwave?
+
+Because they are the two names Somali homes already trust: Geepas covers the countertop — kettles to ovens — at prices that make replacing a worn machine painless, and Lightwave covers the big, hot, always-on loads where build quality matters: dispensers, air conditioners and the stabilizer that protects them. Stock moves weekly; restocks and price drops land on the [deals page](https://hayaan.co/deals) first.
+
+## Protect what you buy: the voltage question
+
+Every appliance above has a heating element or a motor, and both die the same way in Somalia: a surge on a bad grid day. The [Lightwave digital voltage stabilizer at $65](https://hayaan.co/product/digital-voltage-stabilizer-lightwave) sits between the wall and the machine and shaves those peaks and dips — for a $75 oven or a $460 AC, it is the cheapest insurance sold on the same shelf. Plug order: wall → stabilizer → appliance.
+
+## Outfitting more than a kitchen?
+
+- **A home desk or small office:** printers, monitors and networking are in the same [home & office category](https://hayaan.co/category/home-office), and the [home office setup guide](https://hayaan.co/blog/setting-up-a-home-office-in-somalia) has the full list.
+- **A restaurant, café or hotel:** kettles, ovens and dispensers multiply fast — price the whole order through the [bulk quote form](https://hayaan.co/quote) instead of checking out piece by piece.
+- **New to ordering online:** the [how-it-works guide](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) covers sign-up, payment and delivery step by step.
+
+> Rule of the market: buy the appliance that earns its counter space daily, protect it with a stabilizer, and let the delivery fee do the carrying.
+
+## Ready to order?
+
+Everything in this guide ships from the [home & office category](https://hayaan.co/category/home-office) — kettles to water dispensers, with the ACs right beside them. Delivery to your Mogadishu district runs $1.50–$3.00 and $6.95 nationwide ([district fees](https://hayaan.co/blog/online-shopping-in-mogadishu)), and every fee shows at checkout before you pay.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -1919,6 +2216,11 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post19, coverImage: "https://hayaan.co/images/blog/power-bank-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T09:00:00.000Z"), createdAt: "2026-10-18T09:00:00.000Z", updatedAt: "2026-10-18T09:00:00.000Z" },
   { ...post20, coverImage: "https://hayaan.co/images/blog/nokia-phones-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T09:30:00.000Z"), createdAt: "2026-10-18T09:30:00.000Z", updatedAt: "2026-10-18T09:30:00.000Z" },
   { ...post21, coverImage: "https://hayaan.co/images/blog/projector-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-18T10:00:00.000Z"), createdAt: "2026-10-18T10:00:00.000Z", updatedAt: "2026-10-18T10:00:00.000Z" },
+  // Task 127 — October 2026 batch 5 (laptops, Galaxy foldables, home & kitchen
+  // appliances) — prices verified against the live catalog on publish day.
+  { ...post22, coverImage: "https://hayaan.co/images/blog/laptop-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T09:00:00.000Z"), createdAt: "2026-10-26T09:00:00.000Z", updatedAt: "2026-10-26T09:00:00.000Z" },
+  { ...post23, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-z-fold-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T09:30:00.000Z"), createdAt: "2026-10-26T09:30:00.000Z", updatedAt: "2026-10-26T09:30:00.000Z" },
+  { ...post24, coverImage: "https://hayaan.co/images/blog/home-appliances-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T10:00:00.000Z"), createdAt: "2026-10-26T10:00:00.000Z", updatedAt: "2026-10-26T10:00:00.000Z" },
 ];
 
 
