@@ -2176,6 +2176,298 @@ Every appliance above has a heating element or a motor, and both die the same wa
 Everything in this guide ships from the [home & office category](https://hayaan.co/category/home-office) — kettles to water dispensers, with the ACs right beside them. Delivery to your Mogadishu district runs $1.50–$3.00 and $6.95 nationwide ([district fees](https://hayaan.co/blog/online-shopping-in-mogadishu)), and every fee shows at checkout before you pay.`,
 };
 
+// Task 129 — keyword cluster: "invest". Investment-intent searches funnel to
+// the /investors equity-round page (Task 128); this pillar guide maps every
+// realistic route for 2026 and links the live Hayaan round as the example.
+const post25 = {
+  id: "seo-how-to-invest-in-somalia",
+  slug: "how-to-invest-in-somalia",
+  title: "How to Invest in Somalia (2026): Realistic Routes, Risks and First Steps",
+  excerpt:
+    "Private businesses, startup equity, livestock, property or foreign markets — a plain-language map of where money actually grows in Somalia right now, and how to start without getting burned.",
+  quickAnswer:
+    "The realistic ways to invest in Somalia in 2026 are private businesses and startups (including equity rounds like Hayaan's), livestock and agriculture, real estate, telecom-adjacent services, and foreign markets through eligible online brokers. Somalia has no deep public stock market yet, so returns come from holding real companies — start small, document everything in USD, and verify before you fund anything.",
+  faqs: [
+    {
+      q: "Is Somalia a good country to invest in?",
+      a: "It is a high-risk, high-need market: demand is deep and young, the 2023 and 2025 investment laws added real protections (national treatment, protection from expropriation, profit repatriation), and everyday payments already run on mobile money. Returns come from entering underserved sectors early — not from safety.",
+    },
+    {
+      q: "Can I invest in Somalia from abroad?",
+      a: "Yes. The diaspora already sends an estimated $1.4–2 billion a year home, and modern processes are remote-first — Hayaan Market's equity round, for example, runs entirely over email, video calls and a data room, denominated in USD.",
+    },
+    {
+      q: "How much money do I need to start investing in Somalia?",
+      a: "A small trading business can start from a few hundred dollars, startup equity rounds typically open at $10,000 per ticket (Hayaan's current round starts there), and foreign markets through an eligible broker can start from almost nothing.",
+    },
+    {
+      q: "What is the safest way to invest in Somalia?",
+      a: "Invest in what you can verify: a registered company, a signed USD-denominated agreement, a licensed money path, and a sector you understand. Never chase guaranteed monthly returns — that promise is the signature of a scam in every country.",
+    },
+    {
+      q: "Can I invest in a company I already buy from as a customer?",
+      a: "Often yes, by asking. Hayaan Market, the marketplace behind this blog, is currently opening a limited equity round to its community — the expression-of-interest form at https://hayaan.co/investors sends you the deck and a call with the founding team.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Decide the role you want",
+      text: "Silent capital, active operator, or customer-investor? A livestock trader runs a different life from an equity holder in a startup. Decide how much time you can give before you decide where the money goes.",
+    },
+    {
+      name: "Pick the route that matches your money and time",
+      text: "Small ticket, hands-off: startup equity or funds. Medium ticket, local knowledge: an SME or farm. Larger ticket, operator appetite: property or a services business. Foreign markets for diversification.",
+    },
+    {
+      name: "Verify the people and the paperwork",
+      text: "Ask for the company's registration, the exact instrument on offer (SAFE, shares, profit share), and the operator's licence where one is required. The Central Bank of Somalia licenses banks and financial institutions — claims of being 'licensed' should check out there.",
+    },
+    {
+      name: "Agree terms in writing, in USD",
+      text: "Every real investment closes with a signed document that says what you own, what happens in a bad year, and how you exit. Keep the payment inside licensed rails so there is a receipt on both sides.",
+    },
+    {
+      name: "Start small, track, and scale on evidence",
+      text: "Put in the smallest serious ticket first, follow the company for two quarters — sales, delivery, reporting — and scale only what has earned it. Evidence compounds; so does regret.",
+    },
+  ],
+  content: `Somalia is one of the youngest and fastest-urbanizing economies on earth — and for the first time in a generation, its government is writing investment laws instead of just surviving headlines. Yet almost all "how to invest" advice online assumes a broker account and a national stock exchange, two things Somalia is only now building. This guide maps the routes that actually exist in 2026, what each costs to enter, and the checks that separate an investment from a donation to a scammer.
+
+## Why investors are looking at Somalia again
+
+Three things changed. First, the legal floor: the 2023 Investors and Investments Protection Law formalized national treatment, protection from unlawful expropriation, and profit repatriation, and the 2025 Investment Law strengthened the institutional framework around them. Second, the money rails: mobile wallets like EVC Plus and Zaad already move value for millions of people every day, which is exactly the plumbing an investor wants underneath a consumer business. Third, the proof of demand: the diaspora sends an estimated $1.4–2 billion home every year — capital is not the missing piece; structured places to put it are.
+
+You can feel that structure arriving in small ways. A marketplace like [Hayaan Market](https://hayaan.co/blog/where-to-buy-electronics-online-in-somalia) now sells electronics at fixed USD prices with [documented checkout and delivery](https://hayaan.co/blog/online-shopping-in-somalia-how-it-works) — the kind of formal, receipt-backed commerce that institutional money requires and that simply did not exist at scale a few years ago.
+
+## What are the realistic ways to invest in Somalia today?
+
+1. **Private businesses and SMEs** — the classic route: a shop, a pharmacy, a cold-chain, a logistics fleet. Returns arrive as profit share or growth in the business's value, and your diligence is personal and direct.
+2. **Startup equity** — young companies raising structured rounds with real documents. The live example is Hayaan Market itself: the fixed-price marketplace behind this blog is [opening a limited equity round](https://hayaan.co/investors), tickets from $10,000, remote-first and USD-denominated — you express interest, get the deck and the numbers, and decide.
+3. **Livestock and agriculture** — the backbone of exports to the Gulf. Entry can be a few hundred dollars if you know the trade; the risk is operational, not regulatory.
+4. **Property and land** — rents in Mogadishu, Hargeisa and Bosaso keep climbing with urbanization. Buy only what you can verify with clean documents and local counsel.
+5. **Telecom and money-transfer ecosystems** — established, cash-generative, and the hardest gate for outsiders; usually a relationship play.
+6. **Foreign share markets** — many Somalis diversify through eligible international brokers (see the [Somalia share market guide](https://hayaan.co/blog/somalia-share-market) for what that involves).
+
+## Can foreigners invest in Somalia?
+
+Yes. The 2015 Foreign Investment Law opened the door, the 2023 law guarantees national treatment and protection from expropriation, and Somalia is a contracting state to the ICSID convention for dispute settlement. In practice: partner with people on the ground, document everything in USD, and expect the market to move at relationship speed rather than database speed. The formal banking layer is growing too — the Central Bank of Somalia has begun licensing international banks — but most day-to-day value still rides the mobile rails.
+
+## How do the diaspora invest without flying home?
+
+Remote-first is the new normal. Equity rounds run over email and video: Hayaan's round sends the deck and data room before anyone buys a ticket. Money moves through licensed transfer operators with receipts on both ends — the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) walks through how a documented transfer works. And marketplaces let you test demand before you commit capital: you can watch what sells at fixed prices before funding the supply.
+
+## How do you avoid investment scams in Somalia?
+
+- **Guaranteed monthly returns are a lie.** No real investment pays a fixed monthly percentage forever — that sentence alone ends the conversation.
+- **"Licensed" must check out.** Ask which institution issued the licence and verify it; the Central Bank of Somalia's licensing registry covers banks and financial institutions.
+- **Halal branding is not a licence.** Shariah compliance is a real discipline with real scholars; a logo and the word "halal" on a flyer are not either.
+- **Pressure and secrecy are the tell.** "Only five slots, tell nobody, decide today" is a scam script in Mogadishu, Minneapolis and everywhere between.
+- **Payouts from new investors are the endgame.** If "profits" only arrive while recruitment keeps running, you are inside a Ponzi — exit before it exits you.
+
+> Rule of the market: a real investment can lose money on a bad year, and its paperwork says so. A scheme that "cannot lose" is not investing your money — it is taking it.
+
+## So where do you start?
+
+Pick a sector you already understand, verify the people, agree terms in writing, and let the first small ticket buy you information before it buys anyone returns. If the route you want is owning a share of the marketplace Somali shoppers already use, [Hayaan's equity round](https://hayaan.co/investors) is open: submit the expression-of-interest form, and the founding team sends the deck, the numbers behind it, and a time to talk. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
+};
+
+// Task 129 — keyword cluster: "share market" + "shares". Anchors the honest
+// answer (NSES launched June 2025, public market still nascent) and routes
+// share-ownership intent to the private-market example: /investors.
+const post26 = {
+  id: "seo-somalia-share-market",
+  slug: "somalia-share-market",
+  title: "Somalia Share Market: Does Somalia Have a Stock Exchange? (2026)",
+  excerpt:
+    "Somalia launched its first national securities exchange in 2025 — here is what actually exists today, how Somalis buy shares right now, and what the share market means for your money.",
+  quickAnswer:
+    "Somalia's first national exchange, the National Securities Exchange of Somalia (NSES), formally launched in June 2025 with trading targeted for 2026 and no deep public listings yet. Today Somalis own shares mainly through private companies — such as startup equity rounds like Hayaan's — or through eligible foreign brokers, while the private Somali Stock Exchange (SSE) has listed a handful of firms since 2015.",
+  faqs: [
+    {
+      q: "Does Somalia have a stock exchange?",
+      a: "Yes, but it is new. The National Securities Exchange of Somalia (NSES) formally launched in Mogadishu in June 2025; a market-data platform went live in April 2025, trading was targeted for 2026, and the exchange aims for at least ten listed companies within two years. A private initiative, the Somali Stock Exchange (SSE), has operated since 2015.",
+    },
+    {
+      q: "How do I buy shares in Somalia today?",
+      a: "Two ways: buy equity directly in private companies through their funding rounds — for example, Hayaan Market's limited equity round at https://hayaan.co/investors — or invest in foreign-listed companies through an eligible international broker. Deep public trading in Somalia is still ahead, not here.",
+    },
+    {
+      q: "Can Somalis buy shares in foreign companies?",
+      a: "Often, yes — a number of international brokers accept Somali residents and fund accounts in USD. Check that the broker supports your country of residence, what funding rails it accepts from Somalia, the fee schedule, and where your assets are custodied before you send money.",
+    },
+    {
+      q: "Are shares in private Somali companies safe?",
+      a: "They carry real, but different, risk: private shares are harder to sell (illiquid) and their value depends entirely on the company's execution. Reduce the risk with documents — a signed agreement, an honest valuation, reporting you can read — and by only investing amounts you can leave for years.",
+    },
+    {
+      q: "What is a share, in simple words?",
+      a: "A share is a slice of ownership in a company. You earn in two ways: the slice can grow in value as the company grows, and profitable companies can pay dividends. The slice can also shrink if the company does badly — that is the deal.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Find the offer and read it twice",
+      text: "Get the company's own materials — deck, numbers, the instrument on offer. If a 'share' is offered with no documents at all, you have found a scam, not a share.",
+    },
+    {
+      name: "Verify who is behind it",
+      text: "Ask for the company's registration and the names signing the agreement. A real issuer can name its founders, its lawyer and its bank — and answers questions without getting offended.",
+    },
+    {
+      name: "Understand the valuation and the instrument",
+      text: "What is the whole company valued at, what exactly do you hold (SAFE, priced shares, profit share), and what rights come with it? If you cannot restate the deal in one sentence, do not sign.",
+    },
+    {
+      name: "Sign definitive documents and pay on the rails",
+      text: "Sign a real agreement in USD and pay through a licensed, receipted channel — mobile money through the company's documented checkout, a licensed transfer operator, or a bank. Never a personal wallet.",
+    },
+    {
+      name: "Keep records and follow the company",
+      text: "Store your signed agreement and payment receipt, then follow the company's progress quarterly. Ownership you never check on is called a lottery ticket; ownership you track is called an investment.",
+    },
+  ],
+  content: `Searches for "share market" have exploded in Somalia over the past two years — the diaspora is growing, savings are growing, and people want their money to do more than sit in a wallet. The honest answer has two halves: Somalia now has the first pieces of a real share market, and the practical way to own shares today is still private companies and foreign markets. Here is both, plainly.
+
+## Does Somalia have a stock exchange?
+
+The milestone is real: the **National Securities Exchange of Somalia (NSES)** formally launched in Mogadishu on 19 June 2025, with the country's president, prime minister and finance minister present. A market-data platform went live in April 2025, trading was targeted for early 2026, and the exchange has said it aims for at least ten listed companies within two years — looking first at telecom, banking, real estate, energy and agriculture, with a Shariah-compliant sukuk platform planned. The Central Bank of Somalia is providing technical support while the legal framework matures.
+
+Alongside it, the **Somali Stock Exchange (SSE)** — a private initiative founded in 2015 by the Somali Economic Forum — lists a small number of companies informally. And for context, historically shares in Somali businesses have always changed hands through close networks: family firms, partnerships, clan-linked trading houses. What is new is the ambition to formalize all of that.
+
+The reality check for 2026: there is no deep, liquid public market yet. Daily "share market" investing in Somalia still means owning pieces of private companies or investing abroad.
+
+## What is a share?
+
+A share is a slice of ownership in a company. Buy one and you own part of everything the company has and earns — its stock, its brand, its future profits. Returns come two ways: the slice grows in value as the company grows, and profitable companies can share cash through dividends. The honest other side: if the company does badly, your slice shrinks. A share is not a deposit; it is ownership, with everything ownership implies.
+
+## How can you own shares in Somalia right now?
+
+Through private companies raising money with real documents. The live example is Hayaan Market, the fixed-price marketplace behind this blog: it is [opening a limited equity round](https://hayaan.co/investors) where investors express interest, receive the deck and the numbers, and close through a SAFE or priced equity — USD-denominated, remote-first, tickets from $10,000. No bazaar, no verbal promises: a form, a conversation, a diligence room, a signature.
+
+Private shares come with one big trade-off you must accept with open eyes: **they are illiquid**. You will hold them for years, not hours, and there is no app button to sell. That is precisely why the diligence steps below matter more than they do on a public exchange.
+
+## Can you invest in foreign share markets from Somalia?
+
+Yes — many Somalis do. A number of international brokers accept Somali residents, fund in USD, and give access to foreign-listed shares and index funds. Before sending money anywhere, check four things: that the broker officially supports your country of residence; which funding rails it accepts from Somalia (and what those transfers cost); the full fee schedule; and where your assets will be custodied. Start boring — broad index funds — and treat anything promising exotic guaranteed returns as a scam until proven otherwise.
+
+## Red flags when someone offers you "shares"
+
+- **Paper certificates with guaranteed dividends.** Real equity comes with signed agreements, not ornamental paper and fixed monthly promises.
+- **"Listed on an exchange" that cannot be checked.** Ask which exchange, then verify on that exchange's own site.
+- **Pressure and secrecy.** "Decide today, tell nobody" is the script of every fraud, in every currency.
+- **Payments to personal wallets.** A company raising money receives it on documented, licensed rails — the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) shows what a documented money path looks like.
+- **Returns that arrive only while you recruit.** New-investor money paying old-investor "profits" is a Ponzi, and it ends the way Ponzis end.
+
+> Rule of the market: a real share comes with real documents — a valuation you can question, an agreement you can read, and a company you can call. Anything less is a story about a share.
+
+## The bottom line
+
+The share market is arriving in Somalia in stages: the NSES is building the public rails, private rounds are doing the actual funding today. If you want to own a slice of Somalia's e-commerce before the public market matures, [Hayaan's equity round](https://hayaan.co/investors) is the live example — express interest and the founding team sends the deck. And if your money's infrastructure needs sorting first, the [how-to-pay guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) covers the documented rails every investment should ride. This guide is general information, not financial advice, and not an offer to sell or a solicitation to buy securities.`,
+};
+
+// Task 129 — keyword cluster: "securities". Defines the instrument families
+// in plain Somali-market terms, names the real regulatory map (CBS + NSES
+// SRO status), arms readers against fake offers, and explains the SAFE
+// instrument Hayaan's own round closes with.
+const post27 = {
+  id: "seo-securities-in-somalia",
+  slug: "securities-in-somalia",
+  title: "Securities in Somalia: What They Are and How to Invest Safely (2026)",
+  excerpt:
+    "Shares, bonds and funds explained in plain language — what securities Somalis can actually buy today, who regulates what, and the checklist that filters a real offer from a scam.",
+  quickAnswer:
+    "Securities are tradable financial assets: shares (equity in a company), bonds (debt you can hold or sell), and fund units that pool many investors. Somalia's public securities market is still in its infancy — the NSES exchange launched in 2025 is just starting — so today's real opportunities are private equity offers like Hayaan's startup round, Shariah-compliant products through licensed banks, and foreign-listed securities via eligible brokers.",
+  faqs: [
+    {
+      q: "What are securities in simple terms?",
+      a: "Securities are documents (now usually digital) that represent money you put into someone else's venture: shares mean you own a slice, bonds mean you lent money, fund units mean you pooled your money with others under a manager. Each earns differently — and each can lose.",
+    },
+    {
+      q: "Who regulates securities in Somalia?",
+      a: "The Central Bank of Somalia licenses and supervises banks and financial institutions, and the new National Securities Exchange (NSES) operates as a private self-regulatory organization working with the Ministry of Finance, with Central Bank technical support. Because the public disclosure regime is still maturing, your own diligence matters more than it would in an older market.",
+    },
+    {
+      q: "Are Islamic finance products securities?",
+      a: "Some are structured like them, without interest. Murabaha is a cost-plus purchase you repay in installments; sukuk are certificates backed by real assets that pay a share of returns instead of interest. Somalia's NSES plans a Shariah-compliant sukuk platform as it matures, and licensed banks offer Islamic products today.",
+    },
+    {
+      q: "What is a SAFE?",
+      a: "A Simple Agreement for Future Equity — the standard startup investment instrument. You invest now; your money converts into shares at the company's next priced round, usually with a discount for arriving early. It is the instrument Hayaan Market's current equity round can close with, alongside priced equity for larger tickets.",
+    },
+    {
+      q: "How do I spot a fake securities offer?",
+      a: "Guaranteed high returns, an issuer you cannot verify, marketing that leans on the word 'halal' instead of documents, pressure to decide fast, secrecy, and payments into personal wallets. Real securities trace to a legal entity, a signed agreement and a licensed money path — if any of the three is missing, walk away.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Ask who is issuing, and under what law",
+      text: "Every security comes from a specific registered company under a specific jurisdiction's rules. Get the exact legal name, registration number and governing law of anything you are offered — in writing.",
+    },
+    {
+      name: "Check the regulator trail",
+      text: "Banks and financial institutions answer to the Central Bank of Somalia; an exchange's claims should check out on the exchange's own site. 'Regulated' with no name attached is a red flag, not a reassurance.",
+    },
+    {
+      name: "Demand the documents",
+      text: "The instrument, the valuation, the risks, the exit. A real issuer has these ready before you ask; a fake one has a reason they are 'being printed'.",
+    },
+    {
+      name: "Sanity-check the returns",
+      text: "Compare the promise with boring benchmarks: global markets have historically averaged single digits annually, with down years. A guaranteed 15% a month is not an outlier — it is an impossibility wearing a suit.",
+    },
+    {
+      name: "Start small and keep the paper trail",
+      text: "Put in the smallest serious amount first, pay only through licensed, receipted channels, and keep every document. If the issuer objects to any of that, they have answered your diligence for you.",
+    },
+  ],
+  content: `The word "securities" sounds like it belongs on a Wall Street trading floor. But the moment a neighbor offers you shares in his shop, or a WhatsApp group pitches a "guaranteed 15% monthly" investment club, you are dealing with securities — or with fakes wearing their clothes. Somalia's market is young enough that the fakes are loud and the real offers are quiet, so this guide does three things: defines the instrument families, maps what you can actually buy here today, and gives you the checklist that filters one from the other.
+
+## What are securities, exactly?
+
+Three families cover almost everything:
+
+1. **Equity — shares.** You own a slice of a company. You earn through growth in the slice's value and, sometimes, dividends. Example: buying into a startup's funding round, the way Hayaan Market's [limited equity round](https://hayaan.co/investors) works today.
+2. **Debt — bonds and their Islamic cousins.** You lend, you get repaid with profit. Interest-bearing bonds are the Western form; sukuk are the Shariah-compliant form, backed by real assets and paying a share of returns. Somalia's NSES plans a sukuk platform as it matures.
+3. **Funds.** Your money pools with many others under one manager and spreads across many holdings — the standard way to own hundreds of companies with one ticket, available today mainly through foreign brokers.
+
+Every family shares one DNA trait: a security is a **legal claim**, not a verbal promise. That claim is only as good as the entity behind it and the documents that define it.
+
+## What securities can you actually buy in Somalia today?
+
+- **Private equity offers.** Startups and SMEs raising structured rounds with signed agreements. This is where Somalia's newest, most documented opportunities live — Hayaan's round at [hayaan.co/investors](https://hayaan.co/investors) is the working example: expression of interest, deck and data room, then a SAFE or priced equity in USD.
+- **Islamic bank products.** Licensed banks offer murabaha (cost-plus purchase repaid in installments) and related structures today; sukuk arrive with market maturity.
+- **Foreign-listed securities.** Through eligible international brokers — shares, ETFs and index funds abroad, funded in USD. The [Somalia share market guide](https://hayaan.co/blog/somalia-share-market) covers what to verify in a broker.
+- **Public Somali listings, soon.** The NSES launched in June 2025 and targets its first listed companies as the framework matures. When those listings come, they will be the first genuinely public securities the country has had in decades — watch that space with interest and with patience.
+
+## Who regulates securities in Somalia?
+
+The map is simple and worth memorizing. The **Central Bank of Somalia** licenses and supervises banks and financial institutions — the sound-money layer. The **NSES** operates as a private self-regulatory organization working with the Ministry of Finance to build policy and legal frameworks, with Central Bank technical support. And the 2025 Investment Law strengthened the governance frame around foreign and domestic investment.
+
+What does not exist yet: a deep public disclosure regime like the SEC's. Translation: in Somalia, **your own diligence is the regulator**. The steps below are not optional extras; they are the system.
+
+## How do you spot a fake securities offer?
+
+- **Guaranteed high returns.** The single most reliable scam signal on earth. Global markets average single digits annually *with* down years; a guaranteed 15% monthly is arithmetic fraud.
+- **An issuer you cannot trace.** No registered company, no legal name, no governing law — nothing to sue, nothing to verify.
+- **"Halal" as the pitch instead of the structure.** Real Shariah compliance is documented by scholars and contracts, not by a logo on a flyer.
+- **Pressure and secrecy.** "Decide today, don't tell anyone" — the script never changes.
+- **Money flowing into personal wallets.** Real issuers collect through licensed, receipted rails; the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) shows what those look like.
+- **Old investors paid by new investors.** The Ponzi signature. When "returns" depend on recruitment, the end date already exists — you just do not know it yet.
+
+Fake investment clubs have cost Somali families real savings, repeatedly, on two continents. The pattern is always identical; learn it once and you are protected for life.
+
+## What is a SAFE — and why startups use it
+
+A SAFE (Simple Agreement for Future Equity) is the standard way early-stage companies raise: you invest now at today's terms, and your money converts into shares at the company's next priced round — usually with a discount for arriving early. It is simpler than full share paperwork, honest about the risk, and it aligns the investor with the company's growth. Hayaan Market's current round closes this way for most tickets, and through priced equity for larger ones — the [expression-of-interest form](https://hayaan.co/investors) starts that process.
+
+> Rule of the market: every real security can be traced to a legal entity, a signed document and a regulated money path. If one of the three is missing, it is not an investment — it is an exit with your money on it.
+
+## Where this leaves you
+
+Learn the instrument, verify the issuer, size the bet, keep the paper. If the security you want is a slice of Somalia's e-commerce, Hayaan's [equity round](https://hayaan.co/investors) is open today — the form takes two minutes and buys you a conversation, not a commitment. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -2221,6 +2513,12 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post22, coverImage: "https://hayaan.co/images/blog/laptop-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T09:00:00.000Z"), createdAt: "2026-10-26T09:00:00.000Z", updatedAt: "2026-10-26T09:00:00.000Z" },
   { ...post23, coverImage: "https://hayaan.co/images/blog/samsung-galaxy-z-fold-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T09:30:00.000Z"), createdAt: "2026-10-26T09:30:00.000Z", updatedAt: "2026-10-26T09:30:00.000Z" },
   { ...post24, coverImage: "https://hayaan.co/images/blog/home-appliances-price-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-26T10:00:00.000Z"), createdAt: "2026-10-26T10:00:00.000Z", updatedAt: "2026-10-26T10:00:00.000Z" },
+  // Task 129 — October 2026 batch 6 (invest / share market / shares / securities)
+  // — the investing keyword cluster, funneling to /investors. Exchange facts
+  // verified against June 2025 NSES launch reporting on publish day.
+  { ...post25, coverImage: "https://hayaan.co/images/blog/how-to-invest-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T09:00:00.000Z"), createdAt: "2026-10-29T09:00:00.000Z", updatedAt: "2026-10-29T09:00:00.000Z" },
+  { ...post26, coverImage: "https://hayaan.co/images/blog/somalia-share-market.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T09:30:00.000Z"), createdAt: "2026-10-29T09:30:00.000Z", updatedAt: "2026-10-29T09:30:00.000Z" },
+  { ...post27, coverImage: "https://hayaan.co/images/blog/securities-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T10:00:00.000Z"), createdAt: "2026-10-29T10:00:00.000Z", updatedAt: "2026-10-29T10:00:00.000Z" },
 ];
 
 

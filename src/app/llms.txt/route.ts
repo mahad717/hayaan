@@ -50,12 +50,19 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Samsung Galaxy Z Fold & Flip Price in Somalia](${SITE}/blog/samsung-galaxy-z-fold-price-in-somalia): the full foldable ladder — Flip6 $678 to the Z TriFold $4,900 — with care and buying notes.
 - [Home & Kitchen Appliances Price in Somalia](${SITE}/blog/home-appliances-price-in-somalia): Geepas kitchen machines from $15, the Lightwave water dispenser at $120, and the stabilizer that protects them.
 
+## Investing in Somalia (guides)
+
+- [How to Invest in Somalia](${SITE}/blog/how-to-invest-in-somalia): the realistic 2026 routes — private businesses, startup equity, livestock, property, foreign markets — with the checks that keep you safe.
+- [Somalia Share Market](${SITE}/blog/somalia-share-market): does Somalia have a stock exchange? The NSES (launched June 2025), the SSE, and how Somalis own shares today.
+- [Securities in Somalia](${SITE}/blog/securities-in-somalia): what securities are, what you can actually buy in Somalia now, who regulates what, and how to vet any offer.
+
 ## Key pages
 
 - [Full product catalog for LLMs](${SITE}/llms-full.txt): every active product with name, price, category and URL in plain text.
 - [All products](${SITE}): the storefront catalog.
 - [Blog](${SITE}/blog): buyer guides and store news.
 - [Bulk / B2B quote request](${SITE}/quote): for offices, schools, hotels and shops.
+- [Invest in Hayaan](${SITE}/investors): the equity-round page — express interest and receive the investor deck.
 - [Deals & giveaways](${SITE}/deals): current promotions and deal alerts.
 
 ## Policies

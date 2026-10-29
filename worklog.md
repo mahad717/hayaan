@@ -3083,3 +3083,21 @@ Work Log:
 Stage Summary:
 - Task 128 CLOSED: hayaan.co/investors live — equity-round pitch (verified catalog stats, why-now, use of funds, 4-step process, 6-Q FAQ with schema), EOI form wired into the existing lead engine (admin Leads tab + email notification), footer link, sitemap entry. 15/15 local + prod.
 - OWNER ACTION (one line, unlocks the clean path): run src/lib/supabase/migrations/2026-10-26-investor-type.sql in the Supabase SQL editor. Until then investor submissions land as quote-typed rows prefixed "INVESTOR INQUIRY" (nothing is lost), and after it they get the green "Investor" badge in the admin Leads tab.
+
+---
+Task ID: 129
+Agent: Super Z (main)
+Task: "I did the Supabase migration, now optimize for me these keywords for seo and AEO; they have high searchs — shares, invest, share market, securities." Keyword cluster content push funneling investment-intent searchers into the Task 128 /investors equity-round page.
+
+Work Log:
+- Owner's migration = 2026-10-26-investor-type.sql (the 128-verify owner action); investor leads now take the clean type='investor' path. This task is the content counterpart to the funnel.
+- Keyword-to-post mapping (4 keywords, 3 posts, no cannibalization): "invest" -> how-to-invest-in-somalia (pillar); "share market" + "shares" -> somalia-share-market; "securities" -> securities-in-somalia. All three cross-link and funnel to https://hayaan.co/investors.
+- Facts verified BEFORE writing (the AEO quickAnswers are quotable claims): NSES formally launched Mogadishu 19 June 2025 (president/PM/finance minister present; market-data platform April 2025; trading targeted early 2026; 10+ listings target; sukuk platform planned; CBS technical support) per Xinhua via African Capital Markets News + US State Dept 2026 Investment Climate Statement; SSE = private Somali Economic Forum initiative since 2015; 2023 Investors Protection Law / 2025 Investment Law / 2015 Foreign Investment Law / ICSID; remittances $1.4-2B/yr. Compliance posture mirrors /investors: EOI framing only, per-post "not an offer / not advice" line, scam-spotting sections.
+- Wrote post25/26/27 in src/lib/blog-seo-posts.ts (~800 words each, question-style H2s, 40-60-word quickAnswers, 5 FAQs + 5 howtoSteps each -> FAQPage + HowTo schema), registered with covers + staggered 2026-10-29 publish stamps. llms.txt: new "Investing in Somalia (guides)" section + "Invest in Hayaan" line under Key pages. sitemap.xml/llms-full.txt pick the posts up automatically.
+- Covers: scripts/task129-blog-covers.mjs (z-ai sdk 1344x768, cream editorial series; seedling-on-coins+phone / coin bar-chart / glass-dome+padlock; no-text prompts) -> task129-optimize-covers.py (1200x675 JPG q82) -> public/images/blog/<slug>.jpg x3, visually reviewed (clean, zero text).
+- Harness scripts/task129-keyword-check.mjs (127's two-pass 503-tolerant design + /investors llms.txt assert); pipeline scripts/t129-run.sh (lsof port kills, setsid, EADDRINUSE guard, poll /blog).
+- NEW LESSON: hardcoded chrome version paths rot AGAIN (155 -> 156 after another sandbox recycle) — screenshots silently skipped on run 1. Harness now globs /home/z/.cache/puppeteer/chrome/linux-* at runtime (newest first) and prints an explicit skip note if no binary found.
+- Local: 26/26 VERDICT PASS (incl. 12/12 unique internal links resolving — the investing posts link only static routes, so even the link phase runs locally). Screenshots download/task129-blog-local-*.png reviewed: covers blank locally by design (absolute URLs), question-H2s + quick answer boxes + bold-led lists all correct.
+
+Stage Summary:
+- Three SEO/AEO investing guides complete and locally verified 26/26, covers shipped, llms.txt extended, all funneling to /investors. Push + CI + prod verify next (link check MUST run vs prod; 503 two-pass tolerance already in the harness).
