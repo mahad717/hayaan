@@ -163,7 +163,7 @@ exception when duplicate_object then null; end $$;
 -- routes only) reads and writes; see migrations/2026-09-17-leads.sql.
 create table if not exists leads (
   id         uuid primary key default uuid_generate_v4(),
-  type       text not null default 'newsletter' check (type in ('newsletter', 'quote')),
+  type       text not null default 'newsletter' check (type in ('newsletter', 'quote', 'deals', 'investor')),
   name       text,
   email      text,
   phone      text,

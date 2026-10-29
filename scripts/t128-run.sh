@@ -1,15 +1,27 @@
 #!/bin/bash
 # Task 128 local verification pipeline — every stage marked, hard-bounded.
+# NOTE: fuser does NOT exist in this sandbox — port kills must go through
+# lsof/ss. Also: `bun x next start` spawns a next-server CHILD, so the
+# server must be started in its own process group (setsid) and killed as
+# a group, or the child outlives the kill and wedges the next run.
 cd /home/z/my-project
 log() { echo "=== [$(date +%H:%M:%S)] $1 ==="; }
 
+kill_port() {
+  local pids
+  pids=$(lsof -t -i tcp:"$1" 2>/dev/null)
+  [ -n "$pids" ] && kill -9 $pids 2>/dev/null
+  return 0
+}
+
 log "port cleanup"
-fuser -k 3221/tcp 9357/tcp 2>/dev/null
+kill_port 3221
+kill_port 9357
+pkill -9 -f "next-server" 2>/dev/null
 sleep 1
 
 log "server start"
-NODE_ENV=production bun x next start -p 3221 > /tmp/t128-server.log 2>&1 &
-SRV=$!
+setsid env NODE_ENV=production bun x next start -p 3221 > /tmp/t128-server.log 2>&1 &
 disown
 
 log "poll"
@@ -21,16 +33,23 @@ for i in $(seq 1 40); do
 done
 if [ "$up" != "1" ]; then
   log "SERVER NEVER CAME UP — log follows"
-  tail -20 /tmp/t128-server.log
+  strings /tmp/t128-server.log | tail -20
 else
+  log "boot check (EADDRINUSE guard)"
+  if strings /tmp/t128-server.log | grep -q "EADDRINUSE"; then
+    log "FATAL: new server hit EADDRINUSE — results would come from a stale server. Aborting."
+    kill_port 3221; kill_port 9357; pkill -9 -f "next-server" 2>/dev/null
+    exit 3
+  fi
   log "harness (timeout 150)"
   timeout 150 node scripts/task128-investor-check.mjs
   echo "harness_rc=$?"
 fi
 
 log "cleanup"
-kill -9 $SRV 2>/dev/null
-fuser -k 3221/tcp 9357/tcp 2>/dev/null
+kill_port 3221
+kill_port 9357
+pkill -9 -f "next-server" 2>/dev/null
 sleep 1
 python3 - << 'PYEOF'
 import sqlite3

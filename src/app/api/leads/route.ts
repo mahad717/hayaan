@@ -171,7 +171,23 @@ export async function POST(req: NextRequest) {
 
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
-    const { error } = await supabase.from("leads").insert(row);
+    let { error } = await supabase.from("leads").insert(row);
+    if (error && (error as { code?: string }).code === "23514") {
+      // Pre-migration fallback (Task 128): installs that haven't run
+      // migrations/2026-10-26-investor-type.sql keep a leads_type_check
+      // CHECK without 'investor'. Never drop an investor lead — store it
+      // as a quote-typed row whose message announces the investor intent.
+      // The notification below still fires with the investor subject.
+      const fallback = await supabase.from("leads").insert({
+        ...row,
+        type: "quote",
+        message: `INVESTOR INQUIRY (stored as quote until the investor-type migration runs)\n${row.message ?? ""}`.slice(
+          0,
+          MAX_LEN.message,
+        ),
+      });
+      error = fallback.error;
+    }
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     await notifyLead(row);
     return NextResponse.json({ ok: true });
