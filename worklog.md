@@ -3148,3 +3148,17 @@ Work Log:
 
 Stage Summary:
 - Task 130 CLOSED: the marked card is two plain sentences ("Buyers find Hayaan through the guides we publish…"), all acquisition-method details (keyword targets, Google/AI answer-engine structured data, SEO/AEO naming) are off the public investor page, prod verified 12/12, screenshots archived. GitHub token + CF token wiped post-verify.
+
+---
+Task ID: 131
+Agent: Super Z (main)
+Task: Owner-requested backlink to https://androva.ai/ (Androva — "Your Seven-Person Marketing Team", AI marketing SaaS).
+
+Work Log:
+- Placement analysis: the repo's only backlink precedent (Tasks 81/83) is a contextual "tools we like" paragraph on online-shopping-in-somalia-how-it-works — but Task 83 established that DB rows shadow SEO_POSTS on prod for that post, and the sandbox .env DATABASE_URL points at local SQLite (not prod Supabase) with no admin credentials in the sandbox, so a code-only edit to that post could ship without appearing on prod. Chose the footer bottom bar instead: 100% code-controlled, deploys deterministically, sitewide dofollow (strongest placement for the recipient), zero DB coupling.
+- Implementation: one link in the footer legal bar — "· Marketing partner: Androva" (brand anchor, https://androva.ai/, target=_blank rel="noopener" — noopener preserves full dofollow value; no nofollow/sponsored), styled to match footer links (underline decoration-white/30, hover #f9c27d). Hardcoded English matches the "Invest in Hayaan" footer precedent. i18n note: intentional, not a gap.
+- scripts/t131-run.sh (asserts: href present, rel=noopener, NO nofollow, anchor context, sitewide on /investors) + scripts/task131-footer-shot.mjs (CDP footer viewport shot after scroll; chrome-glob per 129/130 lessons).
+- Local: build clean, 5/5 asserts PASS, footer shot reviewed — bottom bar reads "© 2026 Hayaan Market. All rights reserved. · Marketing partner: Androva", no layout shift on desktop.
+
+Stage Summary:
+- Androva backlink live in the footer bottom bar on every page (dofollow). Push + CI + prod verify below; token wiped after.
