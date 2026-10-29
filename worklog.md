@@ -3065,3 +3065,21 @@ Work Log:
 
 Stage Summary:
 - /investors live in code: equity-round pitch + EOI funnel, admin sees investor leads in the existing pipeline with email notification (when RESEND_API_KEY is set). Push + CI + prod verify next; prod POST test will create one clearly-labeled lead (source investors-page, name "Task 128 Verify") — deletable in the admin Leads tab.
+
+---
+Task ID: 128-verify
+Agent: Super Z (main)
+Task: Push Task 128, CI watch, verify /investors on production, close out.
+
+Work Log:
+- Push prep found the sandbox had been recycled between turns: git rolled back to 2b05ef3 while GitHub kept f101a78 (the 127-verify commit). The 127-verify edits survived as uncommitted tree changes, so the Task 128 commit swept them in; rebase onto FETCH_HEAD was clean. Pushed f101a78..008e385, CI green.
+- Prod harness attempt 1: 14/15 — POST /api/leads investor -> 500 `violates check constraint "leads_type_check"`. The leads table CHECK (2026-09-18-deals-type.sql) only allows newsletter/quote/deals; the app-level type addition wasn't enough.
+- Fix (cb4f9e4): (1) migration src/lib/supabase/migrations/2026-10-26-investor-type.sql widens the CHECK to include 'investor' (idempotent, owner runs in Supabase SQL editor); (2) schema.sql inline check updated for fresh installs; (3) app fallback in /api/leads — on 23514 check violation the investor lead is stored as a quote-typed row with an "INVESTOR INQUIRY" message prefix, so NO investor lead is ever dropped pre-migration (notification still fires with the investor subject).
+- Pipeline hardening after 3 wasted tool-timeouts: fuser does not exist in this sandbox (every fuser -k was a silent no-op — stale next-server kept :3221 and served a stale build; sqlite then read-only under the stale handle). t128-run.sh now kills ports via lsof, starts the server under setsid, asserts no EADDRINUSE in the boot log before running the harness.
+- Local re-run: 15/15 PASS (test row cleaned). Push cb4f9e4, CI green ~90s.
+- Prod re-run: 15/15 VERDICT PASS — page 200, h1, 4 sections, EOI form fields, disclaimer, FAQPage JSON-LD (6 questions mirrored), canonical/og, footer link, sitemap, investor POST accepted (via the fallback path until the owner runs the migration), 400s + honeypot correct. Prod screenshots captured + reviewed.
+- One clearly-labeled test lead created on prod ("Task 128 Verify" / invest-verify@hayaan.co, source investors-page) — deletable in the admin Leads tab.
+
+Stage Summary:
+- Task 128 CLOSED: hayaan.co/investors live — equity-round pitch (verified catalog stats, why-now, use of funds, 4-step process, 6-Q FAQ with schema), EOI form wired into the existing lead engine (admin Leads tab + email notification), footer link, sitemap entry. 15/15 local + prod.
+- OWNER ACTION (one line, unlocks the clean path): run src/lib/supabase/migrations/2026-10-26-investor-type.sql in the Supabase SQL editor. Until then investor submissions land as quote-typed rows prefixed "INVESTOR INQUIRY" (nothing is lost), and after it they get the green "Investor" badge in the admin Leads tab.
