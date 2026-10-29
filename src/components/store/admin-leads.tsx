@@ -43,12 +43,14 @@ const TYPE_LABEL: Record<string, string> = {
   quote: "Quote",
   deals: "Deal alert",
   newsletter: "Newsletter",
+  investor: "Investor",
 };
 
 const TYPE_STYLE: Record<string, string> = {
   quote: "bg-[#fef1de] text-[#7a4a14]",
   deals: "bg-teal-50 text-teal-700",
   newsletter: "bg-secondary text-foreground/80",
+  investor: "bg-[#14532d]/10 text-[#14532d]",
 };
 
 function csvCell(value: string | null) {
@@ -349,6 +351,7 @@ export function AdminLeads() {
                 <option value="newsletter">Newsletter</option>
                 <option value="deals">Deal alert</option>
                 <option value="quote">Quote</option>
+                <option value="investor">Investor</option>
               </select>
             </label>
             <label className="flex flex-col gap-1 text-xs font-medium">

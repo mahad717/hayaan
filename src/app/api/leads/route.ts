@@ -14,7 +14,7 @@ import { getDb } from "@/lib/db";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { isSupabaseServerEnabled, createServiceClient } from "@/lib/supabase/server";
 
-const LEAD_TYPES = new Set(["newsletter", "quote", "deals"]);
+const LEAD_TYPES = new Set(["newsletter", "quote", "deals", "investor"]);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MAX_LEN = { name: 120, email: 200, phone: 40, business: 160, message: 4000, source: 40 };
 
@@ -35,9 +35,11 @@ async function notifyLead(row: {
   const subject =
     row.type === "quote"
       ? `New bulk-quote request from ${row.name ?? "a buyer"}`
-      : row.type === "deals"
-        ? `New deal-alert signup — ${row.name ?? row.phone ?? row.email ?? "a shopper"}`
-        : `New newsletter signup${row.email ? ` — ${row.email}` : ""}`;
+      : row.type === "investor"
+        ? `New investor inquiry — ${row.name ?? row.email ?? "an investor"}`
+        : row.type === "deals"
+          ? `New deal-alert signup — ${row.name ?? row.phone ?? row.email ?? "a shopper"}`
+          : `New newsletter signup${row.email ? ` — ${row.email}` : ""}`;
   const body = [
     `Type: ${row.type}`,
     row.name && `Name: ${row.name}`,
@@ -133,7 +135,8 @@ export async function POST(req: NextRequest) {
   }
 
   // A lead must be reachable: newsletter needs email or phone; a quote needs
-  // a name plus at least one contact channel, and what the buyer wants.
+  // a name plus at least one contact channel, and what the buyer wants; an
+  // investor needs a name plus at least one contact channel (Task 128).
   if (type === "quote") {
     if (!name) {
       return NextResponse.json({ error: "Please tell us your name." }, { status: 400 });
@@ -144,6 +147,16 @@ export async function POST(req: NextRequest) {
     if (!email && !phone) {
       return NextResponse.json(
         { error: "Leave a phone number or email so we can send the quote." },
+        { status: 400 },
+      );
+    }
+  } else if (type === "investor") {
+    if (!name) {
+      return NextResponse.json({ error: "Please tell us your name." }, { status: 400 });
+    }
+    if (!email && !phone) {
+      return NextResponse.json(
+        { error: "Leave an email or phone so we can send the investor deck." },
         { status: 400 },
       );
     }

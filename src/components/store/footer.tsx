@@ -120,6 +120,11 @@ export function Footer() {
                 </a>
               </li>
               <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/investors" className="inline-flex items-center gap-1">
+                  Invest in Hayaan
+                </a>
+              </li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
                 <a href={`mailto:${SUPPORT_EMAIL}`} className="inline-flex items-center gap-1">
                   {SUPPORT_EMAIL}
                 </a>

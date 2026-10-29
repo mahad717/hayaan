@@ -3048,3 +3048,20 @@ Work Log:
 Stage Summary:
 - Task 127 CLOSED: three SEO/AEO buyer guides live on hayaan.co/blog (laptop / Galaxy foldables / home appliances prices in Somalia), structured data (BlogPosting+FAQPage+HowTo), sitemap + llms.txt + llms-full.txt all carrying them, zero dead internal links. Verified 26/26 on production.
 - Flagged for owner (separate from 127): intermittent ~10-20% transient 503 on DB-backed prod routes (x-opennext origin error; static routes unaffected). Recommend checking Cloudflare Workers Logs + Supabase metrics; a worker-side retry or CF cache policy on product pages would mask it from users.
+
+---
+Task ID: 128
+Agent: Super Z (main)
+Task: "Add an investor page that investors can invest hayaan in exchange for equity" — /investors page with an equity-round pitch and an expression-of-interest funnel.
+
+Work Log:
+- Architecture decision: reuse the Task 57 lead engine instead of a new table — `investor` added to LEAD_TYPES in /api/leads (validation: name + email-or-phone; same honeypot + 5/10min per-IP throttle; Resend email subject "New investor inquiry — <name>"), stored in the existing leads table, worked from the existing admin Leads tab (new green "Investor" badge + manual-entry option). Zero DB migration, works on Supabase AND local Prisma day one.
+- /investors page: fully static ON PURPOSE — investor traffic arrives as direct shares and prod has intermittent transient 503s on DB-backed routes (documented in 127-verify), so the page reads zero DB. Numbers quoted are stable catalog facts verified live before writing (100 listings / 5 departments via api/products + api/categories). Sections: hero + deck CTAs, stats band, "Why Hayaan, why now" (4 cards), "What the round funds" (fulfillment, digital goods, payments/trust, catalog+content), 4-step "How investing works" (EOI -> deck/call -> diligence/term sheet -> close via SAFE/priced equity), 6-question Investor FAQ mirroring a FAQPage JSON-LD script, EOI form, securities disclaimer. English-only like the blog.
+- InvestorForm (client): name/email/org/phone, investor-type + ticket-size selects (composed into the message body — no schema change), note textarea, honeypot, success state. source="investors-page".
+- Footer support column: "Invest in Hayaan" link; sitemap.xml: /investors (monthly 0.5) + also added the missing /quote entry.
+- Harness task128-investor-check.mjs: page 200/h1/sections/form fields/disclaimer, FAQPage JSON-LD mirrored to visible FAQs, canonical/og, footer link, sitemap, 4 POST scenarios (accepted, no-name 400, no-contact 400, honeypot fake-ok), desktop+mobile CDP screenshots. Pipeline scripts/t128-run.sh (port cleanup -> server -> poll -> bounded harness -> kill -> clean test rows).
+- Sandbox lessons (cost 3 tool-timeouts): (1) background processes are reaped BETWEEN tool calls but zombies from a tool-timeout call survive — run 1 left a next-server on :3221 and chrome on :9357; pkill -f "next start" misses the renamed next-server process — kill BY PORT (fuser -k). (2) Hardcoded chrome version paths rot (155 -> 156 after recycle) — glob the roots. (3) All local POSTs share the throttle's "unknown" IP bucket — harness sends per-test x-forwarded-for. (4) Wrap the whole pipeline in `timeout` + tee to a log so a wedge produces diagnosable output instead of a bare tool timeout.
+- Local: 15/15 VERDICT PASS, test lead row cleaned from sqlite afterwards.
+
+Stage Summary:
+- /investors live in code: equity-round pitch + EOI funnel, admin sees investor leads in the existing pipeline with email notification (when RESEND_API_KEY is set). Push + CI + prod verify next; prod POST test will create one clearly-labeled lead (source investors-page, name "Task 128 Verify") — deletable in the admin Leads tab.
