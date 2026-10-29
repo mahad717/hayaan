@@ -3132,3 +3132,19 @@ Work Log:
 
 Stage Summary:
 - /investors no longer discloses the acquisition playbook; the card is simpler and the investor story intact. Push + CI + prod verify next (needs fresh owner token — 129's was wiped per protocol).
+
+---
+Task ID: 130-verify
+Agent: Super Z (main)
+Task: Deploy Task 130, verify prod, close out. Blocked 90+ min by a Cloudflare platform incident; resolved via owner-provided CF API token + direct wrangler deploy.
+
+Work Log:
+- CI failed 4x INSTANTLY (10:29, 10:32, 10:43, 10:56 UTC) — builds never compiled; every failure was wrangler deploy hitting assets-upload-session -> API error 10013 "unknown error". Owner pasted the build log confirming full Next/OpenNext build success and the deploy-stage 10013.
+- Root cause established as CF platform-side: cloudflarestatus.com declared "Increased HTTP 429 Rate Limit Errors" incident at 10:31:52Z (inside our failure window; account on Partial System Outage), and workers-sdk#13118 documents the identical assets-upload-session/10013 failure class as platform-side ("nothing to be done in workers-sdk"; Discord reports self-resolved after CF escalation).
+- Paced retries per protocol (2 more pushes at 11:23+ UTC window) still failed while the incident was investigating/identified. Full exact CF pipeline (bun run build = prisma generate + next build + opennextjs-cloudflare) reproduced GREEN locally at 10:39 UTC — proving repo code was never the problem.
+- Owner provided a CF user API token (cfut_..., verified via /user/tokens/verify against account fcc092c41935b67348c48202eff28cc0). Local deploy: `bun run deploy` with CLOUDFLARE_API_TOKEN/CLOUDFLARE_ACCOUNT_ID — assets-upload-session accepted the upload at ~12:01Z even though the status incident was still "identified" (API path recovered ahead of formal closure, matching historical #13113-class behavior). NEW LESSON: with a CF token, a direct wrangler deploy from the sandbox is the fastest way past a Workers Builds pipeline outage — wrangler 4.129.0 deploy re-uses .open-next only if freshly built (run full bun run deploy, not bare wrangler deploy).
+- Prod harness: 12/12 VERDICT PASS on https://hayaan.co/investors — 200, simplified card present, both scrubbed FAQ/use-of-funds variants present, 8 method-leak strings absent, h1/FAQPage JSON-LD/canonical/form anchor/non-offer disclaimer/stats intact. Screenshots download/task130-investors-prod-{desktop,mobile}.png reviewed: card reads clean, layout untouched.
+- Worklog + prod screenshots committed and pushed to restore the standard closed state (CI expected green now that the API path works; watched below).
+
+Stage Summary:
+- Task 130 CLOSED: the marked card is two plain sentences ("Buyers find Hayaan through the guides we publish…"), all acquisition-method details (keyword targets, Google/AI answer-engine structured data, SEO/AEO naming) are off the public investor page, prod verified 12/12, screenshots archived. GitHub token + CF token wiped post-verify.
