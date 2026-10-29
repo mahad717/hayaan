@@ -3116,3 +3116,19 @@ Work Log:
 
 Stage Summary:
 - Task 129 CLOSED: the investing keyword cluster is live on hayaan.co/blog — /blog/how-to-invest-in-somalia ("invest"), /blog/somalia-share-market ("share market" + "shares"), /blog/securities-in-somalia ("securities") — each with BlogPosting+FAQPage+HowTo structured data, quotable quick answers, verified exchange facts (NSES June 2025), scam-spotting sections, and every path leading to the /investors equity round. Owner's Supabase migration confirmed live.
+
+---
+Task ID: 130
+Agent: Super Z (main)
+Task: Owner marked the "Demand is compounding through content" card on /investors — simplify it, and remove the acquisition methods from the page for privacy (public page; competitors could read the exact playbook: keyword targets + Google/AI-answer-engine structured data).
+
+Work Log:
+- Card body rewritten to two plain sentences: "Buyers find Hayaan through the guides we publish, and every guide keeps bringing in new customers month after month. It's a growth channel that compounds as the catalog grows." — outcome only, no keywords, no engine names, no technique.
+- Privacy consistency pass on the same page (owner's "don't add the methods" directive): FAQ "What will the funding be used for?" — "content engine that already ships SEO and AEO buyer guides" -> "buyer guides that already bring customers in"; Use-of-funds "Catalog & content expansion" — "content engine that turns searches into customers" -> "bilingual guides that bring new customers in".
+- Scrub check: rg over investors/page.tsx + investor-form.tsx for seo/aeo/answer engine/structured data/rank/google/keyword — CLEAN. FAQPage JSON-LD mirrors FAQS automatically, so schema text is scrubbed too.
+- Harness scripts/task130-investors-copy-check.mjs (new simplified copy present, 8 old method strings absent page-wide, h1/FAQPage schema/canonical/form anchor/disclaimer/stats intact; CDP screenshots with runtime chrome-glob) + scripts/t130-run.sh (t129 pipeline lessons: lsof kills, setsid, EADDRINUSE guard).
+- NEW LESSON (stupid one): in the chrome-glob, the second .map still read d.name after the first .map had already converted Dirents to strings — glob silently matched nothing, screenshots "SKIPPED". Isolated repro caught it in one step; fixed to template the string directly.
+- Local: 12/12 VERDICT PASS (prod build; server up 1s). Screenshots download/task130-investors-local-{desktop,mobile}.png reviewed: simplified card reads clean, page layout untouched.
+
+Stage Summary:
+- /investors no longer discloses the acquisition playbook; the card is simpler and the investor story intact. Push + CI + prod verify next (needs fresh owner token — 129's was wiped per protocol).

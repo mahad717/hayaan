@@ -44,7 +44,7 @@ const FAQS = [
   },
   {
     q: "What will the funding be used for?",
-    a: "Four things: a structured fulfillment and delivery network, a digital-goods line (instant delivery of vouchers and subscriptions), deeper payment and buyer-trust infrastructure, and expanding the catalog into more departments with the content engine that already ships SEO and AEO buyer guides.",
+    a: "Four things: a structured fulfillment and delivery network, a digital-goods line (instant delivery of vouchers and subscriptions), deeper payment and buyer-trust infrastructure, and expanding the catalog into more departments, backed by the buyer guides that already bring customers in.",
   },
   {
     q: "Is this page an offer of securities?",
@@ -81,7 +81,7 @@ const WHY = [
   {
     icon: FileSearch,
     title: "Demand is compounding through content",
-    body: "The blog already ranks for buyer searches like laptop, Galaxy foldable, and appliance prices in Somalia, with structured data built for both Google and AI answer engines. Content is a customer-acquisition channel the competitors simply don't operate.",
+    body: "Buyers find Hayaan through the guides we publish, and every guide keeps bringing in new customers month after month. It's a growth channel that compounds as the catalog grows.",
   },
   {
     icon: ShieldCheck,
@@ -109,7 +109,7 @@ const USE_OF_FUNDS = [
   {
     icon: Layers,
     title: "Catalog & content expansion",
-    body: "More departments, more listings, and the bilingual content engine that turns searches into customers.",
+    body: "More departments, more listings, and the bilingual guides that bring new customers in.",
   },
 ];
 
