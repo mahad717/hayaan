@@ -3206,3 +3206,19 @@ Work Log:
 
 Stage Summary:
 - Search now gives instant, in-viewport feedback: live suggestions under the input (tap = straight to the product page), "See all N results" / Enter = smooth-scroll to the filtered grid. Push + CI + prod verify PENDING — no GitHub token came with this task's message; commit 132 sits local until the owner sends one.
+
+---
+Task ID: 132-verify
+Agent: Super Z (main)
+Task: Push commit 132 (token arrived), watch CI, verify prod.
+
+Work Log:
+- Calibrated remote main (061a3c4), pushed 061a3c4..3df4bec via task107-push2 — clean fast-forward, remote main confirmed 3df4bec.
+- CI: task110-ci-watch timed out at 10 min; direct API then showed check-runs EMPTY, combined status "pending" with NO statuses, zero Actions runs — and it stayed that way through 35+ min of polling. CF Workers Builds never started for this push (Task 131's build posted green in ~2 min, so this is abnormal).
+- Prod (hayaan.co) verified OLD deployment, three independent proofs: (1) SSR home HTML has NO aria-expanded on either search input — the new HeaderSearch always renders aria-expanded="false" in SSR (local build confirms: both inputs have it, 4 aria-expanded total vs prod's 1, which is the Radix account menu); (2) interactive CDP harness against prod failed 5/11 exactly as an old build would — typing filters the grid ("results for" true) but [data-search-panel] never exists; (3) no new dictionary keys anywhere.
+- False-positive lesson (same family as Task 131's "ome &" trap): the bundle fingerprint "Alaab lama helin" matched a prod chunk and briefly suggested the new code WAS deployed — but that Somali string pre-exists as the grid.none wording; the new key merely mirrors it. Precise recheck: the prod chunk has 0× search.seeAll / search.noMatches / data-search-panel, and that chunk name isn't even in the new build. Fingerprint strings MUST be unique to the change (a brand-new key), verified against the local build before trusting a hit.
+- Diagnosis: origin worker serves no-cache dynamic SSR HTML (headers confirmed: cache-control private, no-cache), so this is NOT an edge-cache issue — the deployed worker itself is still old. With nothing posted to GitHub at all, the likely cause is the CF Workers Builds side (build quota / integration), which is the owner-side item already on the long queue. No CF credentials in the sandbox — cannot trigger or inspect the build from here.
+- scripts/t132-prod.sh added: same interactive checks against https://hayaan.co (BASE env already supported by task132-search-check.mjs). Re-run it after the owner retries the build; expect ALL PASS when 3df4bec actually deploys. scripts/t132-prod-probe.mjs added: the slow-poll diagnostic used to separate "panel gate unsatisfied" from "old deployment".
+
+Stage Summary:
+- Commit 132 is ON remote main but NOT deployed: CF Workers Builds did not run for 3df4bec — owner must check the CF dashboard (Workers & Pages → hayaan → Builds/Deployments; retry the build / check build quota). Code itself is done and 19/19 local PASS; prod re-verification is one command (scripts/t132-prod.sh) once the deploy lands. GitHub token wiped after push per protocol.
