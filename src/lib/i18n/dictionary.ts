@@ -185,6 +185,9 @@ const en = {
   "co.preparing": "Preparing checkout…",
   "co.signinTitle": "Please sign in to check out",
   "co.signinBody": "We need your account so we can attach the order to you.",
+  // Task 136 (guest checkout): the one-line hint that replaced the wall.
+  "co.guestHint": "You’re checking out as a guest — no account needed. We use these details only to deliver and to reach you about the order.",
+  "co.guestDoneNote": "No account? No problem — we’ll reach you on the phone number you gave us if anything comes up.",
   "co.emptyTitle": "Your cart is empty",
   "co.emptyBody": "Add some items before checking out.",
   "co.browse": "Browse products",
@@ -294,6 +297,11 @@ const en = {
   "ord.countOne": "1 order",
   "ord.countOther": "{n} orders",
   "ord.loadingDots": "Loading…",
+  // Task 136 (guest checkout): the orders view for signed-out visitors.
+  "ord.guestTitle": "Your orders",
+  "ord.guestHint": "Placed on this device as a guest. Create an account or sign in to keep your full order history on every device.",
+  "ord.guestEmpty": "No guest orders on this device yet.",
+  "ord.guestSigninNudge": "Orders you place while signed in live in your account — on every device, with downloads and reviews.",
   "ord.none": "You haven’t placed any orders yet.",
   "ord.orderLabel": "Order {ref}",
   "ord.qty": "Qty {n}",
@@ -319,6 +327,23 @@ const en = {
   "ord.verifyFailed": "The payment failed or was declined.",
   "ord.verifyError": "Could not verify your payment right now.",
   "ord.verifyNetwork": "Network error — please try again.",
+
+  // Shipping info page (Task 136 / audit F4) — /shipping
+  "ship.title": "Shipping info — delivery areas & fees",
+  "ship.intro":
+    "We deliver across Mogadishu district by district, and anywhere else in Somalia at a flat rate. The fees below are the same ones the checkout charges — what you see here is what you pay.",
+  "ship.factDistrict": "Mogadishu: each district has its own small fee, picked at checkout.",
+  "ship.factOutside": "Outside Mogadishu: a flat {fee} delivery fee, anywhere in Somalia.",
+  "ship.factDigital": "Digital products: delivered online — no delivery fee at all.",
+  "ship.colDistrict": "Area",
+  "ship.colFee": "Delivery fee",
+  "ship.outsideRow": "Other cities (outside Mogadishu)",
+  "ship.tableNote": "Delivery is charged on every order — the fee for your area is added to the item subtotal and shown in your order total before you pay.",
+  "ship.whenTitle": "When will my order arrive?",
+  "ship.whenBody":
+    "Every order carries the phone number you give us at checkout — that is how our team reaches you to arrange the actual delivery, whether you ordered with an account or as a guest.",
+  "ship.contactBody":
+    "Delivery takes a different time for every product and area, so if you want an estimate before ordering, message us on WhatsApp or email — we answer with real times for your address, not guesses.",
 
   // Footer
   "ft.blurb":
@@ -729,6 +754,8 @@ const so: Record<DictKey, string> = {
   "co.preparing": "Diyaarinaya bixinta…",
   "co.signinTitle": "Fadlan soo gal si aad u bixiso",
   "co.signinBody": "Waxaan u baannahay akoonkaaga si aan dalabka kugu dhisno.",
+  "co.guestHint": "Waxaad bixinaysaa martid ahaan — akoon uma baahnid. Xogtaan waxaan ku isticmaalnaa gaadhitaanka iyo inaan kula soo xiriirno dalabkaaga oo keliya.",
+  "co.guestDoneNote": "Akoon ma lihid? Dhibaato ma jirto — haddii ay wax ay dhacaan waxaan kula soo xiriiri doonaa lambarka telefoon aad na siisay.",
   "co.emptyTitle": "Gaadhigaaga waa madhan",
   "co.emptyBody": "Ka hor bixinta, ku dar alaab gaadhigaaga.",
   "co.browse": "Baadh alaabta",
@@ -838,6 +865,10 @@ const so: Record<DictKey, string> = {
   "ord.countOne": "1 dalab",
   "ord.countOther": "{n} dalab",
   "ord.loadingDots": "La keenayo…",
+  "ord.guestTitle": "Dalabyadaada",
+  "ord.guestHint": "Waa dalabyo aad qalabkan ku iibsatey martid ahaan. Samaysso akoon ama soo gal si taariikhda dalabyadaadu ay ku jirto dhamaan qalabadaada.",
+  "ord.guestEmpty": "Weli ma jiro dalab martid oo qalabkan ah.",
+  "ord.guestSigninNudge": "Dalabyada aad akoon la iibsato waxay ku nool yihiin akoonkaaga — dhamaan qalabada, downloads iyo reviews ayaa la socda.",
   "ord.none": "Weli ma samaysan dalab.",
   "ord.orderLabel": "Dalab {ref}",
   "ord.qty": "Tiro {n}",
@@ -863,6 +894,23 @@ const so: Record<DictKey, string> = {
   "ord.verifyFailed": "Bixintu way fashilantay ama waa la diiday.",
   "ord.verifyError": "Hadda lacagta lama xaqiijin karo.",
   "ord.verifyNetwork": "Dhib shabakad — fadlan isku day mar kale.",
+
+  // Shipping info page (Task 136 / audit F4) — /shipping
+  "ship.title": "Xogta gaadhitaanka — meelaha iyo qiimayaasha",
+  "ship.intro":
+    "Waxaanu gaadhinnaa Muqdisho degmo kasta, iyo meel kasta oo Soomaaliya ah oo qiimo fidsan. Qiimayaasha hoose waa kuwa bixintu qaado — waxa halkan lagu arko ayaa la bixiyaa.",
+  "ship.factDistrict": "Muqdisho: degmaddu waxay leedahay kharashkeeda gaadhitaanka, oo la arko xilliga bixinta.",
+  "ship.factOutside": "Muqdisho ka bannaan: kharash fidsan oo {fee} ah, meel kasta oo Soomaaliya ah.",
+  "ship.factDigital": "Alaabta dhijitaalka ah: waxaa lagu gaadhsiiyaa online — kharash gaadhitaan ah ma jiro.",
+  "ship.colDistrict": "Aagga",
+  "ship.colFee": "Kharashka gaadhitaanka",
+  "ship.outsideRow": "Magaalooyinka kale (Muqdisho ka bannaan)",
+  "ship.tableNote": "Gaadhitaanka waa la qaadaa dalab kasta — kharashka aagaaga ayaa lagu daraa wadarta alaabta, laguna muujiyaa wadarta dalabka ka hor bixinta.",
+  "ship.whenTitle": "Goorma ayaa dalabkaygu gaadhayaa?",
+  "ship.whenBody":
+    "Dalab kasta wuxuu wataa lambarka telefoon aad bixiso xilliga bixinta — sidaas ayay kooxdeenu kula soo xiriirtaa si ay u haggaan gaadhitaanka dhabta ah, iyo haddii aad akoon leedahay iyo haddii aad martid tahay.",
+  "ship.contactBody":
+    "Gaadhitaanku waqti kasta iyo meel kasta ayuu ku duub yahay, sidaas darteed haddii aad saadaal doonto ka hor iibsiga, nagu soo dir WhatsApp ama email — waqtiyo dhab ah ayaanu kula soo jawaabnaa cinwaankaaga, malayn ma ahan.",
 
   // Footer
   "ft.blurb":

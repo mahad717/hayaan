@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import { hydrateWishlist, useStore } from "@/hooks/use-store";
+import { hydrateWishlist, mergeGuestCartIntoServer, useStore } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";
 
@@ -55,6 +55,10 @@ export function AuthModal() {
         const cartData = await cartRes.json();
         setCart(cartData.cart);
       }
+      // Task 136 (guest checkout): anything the visitor added to the local
+      // cart before signing in now flows into their server cart (the merge
+      // refreshes the cart state with the server truth when it does).
+      await mergeGuestCartIntoServer().catch(() => {});
       // Wishlist (Task 88) — hydrate the freshly authenticated session's
       // saved products (and the availability flag) without a full reload,
       // mirroring the cart refresh above.

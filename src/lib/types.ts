@@ -126,7 +126,8 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
-  userId: string;
+  // Task 136: null for guest orders (placed without an account).
+  userId: string | null;
   status: OrderStatus;
   totalAmount: number;
   currency: string;

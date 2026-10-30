@@ -94,8 +94,11 @@ model CartItem {
 
 model Order {
   id              String      @id @default(cuid())
-  userId          String
-  user            User        @relation(fields: [userId], references: [id])
+  // Nullable since Task 136 (guest checkout): a guest order is placed without
+  // an account — user_id stays NULL and the order carries only its shipping
+  // contact. The Supabase schema (schema.sql) already allowed NULL here.
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id])
   status          String      @default("pending") // pending | paid | shipped | delivered | cancelled
   totalAmount     Float
   currency        String      @default("USD")

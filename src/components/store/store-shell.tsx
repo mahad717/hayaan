@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { hydrateWishlist, useStore } from "@/hooks/use-store";
+import {
+  guestCartFromStorage,
+  hydrateWishlist,
+  mergeGuestCartIntoServer,
+  useStore,
+} from "@/hooks/use-store";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { CartDrawer } from "@/components/store/cart-drawer";
@@ -30,13 +35,30 @@ export function useStoreBootstrap() {
           fetch("/api/auth/me", { credentials: "include" }),
           fetch("/api/cart", { credentials: "include" }),
         ]);
+        let serverCart: import("@/lib/types").Cart | null = null;
         if (meRes.ok) {
           const { user } = await meRes.json();
           if (user) setUser(user);
         }
         if (cartRes.ok) {
           const { cart } = await cartRes.json();
-          setCart(cart);
+          serverCart = cart ?? null;
+        }
+        // Task 136 (guest checkout): the cart a signed-out visitor builds is
+        // local-only. On boot it goes one of two ways — a signed-in session
+        // MERGES it into the server cart (covers the OAuth bounce and any
+        // login that happened elsewhere in the tab), a guest hydrates from
+        // it so the header badge survives full-page navigations.
+        const signedIn = useStore.getState().user !== null;
+        if (signedIn) {
+          const merged = await mergeGuestCartIntoServer().catch(() => false);
+          // No local rows (or the merge failed) → the boot's server cart IS
+          // the truth; only set it when the merge didn't already.
+          if (!merged && serverCart) setCart(serverCart);
+        } else if (serverCart && serverCart.items.length > 0) {
+          setCart(serverCart);
+        } else {
+          setCart(guestCartFromStorage());
         }
         // Wishlist (Task 88) hydrates after the session resolves: guests get
         // an empty list (hearts still render optimistically), signed-in users

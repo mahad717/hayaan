@@ -18,6 +18,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/deals`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/quote`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/investors`, changeFrequency: "monthly", priority: 0.5 },
+    // Task 136 / audit F4: the trust pages linked from the footer.
+    { url: `${base}/shipping`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${base}/privacy`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/terms`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${base}/cookies`, changeFrequency: "yearly", priority: 0.3 },
   ];
 
   try {

@@ -18,7 +18,12 @@ import {
   initiateSifaloCheckout,
   isSifaloConfigured,
 } from "@/lib/sifalo";
-import { createPendingSifaloOrder, requireUser, type ShippingInput } from "@/lib/sifalo-server";
+import {
+  createPendingSifaloOrder,
+  createPendingGuestSifaloOrder,
+  requireUser,
+  type ShippingInput,
+} from "@/lib/sifalo-server";
 
 export async function GET() {
   const cfg = getSifaloConfig();
@@ -31,7 +36,11 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const user = await requireUser(req);
-  if (!user) return NextResponse.json({ error: "Please sign in to check out." }, { status: 401 });
+  // Task 136 (guest checkout): no session is no longer a dead end. Guests go
+  // through the same hosted Sifalo checkout; their order is created with
+  // user_id NULL and the item list comes from the request body (the guest
+  // cart lives in localStorage), re-priced server-side in
+  // createPendingGuestSifaloOrder.
 
   if (!isSifaloConfigured()) {
     return NextResponse.json(
@@ -40,7 +49,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { shipping?: ShippingInput };
+  let body: { shipping?: ShippingInput; items?: { productId: string; quantity: number }[] };
   try {
     body = await req.json();
   } catch {
@@ -49,13 +58,15 @@ export async function POST(req: NextRequest) {
   const shipping = body.shipping;
   // Only the name is validated here — the REST of the address requirement is
   // cart-dependent (Task 82): digital-only carts need no delivery address at
-  // all. createPendingSifaloOrder checks the cart and enforces the fields a
-  // physical delivery actually requires.
+  // all. The order creators check the cart and enforce the fields a physical
+  // delivery actually requires.
   if (!shipping?.name?.trim()) {
     return NextResponse.json({ error: "Please add your full name so we can record the order." }, { status: 400 });
   }
 
-  const created = await createPendingSifaloOrder(user.id, shipping);
+  const created = user
+    ? await createPendingSifaloOrder(user.id, shipping)
+    : await createPendingGuestSifaloOrder(body.items ?? [], shipping);
   if ("error" in created) {
     return NextResponse.json({ error: created.error }, { status: created.status });
   }

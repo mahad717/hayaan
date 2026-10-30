@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { addToCart, fetchCategories, fetchProducts, goToView, useStore } from "@/hooks/use-store";
+import { addToCart, fetchCategories, fetchProducts, goToView, guestAddToCart, useStore } from "@/hooks/use-store";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
@@ -39,7 +39,7 @@ function formatPrice(price: number, currency: string) {
  *    the server; the store is synced so cart/auth flows behave identically.
  */
 export function ProductDetail({ initialProduct }: { initialProduct?: Product }) {
-  const { selectedProduct, openProduct, setView, setCart, setCartOpen, toast, user, setAuthOpen } = useStore();
+  const { selectedProduct, openProduct, setView, setCart, setCartOpen, toast, user } = useStore();
   const { t, lang } = useLang();
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
@@ -153,7 +153,11 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
 
   const handleAdd = async () => {
     if (!user) {
-      setAuthOpen(true);
+      // Task 136 (guest checkout): guests build a local cart — no account
+      // wall, same feedback as the signed-in path.
+      guestAddToCart(product, qty);
+      toast(t("card.addedAria", { name: product.name }), "success");
+      setCartOpen(true);
       return;
     }
     setAdding(true);
@@ -171,7 +175,8 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
 
   const handleBuyNow = async () => {
     if (!user) {
-      setAuthOpen(true);
+      guestAddToCart(product, qty);
+      goToView("checkout");
       return;
     }
     setAdding(true);

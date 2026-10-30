@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { AlertTriangle, ChevronLeft, CreditCard, Download, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet } from "lucide-react";
+import { AlertTriangle, ChevronLeft, CreditCard, Download, Loader2, Lock, CheckCircle2, ShoppingBag, Leaf, Wallet, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment } from "@/hooks/use-store";
+import { useStore, cartTotal, fetchCart, fetchSifaloStatus, startSifaloPayment, rememberGuestOrder } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";  // Task 115: toasts must not leak English API strings
 import { MOGADISHU_DISTRICTS, OTHER_CITY, findDistrict, computeShipping, computeCartShipping } from "@/lib/shipping";
@@ -24,7 +24,7 @@ function formatPrice(price: number, currency = "USD") {
 }
 
 export function Checkout() {
-  const { cart, setCart, setView, toast, user, setAuthOpen, bootReady } = useStore();
+  const { cart, setCart, setView, toast, user, bootReady } = useStore();
   const { t } = useLang();
   // Prefill from the saved profile (account view) so returning customers
   // don't retype their address.
@@ -219,17 +219,11 @@ export function Checkout() {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-        <h1 className="text-2xl font-semibold text-brand-dark">{t("co.signinTitle")}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {t("co.signinBody")}
-        </p>
-        <Button className="btn-accent mt-4" onClick={() => setAuthOpen(true)}>{t("header.signIn")}</Button>
-      </div>
-    );
-  }
+  // Task 136 (guest checkout): the sign-in wall is GONE. A signed-out
+  // visitor sees the same form with a short reassurance line — the order is
+  // created with user_id NULL and their contact details, then paid at the
+  // same hosted Sifalo checkout. Accounts stay available (header) but are
+  // never required to buy.
 
   if (cart.items.length === 0) {
     return (
@@ -255,12 +249,16 @@ export function Checkout() {
       // hosted checkout. The order status flips to paid on the return page
       // after server-side verification. Digital-only carts record delivery
       // placeholders — nothing physical ships.
+      // Task 136: guests send their cart lines in the request (the server
+      // re-prices every line from the database — client totals are never
+      // trusted) and the order ref is remembered locally for "Track your
+      // order" before the redirect.
       const finalCity = digitalOnly
         ? form.city.trim() || "Digital"
         : districtChoice === OTHER_CITY
           ? form.city.trim()
           : districtChoice;
-      const payment = await startSifaloPayment({
+      const shippingPayload = {
         ...form,
         city: finalCity,
         ...(digitalOnly
@@ -270,7 +268,14 @@ export function Checkout() {
               country: form.country.trim() || "Somalia",
             }
           : {}),
-      });
+      };
+      const payment = user
+        ? await startSifaloPayment(shippingPayload)
+        : await startSifaloPayment(
+            shippingPayload,
+            cart.items.map((it) => ({ productId: it.productId, quantity: it.quantity })),
+          );
+      if (!user) rememberGuestOrder(payment.orderId);
       // Swap to the full-screen redirect view BEFORE navigating, and do NOT
       // touch the client cart here — the server already emptied it when the
       // order was created, and clearing it now would repaint the empty-cart
@@ -289,7 +294,7 @@ export function Checkout() {
       // most confusing one — the server keeps the pending order even when the
       // gateway handshake fails), a network failure (nothing was charged),
       // and everything else (declined/failed at the gateway — never charged).
-      if (/cart is empty|couldn't find your cart|cart not found/i.test(msg)) {
+      if (/cart is empty|couldn't find your cart|cart not found|no longer available/i.test(msg)) {
         setPayError(t("co.errCartSync"));
         try {
           setCart(await fetchCart());
@@ -318,6 +323,16 @@ export function Checkout() {
       </Button>
 
       <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">{t("co.checkoutTitle")}</h1>
+      {/* Task 136: the one-line reassurance that replaced the sign-in wall. */}
+      {!user && (
+        <p
+          data-guest-checkout-hint
+          className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground"
+        >
+          <ShieldCheck className="h-4 w-4 flex-shrink-0 text-brand" aria-hidden />
+          {t("co.guestHint")}
+        </p>
+      )}
 
       <form onSubmit={submit} className="mt-6 grid gap-8 lg:grid-cols-[1fr_380px]">
         {/* Left column: forms */}
@@ -358,10 +373,20 @@ export function Checkout() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="phone" className="text-foreground">{t("co.phone")} <span className="text-xs font-normal text-muted-foreground">{t("co.optional")}</span></Label>
+                {/* Task 136: a guest order has no account email behind it — the
+                    phone number becomes the contact channel, so it's required. */}
+                <Label htmlFor="phone" className="text-foreground">
+                  {t("co.phone")}
+                  {!user ? (
+                    <span aria-hidden className="ml-0.5 text-destructive">*</span>
+                  ) : (
+                    <span className="text-xs font-normal text-muted-foreground">{t("co.optional")}</span>
+                  )}
+                </Label>
                 <Input
                   id="phone"
                   type="tel"
+                  required={!user}
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   autoComplete="tel"

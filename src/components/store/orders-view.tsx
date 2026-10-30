@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { useStore, fetchOrders } from "@/hooks/use-store";
+import { useStore, fetchOrders, guestOrderIds } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError, localizeThrownError } from "@/lib/i18n/api-errors";
 import type { Order, OrderStatus } from "@/lib/types";
@@ -53,6 +53,130 @@ async function resolveDownloadUrl(item: { id: string }): Promise<string> {
     throw new Error((data?.error as string) || "Could not generate the download link — try again.");
   }
   return data.url;
+}
+
+// Task 136 (guest checkout): read-only projection returned by
+// POST /api/orders/lookup for the order refs this browser holds locally.
+interface GuestOrderSummary {
+  id: string;
+  status: string;
+  paymentStatus: string;
+  totalAmount: number;
+  currency: string;
+  createdAt: string;
+  items: { name: string; price: number; quantity: number; image?: string | null; isDigital?: boolean }[];
+}
+
+/**
+ * Guest "Track your order" view (Task 136 + audit F4's dead "Track your
+ * order" footer item). The browser keeps the order refs it checked out with;
+ * the lookup endpoint returns status for ONLY those refs and ONLY guest
+ * orders. Empty registry → the original sign-in guidance, so the view still
+ * nudges towards an account without pretending orders were lost.
+ */
+function GuestOrders({ onSignIn }: { onSignIn: () => void }) {
+  const { t } = useLang();
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<GuestOrderSummary[]>([]);
+
+  useEffect(() => {
+    const ids = guestOrderIds();
+    if (ids.length === 0) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/orders/lookup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ids }),
+        });
+        const data = await res.json().catch(() => null);
+        if (!cancelled && res.ok && Array.isArray(data?.orders)) setOrders(data.orders);
+      } catch {
+        // Network hiccup — the empty list below still renders guidance.
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const hasOrders = orders.length > 0;
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6" data-guest-orders>
+      <Button variant="ghost" size="sm" className="mb-6 text-brand hover:bg-secondary" onClick={() => useStore.getState().setView("home")}>
+        <ChevronLeft className="mr-1 h-4 w-4" /> {t("pdp.back")}
+      </Button>
+      <div className="mb-6 flex items-end justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-brand-dark sm:text-3xl">{t("ord.guestTitle")}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {loading ? t("ord.loadingDots") : hasOrders ? (orders.length === 1 ? t("ord.countOne") : t("ord.countOther", { n: orders.length })) : t("ord.guestEmpty")}
+          </p>
+        </div>
+      </div>
+      {hasOrders && (
+        <p className="mb-4 rounded-md border border-[#e6e2d4] bg-[#faf8f1] px-3 py-2 text-xs leading-relaxed text-brand-dark">
+          {t("ord.guestHint")}
+        </p>
+      )}
+      {loading ? (
+        <div className="flex flex-col gap-4">
+          {[1, 2].map((i) => (
+            <Card key={i}>
+              <CardContent className="h-24 animate-pulse bg-muted/30" />
+            </Card>
+          ))}
+        </div>
+      ) : hasOrders ? (
+        <ul className="flex flex-col gap-4">
+          {orders.map((o) => (
+            <li key={o.id}>
+              <Card className="border-[#e6e2d4]">
+                <CardContent className="flex flex-col gap-3 p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <p className="text-xs text-muted-foreground">{t("co.orderRef")}</p>
+                      <p className="font-semibold text-brand-dark">
+                        <code className="rounded bg-secondary px-1.5 py-0.5 text-brand">{o.id.slice(0, 8).toUpperCase()}</code>
+                      </p>
+                    </div>
+                    <Badge className={`${STATUS_COLOR[(o.status as OrderStatus)] ?? STATUS_COLOR.pending} border-transparent`}>{o.status}</Badge>
+                  </div>
+                  <ul className="flex flex-col gap-1.5 text-sm">
+                    {o.items.map((it, i) => (
+                      <li key={i} className="flex items-center justify-between gap-3">
+                        <span className="line-clamp-1 text-foreground">
+                          {it.quantity}× {it.name}
+                          {it.isDigital && <Download className="ml-1 inline h-3 w-3 text-brand" aria-hidden />}
+                        </span>
+                        <span className="flex-shrink-0 text-xs text-muted-foreground">{formatPrice(it.price * it.quantity, o.currency)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Separator />
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">{t("cart.total")}</span>
+                    <span className="font-semibold text-brand">{formatPrice(o.totalAmount, o.currency)}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <div className="mt-8 flex flex-col items-center gap-3 rounded-xl border border-[#e6e2d4] bg-[#faf8f1] px-4 py-6 text-center">
+        <Package className="h-8 w-8 text-brand" />
+        <p className="max-w-md text-sm text-muted-foreground">{t("ord.guestSigninNudge")}</p>
+        <Button className="bg-brand hover:bg-brand-dark" onClick={onSignIn}>{t("header.signIn")}</Button>
+      </div>
+    </div>
+  );
 }
 
 export function OrdersView() {
@@ -149,14 +273,9 @@ export function OrdersView() {
   }
 
   if (!user) {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
-        <Package className="mx-auto h-12 w-12 text-brand" />
-        <h1 className="mt-4 text-2xl font-semibold text-brand-dark">{t("ord.signinTitle")}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{t("ord.signinBody")}</p>
-        <Button className="mt-4 bg-brand hover:bg-brand-dark" onClick={() => setAuthOpen(true)}>{t("header.signIn")}</Button>
-      </div>
-    );
+    // Task 136: guests see the orders they placed on this device (local
+    // refs → /api/orders/lookup) instead of a bare sign-in wall.
+    return <GuestOrders onSignIn={() => setAuthOpen(true)} />;
   }
 
   return (

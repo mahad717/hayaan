@@ -12,8 +12,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireUser, verifyAndApplyToOrder } from "@/lib/sifalo-server";
 
 export async function POST(req: NextRequest) {
+  // Task 136 (guest checkout): a signed-out caller may verify ONLY guest
+  // orders (user_id NULL) — getOwnedOrder's null-caller branch enforces that.
+  // Guest order ids are unguessable UUIDs, so this stays a narrow surface.
   const user = await requireUser(req);
-  if (!user) return NextResponse.json({ error: "Please sign in." }, { status: 401 });
 
   let body: { orderId?: string; sid?: string };
   try {
@@ -25,7 +27,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "orderId is required." }, { status: 400 });
   }
 
-  const applied = await verifyAndApplyToOrder(user.id, body.orderId, body.sid ?? null);
+  const applied = await verifyAndApplyToOrder(user?.id ?? null, body.orderId, body.sid ?? null);
   if ("error" in applied) {
     return NextResponse.json({ error: applied.error }, { status: applied.status });
   }

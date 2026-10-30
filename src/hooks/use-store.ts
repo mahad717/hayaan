@@ -156,6 +156,192 @@ export function cartTotal(cart: Cart): number {
   return cart.items.reduce((sum, it) => sum + it.product.price * it.quantity, 0);
 }
 
+// ---------------------------------------------------------------------------
+// Guest cart (Task 136) — a localStorage cart for signed-out visitors, so
+// "Add to cart" never dead-ends at the auth modal again. The stored rows keep
+// a display snapshot (name/price/image) so the drawer renders with zero extra
+// requests; the SERVER re-prices every line from the database when the guest
+// order is created (see createPendingGuestSifaloOrder) — client totals are
+// never trusted. Signing in merges the local rows into the server cart and
+// clears the local copy.
+// ---------------------------------------------------------------------------
+
+export const GUEST_CART_KEY = "hayaan_guest_cart";
+export const GUEST_ORDERS_KEY = "hayaan_guest_orders";
+const GUEST_CART_ID = "guest";
+const GUEST_MAX_QTY = 99;
+const GUEST_MAX_ORDERS = 10;
+
+export interface GuestStoredItem {
+  pid: string;
+  q: number;
+  name: string;
+  price: number;
+  image: string | null;
+  type: "physical" | "digital";
+  currency: string;
+  slug: string;
+}
+
+function readGuestStorage(): GuestStoredItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(GUEST_CART_KEY);
+    const list = raw ? (JSON.parse(raw) as GuestStoredItem[]) : [];
+    return (Array.isArray(list) ? list : []).filter(
+      (it) => it && typeof it.pid === "string" && typeof it.q === "number",
+    );
+  } catch {
+    return [];
+  }
+}
+
+function writeGuestStorage(items: GuestStoredItem[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(GUEST_CART_KEY, JSON.stringify(items));
+  } catch {
+    // Private mode / storage full — the cart simply won't persist.
+  }
+}
+
+function guestItemToCartItem(it: GuestStoredItem): CartItem {
+  return {
+    id: `${GUEST_CART_ID}-${it.pid}`,
+    productId: it.pid,
+    quantity: it.q,
+    price: it.price,
+    productType: it.type,
+    product: {
+      id: it.pid,
+      name: it.name,
+      slug: it.slug,
+      description: "",
+      price: it.price,
+      currency: it.currency,
+      stock: 0,
+      rating: 0,
+      reviewCount: 0,
+      images: it.image ? [it.image] : [],
+      tags: [],
+      featured: false,
+      isActive: true,
+      categoryId: "",
+      productType: it.type,
+    },
+  };
+}
+
+/** Rebuild the guest Cart from localStorage (id "guest", display snapshots). */
+export function guestCartFromStorage(): Cart {
+  return {
+    id: GUEST_CART_ID,
+    items: readGuestStorage().map(guestItemToCartItem),
+  };
+}
+
+/** Add a product to the guest cart (or bump its quantity) and update the store. */
+export function guestAddToCart(product: Product, quantity = 1): Cart {
+  const items = readGuestStorage();
+  const existing = items.find((it) => it.pid === product.id);
+  if (existing) {
+    existing.q = Math.min(GUEST_MAX_QTY, existing.q + Math.max(1, quantity));
+  } else {
+    items.push({
+      pid: product.id,
+      q: Math.min(GUEST_MAX_QTY, Math.max(1, quantity)),
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] ?? null,
+      type: product.productType === "digital" ? "digital" : "physical",
+      currency: product.currency ?? "USD",
+      slug: product.slug,
+    });
+  }
+  writeGuestStorage(items);
+  const cart = guestCartFromStorage();
+  useStore.getState().setCart(cart);
+  return cart;
+}
+
+/** Change a guest line's quantity by `delta` (clamped to 1..99). */
+export function guestChangeQty(productId: string, delta: number): Cart {
+  const items = readGuestStorage();
+  const it = items.find((i) => i.pid === productId);
+  if (it) it.q = Math.min(GUEST_MAX_QTY, Math.max(1, it.q + delta));
+  writeGuestStorage(items);
+  const cart = guestCartFromStorage();
+  useStore.getState().setCart(cart);
+  return cart;
+}
+
+/** Remove a guest line. */
+export function guestRemoveItem(productId: string): Cart {
+  const items = readGuestStorage().filter((it) => it.pid !== productId);
+  writeGuestStorage(items);
+  const cart = guestCartFromStorage();
+  useStore.getState().setCart(cart);
+  return cart;
+}
+
+/** Empty the guest cart (used after a successful guest payment). */
+export function clearGuestCart(): void {
+  writeGuestStorage([]);
+  useStore.getState().setCart({ id: "", items: [] });
+}
+
+/** Remember a guest order id for the local "Track your order" list (newest first). */
+export function rememberGuestOrder(orderId: string): void {
+  if (typeof window === "undefined" || !orderId) return;
+  try {
+    const raw = window.localStorage.getItem(GUEST_ORDERS_KEY);
+    const ids = raw ? (JSON.parse(raw) as string[]) : [];
+    const next = [orderId, ...(Array.isArray(ids) ? ids : [])].filter(
+      (id, i, arr) => typeof id === "string" && arr.indexOf(id) === i,
+    ).slice(0, GUEST_MAX_ORDERS);
+    window.localStorage.setItem(GUEST_ORDERS_KEY, JSON.stringify(next));
+  } catch {
+    // Non-fatal — the order ref is still on the payment return page.
+  }
+}
+
+export function guestOrderIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(GUEST_ORDERS_KEY);
+    const ids = raw ? (JSON.parse(raw) as string[]) : [];
+    return (Array.isArray(ids) ? ids : []).filter((id) => typeof id === "string");
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Push the local guest cart into the signed-in user's server cart, then drop
+ * the local copy. Called from the session bootstrap and right after a fresh
+ * login so a visitor who shopped as a guest keeps everything. Best-effort:
+ * a failed line is skipped (it will surface as a stock/availability error at
+ * checkout), and the cart state always ends on the server truth.
+ */
+export async function mergeGuestCartIntoServer(): Promise<boolean> {
+  const items = readGuestStorage();
+  if (items.length === 0) return false;
+  for (const it of items) {
+    try {
+      await addToCart(it.pid, it.q, "increment");
+    } catch {
+      // Product may have been deactivated since — skip it.
+    }
+  }
+  writeGuestStorage([]);
+  try {
+    useStore.getState().setCart(await fetchCart());
+  } catch {
+    useStore.getState().setCart({ id: "", items: [] });
+  }
+  return true;
+}
+
 export async function fetchProducts(): Promise<Product[]> {
   // ?limit=500: the API default is 100 and the catalog outgrew it
   // (Task 91 sanguni mobile sync -> 141 products; the tail was invisible).
@@ -297,15 +483,19 @@ export async function fetchSifaloStatus(): Promise<{
 /**
  * Sifalo Pay hosted checkout: create a PENDING order server-side, get the
  * hosted payment URL, and hand it back — the caller redirects the browser.
+ * Task 136: guests pass their cart as `items` (the server re-prices every
+ * line from the database); signed-in users keep the server-cart path by
+ * omitting `items`.
  */
 export async function startSifaloPayment(
   shipping: { name: string; phone?: string; address: string; city: string; zip: string; country: string },
+  items?: { productId: string; quantity: number }[],
 ): Promise<{ redirectUrl: string; orderId: string; total: number }> {
   const res = await fetch("/api/payments/sifalo", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ shipping }),
+    body: JSON.stringify(items?.length ? { shipping, items } : { shipping }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));

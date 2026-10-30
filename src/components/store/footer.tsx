@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Instagram, Twitter, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";
 import { useStore } from "@/hooks/use-store";
+import { useWhatsAppNumber } from "@/components/store/whatsapp-number";
 import { SUPPORT_EMAIL } from "@/lib/support-email";
 import { categoryName } from "@/lib/i18n/dictionary";
 
@@ -13,6 +14,13 @@ type FooterCategory = { id: string; name: string; slug: string };
 export function Footer() {
   const { t, lang } = useLang();
   const { toast } = useStore();
+  // Task 136/audit F4: "Help" used to be a dead <span>. WhatsApp is this
+  // market's support channel — the number arrives server-side via the layout
+  // provider (request-time env); without it the link degrades to email.
+  const waNumber = useWhatsAppNumber().replace(/[^0-9]/g, "");
+  const helpHref = waNumber
+    ? `https://wa.me/${waNumber}`
+    : `mailto:${SUPPORT_EMAIL}`;
   const [nlEmail, setNlEmail] = useState("");
   const [nlBusy, setNlBusy] = useState(false);
   const [nlDone, setNlDone] = useState(false);
@@ -105,10 +113,24 @@ export function Footer() {
           </div>
           <div>
             <h3 className="text-sm font-semibold text-white">{t("ft.support")}</h3>
+            {/* Task 136/audit F4: every entry here is a REAL destination now —
+                the help/shipping/track items used to be dead <span>s. */}
             <ul className="mt-3 flex flex-col gap-2 text-sm opacity-70 font-original">
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.help")}</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.shippingInfo")}</li>
-              <li className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.track")}</li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href={helpHref} target={waNumber ? "_blank" : undefined} rel={waNumber ? "noopener noreferrer" : undefined} className="inline-flex items-center gap-1">
+                  {t("ft.help")}
+                </a>
+              </li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/shipping" className="inline-flex items-center gap-1">
+                  {t("ft.shippingInfo")}
+                </a>
+              </li>
+              <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
+                <a href="/?view=orders" className="inline-flex items-center gap-1">
+                  {t("ft.track")}
+                </a>
+              </li>
               <li className="transition hover:opacity-100 hover:text-[#f9c27d]">
                 <a href="/quote" className="inline-flex items-center gap-1">
                   {t("ft.bulkOrders")}
@@ -159,24 +181,14 @@ export function Footer() {
               </form>
             )}
             <div className="mt-3 flex gap-2">
+              {/* Task 136/audit F4: the Instagram/Twitter placeholders were
+                  href="#" dead ends — removed until the owner supplies real
+                  handles. The email icon was dead too; now it's the real
+                  support mailto. */}
               <a
-                href="#"
+                href={`mailto:${SUPPORT_EMAIL}`}
                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 transition hover:border-[#f28c28] hover:bg-[#f28c28] hover:text-white"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 transition hover:border-[#f28c28] hover:bg-[#f28c28] hover:text-white"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 transition hover:border-[#f28c28] hover:bg-[#f28c28] hover:text-white"
-                aria-label="Email"
+                aria-label={t("ft.contact")}
               >
                 <Mail className="h-4 w-4" />
               </a>
@@ -186,9 +198,10 @@ export function Footer() {
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs opacity-60 font-original sm:flex-row">
           <p>{t("ft.rights", { year: new Date().getFullYear() })}</p>
           <div className="flex gap-4">
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.privacy")}</span>
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.terms")}</span>
-            <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.cookies")}</span>
+            {/* Task 136/audit F4: real trust pages replace the dead spans. */}
+            <a href="/privacy" className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.privacy")}</a>
+            <a href="/terms" className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.terms")}</a>
+            <a href="/cookies" className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.cookies")}</a>
           </div>
         </div>
       </div>

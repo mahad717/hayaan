@@ -17,6 +17,7 @@ import { getOwnedOrder, verifyAndApplyToOrder } from "@/lib/sifalo-server";
 import { isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { localizeApiError } from "@/lib/i18n/api-errors";
 import { SifaloReturnActions } from "./sifalo-return-client";
+import { ClearGuestCart } from "./clear-guest-cart";
 
 export const dynamic = "force-dynamic";
 
@@ -63,25 +64,29 @@ export default async function SifaloReturnPage({
     );
   }
 
-  if (!user) {
-    return (
-      <Shell>
-        <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
-          <ResultHead
-            icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
-            title={t("sf.signinTitle")}
-            body={t("sf.signinBody", { ref: orderId.slice(0, 8).toUpperCase() })}
-          />
-          <BackActions lang={lang} />
-        </div>
-      </Shell>
-    );
-  }
-
   // Already confirmed on a previous visit? Show success without re-hitting the
   // gateway (idempotent return page).
-  const existing = await getOwnedOrder(user.id, orderId);
+  // Task 136 (guest checkout): with no session the caller can still reach
+  // THEIR order — getOwnedOrder(null, …) matches ONLY guest orders
+  // (user_id IS NULL), so a guest URL can never open a customer's order.
+  // A signed-out visitor whose reference doesn't match any guest order gets
+  // the sign-in prompt below (their order needs a session after all).
+  const existing = await getOwnedOrder(user ? user.id : null, orderId);
   if (!existing) {
+    if (!user) {
+      return (
+        <Shell>
+          <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
+            <ResultHead
+              icon={<HelpCircle className="h-12 w-12 text-[#f28c28]" />}
+              title={t("sf.signinTitle")}
+              body={t("sf.signinBody", { ref: orderId.slice(0, 8).toUpperCase() })}
+            />
+            <BackActions lang={lang} />
+          </div>
+        </Shell>
+      );
+    }
     return (
       <Shell>
         <div className={CARD_BASE} style={{ borderColor: "#e6e2d4" }}>
@@ -97,11 +102,11 @@ export default async function SifaloReturnPage({
   }
 
   if (existing.paymentStatus === "paid" || existing.status === "paid") {
-    return <SuccessCard lang={lang} orderId={orderId} total={existing.totalAmount} paymentType={null} />;
+    return <SuccessCard lang={lang} orderId={orderId} total={existing.totalAmount} paymentType={null} guest={!user} />;
   }
 
   // ---- Live verification ----------------------------------------------------
-  const applied = await verifyAndApplyToOrder(user.id, orderId, sid);
+  const applied = await verifyAndApplyToOrder(user ? user.id : null, orderId, sid);
   if ("error" in applied) {
     return (
       <Shell>
@@ -124,7 +129,15 @@ export default async function SifaloReturnPage({
   const { result, order } = applied;
 
   if (result.state === "paid") {
-    return <SuccessCard lang={lang} orderId={orderId} total={order?.totalAmount ?? existing.totalAmount} paymentType={result.paymentType} />;
+    return (
+      <SuccessCard
+        lang={lang}
+        orderId={orderId}
+        total={order?.totalAmount ?? existing.totalAmount}
+        paymentType={result.paymentType ?? null}
+        guest={!user}
+      />
+    );
   }
 
   if (result.state === "pending") {
@@ -216,15 +229,19 @@ function SuccessCard({
   total,
   paymentType,
   lang,
+  guest,
 }: {
   orderId: string;
   total: number;
   paymentType: string | null;
   lang: "en" | "so";
+  guest?: boolean;
 }) {
   const t = (key: DictKey, vars?: Record<string, string | number>) => translate(lang, key, vars);
   return (
     <Shell>
+      {/* Task 136: a paid guest order means the local cart is spent — drop it. */}
+      {guest && <ClearGuestCart />}
       <div className={CARD_BASE} style={{ borderColor: "#cfe3cb", backgroundColor: "#fbfdf9" }}>
         <div className="flex flex-col items-center gap-3 text-center">
           <CheckCircle2 className="h-14 w-14 text-brand" />
@@ -243,6 +260,11 @@ function SuccessCard({
             <span className="font-medium text-brand">{formatPrice(total)}</span>
           </div>
         </div>
+        {guest && (
+          <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
+            {t("co.guestDoneNote")}
+          </p>
+        )}
         <div className="mt-6 flex justify-center gap-3">
           <Link
             href="/"
@@ -250,12 +272,14 @@ function SuccessCard({
           >
             {t("co.continueShopping")}
           </Link>
-          <Link
-            href="/?view=orders"
-            className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
-          >
-            {t("co.viewOrders")}
-          </Link>
+          {!guest && (
+            <Link
+              href="/?view=orders"
+              className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-brand hover:text-white"
+            >
+              {t("co.viewOrders")}
+            </Link>
+          )}
         </div>
       </div>
     </Shell>

@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useStore, cartTotal, addToCart, removeFromCart, goToView } from "@/hooks/use-store";
+import { useStore, cartTotal, addToCart, removeFromCart, goToView, guestChangeQty, guestRemoveItem } from "@/hooks/use-store";
 import { useLang } from "@/components/store/language-provider";
 import { localizeThrownError } from "@/lib/i18n/api-errors";
 import { computeCartShipping, districtFee } from "@/lib/shipping";
@@ -27,10 +27,18 @@ function formatPrice(price: number, currency = "USD") {
 }
 
 export function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, setCart, toast, user, setAuthOpen } = useStore();
+  const { cart, cartOpen, setCartOpen, setCart, toast, user } = useStore();
   const { t } = useLang();
 
+  // Task 136: a guest cart lives in localStorage (cart.id === "guest"), so
+  // qty/remove stay local instead of hitting the signed-in /api/cart.
+  const isGuestCart = cart.id === "guest";
+
   const updateQty = async (itemId: string, productId: string, qty: number, action: "increment" | "decrement") => {
+    if (isGuestCart) {
+      guestChangeQty(productId, action === "increment" ? 1 : -1);
+      return;
+    }
     try {
       const updated = await addToCart(productId, 1, action);
       setCart(updated);
@@ -40,6 +48,10 @@ export function CartDrawer() {
   };
 
   const remove = async (itemId: string) => {
+    if (isGuestCart) {
+      guestRemoveItem(itemId.replace(/^guest-/, ""));
+      return;
+    }
     try {
       const updated = await removeFromCart(itemId);
       setCart(updated);
@@ -195,20 +207,18 @@ export function CartDrawer() {
               )}
               {digitalOnly && <p className="text-xs text-[#3f7d4a]">{t("co.digitalDrawerNote")}</p>}
             </div>
-            {/* Checkout — Market Orange (the 10% accent) */}
+            {/* Checkout — Market Orange (the 10% accent). Task 136: guests
+                go straight to checkout — the account wall lives at the end
+                of the flow only if they want one, never in the way. */}
             <Button
               size="lg"
               className="btn-accent mt-2"
               onClick={() => {
                 setCartOpen(false);
-                if (!user) {
-                  setAuthOpen(true);
-                } else {
-                  goToView("checkout");
-                }
+                goToView("checkout");
               }}
             >
-              {user ? t("cart.proceed") : t("cart.signinCheckout")}
+              {t("cart.proceed")}
             </Button>
           </SheetFooter>
         )}

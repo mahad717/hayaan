@@ -261,16 +261,224 @@ export interface OwnedOrder {
   currency: string;
 }
 
-/** Fetch an order and confirm it belongs to `userId`. */
-export async function getOwnedOrder(userId: string, orderId: string): Promise<OwnedOrder | null> {
+export interface GuestOrderItemInput {
+  productId: string;
+  quantity: number;
+}
+
+/**
+ * Task 136 (guest checkout): create a PENDING order for a signed-out customer
+ * straight from the request's item list. The guest cart lives in the
+ * browser's localStorage, so — unlike the signed-in path — the server never
+ * held the cart. Prices are therefore RE-READ from the products table here
+ * (client totals are never trusted) and inactive/missing products are
+ * dropped. The order's user_id stays NULL, which both backends already
+ * allow (the Supabase schema never had NOT NULL; the Prisma model was
+ * relaxed in this task) — guest checkout needs no database migration.
+ */
+export async function createPendingGuestSifaloOrder(
+  items: GuestOrderItemInput[],
+  shipping: ShippingInput,
+): Promise<CreatedOrder | { error: string; status: number }> {
+  // Shape-guard the anonymous payload before anything touches the database:
+  // strings only, quantity clamped to 1..99, at most 50 lines.
+  const wanted = (Array.isArray(items) ? items : [])
+    .filter((it) => it && typeof it.productId === "string" && it.productId.length > 0)
+    .map((it) => ({
+      productId: it.productId,
+      quantity: Math.min(99, Math.max(1, Math.floor(Number(it.quantity) || 1))),
+    }))
+    .slice(0, 50);
+  if (wanted.length === 0) {
+    return { error: "Your cart is empty — add an item before checking out.", status: 400 };
+  }
+
   if (isSupabaseServerEnabled) {
     const supabase = createServiceClient()!;
-    const { data } = await supabase
+    const { data: rows } = await supabase
+      .from("products")
+      .select("*")
+      .in("id", wanted.map((it) => it.productId))
+      .eq("is_active", true);
+    const byId = new Map<string, any>((rows ?? []).map((r: any) => [r.id, r]));
+    const lines = wanted
+      .map((it) => ({ it, product: byId.get(it.productId) as any }))
+      .filter((l) => Boolean(l.product));
+    if (lines.length === 0) {
+      return { error: "The items in your cart are no longer available.", status: 400 };
+    }
+
+    // Digital-aware shipping (Task 82 rules, same as the signed-in path).
+    const shippingItems: CartShippingItem[] = lines.map((l) => ({
+      productType: (l.product.product_type ?? l.product.productType ?? "physical") === "digital" ? "digital" : "physical",
+      price: Number(l.product.price ?? 0),
+      quantity: l.it.quantity,
+    }));
+    const digitalOnly = !hasPhysicalItems(shippingItems);
+    if (!digitalOnly && (!shipping.address?.trim() || !shipping.city?.trim() || !shipping.zip?.trim() || !shipping.country?.trim())) {
+      return {
+        error: "Please complete your shipping details so we know where to deliver.",
+        status: 400,
+      };
+    }
+    const finalShipping = digitalOnly
+      ? {
+          ...shipping,
+          address: shipping.address?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.address,
+          city: shipping.city?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.city,
+          zip: shipping.zip?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.zip,
+          country: shipping.country?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.country,
+        }
+      : shipping;
+
+    const { total, shipping: shippingFee, tax: taxAmt } = computeCartCheckoutTotal(shippingItems, finalShipping.city);
+    const baseInsert = {
+      user_id: null,
+      status: "pending",
+      total_amount: total,
+      currency: "USD",
+      shipping_name: finalShipping.name,
+      shipping_phone: finalShipping.phone?.trim() || null,
+      shipping_address: finalShipping.address,
+      shipping_city: finalShipping.city,
+      shipping_zip: finalShipping.zip,
+      shipping_country: finalShipping.country,
+      payment_method: "sifalo",
+      payment_status: "pending",
+    };
+    let order: any = null;
+    let orderErr: any = null;
+    {
+      const res = await supabase
+        .from("orders")
+        .insert({ ...baseInsert, shipping_cost: shippingFee, tax_amount: taxAmt })
+        .select("id")
+        .single();
+      order = res.data;
+      orderErr = res.error;
+      if (orderErr && /shipping_cost|tax_amount|column/i.test(orderErr.message ?? "")) {
+        const retry = await supabase.from("orders").insert(baseInsert).select("id").single();
+        order = retry.data;
+        orderErr = retry.error;
+      }
+    }
+    if (orderErr || !order) return { error: orderErr?.message ?? "insert failed", status: 400 };
+    const insertedItems = await supabase
+      .from("order_items")
+      .insert(
+        lines.map((l) => ({
+          order_id: order.id,
+          product_id: l.product.id,
+          name: l.product.name,
+          price: l.product.price,
+          quantity: l.it.quantity,
+          image: l.product.images?.[0] ?? null,
+        })),
+      )
+      .select("id, product_id, quantity");
+    // Cost-at-sale snapshot (best-effort — checkout must never block on it).
+    try {
+      const costMap = await getProductCostMap(lines.map((l) => l.product.id));
+      await snapshotOrderItemCosts(
+        (insertedItems.data ?? []).map((it: any) => ({
+          orderItemId: it.id,
+          productId: it.product_id,
+          quantity: it.quantity,
+        })),
+        costMap,
+      );
+    } catch (acctErr) {
+      console.error("[sifalo] guest cost snapshot skipped:", acctErr);
+    }
+    return { orderId: order.id, total };
+  }
+
+  // Local Prisma fallback
+  const db = await getDb();
+  const products = await db.product.findMany({
+    where: { id: { in: wanted.map((it) => it.productId) }, isActive: true },
+  });
+  const byId = new Map(products.map((p) => [p.id, p]));
+  const lines = wanted
+    .map((it) => ({ it, product: byId.get(it.productId) }))
+    .filter((l): l is { it: { productId: string; quantity: number }; product: NonNullable<ReturnType<typeof byId.get>> } => Boolean(l.product));
+  if (lines.length === 0) {
+    return { error: "The items in your cart are no longer available.", status: 400 };
+  }
+  const shippingItems: CartShippingItem[] = lines.map((l) => ({
+    productType: l.product.productType === "digital" ? "digital" : "physical",
+    price: l.product.price,
+    quantity: l.it.quantity,
+  }));
+  const digitalOnly = !hasPhysicalItems(shippingItems);
+  if (!digitalOnly && (!shipping.address?.trim() || !shipping.city?.trim() || !shipping.zip?.trim() || !shipping.country?.trim())) {
+    return { error: "Please complete your shipping details so we know where to deliver.", status: 400 };
+  }
+  const finalShipping = digitalOnly
+    ? {
+        ...shipping,
+        address: shipping.address?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.address,
+        city: shipping.city?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.city,
+        zip: shipping.zip?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.zip,
+        country: shipping.country?.trim() || DIGITAL_SHIPPING_PLACEHOLDER.country,
+      }
+    : shipping;
+  const { total, shipping: shippingFee, tax: taxAmt } = computeCartCheckoutTotal(shippingItems, finalShipping.city);
+  const order = await db.order.create({
+    data: {
+      userId: null,
+      status: "pending",
+      totalAmount: total,
+      currency: "USD",
+      shippingName: finalShipping.name,
+      shippingPhone: finalShipping.phone?.trim() || null,
+      shippingAddress: finalShipping.address,
+      shippingCity: finalShipping.city,
+      shippingZip: finalShipping.zip,
+      shippingCountry: finalShipping.country,
+      paymentMethod: "sifalo",
+      paymentStatus: "pending",
+      shippingCost: shippingFee,
+      taxAmount: taxAmt,
+      items: {
+        create: lines.map((l) => ({
+          productId: l.product.id,
+          name: l.product.name,
+          price: l.product.price,
+          quantity: l.it.quantity,
+          image: l.product.images ? JSON.parse(l.product.images)[0] ?? null : null,
+        })),
+      },
+    },
+    include: { items: { select: { id: true, productId: true, quantity: true } } },
+  });
+  try {
+    const costMap = await getProductCostMap(lines.map((l) => l.product.id));
+    await snapshotOrderItemCosts(
+      order.items.map((it) => ({ orderItemId: it.id, productId: it.productId, quantity: it.quantity })),
+      costMap,
+    );
+  } catch (acctErr) {
+    console.error("[sifalo] guest cost snapshot skipped:", acctErr);
+  }
+  return { orderId: order.id, total };
+}
+
+/** Fetch an order and confirm it belongs to the caller. A signed-in user
+ *  matches orders with their user_id; `null` (a guest on the return/verify
+ *  path) matches ONLY guest orders (user_id IS NULL) — a guest can never
+ *  touch a customer's order, and a signed-in user can never touch a guest's.
+ *  Guest ids are unguessable UUIDs, which keeps the unauthenticated surface
+ *  to "status of an order you already hold the reference for". */
+export async function getOwnedOrder(userId: string | null, orderId: string): Promise<OwnedOrder | null> {
+  if (isSupabaseServerEnabled) {
+    const supabase = createServiceClient()!;
+    let q = supabase
       .from("orders")
       .select("id, status, payment_method, payment_status, payment_ref, total_amount, currency")
-      .eq("id", orderId)
-      .eq("user_id", userId)
-      .maybeSingle();
+      .eq("id", orderId);
+    q = userId ? q.eq("user_id", userId) : q.is("user_id", null);
+    const { data } = await q.maybeSingle();
     if (!data) return null;
     return {
       id: data.id,
@@ -284,7 +492,10 @@ export async function getOwnedOrder(userId: string, orderId: string): Promise<Ow
   }
   const db = await getDb();
   const o = await db.order.findUnique({ where: { id: orderId } });
-  if (!o || o.userId !== userId) return null;
+  if (!o) return null;
+  // Guest caller (null) may only see guest orders; a signed-in caller only
+  // their own. Guest ids are unguessable, so ownership stays airtight.
+  if (userId ? o.userId !== userId : o.userId !== null) return null;
   return {
     id: o.id,
     status: o.status,
@@ -315,7 +526,7 @@ export interface AppliedVerification {
  * breaks the payment flow.
  */
 export async function verifyAndApplyToOrder(
-  userId: string,
+  userId: string | null,
   orderId: string,
   sid: string | null,
 ): Promise<AppliedVerification | { error: string; status: number }> {

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@/lib/types";
-import { addToCart, useStore } from "@/hooks/use-store";
+import { addToCart, guestAddToCart, useStore } from "@/hooks/use-store";
 import { WishlistHeartButton } from "@/components/store/wishlist-heart";
 import { useLang } from "@/components/store/language-provider";
 import { categoryName } from "@/lib/i18n/dictionary";
@@ -23,7 +23,7 @@ function formatPrice(price: number, currency: string) {
 }
 
 export function ProductCard({ product }: { product: Product }) {
-  const { setCart, toast, user, setAuthOpen } = useStore();
+  const { setCart, toast, user } = useStore();
   const { t, lang } = useLang();
   // Brief "added" confirmation: the card's add buttons flash a check mark
   // after a successful add, then revert.
@@ -43,7 +43,13 @@ export function ProductCard({ product }: { product: Product }) {
   const handleAdd = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!user) {
-      setAuthOpen(true);
+      // Task 136 (guest checkout): quick-add fills the local cart instead of
+      // opening the auth modal — the grid stays a browsing surface.
+      guestAddToCart(product, 1);
+      toast(t("card.addedAria", { name: product.name }), "success");
+      setAdded(true);
+      if (addedTimer.current) window.clearTimeout(addedTimer.current);
+      addedTimer.current = window.setTimeout(() => setAdded(false), 1500);
       return;
     }
     try {
