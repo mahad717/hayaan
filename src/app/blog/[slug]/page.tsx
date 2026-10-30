@@ -7,6 +7,7 @@ import { getPublishedPostBySlug } from "@/lib/blog";
 import { MarkdownContent } from "@/lib/markdown";
 import { faqPageJsonLd } from "@/lib/faq";
 import { FaqSection } from "@/components/store/faq-section";
+import { ShareButton } from "@/components/store/share-button";
 import { StoreShell } from "@/components/store/store-shell";
 import { formatDateLang, isLang, LANG_COOKIE, translate, type DictKey } from "@/lib/i18n/dictionary";
 
@@ -111,9 +112,20 @@ export default async function BlogPostPage({ params }: Props) {
           <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#3f7d4a]">
             <Newspaper className="h-4 w-4" aria-hidden /> {t("blog.kicker")}
           </p>
-          <h1 className="mt-2 text-3xl font-black leading-tight tracking-tight text-brand-dark sm:text-4xl">
-            {post.title}
-          </h1>
+          <div className="mt-2 flex items-start justify-between gap-4">
+            <h1 className="text-3xl font-black leading-tight tracking-tight text-brand-dark sm:text-4xl">
+              {post.title}
+            </h1>
+            {/* Share (Task 135) — same component as the PDP share+heart pair;
+                native sheet on phones, WhatsApp/copy menu on desktop. */}
+            <ShareButton
+              url={SITE_POST_URL}
+              title={post.title}
+              text={post.excerpt ?? undefined}
+              ariaLabel={t("share.postAria")}
+              className="mt-1 h-9 w-9 shrink-0"
+            />
+          </div>
           <p className="mt-3 text-sm text-muted-foreground font-original">
             {t("blog.by", { name: post.authorName })}
             {post.publishedAt ? ` · ${formatDateLang(post.publishedAt, lang)}` : ""}

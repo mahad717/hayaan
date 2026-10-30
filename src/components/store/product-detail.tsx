@@ -22,6 +22,7 @@ import { categoryName, productDescription } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, sanitizeRichText } from "@/lib/rich-text";
 import { ProductReviews } from "@/components/store/product-reviews";
 import { WishlistHeartButton } from "@/components/store/wishlist-heart";
+import { ShareButton } from "@/components/store/share-button";
 
 function formatPrice(price: number, currency: string) {
   try {
@@ -251,6 +252,15 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
               productId={product.id}
               productName={product.name}
               className="absolute right-4 top-4 h-11 w-11"
+              iconClassName="h-5 w-5"
+            />
+            {/* Share (Task 135) — completes the share+heart pair: native
+                sheet on phones, WhatsApp/Facebook/X/copy menu on desktop. */}
+            <ShareButton
+              url={`https://hayaan.co/product/${product.slug}`}
+              title={product.name}
+              ariaLabel={t("share.aria", { name: product.name })}
+              className="absolute right-[4.25rem] top-4 h-11 w-11"
               iconClassName="h-5 w-5"
             />
           </div>
