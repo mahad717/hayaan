@@ -3267,3 +3267,19 @@ Work Log:
 
 Stage Summary:
 - Both audit quick wins implemented and 14/14 local PASS: PDP now cross-sells (F5) and keeps Add to cart one thumb-tap away on phones (F6). Awaiting token to push; prod verify is one command after CF deploys.
+
+---
+Task ID: 134-deploy
+Agent: Super Z (main)
+Task: Owner sent a fresh GitHub token - push Task 133+134 commits, verify both quick wins on production, close the loop.
+
+Work Log:
+- Token protocol: wrote .gh-token (600), git ls-remote auth OK (remote main at c6f123c as expected), task107-push2.py pushed 4 commits (146738d, af6dbcb Task 133, 0876ec3 Task 134, 09c3908 prod harness). CI green first try (in_progress 15:05Z, success 15:07Z, no nudge needed).
+- Prod fingerprint check: SSR HTML had "You may also like" + pdp-related-heading (new build live); data-sticky-atc absent as expected (bar is client-rendered only after scroll).
+- First prod harness run: 12 checks, 3 FAIL - sticky bar never appeared (element null). Local was 14/14, so prod-specific. Diagnosis via scripts/t134-probe.mjs (tracked): scrolled to bottom manually after longer waits - bar TRUE, bodyClass TRUE, scrollY 4625, no console errors. Root cause: HARNESS RACE, not app bug - prod hydration lags SSR by seconds (cold chunk cache + remote data); the harness's scrollTo fired before React mounted, the scroll event was lost, and the read happened before the mount-time update() could flip state. "PDP hydrated" check only verified the SSR h1 - weak signal. Fix: poll up to 12s for [data-sticky-atc] after scrolling (test-only change).
+- Second prod run: 13/14 - bar fully working, but WhatsApp lift FAIL (waTop=452 = default bottom). Chunk grep: deployed JS chunk contains sticky-atc code, but BOTH prod CSS chunks lack pdp-sticky-atc/sticky-atc-in while local build's globals chunk (2nl_zse4zpnaf.css) has them. Prod's globals chunk 35o9-r6z-n1kn.css had old fingerprints (rich-description yes, sticky-atc-in no) = STALE GLOBALS CSS from the CF build: fresh JS/SSR, old stylesheet (stale build-cache artifact). Bar still worked because its positioning is Tailwind utilities in the TSX; only custom CSS died. Fix: rebuild-marker comment in globals.css (forces fresh stylesheet artifact) + harness polling fix committed as 3d1d5d6.
+- Third run after rebuild CI (success 15:20Z): prod now links 2nl_zse4zpnaf.css (same hash as local, rule present); harness 14/14 PASS - rail 6 cards, bar visible with name+price, WhatsApp lifted (waTop 452 -> 388), body class, auth gate dialog on guest Add, bar retires on scroll-back, desktop hidden. Screenshot download/task134-pdp-prod-mobile.png reviewed: bar pinned with thumbnail/price/orange CTA, bubble above it.
+- Incidental finding: the prod harness comment assumed the WhatsApp float renders on prod - confirmed true (waExists=true).
+
+Stage Summary:
+- Task 134 CLOSED: F5 rail + F6 sticky bar live on hayaan.co, 14/14 prod PASS, CI green at 3d1d5d6. Two deploy-side lessons recorded: prod harnesses must poll (not sleep) for hydration-dependent UI, and CF Workers Builds can serve a stale globals CSS chunk while shipping fresh JS - a content-marker commit forces a fresh stylesheet. Audit backlog (F1 guest checkout, F2 order tracking, F3 confirmation email, F4 footer dead links...) remains with the owner for scheduling.
