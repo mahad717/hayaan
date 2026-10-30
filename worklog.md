@@ -3283,3 +3283,20 @@ Work Log:
 
 Stage Summary:
 - Task 134 CLOSED: F5 rail + F6 sticky bar live on hayaan.co, 14/14 prod PASS, CI green at 3d1d5d6. Two deploy-side lessons recorded: prod harnesses must poll (not sleep) for hydration-dependent UI, and CF Workers Builds can serve a stale globals CSS chunk while shipping fresh JS - a content-marker commit forces a fresh stylesheet. Audit backlog (F1 guest checkout, F2 order tracking, F3 confirmation email, F4 footer dead links...) remains with the owner for scheduling.
+
+---
+Task ID: 135
+Agent: Super Z (main)
+Task: Owner: "Add products with a share button and also blog posts" (+ fresh GitHub token).
+
+Work Log:
+- Scoping: repo exploration revealed the blog already exists end-to-end (/blog + /blog/[slug], BlogPost model, /api/admin/blog CRUD + AdminBlog UI, sitemap entries, header/footer links) and prod carries 28 published SEO posts (verified /blog HTML + 200s). So the request resolved to: share buttons on BOTH product pages and blog posts (blog posts were also confirmed actively authored — latest post dated Oct 29, 2026).
+- ShareButton (src/components/store/share-button.tsx): circular trigger styled like the wishlist heart; first click tries navigator.share (native sheet on phones; AbortError stays silent, any other failure falls through); without Web Share (desktop/headless) a shadcn DropdownMenu unlocks: WhatsApp (inline SVG brand glyph — no Lucide one, and WhatsApp-first because it dominates Somali referrals), Facebook sharer, X intent, Copy link (async Clipboard API + textarea/execCommand fallback) with the store's sonner toast. All share URLs built at click time, canonical https://hayaan.co hosts. stopPropagation guards (PDP image area sits under the badge stack).
+- Mounts: PDP — beside the wishlist heart completing the share+heart pair the Task 88 comment anticipated (right-[4.25rem] top-4 h-11 w-11; gap + same-row asserted in the harness). Blog post — right-aligned on the title row (h-9, aria "Share this post"), server page passes title/excerpt/SITE_POST_URL as plain string props.
+- i18n: share.aria/postAria/menu/whatsapp/facebook/x/copy/copied/copyFailed in EN + type-checked SO ("Wadaag …", "Koobiyeey xiriiriyaha", "Xiriiriyaha waa la koobiyeeyay").
+- Harness (scripts/task135-share-check.mjs + t135-run.sh, 18 checks, dataset-adaptive slugs for both PDP and blog): pair renders/no-overlap, menu closed by default, opens on click, all 4 items listed, wa.me / Facebook sharer / X intent URLs captured via a window.open stub and verified incl. decoded canonical URL, Copy → sonner toast text polled, real clipboard read-back (Browser.grantPermissions + Runtime.evaluate awaitPromise — without awaitPromise CDP returns the Promise object as {}), Escape dismisses, blog share renders/opens/copies, desktop pass (same-row pair, stub re-applied after navigation — first run's only real bug).
+- Local: 18/18 PASS (harness bugs fixed twice: awaitPromise for clipboard reads; window.open stub re-set after gotoPage). Screenshots reviewed: PDP menu with brand glyphs, blog share + "Link copied" toast.
+- Deploy: 52caeb1 pushed, CI success in <2 min, prod fingerprints in SSR (aria-label "Share Samsung Galaxy A18 4G" + "Share this post" on /blog/iphone-price-in-somalia), prod harness 18/18 PASS first try. Prod screenshot matches local.
+
+Stage Summary:
+- Task 135 CLOSED: every product and every blog post is now shareable — native sheet on phones, WhatsApp/Facebook/X/copy menu on desktop, localized EN/SO. CI green at 52caeb1, prod 18/18. Blog itself was already complete (listing, post pages, admin publishing, SEO/sitemap) — confirmed live with 28 posts; no changes needed there.
