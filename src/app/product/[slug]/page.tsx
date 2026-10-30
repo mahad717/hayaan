@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
-import { getProductBySlug, prewarmCatalog } from "@/lib/products-server";
+import { getProductBySlug, prewarmCatalog, listActiveProducts } from "@/lib/products-server";
 import { StoreShell } from "@/components/store/store-shell";
 import { ProductDetail } from "@/components/store/product-detail";
 import { FaqSection } from "@/components/store/faq-section";
@@ -12,10 +12,19 @@ import { brandForProduct, genericPdpDescription, genericPdpTitle, pdpSeoFor, typ
 import { isLang, LANG_COOKIE, productDescription, translate, type DictKey } from "@/lib/i18n/dictionary";
 import { looksLikeHtml, stripHtml } from "@/lib/rich-text";
 import { listApprovedReviews } from "@/lib/reviews";
+import type { Product } from "@/lib/types";
 
 // SSR per request — catalog changes are visible immediately and crawlers
 // always see fresh content.
 export const dynamic = "force-dynamic";
+
+function formatPrice(price: number, currency: string) {
+  try {
+    return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(price);
+  } catch {
+    return `$${price.toFixed(2)}`;
+  }
+}
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -117,6 +126,23 @@ export default async function ProductPage({ params }: Props) {
   // rating + body), not just the aggregate. Fails soft: a missing
   // product_reviews table or any fetch error simply omits the array.
   const reviewsForSchema = await listApprovedReviews(product.id, 5).catch(() => []);
+
+  // Task 134 (audit F5): related products — server-computed so the rail is
+  // in the first HTML (crawlable, zero client work, zero new network calls
+  // on the client: listActiveProducts is the same 60s-SWR single-flight
+  // catalog cache the home page uses). Same category first (in-stock
+  // first), then in-stock items from other categories to fill the rail.
+  const catalog = await listActiveProducts(500).catch(() => [] as Product[]);
+  const sameCat = catalog.filter(
+    (p) => p.id !== product.id && p.category?.slug === product.category?.slug,
+  );
+  const others = catalog.filter(
+    (p) => p.id !== product.id && p.category?.slug !== product.category?.slug,
+  );
+  const relatedProducts = [
+    ...sameCat.filter((p) => p.stock > 0),
+    ...others.filter((p) => p.stock > 0),
+  ].slice(0, 6);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -214,6 +240,45 @@ export default async function ProductPage({ params }: Props) {
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductDetail initialProduct={product} />
+
+      {/* Task 134 (audit F5): related-products rail — server-rendered mini
+          cards (crawlable <a>, zero client JS). Same category first
+          (in-stock first), filled with in-stock picks from other categories;
+          computed from the same 60s-SWR catalog cache the home page uses. */}
+      {relatedProducts.length > 0 && (
+        <section
+          aria-labelledby="pdp-related-heading"
+          className="mx-auto max-w-7xl px-4 pb-12 sm:px-6"
+        >
+          <h2 id="pdp-related-heading" className="text-lg font-bold text-brand-dark">
+            {t("pdp.relatedTitle")}
+          </h2>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {relatedProducts.map((p) => (
+              <a
+                key={p.id}
+                href={`/product/${p.slug}`}
+                className="group rounded-2xl border border-[#e6e2d4] bg-white p-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="aspect-square overflow-hidden rounded-xl bg-[#faf8f1]">
+                  <img
+                    src={p.images[0] ?? "/placeholder.svg"}
+                    alt={p.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug text-foreground">
+                  {p.name}
+                </p>
+                <p className="mt-1 text-sm font-bold text-brand">
+                  {formatPrice(p.price, p.currency)}
+                </p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Task 99: visible keyword-rich intro + FAQ section (AEO), rendered
           with the site-wide FaqSection accordion-card pattern (same component

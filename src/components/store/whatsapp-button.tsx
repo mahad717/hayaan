@@ -31,7 +31,7 @@ export function WhatsAppButton({ number: propNumber }: { number?: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("wa.aria")}
-      className="fixed bottom-4 right-4 z-40 flex items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg shadow-black/25 transition hover:scale-105 hover:bg-[#1fb959] sm:bottom-6 sm:right-6"
+      className="wa-float fixed bottom-4 right-4 z-40 flex items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg shadow-black/25 transition hover:scale-105 hover:bg-[#1fb959] sm:bottom-6 sm:right-6"
       style={{ height: 52, width: 52 }}
     >
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ height: 28, width: 28 }}>

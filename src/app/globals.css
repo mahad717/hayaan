@@ -357,3 +357,27 @@
   font-size: 1.05em;
   margin: 0.4em 0 0.2em;
 }
+
+/* Task 134 (audit F6): mobile sticky add-to-cart bar on the PDP.
+   The bar slides in over the viewport bottom; the floating WhatsApp
+   bubble lifts above it so the two never overlap on phones (the bar is
+   md:hidden, so desktop keeps the original bubble position). */
+body.pdp-sticky-atc .wa-float {
+  bottom: 5rem;
+}
+@media (min-width: 768px) {
+  body.pdp-sticky-atc .wa-float {
+    bottom: 1.5rem;
+  }
+}
+[data-sticky-atc] {
+  animation: sticky-atc-in 0.22s ease-out;
+}
+@keyframes sticky-atc-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

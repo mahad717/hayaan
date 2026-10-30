@@ -108,6 +108,9 @@ const en = {
   "pdp.qtyMinus": "Decrease quantity",
   "pdp.qtyPlus": "Increase quantity",
   "pdp.buyNow": "Buy now",
+  // Task 134: related-products rail + mobile sticky add-to-cart bar
+  "pdp.relatedTitle": "You may also like",
+  "pdp.stickyAria": "Quick add to cart",
   "pdp.digitalInstant": "Instant digital delivery — download right after payment",
   "pdp.digitalReassure": "Instant download — no delivery wait",
   "pdp.imgAria": "View image {n}",
@@ -640,6 +643,9 @@ const so: Record<DictKey, string> = {
   "pdp.qtyMinus": "Yaree tirada",
   "pdp.qtyPlus": "Kordhi tirada",
   "pdp.buyNow": "Iibso hadda",
+  // Task 134
+  "pdp.relatedTitle": "Waxaad kaloo jeceshahay",
+  "pdp.stickyAria": "Ku dar alaabta si degdeg ah",
   "pdp.digitalInstant": "Gudbin dijitaal oo degdeg ah — soo deji bixinta kaddib",
   "pdp.digitalReassure": "Soo deji degdeg ah — sugitaan gaadhitaan ma jiro",
   "pdp.imgAria": "Fiiri sawirka {n}",

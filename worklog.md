@@ -3250,3 +3250,20 @@ Work Log:
 
 Stage Summary:
 - Task 133 CLOSED (pending push): audit PDF delivered in-conversation next message; F5+F6 marked in the report as selected same-day quick wins and are implemented next as Task 134. No GitHub token in this message - commits stay local until the owner sends one (worklog + code will push together).
+
+---
+Task ID: 134
+Agent: Super Z (main)
+Task: Implement the two audit quick wins selected by the owner's "top 1-2 fixes" answer: F5 related-products rail on the PDP + F6 mobile sticky add-to-cart bar.
+
+Work Log:
+- F5: src/app/product/[slug]/page.tsx computes relatedProducts server-side from listActiveProducts(500) (the same 60s-SWR single-flight catalog cache the home page uses): same-category in-stock first, filled with in-stock picks from other categories, 6 max, current product excluded. Rendered as a server-side mini-card rail (crawlable <a>, thumbnail, name, price, zero client JS) between the buy box and reviews. i18n: pdp.relatedTitle EN "You may also like" / SO "Waxaad kaloo jeceshahay".
+- F6: product-detail.tsx renders a mobile-only sticky bar (md:hidden) with thumbnail/name/price + Add to cart once the buy box scrolls above the viewport; button reuses the exact handleAdd (auth gate, toast, drawer). globals.css slides the bar in (sticky-atc-in) and lifts the WhatsApp bubble via body.pdp-sticky-atc .wa-float (the float got a wa-float anchor class); pdp.stickyAria key added EN+SO.
+- Bug 1 (build-time, harness caught it as HTTP 500): importing the client ProductCard into the SSR PDP page triggered a Turbopack SSR chunk TDZ ("Cannot access 'Y' before initialization") from chunk circularity. Fix: server-rendered mini cards instead of the client card on this route.
+- Bug 2 (build-time): the sticky-bar effect referenced `product?.id` in its deps BEFORE `const product` was declared (below the early-return skeleton) - render-time TDZ ("Cannot access 'W'"). Fixed by restructure, then ultimately removed with the IO rewrite.
+- Bug 3 (the deep one): the IntersectionObserver never fired in the harness despite correct wiring - the harness's window.scrollTo is an ATOMIC jump, and IO only fires on threshold crossings: below-viewport to above-viewport passes through zero intersection at every frame boundary, so isIntersecting stays false and NO callback ever runs (a fast real flick can do the same). Replaced IO with a passive scroll listener + requestAnimationFrame-throttled getBoundingClientRect().top < 0 check - the predicate is geometric, and a scroll listener sees every frame. Local seed pages were also too short to scroll: the harness pads body padding-bottom (test instrumentation only) to exercise the full show/hide cycle deterministically.
+- Harness: scripts/task134-pdp-check.mjs + t134-run.sh (catalog-adaptive slug pick - local SQLite seed and prod Supabase differ; 14 checks): rail title/cards/self-link/unique, bar hidden at top, appears after scroll-away, name+price, body class, WhatsApp lift (conditional - the float renders only when a number is configured; local env has none, verified on prod), bar Add opens the auth gate for guests, bar retires on scroll-back, desktop stays hidden. 14/14 PASS locally (390x520 phone viewport). Screenshots download/task134-pdp-{mobile,desktop}.png reviewed: bar pinned cleanly with thumbnail + price + orange CTA.
+- Not yet pushed (no token in this message): Task 133 (audit PDF + worklog) and Task 134 are local commits awaiting the owner's GitHub token. Prod verify after deploy: PDP_SLUG=<a real long product> BASE=https://hayaan.co node scripts/task134-pdp-check.mjs (script already BASE/slug-aware).
+
+Stage Summary:
+- Both audit quick wins implemented and 14/14 local PASS: PDP now cross-sells (F5) and keeps Add to cart one thumb-tap away on phones (F6). Awaiting token to push; prod verify is one command after CF deploys.

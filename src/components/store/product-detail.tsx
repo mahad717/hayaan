@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, Download, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,43 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
   const [activeImage, setActiveImage] = useState(0);
   const [qty, setQty] = useState(1);
   const [adding, setAdding] = useState(false);
+  // Task 134 (audit F6): mobile sticky add-to-cart bar — appears once the
+  // buy box has scrolled ABOVE the viewport, so the buy action is always
+  // one thumb-tap away on long product pages.
+  // Sticky bar visibility follows the buy box: shown only when it has
+  // scrolled ABOVE the viewport (top < 0), one rAF-throttled read per
+  // scroll frame. A scroll listener (not IntersectionObserver) because the
+  // predicate is geometric ("above the top edge") and IO misses atomic
+  // jumps — a programmatic scroll (or a very fast flick) can move the box
+  // from below the viewport to above it without EVER intersecting at a
+  // frame boundary, so no threshold is crossed and IO stays silent. The
+  // body class lifts the floating WhatsApp bubble; the bar is md:hidden —
+  // desktop keeps the inline buy box.
+  const buyBoxRef = useRef<HTMLDivElement | null>(null);
+  const [stickyBar, setStickyBar] = useState(false);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = buyBoxRef.current;
+      setStickyBar(!!el && el.getBoundingClientRect().top < 0);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+      document.body.classList.remove("pdp-sticky-atc");
+    };
+  }, []);
+  useEffect(() => {
+    document.body.classList.toggle("pdp-sticky-atc", stickyBar);
+  }, [stickyBar]);
   // Task 90: PDP delivery preview — the district fee shown at the decision
   // point instead of only at checkout (Norman: knowledge in the world).
   // Starts empty so the SSR snapshot and the first client render match;
@@ -357,7 +394,7 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
           )}
 
           {/* Quantity + actions */}
-          <div className="flex flex-wrap items-center gap-3">
+          <div ref={buyBoxRef} className="flex flex-wrap items-center gap-3">
             <div className="flex items-center rounded-lg border border-[#e6e2d4] bg-white">
               <Button
                 variant="ghost"
@@ -470,9 +507,46 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
         </div>
       </div>
 
+      {/* Task 134 (audit F5): the related-products rail is rendered by the
+          SERVER page (page.tsx) — importing the client ProductCard here
+          triggered a Turbopack SSR chunk TDZ (chunk circularity), and a
+          server-side mini card is lighter anyway. */}
+
       {/* Ratings & comments (Task 85) — full-width section below the buy
           box; hides itself entirely until the reviews migration is run. */}
       <ProductReviews productId={product.id} />
+
+      {/* Task 134 (audit F6): mobile sticky add-to-cart — thumbnail, name,
+          price and the SAME handleAdd (auth gate, toast, drawer) as the buy
+          box, so behavior can never drift. Hidden on md+ screens. */}
+      {stickyBar && (
+        <div
+          data-sticky-atc
+          className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-[#e6e2d4] bg-white/95 p-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur md:hidden"
+        >
+          <img
+            src={product.images[0] ?? "/placeholder.svg"}
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-10 shrink-0 rounded-md border border-[#e6e2d4] bg-[#faf8f1] object-cover"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-medium text-foreground">{product.name}</p>
+            <p className="text-sm font-bold text-brand">
+              {formatPrice(product.price, product.currency)}
+            </p>
+          </div>
+          <Button
+            size="sm"
+            className="btn-accent"
+            onClick={handleAdd}
+            disabled={adding || product.stock === 0}
+            aria-label={t("pdp.stickyAria")}
+          >
+            <ShoppingBag className="mr-1.5 h-4 w-4" /> {t("card.add")}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
