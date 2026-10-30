@@ -106,7 +106,15 @@ const barAtTop = await ev(`(() => { const b = document.querySelector('[data-stic
 ok("[mobile] sticky bar hidden at page top", barAtTop === true);
 
 await ev(`window.scrollTo(0, document.body.scrollHeight)`);
-await sleep(1000);
+// Prod hydration can lag seconds behind SSR (cold chunk cache + remote data),
+// and a scroll fired before mount is lost. Poll instead of a fixed sleep: even
+// late hydration runs the mount-time update(), which sees the buy box above
+// the viewport at the bottom scroll position and flips the state.
+let barAppeared = false;
+for (let i = 0; i < 30 && !barAppeared; i++) {
+  await sleep(400);
+  barAppeared = (await ev(`!!document.querySelector('[data-sticky-atc]')`)) === true;
+}
 const barState = await ev(`(() => {
   const b = document.querySelector('[data-sticky-atc]');
   if (!b) return null;

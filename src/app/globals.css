@@ -361,7 +361,9 @@
 /* Task 134 (audit F6): mobile sticky add-to-cart bar on the PDP.
    The bar slides in over the viewport bottom; the floating WhatsApp
    bubble lifts above it so the two never overlap on phones (the bar is
-   md:hidden, so desktop keeps the original bubble position). */
+   md:hidden, so desktop keeps the original bubble position).
+   Rebuilt 2026-10-30: the CF build served a stale globals chunk (new JS,
+   old CSS) — this marker forces a fresh stylesheet artifact. */
 body.pdp-sticky-atc .wa-float {
   bottom: 5rem;
 }
