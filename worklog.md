@@ -3178,3 +3178,16 @@ Work Log:
 
 Stage Summary:
 - Owner chose contextual placement over the footer: footer link removed, Androva lives in the how-it-works "tools we like" paragraph, "German Shepherd owner" link added to the supplements guide per the KarmaLinks brief (exact anchor + URL). Push + CI + prod verify below; tokens wiped after.
+
+---
+Task ID: 131-verify
+Agent: Super Z (main)
+Task: Push 219fb95, watch CI, verify prod, close out.
+
+Work Log:
+- Push 8929263..219fb95 clean fast-forward (12:12Z); CI (Workers Builds) in_progress → completed success at 12:14:48Z (~2 min).
+- Prod harness scripts/t131b-prod.sh: 12/12 PASS on https://hayaan.co — how-it-works serves exactly one androva.ai contextual link (anchor "Androva", "seven-person team" context, KarmaLinks precedent link intact), supplements guide serves exactly one germanshepherd-pet.com/author/doggyshepherd/ link with the exact preferred anchor "German Shepherd owner", zero nofollow/sponsored on either, and "Marketing partner"/androva.ai absent sitewide (home, both posts) — footer version fully reverted.
+- Target reachability: androva.ai → 200 from sandbox. germanshepherd-pet.com resolves (195.35.44.32) but times out from the sandbox egress; platform-side fetch confirms the page is live — "Author: Deepmala Khatik", self-described German Shepherd owner, so the anchor text matches the page's own wording. Sandbox timeout is egress-side, not the site.
+
+Stage Summary:
+- Task 131 CLOSED: two contextual dofollow backlinks live on prod exactly per the owner's brief + the KarmaLinks instructions, footer link removed, prod 12/12, CI green. GitHub token + Supabase service_role key wiped after verify.
