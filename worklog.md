@@ -3222,3 +3222,16 @@ Work Log:
 
 Stage Summary:
 - Commit 132 is ON remote main but NOT deployed: CF Workers Builds did not run for 3df4bec — owner must check the CF dashboard (Workers & Pages → hayaan → Builds/Deployments; retry the build / check build quota). Code itself is done and 19/19 local PASS; prod re-verification is one command (scripts/t132-prod.sh) once the deploy lands. GitHub token wiped after push per protocol.
+
+---
+Task ID: 132-deploy
+Agent: Super Z (main)
+Task: Deploy landed — CI + prod verification for the search UX fix.
+
+Work Log:
+- Second push (d3ba245, verify commit) triggered the CF build that the first push missed: "Workers Builds: hayaan" in_progress within ~20s, completed success at 13:27:35Z (~2 min, the historical rhythm). So the missed trigger on 3df4bec was a TRANSIENT CF integration miss, not a quota problem — corrected from the 132-verify entry's tentative diagnosis. (Note for future pushes: if no check-run appears within ~2 min, a small follow-up push kicks the build; don't sit 15 min on the watch script first.)
+- Prod fingerprints, this time change-unique: home SSR HTML now has aria-expanded on BOTH search inputs (4 total vs old build's 1) and the new-build-only key "search.seeAll" found in prod chunks (0rn-ybc1jpo-u.js, 2fh5-0sgkk2wz.js).
+- scripts/t132-prod.sh: 19/19 ALL PASS against https://hayaan.co. Desktop 1440×900: panel opens at top=56 bottom=375 with 5 rows, See-all footer, bolded match highlight; tap → /product/samsung-galaxy-a18. Mobile 390×844: panel top=105 bottom=424 — fully in-viewport, the owner's "have to scroll down" complaint is dead on prod. Enter: scrollY 1128, catalogTop 0, grid shows "results for". Screenshot download/task132-search-prod-mobile.png reviewed: panel sits cleanly under the input, thumbnails + prices render, styling on-system (cream panel, brand-dark accents).
+
+Stage Summary:
+- Task 132 CLOSED: live suggestions panel under the header search is live on prod (main=d3ba245, CI green 13:27:35Z, prod 19/19 PASS). Owner-side note: first-push trigger miss was transient; keep the "nudge with a tiny follow-up push" trick in the queue notes. GitHub token wiped after final push per protocol.
