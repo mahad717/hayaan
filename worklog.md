@@ -3191,3 +3191,18 @@ Work Log:
 
 Stage Summary:
 - Task 131 CLOSED: two contextual dofollow backlinks live on prod exactly per the owner's brief + the KarmaLinks instructions, footer link removed, prod 12/12, CI green. GitHub token + Supabase service_role key wiped after verify.
+
+---
+Task ID: 132
+Agent: Super Z (main)
+Task: Owner UX report with screenshot — typing in the search input ("Iphone 15") gives zero visible feedback on a phone; the filtered grid renders below the tall hero, so users must scroll down to see results.
+
+Work Log:
+- Root cause: the header search writes searchQuery (250ms debounce) and ProductGrid's `visible` useMemo filters the catalog inside <section id="catalog">, which renders AFTER the hero. On phones the hero (badge + headline + copy + CTAs + trust items + collage) pushes the grid 2+ viewports down — typing is invisible in the viewport.
+- Fix: new src/components/store/header-search.tsx — the header search input with a live suggestions panel anchored right under it. Both header zones (desktop center + mobile search row) render it and share the Header's `q` state (extracted, not duplicated). Panel: up to 5 matches (thumbnail via the Task 109 Supabase transform + fallback, name with bolded match, category, price), "See all {n} results →" footer, truthful "No products match “{q}”" empty state. Match haystack is IDENTICAL to the grid filter (name + description + tags + category) so the count never contradicts the grid. Suggestion tap opens the same SSR PDP route the product cards use (/product/[slug] + hayaan:pdp-nav event). Enter and "See all" close the panel and smooth-scroll to #catalog (Header.goShop navigation contract for SSR routes). Outside tap / Escape close; the panel stays hidden until the catalog store has booted so it can never lie with a false "no matches". Zero new network calls — matches compute over the already-booted store catalog.
+- i18n: 3 new keys (search.suggestionsAria / search.seeAll / search.noMatches) in en + so; the so record is type-checked against en (missing key = build failure). Somali "Alaab lama helin “{q}”" mirrors the existing grid.none wording.
+- Harness lesson (new disguise of an old one): React 19 silently swallows the native-setter + synthetic Event("input") injection into controlled inputs (probe showed value stayed "" and onChange never fired). Interactive checks must drive the REAL input pipeline: Input.dispatchMouseEvent (click into the input) + Input.insertText (typing) + Input.dispatchKeyEvent (Enter). With that fix the earlier "Enter scrolls" check was exposed as vacuous (scrollIntoView runs regardless of filtering) — it now also asserts the grid's "results for" filter state.
+- scripts/task132-search-check.mjs + scripts/t132-run.sh (build → prod-mode server :3155 → interactive CDP checks → viewport screenshots). 19/19 PASS locally: panel opens in-viewport on desktop (1440×900) and mobile (390×844; top=105 bottom=200 vh=844), suggestion rows render with highlight + price, tap navigates to /product/digital-test-ebook, Enter scrolls AND the grid shows "results for". Screenshots download/task132-search-local-{desktop,mobile}.png reviewed: panel sits cleanly under the input, styling on-system, no layout shift.
+
+Stage Summary:
+- Search now gives instant, in-viewport feedback: live suggestions under the input (tap = straight to the product page), "See all N results" / Enter = smooth-scroll to the filtered grid. Push + CI + prod verify PENDING — no GitHub token came with this task's message; commit 132 sits local until the owner sends one.

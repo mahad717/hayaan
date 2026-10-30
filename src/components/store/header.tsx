@@ -1,10 +1,10 @@
 "use client";
 
-import { ShoppingBag, Search, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu, Newspaper, Heart } from "lucide-react";
+import { ShoppingBag, User, LogOut, LogIn, LayoutGrid, Package, UserRound, Store, Menu, Newspaper, Heart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { HeaderSearch } from "@/components/store/header-search";
 import {
   Sheet,
   SheetContent,
@@ -90,20 +90,24 @@ export function Header() {
     }, 350);
   };
 
+  // Enter / "See all results" from the search suggestions: same navigation
+  // contract as goShop, minus the shop-button semantics — home view, then
+  // smooth-scroll to the catalog where the filtered grid renders.
+  const goSearchResults = () => {
+    if (pathname !== "/") {
+      window.location.assign("/");
+      return;
+    }
+    setView("home");
+    setTimeout(() => {
+      document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
+
   const menuAction = (action: () => void) => () => {
     setMenuOpen(false);
     action();
   };
-
-  const searchInput = (
-    <Input
-      value={q}
-      onChange={(e) => setQ(e.target.value)}
-      placeholder={t("header.searchPlaceholder")}
-      className="border-brand/40 bg-[#faf8f1] pl-9 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20 placeholder:text-muted-foreground/70"
-      aria-label={t("header.searchAria")}
-    />
-  );
 
   return (
     <header
@@ -130,9 +134,8 @@ export function Header() {
             right-hand controls always sit at the true right edge (no dead
             zone at any viewport width). */}
         <div className="relative hidden min-w-0 flex-1 justify-center px-2 sm:flex">
-          <div className="relative w-full max-w-lg">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            {searchInput}
+          <div className="w-full max-w-lg">
+            <HeaderSearch q={q} setQ={setQ} onSeeAll={goSearchResults} />
           </div>
         </div>
 
@@ -285,9 +288,8 @@ export function Header() {
           zone is hidden, so search lives here in a compact dedicated row;
           nav links moved to the hamburger drawer. */}
       <div className="border-t border-[#e6e2d4] bg-white/90 px-4 py-1.5 sm:hidden">
-        <div className="relative mx-auto max-w-7xl">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          {searchInput}
+        <div className="mx-auto max-w-7xl">
+          <HeaderSearch q={q} setQ={setQ} onSeeAll={goSearchResults} />
         </div>
       </div>
 

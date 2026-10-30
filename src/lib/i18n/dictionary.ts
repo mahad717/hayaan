@@ -43,6 +43,9 @@ const en = {
   "header.mobileNavAria": "Mobile navigation",
   "header.mobileAccountAria": "Mobile account",
   "header.tagline": "Everyday finds, one market",
+  "search.suggestionsAria": "Search suggestions",
+  "search.seeAll": "See all {n} results",
+  "search.noMatches": "No products match “{q}”",
   "lang.toggleAria": "Change language",
 
   // Hero
@@ -572,6 +575,9 @@ const so: Record<DictKey, string> = {
   "header.mobileNavAria": "Hagaha mobilka",
   "header.mobileAccountAria": "Akoonka mobilka",
   "header.tagline": "Wax maalinle oo dhan, hal suuq",
+  "search.suggestionsAria": "Talo-bixinta raadinta",
+  "search.seeAll": "Arag dhammaan {n} natiijooyinka",
+  "search.noMatches": "Alaab lama helin “{q}”",
   "lang.toggleAria": "Beddel luqadda",
 
   // Hero
