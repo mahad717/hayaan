@@ -184,21 +184,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs opacity-60 font-original sm:flex-row">
-          <p>
-            {t("ft.rights", { year: new Date().getFullYear() })}
-            {/* Task 131 partner backlink (dofollow by request) — plain noopener
-                keeps full SEO value; brand anchor, muted footer styling. */}
-            <span className="sm:ml-3">· Marketing partner:{" "}
-              <a
-                href="https://androva.ai/"
-                target="_blank"
-                rel="noopener"
-                className="underline decoration-white/30 underline-offset-2 transition hover:text-[#f9c27d] hover:opacity-100"
-              >
-                Androva
-              </a>
-            </span>
-          </p>
+          <p>{t("ft.rights", { year: new Date().getFullYear() })}</p>
           <div className="flex gap-4">
             <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.privacy")}</span>
             <span className="cursor-pointer transition hover:opacity-100 hover:text-[#f9c27d]">{t("ft.terms")}</span>

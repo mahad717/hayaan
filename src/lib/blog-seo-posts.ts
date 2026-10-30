@@ -188,6 +188,8 @@ A good listing answers three questions on one page: **what exactly is in it**, *
 
 Listings that hide behind phrases like "immunity booster" without naming actives, doses, or counts deserve your skepticism — online or in a pharmacy.
 
+Good nutrition writing passes the same test for every member of the household — pets included. The comprehensive German Shepherd care and nutrition guide written by a [German Shepherd owner](https://germanshepherd-pet.com/author/doggyshepherd/) follows the same rules we look for in a listing: it names what each nutrient does and who it is for, instead of hiding behind vague promises.
+
 ## The four checks that matter most
 
 1. **Named actives and amounts.** Vitamin D3 and vitamin B12 on the label beats a "proprietary blend" every time.
@@ -363,7 +365,7 @@ If you are buying for an organization, the [bulk quote](https://hayaan.co/quote)
 
 That is the entire system. No hidden steps, no calls to strangers, no cash "on trust" — just a market that behaves the same way every time you visit it.
 
-Useful resource: the Hayaan team keeps a running list of tools we like — this month we are using [KarmaLinks](https://karmalinks.io/?verificationId=6ab1087d392c10b28b713365) to organize our link partnerships.`,
+Useful resource: the Hayaan team keeps a running list of tools we like — this month we are using [KarmaLinks](https://karmalinks.io/?verificationId=6ab1087d392c10b28b713365) to organize our link partnerships, plus [Androva](https://androva.ai/), an AI marketing platform that works like a seven-person team, for the marketing side of running the market.`,
 };
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -3162,3 +3162,19 @@ Work Log:
 
 Stage Summary:
 - Androva backlink live in the footer bottom bar on every page (dofollow). Push + CI + prod verify below; token wiped after.
+
+---
+Task ID: 131 (continuation — owner redirection)
+Agent: Super Z (main)
+Task: Owner asked to move the Androva link to a contextual link inside a specific blog post; same morning a second backlink request arrived via KarmaLinks (germanshepherd-pet.com).
+
+Work Log:
+- Footer version was already shipped: prod HTML showed "Marketing partner: Androva" in the legal bar (8929263 pushed + deployed). Owner then chose contextual placement → footer link removed in a proper follow-up commit (legal bar restored byte-for-byte to the pre-131 state), NOT a history edit.
+- Placement 1 — Androva (https://androva.ai/): online-shopping-in-somalia-how-it-works, the existing Task 81/83 "tools we like" paragraph, extended naturally: "…this month we are using KarmaLinks to organize our link partnerships, plus Androva, an AI marketing platform that works like a seven-person team, for the marketing side of running the market." Brand anchor, dofollow (markdown renderer emits rel="noopener noreferrer" on outbound links — noopener/noreferrer do not affect follow status; no nofollow/sponsored anywhere).
+- Placement 2 — germanshepherd-pet.com (KarmaLinks brief): preferred anchor URL https://germanshepherd-pet.com/author/doggyshepherd/, preferred anchor text "German Shepherd owner", placed verbatim in buying-health-supplements-online-in-somalia. New paragraph after the "trustworthy listing" section ties the guide to the post's three-question test: nutrition writing that names what each nutrient does and who it is for. No pet posts exist in the catalog, so the supplements/nutrition guide is the closest honest contextual home.
+- DB vs code: queried prod Supabase blog_posts with the owner-provided service_role key — only 2 rows (samsung-galaxy-a18-price-in-somalia + the owner's Somali laptop post). Both target posts serve from code (SEO_POSTS), so code edits + deploy are sufficient and local/prod render the same content. Gotcha recorded: the ref embedded in the pasted JWT (mqyhgyakfhfuctnvezby) NXDOMAINs; the real project per wrangler.toml is mqyhgyakhfhuctnvezby (f/h transposed in the paste) — the key itself authenticates fine against the real URL.
+- False-positive lesson: grepping prod HTML for "ome &" / "ealth supplements" to hunt for broken markdown links matches inside healthy words ("h|ome", "h|ealth") — verified against the Read tool + link-rendered HTML that the catalog paragraph was always intact; no typo fix shipped.
+- Local: build clean; harness asserts on the local prod-mode server.
+
+Stage Summary:
+- Owner chose contextual placement over the footer: footer link removed, Androva lives in the how-it-works "tools we like" paragraph, "German Shepherd owner" link added to the supplements guide per the KarmaLinks brief (exact anchor + URL). Push + CI + prod verify below; tokens wiped after.
