@@ -123,8 +123,8 @@ const post2 = {
 
 At the time of writing, the [phones and wearables](https://hayaan.co/category/phones-wearables) shelf splits roughly like this:
 
-1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $145 and the Galaxy A17 at $165. Big batteries, modern software, honest prices.
-2. **$180–$450** — mid-range, fresh releases and wearables: the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $190, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $320, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
+1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $145. Big batteries, modern software, honest prices.
+2. **$170–$450** — the [Samsung Galaxy A17](https://hayaan.co/product/samsung-galaxy-a17) family from $170 (4GB/128GB) up to the 8GB/256GB at $240, the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $190, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $330, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
 3. **$900 and up** — current flagships like the iPhone 17 at $990, the iPhone 18 Pro from $1,500, and the iPhone 18 Pro Max at up to $2,650, for buyers who want the top of the market.
 
 Decide the tier first. It turns a hundred listings into five, and it stops you from paying flagship money for mid-range hardware.
@@ -1314,7 +1314,7 @@ const post16 = {
     },
     {
       q: "Is the Galaxy A18 better than the Galaxy A17 or A16?",
-      a: "It is the newest of the three: the A18 ($190) runs Samsung's Exynos 1610, carries an IP64 rating and stereo speakers, and is promised updates until 2032. The A17 ($165) and A16 ($145) remain solid buys for tighter budgets — the A18 is worth the step up if you keep phones for years.",
+      a: "It is the newest of the three: the A18 ($190) runs Samsung's Exynos 1610, carries an IP64 rating and stereo speakers, and is promised updates until 2032. The A17 (from $170) and A16 ($145) remain solid buys for tighter budgets — the A18 is worth the step up if you keep phones for years.",
     },
     {
       q: "How much storage and RAM does the Galaxy A18 have?",
@@ -1345,17 +1345,17 @@ The listing terms are the same as everything on the shop: live stock count on th
 - **Android 17 with updates promised until 2032** — six major OS upgrades, the longest software runway of the budget Galaxys.
 - **128GB storage, expandable** — a microSD slot takes the space further as your photo, video and music library grows.
 
-## A16, A17 or A18? The $145–$190 ladder
+## A16, A17 or A18? The $145–$240 ladder
 
 1. **Galaxy A16 — $145.** The budget anchor: big battery, honest price — [the cheapest way into a new Samsung](https://hayaan.co/product/samsung-galaxy-a16).
-2. **Galaxy A17 — $165.** The middle step: a newer take on the same formula for a modest jump — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
+2. **Galaxy A17 — $170.** The middle step, now in three variants: 4GB/128GB at $170, a 6GB/128GB step-up at $220 and an 8GB/256GB top model at $240 — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
 3. **Galaxy A18 — $190.** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise — [the A18 listing](https://hayaan.co/product/samsung-galaxy-a18).
 
 > Rule of thumb: buy the newest phone your budget allows. Software support is the feature that decides how a phone feels in year three — and the A18 has the deepest reserves of the three.
 
 ## 4G only — does that matter in Somalia?
 
-The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday mobile data here — WhatsApp calls, YouTube, Facebook, banking apps — runs on 4G networks that the A18 handles comfortably, and skipping 5G hardware is part of why the phone costs $190 instead of more. If 5G matters to you, the [Galaxy A36 5G at $285](https://hayaan.co/product/samsung-galaxy-a36-5g) and [Galaxy A56 5G at $370](https://hayaan.co/product/samsung-galaxy-a56-5g) are the next rungs on the ladder.
+The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday mobile data here — WhatsApp calls, YouTube, Facebook, banking apps — runs on 4G networks that the A18 handles comfortably, and skipping 5G hardware is part of why the phone costs $190 instead of more. If 5G matters to you, the [Galaxy A36 5G at $285](https://hayaan.co/product/samsung-galaxy-a36-5g) and [Galaxy A56 5G at $375](https://hayaan.co/product/samsung-galaxy-a56-5g) are the next rungs on the ladder.
 
 ## How to order the Galaxy A18
 
@@ -1367,7 +1367,7 @@ The A18 is a 4G LTE phone; a 5G version is expected later. In practice, everyday
 
 ## The bottom line
 
-At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $145](https://hayaan.co/product/samsung-galaxy-a16) and [A17 at $165](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
+At $190 the Galaxy A18 is the freshest sub-$200 phone in the Somali market right now: newest processor of the budget Galaxys, a 90Hz AMOLED panel, 4K camera, IP64 sealing and software support promised into 2032 — delivered to your door. Tighter budgets are still covered by the [A16 at $145](https://hayaan.co/product/samsung-galaxy-a16) and the [A17 family from $170](https://hayaan.co/product/samsung-galaxy-a17), and the [full phone-buying guide](https://hayaan.co/blog/how-to-buy-phones-online-in-somalia) covers the checks that apply to any model. Buying several units for a shop or organization? The [bulk quote form](https://hayaan.co/quote) usually beats listed prices.`,
 };
 
 // Task 101 — HP EliteBook buying guide (owner request: SEO/AEO-optimized

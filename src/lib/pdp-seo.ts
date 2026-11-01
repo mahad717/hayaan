@@ -60,6 +60,94 @@ export const PDP_SEO: Record<string, PdpSeoOverride> = {
       },
     ],
   },
+
+  // Task 138 — Samsung Galaxy A17 family (owner request: the base listing
+  // plus the two sanguni variants, all SEO/AEO-optimized). Same rules as the
+  // A18 override: price-dependent strings stay functions of the live catalog
+  // price, and cross-variant answers describe the family WITHOUT hardcoding
+  // sibling prices (only this listing's price is interpolated), so a future
+  // reprice of any A17 variant can never leave a stale number here.
+  "samsung-galaxy-a17": {
+    heading: "Samsung Galaxy A17 — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A17 Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A17 price in Somalia: $${price} at Hayaan Market. 128GB Galaxy A17 with a 6.7-inch display, 50MP triple camera and 5000mAh battery.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A17 price in Somalia is $${price} at Hayaan Market — the 128GB Galaxy A17 with 4GB of RAM${inStock ? ", in stock and ready to order" : ""}. That buys a 6.7-inch display, a 50MP triple camera with ultrawide and macro lenses, a 13MP selfie camera and a 5000mAh battery, delivered to your door in Mogadishu or anywhere in the country. The A17 family is also stocked in a 6GB/128GB step-up and an 8GB/256GB top variant if you need more headroom.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much does the Samsung Galaxy A17 cost in Somalia?",
+        a: `The Samsung Galaxy A17 price in Somalia is $${price} at Hayaan Market for the 128GB model with 4GB of RAM — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "What storage and RAM does this Galaxy A17 have?",
+        a: "This listing is the 128GB storage / 4GB RAM variant. Hayaan Market also stocks the A17 in a 6GB/128GB step-up and an 8GB/256GB top variant if you need more storage or multitasking headroom.",
+      },
+      {
+        q: "Is the Galaxy A17 a good phone for the price?",
+        a: `For $${price} you get Samsung's 6.7-inch A17 with a 50MP triple camera (wide, ultrawide and macro), a 13MP selfie camera, 1080p video and a 5000mAh battery — an honest everyday Samsung at the entry of the Galaxy A-series ladder.`,
+      },
+      {
+        q: "How do I order the Galaxy A17 and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 depending on your Mogadishu district, and a flat $6.95 anywhere else in Somalia — the exact fee is shown before you pay.",
+      },
+    ],
+  },
+  "samsung-galaxy-a17-6gb128gb": {
+    heading: "Samsung Galaxy A17 (6GB/128GB) — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A17 6GB/128GB Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A17 (6GB/128GB) price in Somalia: $${price} at Hayaan Market. The smoother A17 — 6.7-inch display, 50MP triple camera, 5000mAh battery.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A17 (6GB/128GB) price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""}. This is the multitasker's A17: double the RAM of the base model, the same 6.7-inch display, 50MP triple camera with ultrawide and macro lenses, 13MP selfie camera and 5000mAh battery, delivered to your door in Mogadishu or anywhere in Somalia.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much is the Samsung Galaxy A17 (6GB/128GB) in Somalia?",
+        a: `The 6GB/128GB Samsung Galaxy A17 price in Somalia is $${price} at Hayaan Market — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "What is the difference between the A17 6GB/128GB and the base A17?",
+        a: "Both share the same 6.7-inch display, 50MP triple camera and 5000mAh battery. This variant doubles the RAM to 6GB for smoother multitasking; the base listing runs 4GB. If you also want double the storage, the A17 8GB/256GB tops the family.",
+      },
+      {
+        q: "Is 128GB storage enough on the A17?",
+        a: "128GB holds tens of thousands of photos and hundreds of apps, and the A17 keeps a microSD slot so storage can grow later — RAM, which you cannot upgrade, is where this 6GB variant earns its keep.",
+      },
+      {
+        q: "How do I order the Galaxy A17 (6GB/128GB) and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 in Mogadishu by district and a flat $6.95 nationwide — the exact fee is shown before you pay.",
+      },
+    ],
+  },
+  "samsung-galaxy-a17-8gb256gb": {
+    heading: "Samsung Galaxy A17 (8GB/256GB) — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A17 8GB/256GB Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A17 (8GB/256GB) price in Somalia: $${price} at Hayaan Market. The top A17 — 256GB storage, 8GB RAM, 50MP camera, 5000mAh battery.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A17 (8GB/256GB) price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""}. This is the top of the A17 family: 256GB of storage for years of photos and video, 8GB of RAM, a 6.7-inch display, the 50MP triple camera with ultrawide and macro lenses and a 5000mAh battery, delivered to your door in Mogadishu or anywhere in the country.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much is the Samsung Galaxy A17 (8GB/256GB) in Somalia?",
+        a: `The 8GB/256GB Samsung Galaxy A17 price in Somalia is $${price} at Hayaan Market — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "What do you get with the A17 8GB/256GB over the smaller variants?",
+        a: "The same 6.7-inch display, 50MP triple camera and 5000mAh battery as every A17, with the most storage (256GB) and the most RAM (8GB) in the family — the pick if you shoot a lot of video or keep your library offline.",
+      },
+      {
+        q: "Is 256GB worth it on a budget phone?",
+        a: "Storage is the one thing you cannot add to a phone later, and 256GB is where an A17 stops feeling like a budget phone after two or three years of photos, apps and offline media. Light users are fine on the 128GB listings; heavy users never regret the 256GB.",
+      },
+      {
+        q: "How do I order the Galaxy A17 (8GB/256GB) and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 in Mogadishu by district and a flat $6.95 nationwide — the exact fee is shown before you pay.",
+      },
+    ],
+  },
 };
 
 export function pdpSeoFor(slug: string): PdpSeoOverride | null {
