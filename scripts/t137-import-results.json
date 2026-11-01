@@ -1,0 +1,68 @@
+{
+ "ranAt": "2026-11-01T12:26:04.693Z",
+ "apply": true,
+ "create": {
+  "status": "skipped-exists"
+ },
+ "priceUpdates": [
+  {
+   "slug": "samsung-galaxy-a56-5g",
+   "name": "Samsung Galaxy A56 5G",
+   "old": 370,
+   "price": 375,
+   "id": "6350d0af-e5bc-4931-88c6-57c64f905551",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "samsung-galaxy-a37-5g",
+   "name": "Samsung Galaxy A37 5G",
+   "old": 320,
+   "price": 330,
+   "id": "c3ec2721-641f-48b2-b2d1-1dd9bd8c73ce",
+   "status": "updated",
+   "http": 200
+  },
+  {
+   "slug": "samsung-galaxy-a17",
+   "name": "Samsung Galaxy A17",
+   "old": 165,
+   "price": 170,
+   "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+   "status": "updated",
+   "http": 200
+  }
+ ],
+ "verify": {
+  "newProduct": {
+   "slug": "samsung-galaxy-z-fold8-5g",
+   "price": 1499,
+   "hasImage": true,
+   "match": true
+  },
+  "priceChecks": [
+   {
+    "slug": "samsung-galaxy-a56-5g",
+    "expected": 375,
+    "admin": 375,
+    "publicActive": 375,
+    "match": true
+   },
+   {
+    "slug": "samsung-galaxy-a37-5g",
+    "expected": 330,
+    "admin": 330,
+    "publicActive": 330,
+    "match": true
+   },
+   {
+    "slug": "samsung-galaxy-a17",
+    "expected": 170,
+    "admin": 170,
+    "publicActive": null,
+    "match": true
+   }
+  ],
+  "count": 143
+ }
+}

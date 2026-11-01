@@ -1,0 +1,34 @@
+{
+ "categories": [
+  {
+   "id": "3646f5b1-2a55-4106-a96e-adc871904403",
+   "name": "Computers & TV",
+   "slug": "computers-tv-gaming",
+   "description": "Laptops, printers, TVs, gaming and accessories."
+  },
+  {
+   "id": "99940c8f-b675-4800-bd4b-7fd7974b07e6",
+   "name": "Health Supplements",
+   "slug": "health-supplements",
+   "description": "Vitamins, minerals and everyday wellness supplements."
+  },
+  {
+   "id": "4d41b4f0-b0e9-48a5-a2ea-0c94707310d4",
+   "name": "Home & Office",
+   "slug": "home-office",
+   "description": "Home appliances, office equipment and networking."
+  },
+  {
+   "id": "90c6c2f0-40da-4a17-83b1-808bb8237e2e",
+   "name": "Phones & Wearables",
+   "slug": "phones-wearables",
+   "description": "Smartphones, smart watches and wearables."
+  },
+  {
+   "id": "0e47cd78-ac85-4b6e-876d-4cf85e7d04bd",
+   "name": "Power & Charging",
+   "slug": "power-charging-audio",
+   "description": "Power banks, chargers, cables and audio gear."
+  }
+ ]
+}
