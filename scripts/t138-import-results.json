@@ -1,0 +1,58 @@
+{
+ "ranAt": "2026-11-01T13:17:27.681Z",
+ "apply": true,
+ "creates": [
+  {
+   "name": "Samsung Galaxy A17 (8GB/256GB)",
+   "status": "created",
+   "id": "ddd9b96f-5cc9-491d-9702-5395ef6951d5",
+   "slug": "samsung-galaxy-a17-8gb256gb",
+   "sku": "HAY-MOB-201",
+   "price": 240
+  },
+  {
+   "name": "Samsung Galaxy A17 (6GB/128GB)",
+   "status": "created",
+   "id": "bbf72f4f-0e46-4d18-b5cb-2b9acd36522a",
+   "slug": "samsung-galaxy-a17-6gb128gb",
+   "sku": "HAY-MOB-202",
+   "price": 220
+  }
+ ],
+ "baseEnrich": {
+  "status": "updated",
+  "id": "c50e10f4-d10c-47a8-af74-5dfe4db246df",
+  "http": 200
+ },
+ "verify": {
+  "count": 145,
+  "publicCount": 145,
+  "products": [
+   {
+    "slug": "samsung-galaxy-a17-8gb256gb",
+    "expectedPrice": 240,
+    "adminPrice": 240,
+    "publicPrice": 240,
+    "hasImage": true,
+    "imageIsRepo": true,
+    "supplierUrl": "https://sanguni.so/product/samsung-galaxy-a17-2/",
+    "match": true
+   },
+   {
+    "slug": "samsung-galaxy-a17-6gb128gb",
+    "expectedPrice": 220,
+    "adminPrice": 220,
+    "publicPrice": 220,
+    "hasImage": true,
+    "imageIsRepo": true,
+    "supplierUrl": "https://sanguni.so/product/samsung-galaxy-a17-3/",
+    "match": true
+   }
+  ],
+  "baseA17": {
+   "price": 170,
+   "descHasSpecs": true,
+   "active": true
+  }
+ }
+}
