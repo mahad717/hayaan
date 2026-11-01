@@ -92,7 +92,7 @@ if (existingNames.has(NEW_PRODUCT.name.toLowerCase())) {
     const j = await res.json().catch(() => ({}));
     if (res.ok) {
       console.log(`[create] OK ${NEW_PRODUCT.name} $${NEW_PRODUCT.price} -> ${j.product?.slug} (id ${j.product?.id})`);
-      results.create = { status: "created", id: j.product?.id, slug: j.product?.slug, sku, price: NEW_PRODUCT.price, image: upJson.url };
+      results.create = { status: "created", id: j.product?.id, slug: j.product?.slug, sku, price: NEW_PRODUCT.price, image: NEW_PRODUCT.imageUrl };
     } else {
       console.error(`[create] FAIL ${res.status}: ${JSON.stringify(j).slice(0, 200)}`);
       results.create = { status: "failed", http: res.status, error: j.error ?? "" };
