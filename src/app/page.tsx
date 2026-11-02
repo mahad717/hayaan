@@ -283,7 +283,13 @@ function restore(){
     // and only for meaningful (>80px) shifts; the ticks budget bounds it.
     if(reached&&d.top){
       try{
-        var ca=document.querySelector('a[href="/product/'+d.top+'"]');
+        // Task 139: scrape-safe selector. Crawlers regex href attributes out
+        // of raw HTML (script text included); the old exact-match selector
+        // leaked a phantom /product/ URL into their crawl and it 404s
+        // forever (an Ahrefs error-URL dragging the Health Score down).
+        // Start/end attribute selectors carry no bare attribute-name string,
+        // and a product slug is unique, so matching stays equivalent.
+        var ca=document.querySelector('a[href^="/product/"][href$="'+d.top+'"]');
         if(ca){
           var delta=Math.round(ca.getBoundingClientRect().top-(d.dy|0));
           if(delta<-80||delta>80){window.scrollTo(0,(window.scrollY|0)+delta);lastY=window.scrollY|0;}

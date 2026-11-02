@@ -1,0 +1,185 @@
+{
+ "generated": "2026-11-02 12:54:28 UTC",
+ "robots_status": 200,
+ "robots_ai_lines": [
+  "User-agent: Googlebot",
+  "User-agent: Bingbot",
+  "User-agent: Twitterbot",
+  "User-agent: facebookexternalhit",
+  "User-agent: *"
+ ],
+ "url_count": 170,
+ "sitemap_count": 187,
+ "extra_not_in_sitemap": [
+  "/",
+  "/_next/static/chunks/0jvhpaew_uadu.js",
+  "/_next/static/chunks/0kr0pf4e2ipll.css",
+  "/_next/static/chunks/2h_r5efyug4l0.css",
+  "/hayaan-logo-green.svg",
+  "/hayaan-logo-orange.svg",
+  "/product/'+d.top+'"
+ ],
+ "pass1": {
+  "ok": 169,
+  "fail": 1,
+  "ttfb_median": 0.567,
+  "ttfb_p90": 1.018,
+  "ttfb_max": 2.259,
+  "over_500ms": 142,
+  "over_300ms": 158
+ },
+ "failures": [
+  {
+   "url": "/product/'+d.top+'",
+   "code": 404,
+   "err": "HTTP Error 404: Not Found",
+   "retest": [
+    404,
+    404,
+    404
+   ],
+   "persistent": true
+  }
+ ],
+ "slowest": [
+  {
+   "url": "/blog/home-appliances-price-in-somalia",
+   "ttfb": 2.259
+  },
+  {
+   "url": "/product/air-conditioner-lightwave-24k",
+   "ttfb": 2.026
+  },
+  {
+   "url": "/product/macbook-pro-m3",
+   "ttfb": 1.756
+  },
+  {
+   "url": "/category/power-charging-audio",
+   "ttfb": 1.651
+  },
+  {
+   "url": "/product/hp-printer-laser-mfp-135a",
+   "ttfb": 1.633
+  },
+  {
+   "url": "/category/home-office",
+   "ttfb": 1.612
+  },
+  {
+   "url": "/blog/printer-price-in-somalia",
+   "ttfb": 1.57
+  },
+  {
+   "url": "/blog/power-bank-price-in-somalia",
+   "ttfb": 1.495
+  },
+  {
+   "url": "/product/iphone-16-pro",
+   "ttfb": 1.449
+  },
+  {
+   "url": "/blog/buying-health-supplements-online-in-somalia",
+   "ttfb": 1.427
+  },
+  {
+   "url": "/product/cable-charge-60w-usb-c-1m",
+   "ttfb": 1.272
+  },
+  {
+   "url": "/product/air-conditioner-lightwave-12k",
+   "ttfb": 1.27
+  },
+  {
+   "url": "/product/power-bank-lion-ultra-thin-20,000mah-120w",
+   "ttfb": 1.218
+  },
+  {
+   "url": "/product/samsung-galaxy-a17-6gb128gb",
+   "ttfb": 1.218
+  },
+  {
+   "url": "/product/nokia-2660-flip",
+   "ttfb": 1.166
+  },
+  {
+   "url": "/product/adaptor-usb-c-25w-pd",
+   "ttfb": 1.108
+  },
+  {
+   "url": "/product/amazfit-active-42mm-smart-watch",
+   "ttfb": 1.018
+  },
+  {
+   "url": "/product/hp-elitebook-840-g9-intel-core-i7-12gen",
+   "ttfb": 1.018
+  },
+  {
+   "url": "/product/hp-toner-cartridge-651a-original-set",
+   "ttfb": 1.009
+  },
+  {
+   "url": "/product/air-conditioner-lightwave-18k",
+   "ttfb": 0.986
+  },
+  {
+   "url": "/product/samsung-galaxy-a16",
+   "ttfb": 0.972
+  },
+  {
+   "url": "/product/battery-case-iphone-16-pro-max-7000mah",
+   "ttfb": 0.968
+  },
+  {
+   "url": "/product/samsung-galaxy-a06",
+   "ttfb": 0.967
+  },
+  {
+   "url": "/product/samsung-galaxy-z-flip8-5g",
+   "ttfb": 0.963
+  },
+  {
+   "url": "/product/huawei-watch-gt-6-gps-46mm",
+   "ttfb": 0.956
+  }
+ ],
+ "ai_crawler": [
+  {
+   "url": "/",
+   "browser": 0.109,
+   "gptbot": 0.047,
+   "gptbot_code": 403
+  },
+  {
+   "url": "/category/phones-wearables",
+   "browser": 0.142,
+   "gptbot": 0.051,
+   "gptbot_code": 403
+  },
+  {
+   "url": "/blog",
+   "browser": 0.487,
+   "gptbot": 0.038,
+   "gptbot_code": 403
+  },
+  {
+   "url": "/product/samsung-galaxy-a17",
+   "browser": 0.316,
+   "gptbot": 0.042,
+   "gptbot_code": 403
+  },
+  {
+   "url": "/product/samsung-galaxy-a17-2",
+   "browser": 0.093,
+   "gptbot": 0.052,
+   "gptbot_code": 403
+  },
+  {
+   "url": "/product/samsung-galaxy-a17-3",
+   "browser": 0.122,
+   "gptbot": 0.035,
+   "gptbot_code": 403
+  }
+ ],
+ "elapsed_s": 29.7
+}
