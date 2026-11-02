@@ -40,11 +40,19 @@ check("NEW selector present", new_sel in inline)
 check("OLD bare literal gone", old_lit not in inline, "still present!" if old_lit in inline else "")
 check("OLD phantom URL absent", "/product/'+d.top+'" not in html)
 
-# 4: syntax-check every inline script with node (temp file; /dev/stdin unsupported)
-import tempfile, os
+# 4: syntax-check inline scripts — JSON-LD blocks via json.loads (bare {...} is
+# invalid as a JS *statement*, so node --check misfires on them); JS via node.
+import tempfile, os, json as _json
 syn_bad = []
 for i, s in enumerate(scripts):
-    if len(s.strip()) < 10:
+    t = s.strip()
+    if len(t) < 10:
+        continue
+    if t[0] in "{[":
+        try:
+            _json.loads(t)
+        except Exception as e:
+            syn_bad.append((i, f"BAD JSON-LD: {e}"))
         continue
     with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False) as tf:
         tf.write(s)
