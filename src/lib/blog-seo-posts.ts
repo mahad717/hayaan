@@ -124,7 +124,7 @@ const post2 = {
 At the time of writing, the [phones and wearables](https://hayaan.co/category/phones-wearables) shelf splits roughly like this:
 
 1. **Under $150** — dependable daily drivers such as the [Samsung Galaxy A16](https://hayaan.co/product/samsung-galaxy-a16) at $145. Big batteries, modern software, honest prices.
-2. **$170–$450** — the [Samsung Galaxy A17](https://hayaan.co/product/samsung-galaxy-a17) family from $170 (4GB/128GB) up to the 8GB/256GB at $240, the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $190, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $330, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
+2. **$170–$450** — the [Samsung Galaxy A17](https://hayaan.co/product/samsung-galaxy-a17) family from $170 (4GB/128GB) up to the 8GB/256GB at $263, the [Samsung Galaxy A18](https://hayaan.co/product/samsung-galaxy-a18) at $190, the [Galaxy A36 5G](https://hayaan.co/product/samsung-galaxy-a36-5g) at $285, Galaxy A37 5G at $330, and smartwatches from the Huawei Watch GT 6 at $230 to the [Apple Watch Series 11](https://hayaan.co/product/apple-watch-series-11-46mm) at $440.
 3. **$900 and up** — current flagships like the iPhone 17 at $990, the iPhone 18 Pro from $1,500, and the iPhone 18 Pro Max at up to $2,650, for buyers who want the top of the market.
 
 Decide the tier first. It turns a hundred listings into five, and it stops you from paying flagship money for mid-range hardware.
@@ -1345,10 +1345,10 @@ The listing terms are the same as everything on the shop: live stock count on th
 - **Android 17 with updates promised until 2032** — six major OS upgrades, the longest software runway of the budget Galaxys.
 - **128GB storage, expandable** — a microSD slot takes the space further as your photo, video and music library grows.
 
-## A16, A17 or A18? The $145–$240 ladder
+## A16, A17 or A18? The $145–$263 ladder
 
 1. **Galaxy A16 — $145.** The budget anchor: big battery, honest price — [the cheapest way into a new Samsung](https://hayaan.co/product/samsung-galaxy-a16).
-2. **Galaxy A17 — $170.** The middle step, now in three variants: 4GB/128GB at $170, a 6GB/128GB step-up at $220 and an 8GB/256GB top model at $240 — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
+2. **Galaxy A17 — $170.** The middle step, now in three variants: 4GB/128GB at $170, a 6GB/128GB step-up at $220 and an 8GB/256GB top model at $263 — [the A17 listing](https://hayaan.co/product/samsung-galaxy-a17).
 3. **Galaxy A18 — $190.** The newest: Exynos 1610, 4K video, IP64 and the 2032 update promise — [the A18 listing](https://hayaan.co/product/samsung-galaxy-a18).
 
 > Rule of thumb: buy the newest phone your budget allows. Software support is the feature that decides how a phone feels in year three — and the A18 has the deepest reserves of the three.
