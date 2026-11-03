@@ -81,14 +81,17 @@ export function Hero({ onShop }: { onShop: () => void }) {
         </div>
 
         {/* Hero artwork — owner-provided 3D "online shopping" render
-            (Task 140). Source: the 1676x1076 raster embedded in the owner's
-            SVG wrapper (the .svg was a 1.7MB fake vector; the .png only
-            500px) — extracted, background flood-filled to transparent
-            (interior blacks preserved), 1200px WebP @100KB. Replaces the old
-            2x2 product collage; the Pay-your-way chip below is untouched. */}
+            (Task 140, cache-busted to -v2 in Task 141). Source: the
+            1676x1076 raster embedded in the owner's SVG wrapper (the .svg
+            was a 1.7MB fake vector; the .png only 500px) — extracted,
+            background flood-filled to transparent incl. enclosed pockets,
+            1200px WebP @113KB. Renamed because the first cut shipped under
+            this URL with two background pockets still visible and browsers
+            pinned it for max-age=7d — same-name overwrites never reach
+            those visitors. Pay-your-way chip below is untouched. */}
         <div className="relative">
           <img
-            src="/images/hero-shopping-3d.webp"
+            src="/images/hero-shopping-3d-v2.webp"
             alt={t("hero.alt3d")}
             width={1200}
             height={770}
