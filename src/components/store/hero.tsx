@@ -5,10 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ButtonWithIcon } from "@/components/ui/button-with-icon";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { useLang } from "@/components/store/language-provider";
-import { productImg, productImgFallback } from "@/lib/img";
-
-const HERO_IMG_3 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725484435-41dd6a71-ae1e-46f7-a413-a46102279bae.jpg";
-const HERO_IMG_4 = "https://mqyhgyakhfhuctnvezby.supabase.co/storage/v1/object/public/product-images/1788725481334-42782eff-9837-4cf2-bb56-70377b7f2df7.jpg";
 
 export function Hero({ onShop }: { onShop: () => void }) {
   const { t } = useLang();
@@ -84,36 +80,21 @@ export function Hero({ onShop }: { onShop: () => void }) {
           </div>
         </div>
 
-        {/* Image collage */}
+        {/* Hero artwork — owner-provided 3D "online shopping" render
+            (Task 140). Source: the 1676x1076 raster embedded in the owner's
+            SVG wrapper (the .svg was a 1.7MB fake vector; the .png only
+            500px) — extracted, background flood-filled to transparent
+            (interior blacks preserved), 1200px WebP @100KB. Replaces the old
+            2x2 product collage; the Pay-your-way chip below is untouched. */}
         <div className="relative">
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            <img
-              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"
-              alt={t("hero.alt1")}
-              className="aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
-            />
-            <img
-              src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&auto=format&fit=crop"
-              alt={t("hero.alt2")}
-              className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
-            />
-            <img
-              src={productImg(HERO_IMG_3, 600)}
-              onError={productImgFallback(HERO_IMG_3)}
-              alt={t("hero.alt3")}
-              width={600}
-              height={600}
-              className="aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
-            />
-            <img
-              src={productImg(HERO_IMG_4, 600)}
-              onError={productImgFallback(HERO_IMG_4)}
-              alt={t("hero.alt4")}
-              width={600}
-              height={600}
-              className="mt-6 aspect-square w-full rounded-2xl object-cover shadow-sm ring-1 ring-black/5"
-            />
-          </div>
+          <img
+            src="/images/hero-shopping-3d.webp"
+            alt={t("hero.alt3d")}
+            width={1200}
+            height={770}
+            fetchPriority="high"
+            className="w-full h-auto drop-shadow-md"
+          />
 
           {/* Floating promo chip — real payment variety, not a fake discount */}
           <div className="absolute -bottom-3 left-4 hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow-md ring-1 ring-[#e6e2d4] sm:flex">

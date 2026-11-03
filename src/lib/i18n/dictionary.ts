@@ -521,6 +521,7 @@ const en = {
   "hero.alt2": "Linen hoodie",
   "hero.alt3": "Matte black ceramic vase",
   "hero.alt4": "Heavyweight sweatshirt",
+  "hero.alt3d": "3D illustration of online shopping on Hayaan Market — a courier delivers an order straight from the phone",
 
   // Form placeholders
   "acc.namePh": "e.g. Hodan Ahmed",
@@ -1085,6 +1086,7 @@ const so: Record<DictKey, string> = {
   "hero.alt2": "Hoodie linen ah",
   "hero.alt3": "Dherig ceramic oo madow",
   "hero.alt4": "Sweatshirt oo maro culus ah",
+  "hero.alt3d": "Sawir 3D oo muujinaya iibka online-ka ee Hayaan Market — dalab laga soo saarayo telefoonka",
 
   "acc.namePh": "tus: Hodan Ahmed",
   "acc.addressPh": "Villa 12, Wadada Maka Al Mukarama",
