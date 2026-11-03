@@ -51,6 +51,33 @@ while q:
             bg[ny * w + nx] = 1
             q.append((nx, ny))
 
+# --- 1b. ENCLOSED background pockets (Task 140b): border flood-fill can't
+# reach the black regions sealed between subjects (behind the t-shirt, under
+# the cart). Component analysis on prod screenshots showed a clean split:
+# pockets are PURE black (lum mean<5, std<8: 0.0-1.1 / 0.6-5.5), while
+# subject blacks are shaded (phone screen strips mean 18.8, notch 16.5,
+# cart shadows 28.0). Remove only large uniform pure-black components.
+import numpy as np
+from scipy import ndimage
+arr = np.asarray(im).astype(np.float32)
+lum_np = 0.2126 * arr[..., 0] + 0.7152 * arr[..., 1] + 0.0722 * arr[..., 2]
+lab, ncomp = ndimage.label(lum_np < 40)
+pockets = 0
+for i in range(1, ncomp + 1):
+    mask = lab == i
+    area = int(mask.sum())
+    if area < 1500:
+        continue
+    vals = lum_np[mask]
+    if vals.mean() < 5 and vals.std() < 8:
+        ys, xs = np.where(mask)
+        flat = mask.ravel()
+        for idx in np.where(flat)[0]:
+            bg[idx] = 1
+        pockets += 1
+        print(f"pocket removed: area={area} bbox=({xs.min()},{ys.min()})-({xs.max()},{ys.max()})")
+print(f"enclosed pockets removed: {pockets}")
+
 total = w * h
 nbg = sum(bg)
 print(f"background removed: {nbg}/{total} px ({100*nbg/total:.1f}%)")
