@@ -81,25 +81,28 @@ export function Hero({ onShop }: { onShop: () => void }) {
         </div>
 
         {/* Hero artwork — owner-provided 3D "online shopping" render
-            (Task 140, cache-busted to -v2 in Task 141). Source: the
-            1676x1076 raster embedded in the owner's SVG wrapper (the .svg
-            was a 1.7MB fake vector; the .png only 500px) — extracted,
-            background flood-filled to transparent incl. enclosed pockets,
-            1200px WebP @113KB. Renamed because the first cut shipped under
-            this URL with two background pockets still visible and browsers
-            pinned it for max-age=7d — same-name overwrites never reach
-            those visitors. Pay-your-way chip below is untouched. */}
+            (Task 140, cache-busted to -v2 in Task 141; owner then replaced
+            the bytes twice via GitHub web-UI — current asset is their
+            1563x938 cut, and the width/height attrs below are synced to it
+            because the stale 1200x770 pair was stretching their image ~7%).
+            Task 142: the illustration and the Pay-your-way chip are taken
+            apart — on md+ the img floats 48px higher via translate (layout,
+            wrapper and chip anchor untouched), so the chip no longer sits
+            on the artwork's platform. Mobile keeps the original overlap. */}
         <div className="relative">
           <img
             src="/images/hero-shopping-3d-v2.webp"
             alt={t("hero.alt3d")}
-            width={1200}
-            height={770}
+            width={1563}
+            height={938}
             fetchPriority="high"
-            className="w-full h-auto drop-shadow-md"
+            className="w-full h-auto drop-shadow-md md:-translate-y-12"
           />
 
-          {/* Floating promo chip — real payment variety, not a fake discount */}
+          {/* Floating promo chip — real payment variety, not a fake discount.
+              Deliberately anchored to the wrapper (not the raised img): the
+              translate above moves the artwork only, leaving the chip where
+              it was — that separation is the point of Task 142. */}
           <div className="absolute -bottom-3 left-4 hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-sm shadow-md ring-1 ring-[#e6e2d4] sm:flex">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f28c28]/10 text-[#f28c28]">
               <Wallet className="h-4 w-4" />
