@@ -2470,6 +2470,112 @@ A SAFE (Simple Agreement for Future Equity) is the standard way early-stage comp
 Learn the instrument, verify the issuer, size the bet, keep the paper. If the security you want is a slice of Somalia's e-commerce, Hayaan's [equity round](https://hayaan.co/investors) is open today — the form takes two minutes and buys you a conversation, not a commitment. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
 };
 
+// Task 143 — keyword cluster: "venture capital" (Google Keyword Planner
+// 100-1K/mo). Defines VC mechanics in plain language, answers the honest
+// Somalia question (no formal VC industry yet — diaspora angels and
+// structured private rounds are the live reality, NSES forming the public
+// rails), arms founders to become investable, and funnels both sides to
+// the /investors equity-round page.
+const post28 = {
+  id: "seo-venture-capital-somalia",
+  slug: "venture-capital-in-somalia",
+  title: "Venture Capital in Somalia: How Startup Funding Works (2026)",
+  excerpt:
+    "What venture capital really is, why no formal VC industry exists in Somalia yet, how founders raise venture-style money today — and the checks that make a company investable.",
+  quickAnswer:
+    "Venture capital is money professional investors exchange for a share of a young company — no repayment, no collateral; they earn only if the company grows. Somalia has no formal VC industry yet: startup funding comes from founders, diaspora angels, and structured private rounds like Hayaan Market's equity round, while the NSES builds the public rails for later.",
+  faqs: [
+    {
+      q: "What is venture capital in simple terms?",
+      a: "Venture capital is money from professional investors (venture capital firms) used to buy a slice — equity — of a young company with big growth potential. There is no monthly repayment and usually no collateral: the investor wins big if the company grows, loses it all if it dies. That is why VCs fund startups a bank would turn away.",
+    },
+    {
+      q: "Is there venture capital in Somalia?",
+      a: "Not yet in the formal sense — no registered VC funds with offices in Mogadishu or Hargeisa. The live equivalents are founder capital, diaspora angel investors, Shariah-compliant SME finance, and structured private rounds with real documents. Hayaan Market's equity round is the working example: an expression-of-interest form, a deck and data room, then a SAFE or priced equity in USD.",
+    },
+    {
+      q: "How is venture capital different from a bank loan?",
+      a: "A loan is debt: fixed repayments, collateral, interest, and the bank wins either way. Venture capital is equity: no repayments to miss, nothing to repossess, and the investor only wins if the company grows. The flip side — the investor becomes a part-owner with a voice, and a startup that cannot show growth cannot raise again.",
+    },
+    {
+      q: "What do venture capitalists look for before investing?",
+      a: "Four things: the team (does it execute and tell the truth), the market (is it big and growing), traction (revenue, orders, retention — numbers, not adjectives), and documents (clean registration, accounts, cap table, signed agreements). Hayaan's own diligence room shows what this looks like locally: every number a claimant makes must trace to a record.",
+    },
+    {
+      q: "How can a Somali founder raise venture-style funding today?",
+      a: "Start with money that matches your stage: your own savings, revenue, then diaspora angels who know you, then a structured private round when the numbers are real. Get investable first — registered company, signed agreements, financial records, a clean cap table — and collect every payment through licensed, receipted rails. The how-to-invest guide and Hayaan's EOI process both walk this path.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Decide what you are selling, and to whom",
+      text: "Raising money is selling a slice of your company. Fix the round size, what the money will achieve, and what the investor gets — before anyone else frames it for you.",
+    },
+    {
+      name: "Get your documents investable",
+      text: "Company registration, financial records, customer evidence, a clean cap table, signed agreements. An investor's first question is not 'how much do you need' — it is 'show me'.",
+    },
+    {
+      name: "Match the money to the stage",
+      text: "Founder savings and revenue carry the idea stage; diaspora angels carry the first traction; structured rounds with documents carry a working business. Skipping stages is how founders give away half a company for pocket money.",
+    },
+    {
+      name: "Pitch with numbers, not adjectives",
+      text: "Orders, revenue, margins, retention, cost to acquire a customer. 'Huge opportunity' is an opinion; 400 orders a month at a known margin is a fact, and facts are what diligence rooms check.",
+    },
+    {
+      name: "Close clean, and keep the paper trail",
+      text: "A written agreement, money moving through licensed receipted rails — never personal wallets — and milestones both sides can check. Then run the business and report honestly, including the bad months.",
+    },
+  ],
+  content: `Type "venture capital" into LinkedIn and you will see a world of term sheets, seed rounds and unicorns. Type it into a conversation in Mogadishu and you will mostly get shrugged shoulders — and yet money is flowing into Somali businesses every day. This guide closes that gap: what venture capital actually is, the honest answer about Somalia, and the route a founder here can realistically walk from savings to a structured round — the same route Hayaan Market, the marketplace behind this blog, has walked in public.
+
+## What venture capital is, exactly
+
+Venture capital (VC) is money that professional investors exchange for **equity** — a slice of ownership — in young companies believed to grow very large. The plumbing matters less than the logic:
+
+1. **The fund.** A VC firm raises a pool of money from institutions and wealthy individuals (limited partners) whose money this is; the firm's job is to deploy it into startups.
+2. **The bet.** The fund buys into a handful of companies early, at stages with names: pre-seed, seed, Series A, B, C. Earlier stage, smaller cheque, bigger risk.
+3. **The win.** No interest, no repayments, no collateral. The fund earns when a backed company is sold, lists, or buys back shares at many times the entry price. One winner pays for many failures — that portfolio math is the entire industry.
+
+Because there is no repayment to miss, VC funds what banks cannot: companies with no history, no property to pledge, and a decade of growth ahead. The price of that freedom is ownership and a voice — investors get a board seat, veto rights on big decisions, and expectations that arrive every quarter.
+
+## Does Somalia have venture capital?
+
+Honest answer, in three layers:
+
+- **The formal industry: not yet.** There are no registered VC funds running Mogadishu deal flow, no incubator-to-Series-A pipeline, no local term-sheet culture. Anyone selling you "a VC fund in Somalia" today is ahead of the infrastructure — apply the [securities checklist](https://hayaan.co/blog/securities-in-somalia) before sending money anywhere.
+- **The live reality: private money, structured properly.** Somali businesses are funded by founder savings, customer revenue, diaspora angels who know the founder personally, Shariah-compliant SME finance, and increasingly by structured private rounds — real documents, real valuations, real money paths. The working example is Hayaan Market's [equity round](https://hayaan.co/investors): an expression-of-interest form, then the deck and data room, then a SAFE or priced equity in USD with tickets from $10,000. It is venture-style funding, stripped of the jargon.
+- **The rails forming.** The National Securities Exchange (NSES) launched in June 2025 and the 2025 Investment Law strengthened the governance frame. Neither is venture capital today; both make tomorrow's venture capital possible — public markets need somewhere to exit into. The [share market guide](https://hayaan.co/blog/somalia-share-market) tracks that story.
+
+So the precise statement is: venture capital in Somalia is a **stage of development, not an absence**. The money exists; the formal intermediaries are being born.
+
+## Venture capital vs a bank loan
+
+- **Ownership:** a loan leaves you 100% owner; VC sells slices.
+- **Repayment:** loans demand money back on a schedule from day one; VC demands nothing monthly — it wants growth.
+- **Collateral:** banks need property or guarantees; VCs take the risk on the company itself.
+- **Downside:** miss loan payments and you lose assets; a startup fails and the investor's money is gone — the founder owes nothing.
+- **Upside:** the bank's profit is capped at the interest; the investor's upside is uncapped — which is exactly why they push for explosive growth.
+
+A young company with no collateral has no real loan option — that is the gap VC exists to fill. The [how-to-invest guide](https://hayaan.co/blog/how-to-invest-in-somalia) maps where else Somali money comes from.
+
+## What investors actually look for
+
+1. **The team.** Does it execute, and does it tell the truth early? Investors back people through pivots and bad quarters.
+2. **The market.** Big, growing, reachable. A brilliant shop in one neighborhood cannot compound; a marketplace for a whole diaspora-connected country can.
+3. **Traction.** Revenue, orders, retention, unit economics — numbers a diligence room can trace to records. This is why the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) matters beyond convenience: licensed, receipted rails create the paper trail that makes traction provable.
+4. **The documents.** Registration, financial records, a clean cap table, signed agreements. In a market with no deep disclosure regime, your documents are your credibility.
+
+Notice what is missing from the list: a pitch deck's font, an office in a glass tower, a founder's accent. Numbers and paper beat all of it.
+
+> Rule of the raise: venture capital is not free money — it is someone else's savings buying a slice of your future. Sell that slice deliberately, document it completely, and spend it on the plan you showed.
+
+## Where this leaves you
+
+If you are a **founder**: become investable before you are loud — registration, records, traction, clean paper — then raise money that matches your stage. If you are an **investor**: the venture-style opportunity is already here in structured form; Hayaan Market's [equity round](https://hayaan.co/investors) is open — the expression-of-interest form takes two minutes and buys you the deck and a conversation, not a commitment. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -2521,6 +2627,11 @@ export const SEO_POSTS: BlogPost[] = [
   { ...post25, coverImage: "https://hayaan.co/images/blog/how-to-invest-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T09:00:00.000Z"), createdAt: "2026-10-29T09:00:00.000Z", updatedAt: "2026-10-29T09:00:00.000Z" },
   { ...post26, coverImage: "https://hayaan.co/images/blog/somalia-share-market.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T09:30:00.000Z"), createdAt: "2026-10-29T09:30:00.000Z", updatedAt: "2026-10-29T09:30:00.000Z" },
   { ...post27, coverImage: "https://hayaan.co/images/blog/securities-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-10-29T10:00:00.000Z"), createdAt: "2026-10-29T10:00:00.000Z", updatedAt: "2026-10-29T10:00:00.000Z" },
+  // Task 143 — November 2026 batch (venture capital, Keyword Planner 100-1K/mo)
+  // — extends the investing cluster to founders + the VC search intent; funnel
+  // to /investors. Facts consistent with the Task 129 verified set (NSES June
+  // 2025, 2025 Investment Law, Hayaan round mechanics).
+  { ...post28, coverImage: "https://hayaan.co/images/blog/venture-capital-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-11-03T09:00:00.000Z"), createdAt: "2026-11-03T09:00:00.000Z", updatedAt: "2026-11-03T09:00:00.000Z" },
 ];
 
 
