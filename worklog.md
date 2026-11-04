@@ -3426,3 +3426,19 @@ Work Log:
 Stage Summary:
 - Task 143 CODE COMPLETE (push pending): 29th live blog post targets the "venture capital" keyword cluster (Keyword Planner 100-1K/mo) with full AEO kit (quick answer + FAQPage + HowTo schema), funnels to /investors, 14/14 local verify incl. 9-link resolution + cover + schema. After push + CI: re-run harness against prod (cover must render there), close.
 - Deploy + prod verify (same session): pushed e650798..12992b5 (carrying sandbox housekeeping commit db0b568), CI PASS in ~100s. Prod harness 14/14 on https://hayaan.co — page 200, quick-answer box, JSON-LD BlogPosting+FAQPage+HowTo, all 5 FAQs, canonical + og:image, cover 200 image/jpeg (renders on prod as predicted), /blog index + sitemap.xml + llms.txt + llms-full.txt all list it, all 9 internal links resolve 200. Screenshot download/task143-blog-prod-venture-capital-in-somalia.png. Task 143 CLOSED — post #29 live, /investors funnel now covers the venture-capital keyword cluster end to end.
+
+---
+Task ID: 144
+Agent: Super Z (main)
+Task: Owner: "Remove the text I marked for you" (screenshot red-circles the "Fixed USD prices — no VAT" hero badge) + GH token
+
+Work Log:
+- Marked element identified: the white pill above the H1 with the orange Sparkles icon + t("hero.badge") = "Fixed USD prices — no VAT" (hero.tsx lines 35-38). NOT the Pay-your-way chip on the artwork (that's the Task 142 element, owner didn't circle it) — both look similar (white rounded-full pills) so the dictionary key + position above the H1 settled it.
+- Removal: badge <span> deleted from hero.tsx (H1 now leads the copy column), "hero.badge" key dropped from BOTH dictionaries (EN line 52 + SO line 623), unused Sparkles import removed. Nothing else referenced hero.badge (grep-verified).
+- Repo hygiene: local had 2 unpushed Task 143 evidence commits (a6496a3 worklog note, d958830 prod screenshot which ALSO accidentally re-added public/images/hero-shopping-3d.webp — the file Task 141 deliberately killed). Deleted the v1 file again in this commit so the dead URL stays dead once pushed. Lesson recorded: git stash pop does NOT preserve staged-vs-unstaged (my git rm was silently unstaged by the tsc-baseline stash test; caught by reviewing git show --stat before push).
+- Verify false-positive fixed en route: my first SSR fingerprint "px-3 py-1" matched the search input (not the badge) — swapped to the badge's unique class combo "w-fit items-center gap-1.5 rounded-full bg-white". 54-line tsc output identical to baseline (zero new type errors).
+- Local verify (fresh dev server, single session): t144 16/16 — EN+SO badge text gone from SSR + unique markup fingerprint gone, hero v2 asset/H1/subtitle/chip intact, live-DOM desktop probe (badge absent, chip live, artwork live), SO runtime toggle really switches (SO H1 renders) and the SO badge text is absent there too, 390x844 screenshot; PLUS regressions t141 17/17 + t142 11/11 (chip geometry byte-identical: desktop translate 0px -48px gap +16, narrow none/-32).
+
+Stage Summary:
+- Task 144 CODE COMPLETE (push pending): owner-marked badge removed in EN+SO, Pay-your-way chip untouched, 44/44 local. After push + CI: re-run all 3 suites against prod, close.
+- Deploy + prod verify (same session): pushed 12992b5..b06362e (carrying the 2 Task 143 evidence commits), CI PASS first run (~4.5min incl. CF queue — no transient this time). Prod on https://hayaan.co: t144 16/16 + t141 17/17 + t142 11/11 = 44/44, zero console errors, served asset md5 44421efe41 unchanged, old v1 URL still 404, chip/artwork geometry identical to Task 142 baseline. Prod screenshots download/t144-hero-desktop.png + t144-hero-mobile.png. Task 144 CLOSED — badge gone from both languages, headline leads the hero.
