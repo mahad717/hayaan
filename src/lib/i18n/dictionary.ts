@@ -49,7 +49,6 @@ const en = {
   "lang.toggleAria": "Change language",
 
   // Hero
-  "hero.badge": "Fixed USD prices — no VAT",
   "hero.title1": "Find what you need,",
   "hero.title2": "discover what you’ll love.",
   "hero.sub":
@@ -620,7 +619,6 @@ const so: Record<DictKey, string> = {
   "lang.toggleAria": "Beddel luqadda",
 
   // Hero
-  "hero.badge": "Qiimo USD oo go'an — VAT ma jiro",
   "hero.title1": "Hel waxa aad u baahan tahay,",
   "hero.title2": "oo hel waxa aad jeceshahay.",
   "hero.sub":

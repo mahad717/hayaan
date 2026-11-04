@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, Truck, Shield, RotateCcw, Wallet } from "lucide-react";
+import { Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonWithIcon } from "@/components/ui/button-with-icon";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
@@ -32,11 +32,6 @@ export function Hero({ onShop }: { onShop: () => void }) {
       <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
         {/* Copy */}
         <div className="flex flex-col gap-5">
-          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-brand shadow-sm ring-1 ring-[#e6e2d4]">
-            <Sparkles className="h-3.5 w-3.5 text-[#f28c28]" />
-            {t("hero.badge")}
-          </span>
-
           <h1 className="text-4xl font-black font-panton leading-tight tracking-tight text-brand-dark sm:text-5xl md:text-6xl">
             {t("hero.title1")}
             <br />
