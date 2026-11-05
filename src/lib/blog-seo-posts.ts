@@ -2612,7 +2612,7 @@ const post29 = {
     },
     {
       q: "How do I invest in Somalia from abroad?",
-      a: "The diaspora route most used today: put money into structured private equity rounds in operating businesses (Hayaan Market's equity round runs from a $10,000 ticket — expression of interest, then deck and data room, then a SAFE or priced equity in USD), take a joint-venture stake with an operator, or fund your own project. Always move money through licensed banks or money transfer organizations and keep every receipt — your paper trail is your legal position.",
+      a: "The diaspora route most used today: put money into structured private equity rounds in operating businesses (Hayaan Market's equity round runs from a $10,000 ticket — expression of interest, then deck and data room, then a SAFE or priced equity in USD), take a joint-venture stake with an operator, or fund your own project. Always move money through licensed banks or money transfer organizations and keep every receipt — your paper trail is your legal position. The [diaspora guide](https://hayaan.co/blog/how-to-invest-in-somalia-from-abroad) walks this route end to end.",
     },
     {
       q: "What is the safest way to invest in Somalia?",
@@ -2706,6 +2706,113 @@ The legal frame exists and keeps strengthening: the 2015 Foreign Investment Law 
 This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
 };
 
+// Task 146 — keyword: "how to invest in Somalia from abroad" — the diaspora
+// intent (the /investors funnel's exact audience). Facts verified on publish
+// day: remittances ~$1.3B (Oxfam) / ~$1.4B ~quarter of GDP (IOM) vs UNCTAD-
+// cited FDI ~$455M (2021) — the diaspora is the largest investor class;
+// Somali Diaspora Investment Survey discussion brief (Feb 2026): only 33% of
+// surveyed diaspora made financial investments in the past three years; 2012
+// provisional constitution allows dual nationality (1962 law did not); 2023
+// Investor Protection Law guarantees (State Dept 2025 ICS); 7 licensed money
+// transfer businesses / hawalas (US Commerce CCG Jan 2024); shilling not
+// printed since 1991, >98% counterfeit, USD + mobile money standard (State
+// Dept); property: no federal registry, pre-1991 title verification ~1 month
+// $1,000-2,000, lawyer title check ~$50, foreigners lease-not-own, Somaliland
+// framework more advanced (State Dept 2025 ICS); SSE 2015 small/unregulated.
+// Funnels to /investors x2 + how-to-invest + securities + VC + umbrella +
+// share-market + payments guides. post29's diaspora FAQ cross-links here.
+const post30 = {
+  id: "seo-invest-somalia-from-abroad",
+  slug: "how-to-invest-in-somalia-from-abroad",
+  title: "How to Invest in Somalia from Abroad (2026 Diaspora Guide)",
+  excerpt:
+    "The diaspora guide to investing in Somalia from abroad: the legal frame, the four routes, licensed money rails, and the property trap to avoid.",
+  quickAnswer:
+    "Yes — Somalia's 2012 constitution allows dual nationality, and the 2023 investment-protection law guarantees capital against unlawful expropriation and protects profit repatriation. The working routes from abroad: structured private equity rounds from a $10,000 ticket, joint ventures, or your own project — funded through licensed money transfer businesses, never couriers. Verify records before you send, and treat land as the trap it is.",
+  faqs: [
+    {
+      q: "Can I legally invest in Somalia from abroad?",
+      a: "Yes. The 2015 Foreign Investment Law opened the door, and the 2023 Investors and Investments Protection Law guarantees protection from unlawful expropriation, national treatment, and the right to repatriate profits. SOMINVEST, the investment promotion office under the Ministry of Planning, handles registration. Somalia's 2012 provisional constitution also allows dual nationality, so your foreign passport is not a legal obstacle. The one famous exception: foreigners can lease land for commercial purposes but cannot formally own it.",
+    },
+    {
+      q: "How much money do I need to invest in Somalia from abroad?",
+      a: "Less than most people assume for the structured route: Hayaan Market's equity round runs tickets from $10,000 — expression of interest first, deck and data room before any commitment. Joint-venture stakes are negotiated deal by deal, and a solo project costs whatever the plan (and the records) support. Context worth knowing: in a Somali Diaspora Investment Survey discussion brief, only about a third of surveyed diaspora had made financial investments in the past three years — the appetite is bigger than the machinery, so start with verified vehicles, not family favors.",
+    },
+    {
+      q: "How do I send investment money to Somalia safely?",
+      a: "Through licensed rails only: Somalia's Central Bank licenses money transfer businesses — seven licensed hawala-style MTOs were listed in the U.S. Commerce Department's 2024 country guide, alongside licensed banks — and mobile money plus the U.S. dollar are the economy's working standard (the old shilling bills, unprinted since 1991, are mostly counterfeit; a CBS reissue backed by the IMF and World Bank is underway). Never send cash with couriers or move money through personal wallets, and keep every receipt — the paper trail is your legal position.",
+    },
+    {
+      q: "Is buying land or property in Somalia a good idea for the diaspora?",
+      a: "Be careful: this is the classic diaspora loss. There is no federal land registry, fraudulent titles are common, and pre-1991 records were moved abroad — verifying an old title takes about a month and $1,000–2,000, while a lawyer's title check on newer records runs around $50. Foreigners can lease but not formally own, tenure depends on local relationships, and property disputes are frequent. Somaliland's title framework is more advanced. If you buy, use a lawyer and municipal documentation — or put the same money into operating-business equity instead.",
+    },
+    {
+      q: "What can I invest in from abroad besides property?",
+      a: "The operating economy: structured private equity in companies (the marketplace behind this blog is one example with open tickets), processing and cold-chain ventures in livestock and agriculture (a single cold-storage facility has been sized at $20 million with 18–22% annual ROI), telecom and logistics, and city retail. The [sector guide](https://hayaan.co/blog/investment-opportunities-in-somalia) ranks them all with numbers.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Decide your role before your amount",
+      text: "Passive capital suits structured equity rounds where professionals run the asset; hands-on capital suits projects you can visit, measure and manage. Passive money inside an operating business you cannot oversee is the most common expensive diaspora mistake.",
+    },
+    {
+      name: "Verify the business, not the story",
+      text: "Financial records, orders, licenses, a clean cap table, signed agreements — the same documents a diligence data room demands. In a market with thin public disclosure, the seller's paperwork is the diligence: no records, no deal.",
+    },
+    {
+      name: "Pick the instrument and paper it",
+      text: "Priced equity or a SAFE for company investment, a written joint-venture agreement for projects, milestones and exit terms in both. The 2023 protection law provides the legal frame; your contract makes it work in practice.",
+    },
+    {
+      name: "Send money only through licensed rails",
+      text: "Licensed money transfer businesses and banks, never couriers, never personal wallets. Get a receipt for every transfer — it proves your ownership and your repatriation rights, and it is what any future buyer's diligence will ask to see.",
+    },
+    {
+      name: "Set milestones, review quarterly, keep the paper",
+      text: "Written milestones both sides can check, honest reporting including the bad months, exit terms agreed while relations are still friendly. Treat the investment as a business asset with a file, not as a favor to relatives.",
+    },
+  ],
+  content: `Here is the diaspora paradox in two numbers. Somalis abroad send home roughly $1.3–1.4 billion a year — Oxfam and IOM estimates put it at about a quarter of GDP — while formal foreign direct investment has been estimated at only around $455 million in a recent year. The diaspora is, measurably, the largest investor class in Somalia. Yet when the Somali Diaspora Investment Survey asked, only about a third of respondents had made a financial investment in the region in the past three years. The money wants in; the machinery is what's missing. This guide is the machinery: the legal answer, the four routes, how to move money safely, and the trap that eats the most diaspora savings — land.
+
+## The legal answer: yes, with paperwork
+
+The frame has been improving for a decade. The 2015 Foreign Investment Law opened the economy; the 2023 Investors and Investments Protection Law added the guarantees investors actually recognize — protection from unlawful expropriation, national treatment, and the right to repatriate profits. SOMINVEST, the promotion office under the Ministry of Planning, is the official registration and facilitation entry point. And personally, the 2012 provisional constitution allows dual nationality — the old 1962 law's prohibition is gone — so holding a foreign passport does not compromise your standing.
+
+One boundary matters from day one: **land**. Foreigners can lease land for commercial purposes but cannot formally own it, and Somalis investing from abroad run into the same registry problems below. Structure around it, don't discover it late.
+
+## The four routes from abroad
+
+1. **Structured private equity — the passive-friendly default.** Hayaan Market's [equity round](https://hayaan.co/investors) runs tickets from $10,000: an expression-of-interest form takes two minutes, then you receive the investor deck and data room access, and only then a SAFE or priced equity agreement in USD. You get professional operations, real documents, and a paper trail — without running anything yourself.
+2. **A joint venture with an operating business.** You bring capital and standards; a local operator brings market knowledge and relationships. It works when the partnership is written down — equity split, decisions, milestones, exit — and fails when it runs on cousin-trust alone.
+3. **Your own project.** A farm, a processing line, a logistics operation, a franchise. Highest control, highest workload, and the [become-investable checklist](https://hayaan.co/blog/venture-capital-in-somalia) investors apply to founders applies to you too.
+4. **Public markets — forming, not ready.** The National Securities Exchange launched in June 2025 and the [share market guide](https://hayaan.co/blog/somalia-share-market) tracks it, but the U.S. State Department's 2025 review still describes the private SSE (2015) as small and unregulated — treat public trading as a watchlist item, not a portfolio slot.
+
+## Moving the money without losing it
+
+The rails are more formal than the reputation. The Central Bank licenses money transfer businesses — the U.S. Commerce Department's 2024 country guide counted seven licensed hawala-style MTOs — alongside licensed banks, and mobile money plus the U.S. dollar are how the economy actually settles payments. (The old shilling notes, unprinted since 1991, are mostly counterfeit; a CBS reissue with IMF and World Bank backing is underway, which is one more reason to transact in USD.)
+
+Three rules carry your money safely: **licensed channels only** — never couriers, never "send it with someone traveling"; **receipts for everything** — your transfer record is what proves ownership and repatriation rights later; **separate investment from family support** — remittances are gifts by default, investment is a documented position. Mixing the two is how capital evaporates quietly.
+
+## The property trap
+
+Land is where diaspora money goes to die, so read this twice. There is no federal land registry; ownership runs on documents, custom and relationships. Fraudulent titles are common. Records from before 1991 were literally moved out of the country — verifying a pre-1991 title takes about a month and $1,000–2,000, while a lawyer's authenticity check on newer records runs around $50. Foreign investors can lease but not own; tenure security leans on local relationships and politics. Somaliland has built the more advanced title and dispute framework, but disputes are frequent everywhere.
+
+None of this means "never buy property". It means property is not the safe default many assume: the paperwork is heavier than an equity round, the downside is total, and the upside is slower than an operating business. If you buy: a lawyer first, municipal documentation, licensed rails for payment, and never cash. If that sounds like a project, it is — and the [sector guide](https://hayaan.co/blog/investment-opportunities-in-somalia) shows where the same money works harder.
+
+## The verify-before-you-send checklist
+
+1. **Records before promises** — accounts, orders, licenses, cap table. The [securities checklist](https://hayaan.co/blog/securities-in-somalia) applies to any offer, however trusted the messenger.
+2. **Documents before money** — priced equity, SAFE or JV agreement signed before funds move.
+3. **Licensed rails and receipts** — the trail that proves your position.
+4. **Milestones and quarterly reviews** — including the bad months; honesty is the health metric of an investment.
+5. **Exit terms in writing** — agreed while everyone is still friendly.
+
+> The diaspora advantage is real: you know the language, the market and the people. The diaspora risk is real too: warmth is not diligence. Invest from abroad with the same paperwork you would demand at home — records, rails, receipts — and the home advantage finally pays.
+
+**Start this week:** Hayaan Market's [equity round](https://hayaan.co/investors) is open to diaspora investors — the expression-of-interest form takes two minutes and buys you the deck and a conversation, not a commitment. The [how-to-invest guide](https://hayaan.co/blog/how-to-invest-in-somalia) and the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) cover the rest of the mechanics. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
+};
+
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
  *  Cover images (Task 80): branded 16:9 JPGs shipped in /public/images/blog —
  *  absolute URLs so og:image / twitter:image / BlogPosting JSON-LD resolve
@@ -2767,6 +2874,12 @@ export const SEO_POSTS: BlogPost[] = [
   // publish day (World Bank, AfDB, State Dept 2025 ICS, SDRB, MoAI, FAO);
   // funnels to /investors + all four sibling cluster guides.
   { ...post29, coverImage: "https://hayaan.co/images/blog/investment-opportunities-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-11-05T09:00:00.000Z"), createdAt: "2026-11-05T09:00:00.000Z", updatedAt: "2026-11-05T09:00:00.000Z" },
+  // Task 146 — November 2026 (invest from abroad, the diaspora intent — the
+  // /investors funnel's exact audience) — facts verified on publish day
+  // (Oxfam/IOM remittances, SDIS 33%, 2012 dual-nationality constitution,
+  // US Commerce 7-licensed-MTO count, State Dept property + shilling facts);
+  // post29's diaspora FAQ cross-links here; funnels to /investors x2 + 4 guides.
+  { ...post30, coverImage: "https://hayaan.co/images/blog/how-to-invest-in-somalia-from-abroad.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-11-05T10:00:00.000Z"), createdAt: "2026-11-05T10:00:00.000Z", updatedAt: "2026-11-05T10:00:00.000Z" },
 ];
 
 
