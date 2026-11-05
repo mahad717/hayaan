@@ -3492,3 +3492,4 @@ Work Log:
 
 Stage Summary:
 - Task 147 CODE COMPLETE (push pending): post31 property pillar live-ready, 16/16 local. After push + CI: prod harness (re-run t146 too — post30 gained a cross-link), close.
+- Deploy + prod verify (same session): pushed 949e07c..1ffa56a (carrying stray raw-cover checkpoint c8686a9), CI PASS first run (~100s — no trigger-miss this time; the "every other push" pattern continues to be intermittent, not deterministic). Prod harness 16/16 on https://hayaan.co — cover renders on prod (confirmed in screenshot download/task147-blog-prod-real-estate-in-somalia.png), schema/facts/links all green. t146 regression on prod 16/16 — post30's new cross-link live (11->12 unique links, all resolve). Task 147 CLOSED — post #32 live; the investing cluster now covers property: umbrella + diaspora + property + 3 instrument guides + payments rails, 7 llms.txt investing lines, all cross-linked, all funneling to /investors.
