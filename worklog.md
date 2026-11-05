@@ -3459,3 +3459,20 @@ Work Log:
 Stage Summary:
 - Task 145 CODE COMPLETE (push pending): post29 umbrella guide live-ready, 16/16 local. After push + CI: re-run harness against prod (cover render), close.
 - Deploy + prod verify (same session): pushed 41848b8..6c13eae, CI PASS first run (~2.5min). Prod harness 16/16 on https://hayaan.co — cover renders on prod (confirmed in screenshot), schema/facts/links all green. Screenshot download/task145-blog-prod-investment-opportunities-in-somalia.png. Task 145 CLOSED — post #30 live; the investing cluster now has its umbrella pillar: 5 guides + /investors page covering the full investor search surface.
+
+---
+Task ID: 146
+Agent: Super Z (main)
+Task: Owner: "continue" (after Task 145 + keyword-roadmap offer) — next investor keyword: "how to invest in Somalia from abroad" (diaspora intent) + GH token
+
+Work Log:
+- Positioning: the diaspora intent is the /investors funnel's EXACT audience, and post29's FAQ ("How do I invest in Somalia from abroad?") already seeded it. Shipped as post30 — post29's FAQ now cross-links to it (two-way cluster weaving).
+- Facts verified on publish day (the distinctive set this time): remittances ~$1.3B Oxfam / ~$1.4B ~quarter of GDP IOM vs UNCTAD-cited FDI ~$455M (2021, via How-We-Made-It-In-Africa) -> the post's framing "the diaspora is, measurably, the largest investor class in Somalia"; Somali Diaspora Investment Survey discussion brief (Feb 2026, ffremittances.org): only 33% of surveyed diaspora invested in the past 3 years -> "the appetite is bigger than the machinery"; dual nationality permitted by the 2012 provisional constitution (1962 law's prohibition superseded — citizenshiprightsafrica.org + Kenya Times); seven licensed hawala-style MTOs (US Commerce CCG Jan 2024); shilling unprinted since 1991, >98% counterfeit, USD + mobile money standard, CBS reissue with IMF/WB backing (State Dept 2025 ICS); property trap: no federal registry, fraudulent titles common, pre-1991 records moved abroad (verification ~1 month + $1,000-2,000), lawyer title check ~$50, foreigners lease-not-own, Somaliland framework more advanced (State Dept 2025 ICS); SSE 2015 small/unregulated + NSES June 2025 forming (consistent with Task 129 set).
+- SEO/AEO kit: title 57 chars keyword-first, 60-word quickAnswer, 5 PAA-style FAQs -> FAQPage, 5 howtoSteps -> HowTo, ~1,200-word body with the honest property-trap section (the distinctive diaspora-loss content no competitor dares write), keyword "from abroad" x51, 8 internal links (4 cluster guides + payments + /investors x2), series disclaimer.
+- Cover: task146-blog-covers.mjs — paper airplane carrying a coin along a coin path to a tiny model shop ("money arriving home", series style, no text) -> 1200x675 JPG 75KB. llms.txt investing section now 6 guides + umbrella.
+- Local verify (t146-run.sh): 16/16 PASS — page/h1/quick-answer, keyword density, BlogPosting+FAQPage+HowTo, 5 FAQ questions, verified-facts assertions ($455M/seven licensed/lease-not-own/$10,000), no-7%-growth assertion, canonical/og:image/cover, /blog + sitemap + llms.txt + llms-full.txt, all 11 content links resolve.
+- Deploy pattern now reliable data: first push trigger-miss AGAIN (no check-runs ~5min, 3rd occurrence: Tasks 132/144/146) — empty-commit retrigger worked again (2nd time, after Task 144). CF's webhook seems to skip roughly every other push from this token path; always retrigger after ~5min of silence.
+
+Stage Summary:
+- Task 146 CODE COMPLETE (push pending): post30 diaspora guide live-ready, 16/16 local. After push + CI: prod harness, close.
+- Deploy + prod verify (same session): pushed b6db984..8f5f320 (carry stray raw-cover commit 51bba7e) — trigger-miss -> retrigger ff231ba -> CI PASS. Prod harness 16/16 on https://hayaan.co, cover renders (screenshot download/task146-blog-how-to-invest-in-somalia-from-abroad.png). Task 146 CLOSED — post #31 live; investing cluster = umbrella + diaspora + 3 instrument guides + 2 market rails guides, 6 llms.txt lines, all cross-linked, all funneling to /investors.
