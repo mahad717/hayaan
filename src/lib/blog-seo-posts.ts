@@ -2798,7 +2798,7 @@ Three rules carry your money safely: **licensed channels only** — never courie
 
 Land is where diaspora money goes to die, so read this twice. There is no federal land registry; ownership runs on documents, custom and relationships. Fraudulent titles are common. Records from before 1991 were literally moved out of the country — verifying a pre-1991 title takes about a month and $1,000–2,000, while a lawyer's authenticity check on newer records runs around $50. Foreign investors can lease but not own; tenure security leans on local relationships and politics. Somaliland has built the more advanced title and dispute framework, but disputes are frequent everywhere.
 
-None of this means "never buy property". It means property is not the safe default many assume: the paperwork is heavier than an equity round, the downside is total, and the upside is slower than an operating business. If you buy: a lawyer first, municipal documentation, licensed rails for payment, and never cash. If that sounds like a project, it is — and the [sector guide](https://hayaan.co/blog/investment-opportunities-in-somalia) shows where the same money works harder.
+None of this means "never buy property". It means property is not the safe default many assume: the paperwork is heavier than an equity round, the downside is total, and the upside is slower than an operating business. If you buy: a lawyer first, municipal documentation, licensed rails for payment, and never cash. The dedicated [real estate guide](https://hayaan.co/blog/real-estate-in-somalia) walks the boom numbers, the title-check costs and the buy-safely checklist in full — and the [sector guide](https://hayaan.co/blog/investment-opportunities-in-somalia) shows where the same money works harder.
 
 ## The verify-before-you-send checklist
 
@@ -2811,6 +2811,102 @@ None of this means "never buy property". It means property is not the safe defau
 > The diaspora advantage is real: you know the language, the market and the people. The diaspora risk is real too: warmth is not diligence. Invest from abroad with the same paperwork you would demand at home — records, rails, receipts — and the home advantage finally pays.
 
 **Start this week:** Hayaan Market's [equity round](https://hayaan.co/investors) is open to diaspora investors — the expression-of-interest form takes two minutes and buys you the deck and a conversation, not a commitment. The [how-to-invest guide](https://hayaan.co/blog/how-to-invest-in-somalia) and the [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) cover the rest of the mechanics. This guide is general information, not financial advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
+};
+
+const post31 = {
+  id: "seo-real-estate-in-somalia",
+  slug: "real-estate-in-somalia",
+  title: "Real Estate in Somalia: The 2026 Investor's Guide",
+  excerpt:
+    "Real estate in Somalia: the building boom in numbers, what apartments rent for, the land-registry reality, and the title checks that keep your money safe.",
+  quickAnswer:
+    "The real estate boom in Somalia is real — Mogadishu's mayor counted more than 6,000 buildings in five years and new apartments rent for $600–$1,500 a month. But there is no federal land registry, fraudulent titles are common, and foreigners lease rather than own. Buy only with a lawyer's title check and municipal paperwork — or put the money into operating businesses instead.",
+  faqs: [
+    {
+      q: "Is real estate a good investment in Somalia?",
+      a: "It can be — the demand is real. Mogadishu's mayor counted more than 6,000 buildings in five years, new apartments rent for $600–$1,500 a month, and UN-Habitat sizes the country's housing gap at about two million units. But there is no federal land registry, fraudulent titles are common, and foreigners lease rather than own — so the answer depends entirely on your title checks. Buyers who verify first do fine; buyers who wire first get burned.",
+    },
+    {
+      q: "Can foreigners buy property in Somalia?",
+      a: "For land, no: foreigners cannot formally own land in Somalia — commercial property works through leases. Business ownership is different: the 2015 Foreign Investment Law permits full foreign ownership of companies, the 2023 Investors and Investments Protection Law adds expropriation and repatriation guarantees, and a November 2025 Investment Law formalized SOMINVEST as the one-stop facilitation agency. If you hold Somali nationality — dual nationality included — you can hold title, but you inherit the same registry risks.",
+    },
+    {
+      q: "How much does property in Somalia cost?",
+      a: "There is no reliable price index — construction is largely unregulated and statistics are rare, per AFP. What is verifiable: new Mogadishu apartments rent for $600–$1,500 a month (The New Humanitarian), modest district units for $200–$350 (Somali Researchers Association, 2026), a lawyer's title check runs about $50, and verifying a pre-1991 title takes about a month and $1,000–$2,000. Anyone quoting an exact market average is selling, not measuring.",
+    },
+    {
+      q: "Is there a land registry in Somalia?",
+      a: "Not federally. There is no national land registry — ownership runs on documents, custom and relationships, records from before 1991 were moved abroad, and fraudulent titles are common (U.S. State Department Investment Climate Statements). Municipal records are the practical evidence, and Somaliland's registration framework is more advanced than the federal system's.",
+    },
+    {
+      q: "Should the diaspora buy land or invest in a business?",
+      a: "The diaspora is Somalia's largest investor class — $1.3–1.4 billion in remittances a year — and land is where that money most often dies: no registry, forged titles, disputes in court for years, and fraud following families even abroad (Minnesota's attorney general sued a property developer in 2024 over roughly $1 million raised from Somali families). If you buy, lawyer and municipal records first. If you want returns without the title risk, structured equity from $10,000 tickets funds the operating economy instead.",
+    },
+  ],
+  howtoSteps: [
+    {
+      name: "Decide what the property must do",
+      text: "A family home, a rental income asset and a land speculation play are three different purchases with three different risk profiles. Income assets live or die on the rent ranges and management quality; speculation lives on appreciation nobody can index. Pick one and size your checks accordingly.",
+    },
+    {
+      name: "Run the title check before any money moves",
+      text: "A lawyer's authenticity check on newer municipal records runs about $50; pre-1991 files take about a month and $1,000–$2,000 because the originals left the country. No clean file, no deal — this is the whole game in Somali real estate.",
+    },
+    {
+      name: "Paper the deal and pay on licensed rails",
+      text: "Written sale or lease agreement, both parties' identification, municipal registration where available, and payment through licensed money transfer businesses or banks — never cash, never couriers. Your transfer record is your proof of purchase.",
+    },
+    {
+      name: "Structure around the ownership rules",
+      text: "Foreigners take commercial land on leases, not title. Diaspora buyers should verify the seller's own chain of ownership — a forged deed one generation back poisons yours. Comparing Somaliland's more advanced registration framework is legitimate market research, not disloyalty.",
+    },
+    {
+      name: "Decide the exit before you enter",
+      text: "There is no listing platform and few comparable sales, so your records are your exit: agreements, receipts, photos, municipal stamps. If assembling that file sounds heavier than the returns justify, the same capital can fund verified operating ventures instead — a cold-storage facility has been sized at 18–22% annual ROI.",
+    },
+  ],
+  content: `Mogadishu is building. Sand, girders and scaffolding line the avenues of the capital; new glass-fronted towers climb over streets that still carry bullet scars; and for the first time in decades, as AFP reported from the city in November 2025, residents say builders are "not afraid of shattering". Real estate is the sector every visitor asks about first — and the one where Somalia's opportunity and Somalia's risk sit closest together. This guide gives you both: the boom in verified numbers, the legal reality of land, what property actually rents for, and the title checks that separate a good buy from an expensive story.
+
+## How big the boom actually is
+
+Start with what is verifiable:
+
+- **More than 6,000 buildings** went up in Mogadishu in five years, the capital's mayor told the BBC in June 2025 — a figure AFP reported alongside its building-boom coverage, while cautioning that construction is largely unregulated and reliable statistics are rare. Treat every precise market number you hear with the same caution.
+- Rents show the demand. New apartment buildings in Mogadishu rent for **$600–$1,500 a month** (The New Humanitarian, 2024), while the Somali Researchers Association's October 2026 cost-of-living data puts modest district apartments lower — Bakara around $200–$300, Waberi $300–$350.
+- The demand is structural, not speculative: **55% of Somalis live in cities** (World Bank, 2025), the urban population grows around **4.3% a year**, and Somalia is already more urbanized than its neighbors. UN-Habitat, working with the government on Somalia's National Housing Policy, sizes the national housing gap at about **two million units** — and describes it as growing.
+- One honest counterweight: almost 70% of Somalis are multidimensionally poor by the UN's measure. The premium tenant base is real but thin. This is a remittance-backed market, not a mortgage-financed one.
+
+## Who is actually buying
+
+The same force that sends money home builds the skyline. Somalis abroad send roughly **$1.3–1.4 billion a year** in remittances — about a quarter of GDP (Oxfam and IOM estimates) — which makes the diaspora the country's largest investor class, as the [diaspora guide](https://hayaan.co/blog/how-to-invest-in-somalia-from-abroad) details. Housing is one of the first things that money builds, because bank credit cannot do the job: the financial sector remains constrained by missing correspondent banking relationships, and moving money in and out of Somalia remains difficult (U.S. State Department 2026 Investment Climate Statement). Remittances, not mortgages, build this city — alongside the inbound investment from Turkish firms and Gulf partners that the same State Department review records.
+
+## The legal reality: land is the hard part
+
+Here the enthusiasm needs a seatbelt, because **Somalia has no federal land registry**. Ownership runs on documents, custom and relationships; fraudulent titles and land disputes are common; and the records from before 1991 were physically moved out of the country. The practical costs are documented by the U.S. State Department's Investment Climate Statements: verifying a pre-1991 title takes about a month and **$1,000–$2,000**, while a lawyer's authenticity check on newer municipal records runs around **$50**.
+
+Three more boundaries every buyer should know before offering on anything:
+
+1. **Foreigners lease — they do not formally own land.** The 2015 Foreign Investment Law permits full foreign ownership of businesses, the 2023 Investors and Investments Protection Law guarantees protection from unlawful expropriation and profit repatriation, and a November 2025 Investment Law formalized SOMINVEST as the one-stop investment facilitation agency — but land title is a separate instrument, and foreigners take commercial land on leases.
+2. **Construction and real estate regulation is contested** between federal and state authorities, so the same file can meet different interpreters in different offices (State Department, 2026) — and in some regions clan-based affiliations influence access to land.
+3. **Somaliland's title framework is more advanced**, with fuller registration and dispute processes — one reason some buyers compare markets before committing.
+
+None of this means "never buy". It means the title check **is** the investment: pay the $50, wait the month if the file is old, read the municipal record — before any money moves.
+
+## What property actually earns
+
+Be suspicious of anyone quoting a precise yield: no published index exists for Somali real estate, and construction quality, district and management decide everything. What is verifiable sits in the rent ranges above — a new apartment renting at $600–$1,500 competes for a thin premium tenant base, while a modest $200–$350 unit rents faster but earns less. Against that, weigh the operating economy you could fund with the same capital: a cold-storage facility has been sized at $20 million with 18–22% annual ROI, and [structured equity rounds](https://hayaan.co/investors) start at $10,000 tickets with professional operators running the asset. Property can beat both in a good district and a good year — and it can also sit vacant and disputed while it does nothing.
+
+## How to buy without becoming a case study
+
+1. **Lawyer first, offer second.** A lawyer's title check (about $50 on newer records) is the cheapest insurance in Somali real estate. No clean file, no deal.
+2. **Use municipal documentation.** District and municipal records are what you can actually verify; treat photocopied "title deeds" as claims, not evidence.
+3. **Pay through licensed rails, never cash.** The [payments guide](https://hayaan.co/blog/how-to-pay-online-in-somalia) covers the channels; your transfer record is your proof of purchase.
+4. **Verify the counterparty, not just the plot.** Fraud follows diaspora money even abroad — in October 2024, Minnesota's attorney general sued a property developer over roughly $1 million raised from Somali families for a development far short of the pitch. The [securities checklist](https://hayaan.co/blog/securities-in-somalia) applies to property schemes too.
+5. **Decide the exit before you enter.** Real estate here is illiquid: few comparable sales, no listing platform, disputes that run in court for years. Records, photos, agreements and receipts are what a future buyer's diligence will demand — and what your own exit depends on.
+
+> The boom is real: six thousand buildings, rising rents, a two-million-unit housing gap waiting for builders. The trap is real too: no registry, forged titles, and a market that rewards paperwork over enthusiasm. In Somali real estate, the person who verifies first is the investor; the person who wires first is the lesson.
+
+**Start this week:** if the numbers above convinced you, put the same discipline to work on operating businesses — Hayaan Market's [equity round](https://hayaan.co/investors) opens with a two-minute expression-of-interest form, and the [sector guide](https://hayaan.co/blog/investment-opportunities-in-somalia) ranks every alternative with numbers. If you are set on property, run the title checks in this guide first — and the [how-to-invest guide](https://hayaan.co/blog/how-to-invest-in-somalia) and [share market guide](https://hayaan.co/blog/somalia-share-market) cover the rest of the investment surface. This guide is general information, not financial, legal or tax advice, and nothing in it is an offer to sell or a solicitation to buy securities in any jurisdiction.`,
 };
 
 /** Published-at stamps — staggered weekly so the /blog index reads naturally.
@@ -2880,6 +2976,15 @@ export const SEO_POSTS: BlogPost[] = [
   // US Commerce 7-licensed-MTO count, State Dept property + shilling facts);
   // post29's diaspora FAQ cross-links here; funnels to /investors x2 + 4 guides.
   { ...post30, coverImage: "https://hayaan.co/images/blog/how-to-invest-in-somalia-from-abroad.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-11-05T10:00:00.000Z"), createdAt: "2026-11-05T10:00:00.000Z", updatedAt: "2026-11-05T10:00:00.000Z" },
+  // Task 147 — November 2026 (real estate in Somalia — the highest-intent
+  // investor query the cluster still lacked; the diaspora guide's property
+  // trap now gets its own pillar) — facts verified on publish day (2026 ICS
+  // incl. the Nov-2025 Investment Law + federal/state construction contest;
+  // AFP/Mayor-via-BBC 6,000 buildings; New Humanitarian $600-1,500 rents; SRA
+  // 2026 district rents; World Bank 55% urban + 4.3% growth; UN-Habitat 2M
+  // gap; ICS 2023/2025 title-check costs; Minnesota AG 2024 fraud case);
+  // funnels to /investors x2 + 6 sibling guides + payments.
+  { ...post31, coverImage: "https://hayaan.co/images/blog/real-estate-in-somalia.jpg", authorName: "Hayaan Team", status: "published", publishedAt: publishedAt("2026-11-05T11:00:00.000Z"), createdAt: "2026-11-05T11:00:00.000Z", updatedAt: "2026-11-05T11:00:00.000Z" },
 ];
 
 
