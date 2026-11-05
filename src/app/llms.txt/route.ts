@@ -56,6 +56,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Somalia Share Market](${SITE}/blog/somalia-share-market): does Somalia have a stock exchange? The NSES (launched June 2025), the SSE, and how Somalis own shares today.
 - [Securities in Somalia](${SITE}/blog/securities-in-somalia): what securities are, what you can actually buy in Somalia now, who regulates what, and how to vet any offer.
 - [Venture Capital in Somalia](${SITE}/blog/venture-capital-in-somalia): what venture capital is, the honest Somalia answer (no formal VC industry yet), VC vs a bank loan, and how founders raise venture-style money today.
+- [Investment Opportunities in Somalia](${SITE}/blog/investment-opportunities-in-somalia): the umbrella guide — macro numbers, sector by sector (livestock, agriculture, fisheries, energy, telecom, cities), the honest risk list, and how money legally enters.
 
 ## Key pages
 
