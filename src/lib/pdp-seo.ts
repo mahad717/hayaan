@@ -148,6 +148,130 @@ export const PDP_SEO: Record<string, PdpSeoOverride> = {
       },
     ],
   },
+
+  // Task 148 — Samsung Galaxy A-series long-tail cluster (owner request: the
+  // Google autocomplete suggestions "a56/a57/a15/a16/a17 samsung price in
+  // somalia"). The A16/A56/A57 PDPs are the conversion pages for those
+  // queries; same rules as every override above — price-dependent strings
+  // stay functions of the LIVE catalog price, only THIS listing's price is
+  // interpolated, and sibling prices are never hardcoded here (a reprice of
+  // any other model can never leave a stale number in these strings).
+  // Model-level specs cited from Samsung's published spec sheets (verified
+  // 2026-11-05: A16 = 6.7" Super AMOLED / 50MP / IP54 / 25W / six-OS-upgrade
+  // promise; A56 5G = Exynos 1580 / 120Hz Super AMOLED / 50MP OIS / 45W;
+  // A57 5G = 50MP OIS Nightography / IP68 / six OS upgrades / 6.7" Super
+  // AMOLED Plus), hedged to the listing where the catalog copy is thin.
+  "samsung-galaxy-a16": {
+    heading: "Samsung Galaxy A16 — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A16 Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A16 price in Somalia: $${price} at Hayaan Market. 6.7-inch Super AMOLED, 50MP camera, 5000mAh battery, IP54 rating.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A16 price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""}. Samsung's 2024 budget anchor buys a 6.7-inch Super AMOLED display, a 50MP triple camera, a 5000mAh battery with 25W fast charging, an IP54 rating and one of the longest software runways in its class — delivered to your door in Mogadishu or anywhere in the country. It is the cheapest way into a brand-new Samsung in this catalog.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much does the Samsung Galaxy A16 cost in Somalia?",
+        a: `The Samsung Galaxy A16 price in Somalia is $${price} at Hayaan Market — a fixed USD price with no VAT added at checkout, and the lowest-priced new Samsung phone in the catalog.`,
+      },
+      {
+        q: "What does the Galaxy A16 offer at this price?",
+        a: "Samsung's October 2024 release gives the A16 a 6.7-inch Super AMOLED display (a step up from the A15's 6.5-inch panel), a 50MP triple camera, a 5000mAh battery with 25W fast charging, an IP54 dust and splash rating and a microSD slot — plus Samsung's budget-class-leading promise of six generations of Android OS upgrades.",
+      },
+      {
+        q: "Is the Galaxy A16 a good budget phone?",
+        a: `At $${price} it is the entry rung of the Galaxy ladder: an honest big-screen Samsung for calls, WhatsApp, YouTube and everyday apps. If your budget stretches further, the A17 and A18 above it add sharper cameras, faster chipsets and water resistance — but the A16 covers the essentials for the least money.`,
+      },
+      {
+        q: "How do I order the Galaxy A16 and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 depending on your Mogadishu district, and a flat $6.95 anywhere else in Somalia — the exact fee is shown before you pay.",
+      },
+    ],
+  },
+
+  "samsung-galaxy-a56-5g": {
+    heading: "Samsung Galaxy A56 5G — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A56 5G Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A56 5G price in Somalia: $${price} at Hayaan Market. 256GB with Exynos 1580, 120Hz Super AMOLED and a 50MP OIS camera.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A56 5G price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""} — the 256GB model. That buys Samsung's Exynos 1580 chipset, a 6.7-inch 120Hz Super AMOLED display, a 50MP main camera with optical image stabilization plus ultrawide and macro lenses, a 12MP selfie camera, 4K video, a 5000mAh battery with 45W charging and Gorilla Glass Victus+ — delivered to your door in Mogadishu or anywhere in the country.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much does the Samsung Galaxy A56 cost in Somalia?",
+        a: `The Samsung Galaxy A56 5G price in Somalia is $${price} at Hayaan Market for the 256GB model — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "What do you get with the Galaxy A56 5G?",
+        a: "Samsung's March 2025 mid-ranger: the Exynos 1580 chipset, a 6.7-inch 120Hz Super AMOLED display, a 50MP main camera with OIS plus a 12MP ultrawide and a 5MP macro, a 12MP selfie camera, 4K@30fps video, a 5000mAh battery with 45W Super Fast Charging, Gorilla Glass Victus+ and stereo speakers — Samsung's most complete mid-ranger of 2025.",
+      },
+      {
+        q: "Is the Galaxy A56 5G good for gaming and photography?",
+        a: "Yes, within its class: the Exynos 1580 with the Xclipse GPU handles everyday games smoothly on the 120Hz panel, and the OIS-equipped 50MP main camera plus Best Face editing is the same camera philosophy Samsung puts in its pricier phones — 4K video with gyro-EIS included.",
+      },
+      {
+        q: "How do I order the Galaxy A56 5G and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 depending on your Mogadishu district, and a flat $6.95 anywhere else in Somalia — the exact fee is shown before you pay.",
+      },
+    ],
+  },
+
+  "samsung-galaxy-a57-5g-8gb256gb": {
+    heading: "Samsung Galaxy A57 5G (8GB/256GB) — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A57 5G 8GB/256GB Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A57 5G (8GB/256GB) price in Somalia: $${price} at Hayaan Market. 50MP OIS Nightography camera, IP68, six OS upgrades.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A57 5G (8GB/256GB) price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""}. Samsung's newest mid-range Galaxy (released March 2026) brings a 50MP main camera with OIS and Nightography, a 6.7-inch Super AMOLED display, a 5000mAh battery that charges to 60% in 30 minutes, IP68 water resistance and six generations of Android OS upgrades promised — delivered to your door in Mogadishu or anywhere in the country.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much is the Samsung Galaxy A57 in Somalia?",
+        a: `The Samsung Galaxy A57 5G price in Somalia is $${price} at Hayaan Market for the 8GB RAM / 256GB storage variant — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "What do you get with the Galaxy A57 5G?",
+        a: "Samsung's March 2026 release: a 50MP main camera with optical image stabilization and Nightography, joined by a 12MP ultrawide and a 5MP macro, a 12MP selfie camera, 4K@30fps video, a 6.7-inch Super AMOLED display, a 5000mAh battery with fast charging (60% in about 30 minutes), IP68 water resistance and a promise of six generations of Android OS upgrades.",
+      },
+      {
+        q: "What is the difference between the two Galaxy A57 variants?",
+        a: "The camera, display, battery and 256GB storage are identical across the family — the step-up variant doubles the RAM to 12GB for heavier multitasking and longer usable life. This listing is the 8GB RAM / 256GB storage variant, which covers everyday use comfortably.",
+      },
+      {
+        q: "How do I order the Galaxy A57 5G and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 depending on your Mogadishu district, and a flat $6.95 anywhere else in Somalia — the exact fee is shown before you pay.",
+      },
+    ],
+  },
+
+  "samsung-galaxy-a57-5g-12gb256gb": {
+    heading: "Samsung Galaxy A57 5G (12GB/256GB) — price in Somalia and buying FAQs",
+    title: ({ price }) =>
+      `Samsung Galaxy A57 5G 12GB/256GB Price in Somalia — $${price} | Hayaan Market`,
+    metaDescription: ({ price, inStock }) =>
+      `Samsung Galaxy A57 5G (12GB/256GB) price in Somalia: $${price} at Hayaan Market. The top A57 — 12GB RAM, 256GB, 50MP OIS camera, IP68.${inStock ? " Order online." : " Check back soon."}`,
+    intro: ({ price, inStock }) =>
+      `The Samsung Galaxy A57 5G (12GB/256GB) price in Somalia is $${price} at Hayaan Market${inStock ? ", in stock and ready to order" : ""} — the top of the A57 family. Same hardware that makes the A57 Samsung's strongest mid-ranger yet: the 50MP OIS Nightography camera with ultrawide and macro lenses, a 6.7-inch Super AMOLED display, a 5000mAh battery, IP68 water resistance and six promised Android OS upgrades — with double the RAM (12GB) for years of smooth multitasking, delivered to your door in Mogadishu or anywhere in the country.`,
+    faqs: ({ price }) => [
+      {
+        q: "How much is the Samsung Galaxy A57 (12GB/256GB) in Somalia?",
+        a: `The 12GB/256GB Samsung Galaxy A57 5G price in Somalia is $${price} at Hayaan Market — a fixed USD price with no VAT added at checkout.`,
+      },
+      {
+        q: "Who should buy the 12GB Galaxy A57 over the 8GB one?",
+        a: "Anyone keeping the phone three-plus years, juggling heavy apps, editing video, or sharing the phone across work and family — RAM is the one spec you cannot upgrade later. The camera, display, battery, IP68 rating and 256GB storage are identical to the 8GB variant; this listing simply doubles the memory.",
+      },
+      {
+        q: "Is the Galaxy A57 5G waterproof?",
+        a: "It carries an IP68 rating — dust-tight and protected against submersion, a spec that used to belong to Samsung's flagships. That covers splashes, rain and brief submersion, though like any phone it should be dried before charging.",
+      },
+      {
+        q: "How do I order the Galaxy A57 (12GB/256GB) and how much is delivery?",
+        a: "Add it to your cart on this page and pay with EVC Plus, Edahab or card. Delivery is $1.50–$3.00 depending on your Mogadishu district, and a flat $6.95 anywhere else in Somalia — the exact fee is shown before you pay.",
+      },
+    ],
+  },
 };
 
 export function pdpSeoFor(slug: string): PdpSeoOverride | null {

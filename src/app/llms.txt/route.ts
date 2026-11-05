@@ -41,6 +41,7 @@ Hayaan Market serves customers across Somalia. Prices are listed in US dollars w
 - [Printer Price in Somalia](${SITE}/blog/printer-price-in-somalia): HP lasers from $165, print-only vs MFP, laser-vs-inkjet in this climate, and the toner math.
 - [Online Shopping in Hargeisa](${SITE}/blog/online-shopping-in-hargeisa): flat $6.95 delivery to every Hargeisa neighborhood, payment and ordering walkthrough.
 - [Samsung Galaxy A18 Price in Somalia](${SITE}/blog/samsung-galaxy-a18-price-in-somalia): the newest budget Galaxy at $190 (128GB), specs, the A16/A17/A18 ladder, and how to order.
+- [Samsung Galaxy A Series Price in Somalia](${SITE}/blog/samsung-galaxy-a-series-price-in-somalia): every Galaxy A priced live — A16 $145, A17 $170–$263, A18 $190, A56 5G $375, A57 5G $375–$440 — including the honest answer on the (unstocked) A15.
 - [Refurbished HP EliteBook Price in Somalia](${SITE}/blog/hp-elitebook-price-in-somalia): every refurbished EliteBook from $310 (840 G7) to $990 (840 G9), which model to buy, and the ordering walkthrough.
 - [Electronics Store Near Me in Somalia](${SITE}/blog/electronics-store-near-me-in-somalia): the nearest electronics store is the one that delivers to your district — $1.50–$3.00 across all 20 Mogadishu districts, $6.95 nationwide.
 - [Power Bank Price in Somalia](${SITE}/blog/power-bank-price-in-somalia): every power bank from $15 (Porodo 5,000mAh) to $65 (Green Lion 80,000mAh), honest mAh math, and the chargers that fill them fast.

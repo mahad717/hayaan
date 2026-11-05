@@ -103,6 +103,15 @@ export const BUYING_GUIDES = {
     "Galaxy A18 Price in Somalia (2026)",
     "$190 with 128GB — specs, the A16/A17/A18 ladder, and how to order.",
   ),
+  // Task 148 — the Galaxy A-series price hub; every other Galaxy A PDP
+  // (A06/A07/A16/A17 variants/A36/A37/A56/A57 variants) links here so the
+  // whole cluster funnels into the hub post that answers the
+  // "aXX samsung price in somalia" autocomplete family.
+  galaxyASeries: G(
+    "samsung-galaxy-a-series-price-in-somalia",
+    "Galaxy A Series Price in Somalia (2026)",
+    "Every Galaxy A priced live — A15 answers, the A06-to-A57 ladder, and which model to buy.",
+  ),
   elitebook: G(
     "hp-elitebook-price-in-somalia",
     "Refurbished HP EliteBook Price in Somalia (2026)",
@@ -129,6 +138,9 @@ export function guidesForProduct(name: string, categorySlug?: string | null): Gu
   // Specific product-name matches first.
   if (/air conditioner/.test(n)) push(BUYING_GUIDES.ac);
   if (/galaxy a18|sm-a185/.test(n)) push(BUYING_GUIDES.galaxyA18);
+  // Task 148 — every OTHER Galaxy A model funnels to the A-series price hub
+  // (the A18 keeps its dedicated guide first; else-if preserves its trio).
+  else if (/galaxy a\d/.test(n)) push(BUYING_GUIDES.galaxyASeries);
   if (/elitebook/.test(n)) push(BUYING_GUIDES.elitebook);
   if (/router|access point|extender|wi-?fi|\buni-?fi\b|mikrotik|omada/.test(n)) push(BUYING_GUIDES.router);
   if (/printer|toner/.test(n)) push(BUYING_GUIDES.printer);
