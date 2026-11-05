@@ -3442,3 +3442,20 @@ Work Log:
 Stage Summary:
 - Task 144 CODE COMPLETE (push pending): owner-marked badge removed in EN+SO, Pay-your-way chip untouched, 44/44 local. After push + CI: re-run all 3 suites against prod, close.
 - Deploy + prod verify (same session): pushed 12992b5..b06362e (carrying the 2 Task 143 evidence commits), CI PASS first run (~4.5min incl. CF queue — no transient this time). Prod on https://hayaan.co: t144 16/16 + t141 17/17 + t142 11/11 = 44/44, zero console errors, served asset md5 44421efe41 unchanged, old v1 URL still 404, chip/artwork geometry identical to Task 142 baseline. Prod screenshots download/t144-hero-desktop.png + t144-hero-mobile.png. Task 144 CLOSED — badge gone from both languages, headline leads the hero.
+
+---
+Task ID: 145
+Agent: Super Z (main)
+Task: Owner: "I want to rank for every keyword investors are searching for... always make SEO and AEO-optimized — 'investment opportunities in Somalia'" (+ screenshot of the Google AI Overview for that query) + GH token
+
+Work Log:
+- Positioning: this is the CLUSTER'S UMBRELLA query (broadest investor intent) — shipped as post29, the pillar the four Task 129/143 sibling guides orbit. /investors funnel now covered from both ends: the generic discovery query (this) and the specific intents (how to invest, share market, securities, venture capital).
+- Facts discipline (the important part): the screenshot's AI Overview claims "GDP growth 7%" — CONTRADICTED by World Bank data (3.0% 2025 per WDI; AfDB projects 3.1%/3.4% for 2026/27; WB-cited 4.2%/4% for 2023/24 in State Dept 2025 ICS) — deliberately NOT used. Its "8.2M ha" is 8.9M per the Ministry of Agriculture and Irrigation (gov.so). Every number that IS in the post verified on publish day: WB 3.0% (2025), AfDB 3.1%/3.4%, HIPC 2023 debt cut ~$4.5B -> <$700M, remittances ~$1.3B (Oxfam) / ~$1.4B ~quarter of GDP (IOM), livestock exports $1.03B 2024 + 56M head + 90% Gulf concentration + >$200M dairy imports + cold-storage $20M @ 18-22% ROI (SDRB/EAC profile), sesame #7 worldwide + FAO sesame/maize cases IRR 25-27%, 2015 FDI Law + 2023 Investor Protection Law + SOMINVEST (State Dept 2025 ICS). Harness now ASSERTS the verified set is present AND that no "7% growth" claim appears.
+- SEO/AEO kit (series standard): title 59 chars keyword-first, 60-word quickAnswer (AI-Overview-quotable), 5 PAA-style FAQs -> FAQPage JSON-LD, 5 howtoSteps -> HowTo JSON-LD, ~1,300-word body, keyword x43 on page, 7 internal links (4 cluster guides + payments + /investors x2), series disclaimer.
+- Cover: task145-blog-covers.mjs (z-ai SDK, series style — seedlings growing from half-buried coins, model city + freight ship, no text/logos) -> task145-optimize-covers.py crop 1200x675 JPG q82 (110KB). llms.txt investing section gains the 5th (umbrella) line.
+- Local verify (t145-run.sh: typecheck -> prod build -> next start :3222 -> harness): 16/16 PASS — page/h1/quick-answer, keyword density, BlogPosting+FAQPage+HowTo @graph, 5 FAQ questions, verified-facts assertions + no-7%-growth assertion, canonical, og:image, cover JPEG, /blog + sitemap.xml + llms.txt + llms-full.txt, all 10 content links resolve. Local screenshot's broken cover box = EXPECTED pre-deploy (Task 80 absolute URLs — resolved on prod, as predicted).
+- NOTE: adapted harness initially had a self-inflicted bug (undeclared i2 in the CDP cmd closure — ESM strict mode would throw); caught and fixed before first run.
+
+Stage Summary:
+- Task 145 CODE COMPLETE (push pending): post29 umbrella guide live-ready, 16/16 local. After push + CI: re-run harness against prod (cover render), close.
+- Deploy + prod verify (same session): pushed 41848b8..6c13eae, CI PASS first run (~2.5min). Prod harness 16/16 on https://hayaan.co — cover renders on prod (confirmed in screenshot), schema/facts/links all green. Screenshot download/task145-blog-prod-investment-opportunities-in-somalia.png. Task 145 CLOSED — post #30 live; the investing cluster now has its umbrella pillar: 5 guides + /investors page covering the full investor search surface.
