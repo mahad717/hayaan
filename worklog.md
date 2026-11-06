@@ -3535,3 +3535,19 @@ Work Log:
 
 Stage Summary:
 - Task 149 CLOSED — Agentic Browsing 3/3 live (agent-accessibility-tree PASS), a11y audits all green sitewide, PSI perf levers pulled (TBT -28%, SI -31%, unused JS -59%, hero bytes -65% on mobile, cache 30d), zero visual regressions, evidence in download/task149-*.png.
+
+---
+Task ID: 150
+Agent: Super Z (main)
+Task: Owner: "Restore checkout to its original color and size" + WhatsApp screenshot circling the product-card orange "+" add-to-cart button
+
+Work Log:
+- Root cause found in one step: Task 149's a11y sweep (deployed ~21 min before the owner's screenshot) changed exactly what the owner circled — card mobile add button 36->48px (h-9 w-9 -> h-12 w-12, size="icon" dropped) and the Market Orange label sweep white -> #451a03 via --hayaan-accent-foreground + hardcoded pill/badge/seed-button classes. The button background never changed; the "+" icon went dark and the button grew.
+- Restored the original accent identity sitewide, not just the circled card (consistency — the same sweep touched every orange surface): token #451a03 -> #ffffff in BOTH theme blocks of globals.css (covers every .btn-accent: card +, PDP add-to-cart, checkout, cart drawer); card discount pill + PDP discount pill -> text-white; header cart & wishlist count badges -> text-white; seed-callout button -> text-white; card add button back to size="icon" + btn-accent h-9 w-9 sm:hidden (36px, byte-equal to pre-149 rendering); skeleton h-12 -> h-9.
+- Kept from Task 149 (not part of the request): header-search aria fix, rating (N) opacity fix, title-link block+py-1.5, footer Subscribe #c2410c, ALL perf remediation (code splitting, hero picture/GA4, cache headers).
+- Accepted debt documented in code + commit: white on #f28c28 is 2.45:1 and the 36px target may re-flag Lighthouse target-size spacing — the a11y score may slip from 100; Agentic Browsing 3/3 is UNAFFECTED (its checks are llms.txt, accessibility tree, CLS — contrast is not in the tree audit). Owner's explicit visual request wins.
+- Local verify: tsc 38 pre-existing errors, ZERO in the 5 edited files; build OK; t150-run.sh harness 8/8 computed-style asserts on next start :3222 — 36x36 box, button color white, bg rgb(242,140,40), + icon white, card pill white, header cart badge white (after a real add-to-cart click), PDP accent button white, PDP pill white. Evidence shots framed like the owner's screenshot.
+- Deploy: pushed 59f622a..307f0dc, CI PASS first run ~70s. Prod verified by fingerprint: homepage SSR has btn-accent h-9 w-9 x36 (zero h-12 w-12), zero #451a03 in home + A16 PDP SSR, live CSS carries hayaan-accent-foreground:#fff x2 (light+dark). Playwright on https://hayaan.co: button 36x36, color rgb(255,255,255), bg rgb(242,140,40), icon white — prod evidence screenshot download/task150-prod-evidence.png. Token wiped (rm .gh-token ~/.git-credentials).
+
+Stage Summary:
+- Task 150 CLOSED — checkout/add-to-cart accent buttons restored to their original look everywhere (white labels/icons on Market Orange, 36px card button), owner request satisfied with site-wide consistency; Task 149's non-visual a11y/perf wins preserved; contrast regression on orange buttons accepted and documented as owner-instructed.
