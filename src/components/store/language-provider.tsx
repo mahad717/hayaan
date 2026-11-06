@@ -72,7 +72,10 @@ export function LangToggle({ className }: { className?: string }) {
           type="button"
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
-          aria-label={l === "en" ? "English" : "Soomaali"}
+          /* Task 149: the accessible name must contain the visible label
+             ("EN"/"SO") — Lighthouse label-content-name-mismatch flagged
+             bare "English"/"Soomaali" against the "EN"/"SO" button text. */
+          aria-label={l === "en" ? "EN — English" : "SO — Soomaali"}
           className={cn(
             "rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide transition-colors",
             lang === l ? "bg-brand text-white" : "text-muted-foreground hover:text-brand",

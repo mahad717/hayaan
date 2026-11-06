@@ -87,7 +87,10 @@
 
   /* Brand accent (10% orange) — surfaced via custom .btn-accent class */
   --hayaan-accent: #f28c28;       /* Market Orange */
-  --hayaan-accent-foreground: #ffffff; /* White button labels */
+  /* Task 149: labels on Market Orange are deep brown, not white — white on
+     #f28c28 is 2.45:1 (color-contrast fail on every visible accent button).
+     #451a03 gives 6.1:1 (Amazon-style dark-on-yellow pattern). */
+  --hayaan-accent-foreground: #451a03;
   --hayaan-accent-soft: #f9c27d;  /* Soft Apricot */
 
   /* Brand support greens */
@@ -146,7 +149,7 @@
   --accent: #1a4a30;
   --accent-foreground: #faf8f1;
   --hayaan-accent: #f28c28;
-  --hayaan-accent-foreground: #ffffff;
+  --hayaan-accent-foreground: #451a03;
   --hayaan-accent-soft: #f9c27d;
   --hayaan-green-dark: #021d12;
   --hayaan-green-mid: #3f7d4a;

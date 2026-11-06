@@ -245,7 +245,10 @@ export function ProductDetail({ initialProduct }: { initialProduct?: Product }) 
               className="h-full w-full object-cover"
             />
             {discount > 0 && (
-              <span className="absolute left-4 top-4 flex items-center gap-1 rounded-full bg-[#f28c28] px-3 py-1 text-xs font-semibold text-white shadow-sm">
+              /* Task 149: deep-brown label — white on #f28c28 is 2.45:1
+                 (color-contrast fail; this pill renders on every discounted
+                 PDP). #451a03 gives 6.1:1. */
+              <span className="absolute left-4 top-4 flex items-center gap-1 rounded-full bg-[#f28c28] px-3 py-1 text-xs font-semibold text-[#451a03] shadow-sm">
                 -{discount}%
               </span>
             )}

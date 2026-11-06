@@ -174,7 +174,11 @@ export function Footer() {
                 <button
                   type="submit"
                   disabled={nlBusy}
-                  className="h-9 shrink-0 rounded-lg bg-[#f28c28] px-3 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
+                  /* Task 149: #f28c28 + white text failed color-contrast
+                     (2.4:1). #c2410c keeps the Market Orange family and gives
+                     white 5.1:1; hover steps darker instead of opacity
+                     (0.9 alpha over the dark footer would sit near 4:1). */
+                  className="h-9 shrink-0 rounded-lg bg-[#c2410c] px-3 text-sm font-medium text-white transition hover:bg-[#9a3412] disabled:opacity-60"
                 >
                   {t("ft.subscribe")}
                 </button>

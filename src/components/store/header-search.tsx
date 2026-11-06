@@ -129,7 +129,6 @@ export function HeaderSearch({
         placeholder={t("header.searchPlaceholder")}
         className="border-brand/40 bg-[#faf8f1] pl-9 hover:border-brand/60 focus-visible:border-brand focus-visible:ring-brand/20 placeholder:text-muted-foreground/70"
         aria-label={t("header.searchAria")}
-        aria-expanded={showPanel}
         autoComplete="off"
       />
       {showPanel && (

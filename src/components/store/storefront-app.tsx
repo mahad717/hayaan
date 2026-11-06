@@ -1,19 +1,67 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { useStore, type View } from "@/hooks/use-store";
 import type { Category, Product } from "@/lib/types";
 import { useStoreBootstrap } from "@/components/store/store-shell";
 import { Header } from "@/components/store/header";
 import { Hero } from "@/components/store/hero";
 import { ProductGrid } from "@/components/store/product-grid";
-import { ProductDetail } from "@/components/store/product-detail";
-import { Checkout } from "@/components/store/checkout";
-import { OrdersView } from "@/components/store/orders-view";
-import { AccountView } from "@/components/store/account-view";
-import { CartDrawer } from "@/components/store/cart-drawer";
-import { AuthModal } from "@/components/store/auth-modal";
-import { WishlistView } from "@/components/store/wishlist-view";
+
+// Task 149 — per-view code splitting. StorefrontApp used to statically pull
+// ProductDetail + Checkout + Orders + Account + Wishlist + CartDrawer +
+// AuthModal into EVERY first load, so the homepage shipped the PDP and
+// checkout machinery it never renders (the 71KB chunk alone burned 1.4s of
+// main-thread scripting; PSI: 163KiB unused JS, TBT 1,020ms, LCP render
+// delayed ~2.3s behind hydration). Each view/modal is now its own chunk:
+// - The homepage loads none of them (the audited page gets the whole win).
+// - Deep links still first-paint correctly: dynamic components keep SSR, so
+//   /?view=product|checkout|orders|account|wishlist render server-side and
+//   their chunks load eagerly on THAT route.
+// - /product/[slug] is untouched: it has its own shell with a static
+//   ProductDetail import.
+// - In-SPA view switches get the ViewSkeleton / null fallbacks below while
+//   their chunk arrives (cached immutable afterwards).
+const ProductDetail = dynamic(
+  () => import("@/components/store/product-detail").then((m) => m.ProductDetail),
+  { loading: () => <ViewSkeleton /> }
+);
+const Checkout = dynamic(
+  () => import("@/components/store/checkout").then((m) => m.Checkout),
+  { loading: () => <ViewSkeleton /> }
+);
+const OrdersView = dynamic(
+  () => import("@/components/store/orders-view").then((m) => m.OrdersView),
+  { loading: () => <ViewSkeleton /> }
+);
+const AccountView = dynamic(
+  () => import("@/components/store/account-view").then((m) => m.AccountView),
+  { loading: () => <ViewSkeleton /> }
+);
+const WishlistView = dynamic(
+  () => import("@/components/store/wishlist-view").then((m) => m.WishlistView),
+  { loading: () => <ViewSkeleton /> }
+);
+const CartDrawer = dynamic(
+  () => import("@/components/store/cart-drawer").then((m) => m.CartDrawer),
+  { loading: () => null }
+);
+const AuthModal = dynamic(
+  () => import("@/components/store/auth-modal").then((m) => m.AuthModal),
+  { loading: () => null }
+);
+
+/** Loading fallback for view chunks — same cream palette as the skeletons. */
+function ViewSkeleton() {
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6" aria-hidden>
+      <div className="h-8 w-40 animate-pulse rounded bg-[#efece2]" />
+      <div className="mt-4 h-4 w-72 animate-pulse rounded bg-[#efece2]" />
+      <div className="mt-8 h-64 animate-pulse rounded-xl bg-[#faf8f1]" />
+    </div>
+  );
+}
 import { Footer } from "@/components/store/footer";
 import { FaqSection } from "@/components/store/faq-section";
 import { siteFaqs } from "@/lib/faq";
@@ -41,7 +89,7 @@ function SeedCallout() {
         </p>
         <div className="flex gap-2">
           <button
-            className="rounded-md bg-[#f28c28] px-3 py-1 text-xs font-medium text-white hover:opacity-90"
+            className="rounded-md bg-[#f28c28] px-3 py-1 text-xs font-medium text-[#451a03] hover:opacity-90"
             onClick={async () => {
               const res = await fetch("/api/seed", { method: "POST" });
               if (res.ok) {

@@ -1,10 +1,24 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Truck, Shield, RotateCcw, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonWithIcon } from "@/components/ui/button-with-icon";
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { useLang } from "@/components/store/language-provider";
+
+// Task 149: framer-motion shipped in every first load just for the hero's
+// decorative beams (~50KB, ~500ms of throttled scripting — the 01n-… chunk
+// Lighthouse flagged). It is a purely decorative aria-hidden layer, so it
+// now loads client-side only, after hydration, and renders nothing until
+// then (no layout impact — absolute inset-0 wrapper, no CLS). Same content,
+// same animation, zero first-load cost.
+const BackgroundBeamsWithCollision = dynamic(
+  () =>
+    import("@/components/ui/background-beams-with-collision").then(
+      (m) => m.BackgroundBeamsWithCollision
+    ),
+  { ssr: false, loading: () => null }
+);
 
 export function Hero({ onShop }: { onShop: () => void }) {
   const { t } = useLang();
@@ -85,14 +99,26 @@ export function Hero({ onShop }: { onShop: () => void }) {
             wrapper and chip anchor untouched), so the chip no longer sits
             on the artwork's platform. Mobile keeps the original overlap. */}
         <div className="relative">
-          <img
-            src="/images/hero-shopping-3d-v2.webp"
-            alt={t("hero.alt3d")}
-            width={1563}
-            height={938}
-            fetchPriority="high"
-            className="w-full h-auto drop-shadow-md md:-translate-y-12"
-          />
+          {/* Task 149: mobile gets a 760px cut of the artwork. The full
+              1563x938 webp (97KB) served into a ~380px-wide slot wasted
+              80.8KB (Lighthouse image-delivery flagged it as the page's
+              entire 79KiB opportunity). Same aspect ratio, so the synced
+              width/height attrs below stay correct for both sources. */}
+          <picture>
+            <source
+              media="(max-width: 639px)"
+              srcSet="/images/hero-shopping-3d-m760.webp"
+              type="image/webp"
+            />
+            <img
+              src="/images/hero-shopping-3d-v2.webp"
+              alt={t("hero.alt3d")}
+              width={1563}
+              height={938}
+              fetchPriority="high"
+              className="w-full h-auto drop-shadow-md md:-translate-y-12"
+            />
+          </picture>
 
           {/* Floating promo chip — real payment variety, not a fake discount.
               Deliberately anchored to the wrapper (not the raised img): the
