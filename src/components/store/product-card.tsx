@@ -185,7 +185,15 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        <h3 className="line-clamp-2 text-sm font-medium leading-tight text-foreground font-original">
+        {/* Task 150: the clamp lives on the LINK, and the LINK carries NO
+            padding. Task 149's block+py anchor inside the h3's -webkit-box
+            broke Chromium's line counting (2 full lines + a half-clipped 3rd
+            line — owner screenshot). Padding ON the clamp container makes
+            -webkit-box paint the overflow line into its padding box even
+            when the clamp engages, so py-1.5 moved to the plain-block h3 and
+            the anchor is a padding-free line-clamp-2 (-webkit-box): clean
+            2-line ellipsis. Hit target stays 35px (>= 24px target-size). */}
+        <h3 className="py-1.5 text-sm font-medium leading-tight text-foreground font-original">
           {/* Real anchor → crawlable product URL (SEO). Task 108b: the click
               escalates to a REAL navigation so a ready prerender ACTIVATES
               (soft navs never activate one). Modifier clicks (cmd/ctrl/
@@ -201,10 +209,7 @@ export function ProductCard({ product }: { product: Product }) {
               e.stopPropagation();
               window.location.assign(`/product/${product.slug}`);
             }}
-            /* Task 149: block + py-1.5 — the bare inline anchor was ~20px
-               tall and failed the target-size audit (min 24px). The card
-               body's flex gaps keep ≥24px clearance to the add button. */
-            className="block py-1.5 hover:text-brand"
+            className="line-clamp-2 hover:text-brand"
           >
             {product.name}
           </Link>
