@@ -244,7 +244,7 @@ export function Header() {
             />
             {wishlist.length > 0 && (
               <span
-                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-[#451a03] shadow-sm ring-2 ring-white"
+                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-white shadow-sm ring-2 ring-white"
                 aria-label={t("header.wishlistBadgeAria", { n: wishlist.length })}
               >
                 {wishlist.length}
@@ -263,7 +263,7 @@ export function Header() {
             <ShoppingBag className="h-5 w-5" />
             {cartCount(cart) > 0 && (
               <span
-                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-[#451a03] shadow-sm ring-2 ring-white"
+                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f28c28] px-1 text-xs font-semibold text-white shadow-sm ring-2 ring-white"
                 aria-label={t("header.cartBadgeAria", { n: cartCount(cart) })}
               >
                 {cartCount(cart)}

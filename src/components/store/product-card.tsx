@@ -115,10 +115,7 @@ export function ProductCard({ product }: { product: Product }) {
         {(discount > 0 || product.productType === "digital") && (
           <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
             {discount > 0 && (
-              /* Task 149: deep-brown label on Market Orange — white on
-                 #f28c28 is 2.45:1 (fails color-contrast on every category
-                 page with discounted items). #451a03 gives 6.1:1. */
-              <span className="flex items-center gap-1 rounded-full bg-[#f28c28] px-2.5 py-1 text-xs font-semibold text-[#451a03] shadow-sm">
+              <span className="flex items-center gap-1 rounded-full bg-[#f28c28] px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
                 -{discount}%
               </span>
             )}
@@ -228,13 +225,12 @@ export function ProductCard({ product }: { product: Product }) {
 
           {/* Mobile add button (always visible) — orange; flashes a check
               mark for ~1.5s after a successful add */}
-          {/* Task 149: 48px hit target (was 36px via size="icon" → size-9).
-              Deliberately NO size prop: the icon variant hardcodes size-9 and
-              a later h-12 can never remove it from the DOM class list — the
-              default size's h-9 IS removable by tailwind-merge (h-12 wins).
-              Lighthouse target-size flagged the 36px buttons for spacing. */}
+          {/* Task 150: owner asked for the original 36px size back (Task 149
+              enlarged it to 48px for the Lighthouse target-size audit).
+              Accepted debt: 36px may re-flag target-size spacing. */}
           <Button
-            className="btn-accent h-12 w-12 sm:hidden"
+            size="icon"
+            className="btn-accent h-9 w-9 sm:hidden"
             onClick={handleAdd}
             aria-label={added ? t("card.addedAria", { name: product.name }) : t("card.addAria", { name: product.name })}
           >
@@ -256,7 +252,7 @@ export function ProductCardSkeleton() {
         <Skeleton className="h-4 w-2/3" />
         <div className="flex justify-between pt-2">
           <Skeleton className="h-5 w-20" />
-          <Skeleton className="h-12 w-12 rounded-lg" />
+          <Skeleton className="h-9 w-9 rounded-lg" />
         </div>
       </div>
     </Card>

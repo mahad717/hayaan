@@ -89,7 +89,7 @@ function SeedCallout() {
         </p>
         <div className="flex gap-2">
           <button
-            className="rounded-md bg-[#f28c28] px-3 py-1 text-xs font-medium text-[#451a03] hover:opacity-90"
+            className="rounded-md bg-[#f28c28] px-3 py-1 text-xs font-medium text-white hover:opacity-90"
             onClick={async () => {
               const res = await fetch("/api/seed", { method: "POST" });
               if (res.ok) {
