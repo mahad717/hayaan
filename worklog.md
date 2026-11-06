@@ -3551,3 +3551,19 @@ Work Log:
 
 Stage Summary:
 - Task 150 CLOSED — checkout/add-to-cart accent buttons restored to their original look everywhere (white labels/icons on Market Orange, 36px card button), owner request satisfied with site-wide consistency; Task 149's non-visual a11y/perf wins preserved; contrast regression on orange buttons accepted and documented as owner-instructed.
+
+---
+Task ID: 151
+Agent: Super Z (main)
+Task: Owner: "some of the product texts is cut" + screenshot circling 'Men's Multivitamins - Immune Boost with…' and 'Refurbished HP EliteBook 840 G7…' cards (long names painting 2 full lines + a half-clipped 3rd)
+
+Work Log:
+- Regression from Task 149: the target-size fix made the card-title anchor block-level WITH py-1.5 while the h3 kept line-clamp-2. A block child inside the h3's -webkit-box breaks Chromium's line counting — the clamp half-engages (ellipsis on line 2) but the overflow line still paints, half-clipped by the card (exactly the owner's screenshot).
+- First attempt (clamp on the py-bearing anchor) measured the clamp engaging on the BOX (anchor 47px) while Chromium STILL painted the clipped 3rd line into the padding box — caught it in the evidence screenshot before push. Padding inside the clamp container is itself a breaker.
+- Final fix (structure C): py-1.5 moved to the plain-block h3; the anchor is a padding-free line-clamp-2 (-webkit-box). In-page DOM-surgery A/B proved it: clamp+py anchor = broken paint; padding-free clamp anchor = 35px box, clean 2-line ellipsis, h3 wraps 47px, zero spill. Target-size intact (anchor 35px >= 24px).
+- Chromium 143+ quirk documented: getComputedStyle reports display:flow-root for the legacy -webkit-box value, but -webkit-line-clamp:2 empirically clamps — assert on measurements, not on the computed display.
+- Verify: tsc 38 pre-existing (none in product-card), build OK, t151 harness 4/4 (structure C on all 18 local cards + injected-3-line-name clamp asserts + evidence shot). CI PASS first run ~70s (ef77afc).
+- Prod verified on the REAL owner-circled products: Multivitamins + EliteBook anchors both 35px/h3 47px CLEAN, SSR shows 36x new structure and zero old 'block py-1.5' anchors; prod evidence screenshot matches the owner's framing with both cards fixed. Token wiped.
+
+Stage Summary:
+- Task 151 CLOSED — product-card titles clamp cleanly at 2 lines sitewide (cards on home/category/PDP related rails), the half-clipped third line is gone, Task 150's restored button look and Task 149's a11y/perf work untouched.
