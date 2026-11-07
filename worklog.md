@@ -3567,3 +3567,17 @@ Work Log:
 
 Stage Summary:
 - Task 151 CLOSED — product-card titles clamp cleanly at 2 lines sitewide (cards on home/category/PDP related rails), the half-clipped third line is gone, Task 150's restored button look and Task 149's a11y/perf work untouched.
+
+---
+Task ID: 152
+Agent: Super Z (main)
+Task: Owner: "what is the cop i want it to be $" + Google SERP screenshot showing a "COP 375" price chip under the hayaan.co A57 8/256 result + fresh GH token
+
+Work Log:
+- Explained + diagnosed: COP = the ISO code for Colombian Pesos, rendered by Google's OWN Shopping-graph price chip — not site content. Full live audit of ALL 191 sitemap URLs (144 PDPs + 47 others): every page declares USD via Product JSON-LD priceCurrency + meta product:price:currency + OnlineStore currenciesAccepted:"USD"; zero "COP" strings anywhere; git history has no COP in priceCurrency (the -S 'COP' hits are COPY substrings); the sanguni source pages the importer scrapes declare USD too. The A57 8/256 signals were already correct at Google's crawl date (schema @graph: Product -> Offer USD 375.00, priceValidUntil, InStock).
+- Conclusion: Google-side graph mislabel. Defense-in-depth shipped (not a bug fix): Offer now also carries priceSpecification UnitPriceSpecification {price, priceCurrency, valueAddedTaxIncluded:false} — the exact shape Google demonstrably parses for SERP price chips on this product class (the competitor listing whose $385 offer Google priced correctly sends it; ours lacked it). One emitter (product/[slug]/page.tsx), verified on a seeded local PDP.
+- CRITICAL catch during rebase: owner's GitHub-UI commits (0fe564f delete + dba621b rename v2->m760) removed hero-shopping-3d-v2.webp — hero.tsx's desktop img src — which my Task 152 push had just deployed: desktop hero 404 + mobile silently served the full 96KB image under the m760 name. Repaired in Task 152b (b5539da): desktop src -> the owner's kept m760.webp filename; mobile cut regenerated from the full image as NEW cache-busted /images/hero-shopping-3d-sm.webp (760x456, 35KB — the old m760.webp URL is pinned at 30d cache with full-size bytes in returning visitors' browsers, so it can never serve the cut again; t141 rename rule).
+- Verify: tsc 38 pre-existing both commits, builds OK, Playwright local mobile currentSrc=sm cut / desktop=m760 full. CI PASS first run both (~70s). Prod: sm 200 35056b, m760 200 98664b, v2 404 (zero refs left), homepage references only the two live files; A57 8/256 schema live with USD 375.00 + priceSpecification. Token wiped.
+
+Stage Summary:
+- Task 152 CLOSED — owner's "COP" question answered (Google-side currency-code mislabel; site is 100% USD, audited 191/191 live), schema hardened with the UnitPriceSpecification signal to help Google re-label the chip to $375 on recrawl; owner's hero-breaking asset rename repaired same-hour with cache-bust discipline.
