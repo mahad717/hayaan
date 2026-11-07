@@ -185,6 +185,16 @@ export default async function ProductPage({ params }: Props) {
           url: `https://hayaan.co/product/${product.slug}`,
           priceCurrency: product.currency,
           price: product.price.toFixed(2),
+          // Task 152: UnitPriceSpecification — the shape Google's Shopping
+          // graph demonstrably parses for SERP price chips (competitor
+          // listings with it priced correctly while a hayaan offer was
+          // mislabeled COP). Redundant explicit currency for the chip.
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: product.price.toFixed(2),
+            priceCurrency: product.currency,
+            valueAddedTaxIncluded: false,
+          },
           // Google recommends a validity horizon on Offer.price — 90 days
           // from render, refreshed on every SSR request.
           priceValidUntil: new Date(Date.now() + 90 * 864e5).toISOString().slice(0, 10),
