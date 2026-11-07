@@ -99,19 +99,23 @@ export function Hero({ onShop }: { onShop: () => void }) {
             wrapper and chip anchor untouched), so the chip no longer sits
             on the artwork's platform. Mobile keeps the original overlap. */}
         <div className="relative">
-          {/* Task 149: mobile gets a 760px cut of the artwork. The full
-              1563x938 webp (97KB) served into a ~380px-wide slot wasted
-              80.8KB (Lighthouse image-delivery flagged it as the page's
-              entire 79KiB opportunity). Same aspect ratio, so the synced
-              width/height attrs below stay correct for both sources. */}
+          {/* Task 152: the owner renamed hero-shopping-3d-v2.webp ->
+              hero-shopping-3d-m760.webp in the GitHub UI (deleting the old
+              34KB m760 cut), so the desktop v2 URL went dead. Desktop now
+              serves the owner's kept filename (m760.webp, full 1563x938);
+              mobile gets a regenerated 760px cut under a NEW cache-busted
+              name (hero-shopping-3d-sm.webp, 35KB) per the t141 rename rule
+              — the old m760.webp URL is pinned in visitor browsers for 30d
+              with the wrong (full-size) bytes, so it must never serve the
+              cut again. Same aspect ratio: width/height attrs stay correct. */}
           <picture>
             <source
               media="(max-width: 639px)"
-              srcSet="/images/hero-shopping-3d-m760.webp"
+              srcSet="/images/hero-shopping-3d-sm.webp"
               type="image/webp"
             />
             <img
-              src="/images/hero-shopping-3d-v2.webp"
+              src="/images/hero-shopping-3d-m760.webp"
               alt={t("hero.alt3d")}
               width={1563}
               height={938}
