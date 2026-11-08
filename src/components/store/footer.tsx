@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail } from "lucide-react";
+import { Facebook, Mail } from "lucide-react";
 import { useLang } from "@/components/store/language-provider";
 import { localizeApiError } from "@/lib/i18n/api-errors";
 import { useStore } from "@/hooks/use-store";
@@ -174,11 +174,13 @@ export function Footer() {
                 <button
                   type="submit"
                   disabled={nlBusy}
-                  /* Task 149: #f28c28 + white text failed color-contrast
-                     (2.4:1). #c2410c keeps the Market Orange family and gives
-                     white 5.1:1; hover steps darker instead of opacity
-                     (0.9 alpha over the dark footer would sit near 4:1). */
-                  className="h-9 shrink-0 rounded-lg bg-[#c2410c] px-3 text-sm font-medium text-white transition hover:bg-[#9a3412] disabled:opacity-60"
+                  /* Task 153: owner circled this button and asked for
+                     #f28c28 — the Task 149 burnt-orange #c2410c came off as
+                     a different brand than the Add-to-cart buttons. Same
+                     accepted debt as Task 150: white on Market Orange is
+                     2.45:1, owner's explicit call. .btn-accent keeps the
+                     hover/foreground identical to every other CTA. */
+                  className="h-9 shrink-0 rounded-lg btn-accent px-3 text-sm font-medium transition disabled:opacity-60"
                 >
                   {t("ft.subscribe")}
                 </button>
@@ -195,6 +197,18 @@ export function Footer() {
                 aria-label={t("ft.contact")}
               >
                 <Mail className="h-4 w-4" />
+              </a>
+              {/* Task 153: owner supplied the real handle, so the F4
+                  placeholder row gets its first social entry — the official
+                  Hayaan Facebook page. Same chrome as the Mail tile. */}
+              <a
+                href="https://www.facebook.com/hayaan20"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 transition hover:border-[#f28c28] hover:bg-[#f28c28] hover:text-white"
+                aria-label={t("ft.facebook")}
+              >
+                <Facebook className="h-4 w-4" />
               </a>
             </div>
           </div>
