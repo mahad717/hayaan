@@ -3581,3 +3581,18 @@ Work Log:
 
 Stage Summary:
 - Task 152 CLOSED — owner's "COP" question answered (Google-side currency-code mislabel; site is 100% USD, audited 191/191 live), schema hardened with the UnitPriceSpecification signal to help Google re-label the chip to $375 on recrawl; owner's hero-breaking asset rename repaired same-hour with cache-bust discipline.
+
+---
+Task ID: 153
+Agent: Super Z (main)
+Task: Owner: "Make the color of that button: #f28c28" + WhatsApp screenshot circling the footer Subscribe button + "below social buttons add our facebook page: https://www.facebook.com/hayaan20"
+
+Work Log:
+- Subscribe: Task 149's contrast sweep had recolored it burnt-orange #c2410c (white = 5.1:1); the owner circled it and asked for the brand Market Orange #f28c28. Swapped the hardcoded hex pair for the shared .btn-accent class — the EXACT Add-to-cart treatment (#f28c28 bg via --hayaan-accent, white foreground via --hayaan-accent-foreground, 88%-oklab-mix hover). Zero drift from every other CTA, themable in one place. Contrast debt (white on #f28c28 = 2.45:1) explicitly accepted by owner, same call as Task 150 — documented in-code.
+- Facebook: the F4 social row (audit removed dead Instagram/Twitter placeholders "until the owner supplies real handles") got its first real entry — a 36px tile identical to the Mail tile: lucide Facebook icon, href https://www.facebook.com/hayaan20, target=_blank rel=noopener noreferrer, aria-label from new flat i18n key ft.facebook (EN + SO, brand name identical in both).
+- Verify: tsc 38 pre-existing (0 in edited files), build OK, t153 harness 12/12 (SSR: zero c2410c, FB link + safe rel + accessible name, btn-accent on the rounded-lg submit; computed: bg rgb(242,140,40) + white + 36px; tile geometry 36x36, icon, sits right after Mail; owner-framing screenshot).
+- Assertion bug of my own caught twice before green: first regex demanded class ORDER btn-accent-before-rounded-lg (source is rounded-lg first), then the "first btn-accent button in SSR" heuristic hijacked by the sticky bottom-bar CTA — final assert scans ALL button tags for the rounded-lg+btn-accent combo.
+- Deploy: bea53dc, CI Workers Builds PASS, prod SSR fingerprint live (fb-link 1, aria Facebook 1, c2410c 0) + live Playwright 3/3 (bg #f28c28 / white label / 36px FB tile) + prod evidence screenshot in the owner's framing. Token wiped.
+
+Stage Summary:
+- Task 153 CLOSED — footer Subscribe button is brand Market Orange matching every Add-to-cart, and the site now links the official Facebook page from the footer social row (new-tab safe, screen-reader named, EN/SO).
