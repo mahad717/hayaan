@@ -3596,3 +3596,13 @@ Work Log:
 
 Stage Summary:
 - Task 153 CLOSED — footer Subscribe button is brand Market Orange matching every Add-to-cart, and the site now links the official Facebook page from the footer social row (new-tab safe, screen-reader named, EN/SO).
+
+---
+Task ID: SD-1 (standing directive, no deploy)
+Agent: Super Z (main)
+Task: Owner: "always follow these principles" + premium-minimalism slide (fewer colors, lower saturation, more whitespace, stronger contrast, restrained palettes — "Minimalism increases perceived value")
+
+Work Log:
+- Recorded as the permanent design north star in DESIGN-PRINCIPLES.md (repo root): the five principles + concrete Hayaan mapping — CLOSED palette (forest/market greens, Market Orange #f28c28 as the single accent, apricot, cream, white), whitespace before decoration, muted supporting UI, strong contrast with the single owner-approved exception (white-on-orange CTA debt), precedence: explicit owner instruction > principles > existing tokens.
+- Fits the site's current system: brand already runs 3 hues + neutrals with a 10%-orange accent rule; Tasks 150/153 conflicts are resolved under the precedence rule (owner's explicit color calls win).
+- Committed locally; rides to GitHub with the next deploy push (no token supplied this turn, last token wiped per protocol).
