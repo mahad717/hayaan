@@ -3619,3 +3619,5 @@ Work Log:
 - PHASE A APPLIED LIVE: 9 guarded price PUTs (old-price guards passed) -> admin+public verify 9/9 MATCH, 0 failures (scripts/t156/price-sync-results.json).
 - PHASE B STAGED, deploy-gated: 30 products (17 mics + 13 new), images repo-hosted public/images/products/ 30/30 downloaded+magic-checked, import script t156-import-new.mjs HEAD-checks hayaan.co images before any create. NEEDS: git push + deploy (token), then APPLY=1 node scripts/t156-import-new.mjs. Category mapping: mics -> power-charging-audio (audio family; no category-create API/service key locally), phones->phones-wearables, computer/printer->computers-tv-gaming, misc->home-office.
 - Known gaps: camera-accessories p5+ (96 curated-out camera items) unreadable via reader cache; Store API query params dead; camera carried rows unaffected (name-matched).
+
+Task 156 deployment (token received): pushed 36fa760..07bbd43 (Task 156 prep + snapshots), CI Workers Builds PASS ~100s, 30/30 images HEAD-checked live, APPLY=1 import created 30/30 products (17 mics + 13 new), admin+public verify 30/30 MATCH 0 failures. Catalog now 175 public SKUs. Token wiped.
