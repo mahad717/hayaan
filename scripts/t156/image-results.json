@@ -1,0 +1,158 @@
+[
+ {
+  "slug": "microphone-boya-m1",
+  "status": "cached",
+  "file": "public/images/products/microphone-boya-m1.jpg"
+ },
+ {
+  "slug": "microphone-ahuja",
+  "status": "cached",
+  "file": "public/images/products/microphone-ahuja.jpg"
+ },
+ {
+  "slug": "power-extension-omega-5-outlet",
+  "status": "cached",
+  "file": "public/images/products/power-extension-omega-5-outlet.jpg"
+ },
+ {
+  "slug": "microphone-ahuja-headband",
+  "status": "cached",
+  "file": "public/images/products/microphone-ahuja-headband.jpg"
+ },
+ {
+  "slug": "microphone-wireless-3in1-multi-function",
+  "status": "cached",
+  "file": "public/images/products/microphone-wireless-3in1-multi-function.jpg"
+ },
+ {
+  "slug": "microphone-wireless-f11-2",
+  "status": "cached",
+  "file": "public/images/products/microphone-wireless-f11-2.jpg"
+ },
+ {
+  "slug": "lens-cleaning-kit-kf-concept",
+  "status": "cached",
+  "file": "public/images/products/lens-cleaning-kit-kf-concept.jpg"
+ },
+ {
+  "slug": "power-bank-20000mah-green-lion-35w",
+  "status": "cached",
+  "file": "public/images/products/power-bank-20000mah-green-lion-35w.jpg"
+ },
+ {
+  "slug": "cable-adapter-lightning-to-ethernet-rj45",
+  "status": "downloaded",
+  "file": "public/images/products/cable-adapter-lightning-to-ethernet-rj45.jpg",
+  "bytes": 471562
+ },
+ {
+  "slug": "microphone-wireless-jmary",
+  "status": "cached",
+  "file": "public/images/products/microphone-wireless-jmary.jpg"
+ },
+ {
+  "slug": "microphone-wireless-mic-lite",
+  "status": "cached",
+  "file": "public/images/products/microphone-wireless-mic-lite.jpg"
+ },
+ {
+  "slug": "dji-mic-mini-mobile-phone-adapter",
+  "status": "cached",
+  "file": "public/images/products/dji-mic-mini-mobile-phone-adapter.jpg"
+ },
+ {
+  "slug": "rode-interview-go-handheld-mic-adapter",
+  "status": "cached",
+  "file": "public/images/products/rode-interview-go-handheld-mic-adapter.jpg"
+ },
+ {
+  "slug": "power-bank-porodo-30000mah-with-integrated-cable",
+  "status": "cached",
+  "file": "public/images/products/power-bank-porodo-30000mah-with-integrated-cable.jpg"
+ },
+ {
+  "slug": "microphone-usb-jmary",
+  "status": "cached",
+  "file": "public/images/products/microphone-usb-jmary.jpg"
+ },
+ {
+  "slug": "ssd-lexar-ns100-512gb-2-5-sata-iii",
+  "status": "downloaded",
+  "file": "public/images/products/ssd-lexar-ns100-512gb-2-5-sata-iii.jpg",
+  "bytes": 410447
+ },
+ {
+  "slug": "mic-air-1-tx-1-rx",
+  "status": "cached",
+  "file": "public/images/products/mic-air-1-tx-1-rx.jpg"
+ },
+ {
+  "slug": "microphone-broadcast-rode-podmic",
+  "status": "cached",
+  "file": "public/images/products/microphone-broadcast-rode-podmic.jpg"
+ },
+ {
+  "slug": "microphone-blueyeti",
+  "status": "cached",
+  "file": "public/images/products/microphone-blueyeti.jpg"
+ },
+ {
+  "slug": "microphone-broadcast-rode-podmic-usb",
+  "status": "cached",
+  "file": "public/images/products/microphone-broadcast-rode-podmic-usb.jpg"
+ },
+ {
+  "slug": "hp-monitor-series-5-27-inch-with-speakers",
+  "status": "downloaded",
+  "file": "public/images/products/hp-monitor-series-5-27-inch-with-speakers.jpg",
+  "bytes": 1095532
+ },
+ {
+  "slug": "rode-videomic-pro",
+  "status": "cached",
+  "file": "public/images/products/rode-videomic-pro.jpg"
+ },
+ {
+  "slug": "portable-ssd-2tb-sandisk-1000mb-s-2",
+  "status": "downloaded",
+  "file": "public/images/products/portable-ssd-2tb-sandisk-1000mb-s-2.jpg",
+  "bytes": 564188
+ },
+ {
+  "slug": "microphone-conference-professional-wireless-siltron-st-3600",
+  "status": "cached",
+  "file": "public/images/products/microphone-conference-professional-wireless-siltron-st-3600.jpg"
+ },
+ {
+  "slug": "hp-printer-color-laserjet-pro-mfp-4303fdw",
+  "status": "cached",
+  "file": "public/images/products/hp-printer-color-laserjet-pro-mfp-4303fdw.jpg"
+ },
+ {
+  "slug": "microphone-conference-professional-wireless-siltron-st-8900",
+  "status": "cached",
+  "file": "public/images/products/microphone-conference-professional-wireless-siltron-st-8900.jpg"
+ },
+ {
+  "slug": "unifi-usw-48poe-network-switch-managed",
+  "status": "downloaded",
+  "file": "public/images/products/unifi-usw-48poe-network-switch-managed.jpg",
+  "bytes": 570083
+ },
+ {
+  "slug": "msi-cyborg-15-gaming-intel-core-7-240h",
+  "status": "downloaded",
+  "file": "public/images/products/msi-cyborg-15-gaming-intel-core-7-240h.jpg",
+  "bytes": 1477984
+ },
+ {
+  "slug": "printer-canon-image-runner-2425i-monochrome-a3-multifunctional",
+  "status": "cached",
+  "file": "public/images/products/printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg"
+ },
+ {
+  "slug": "iphone-duo-256gb-esim",
+  "status": "cached",
+  "file": "public/images/products/iphone-duo-256gb-esim.jpg"
+ }
+]

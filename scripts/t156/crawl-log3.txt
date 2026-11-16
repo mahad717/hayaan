@@ -1,0 +1,100 @@
+[resume] loaded 497 existing
+[mobile-accessories]
+  [mobile-accessories p1] +12 (dup 0, merged 12, total~188)
+  [mobile-accessories p2] +12 (dup 0, merged 24, total~188)
+  [mobile-accessories p3] +12 (dup 0, merged 36, total~188)
+  [mobile-accessories p4] +12 (dup 0, merged 48, total~188)
+  [mobile-accessories p5] +12 (dup 0, merged 60, total~188)
+  [mobile-accessories p6] +12 (dup 0, merged 72, total~188)
+  [mobile-accessories p7] +12 (dup 0, merged 84, total~188)
+  [mobile-accessories p8] +12 (dup 0, merged 96, total~188)
+  [mobile-accessories p9] +12 (dup 0, merged 108, total~188)
+  [mobile-accessories p10] +12 (dup 0, merged 120, total~188)
+  [mobile-accessories p11] +12 (dup 0, merged 132, total~188)
+  [mobile-accessories p12] +10 (dup 0, merged 142, total~188)
+  [mobile-accessories p13] +12 (dup 0, merged 154, total~188)
+  [mobile-accessories p14] +12 (dup 0, merged 166, total~188)
+  [mobile-accessories p15] +12 (dup 0, merged 178, total~188)
+  [mobile-accessories p16] +8 (dup 0, merged 186, total~188)
+  [mobile-accessories p17] 0 products (total~?) -> stop
+[computer-accessories]
+  [computer-accessories p1] +12 (dup 0, merged 12, total~277)
+  [computer-accessories p2] +12 (dup 0, merged 24, total~277)
+  [computer-accessories p3] +12 (dup 0, merged 36, total~277)
+  [computer-accessories p4] +12 (dup 0, merged 48, total~277)
+  [computer-accessories p5] +12 (dup 0, merged 60, total~277)
+  [computer-accessories p6] +12 (dup 0, merged 72, total~277)
+  [computer-accessories p7] +12 (dup 0, merged 84, total~277)
+  [computer-accessories p8] +12 (dup 0, merged 96, total~277)
+  [computer-accessories p9] +12 (dup 0, merged 108, total~277)
+  [computer-accessories p10] +12 (dup 0, merged 120, total~277)
+    retry 1 (html 0)
+  [computer-accessories p11] +12 (dup 0, merged 132, total~277)
+    retry 1 (html 0)
+  [computer-accessories p12] +12 (dup 0, merged 144, total~277)
+    retry 1 (html 0)
+  [computer-accessories p13] +12 (dup 0, merged 156, total~277)
+  [computer-accessories p14] +12 (dup 0, merged 168, total~277)
+  [computer-accessories p15] +12 (dup 0, merged 180, total~277)
+    retry 1 (html 0)
+  [computer-accessories p16] +12 (dup 0, merged 192, total~277)
+  [computer-accessories p17] +12 (dup 0, merged 204, total~277)
+    retry 1 (html 0)
+  [computer-accessories p18] +11 (dup 0, merged 215, total~277)
+    retry 1 (html 0)
+    retry 2 (html 0)
+  [computer-accessories p19] +12 (dup 0, merged 227, total~277)
+  [computer-accessories p20] +12 (dup 0, merged 239, total~277)
+    retry 1 (html 0)
+    retry 2 (html 0)
+  [computer-accessories p21] +12 (dup 0, merged 251, total~277)
+  [computer-accessories p22] +12 (dup 0, merged 263, total~277)
+    retry 1 (html 0)
+  [computer-accessories p23] +11 (dup 0, merged 274, total~277)
+    retry 1 (html 0)
+    retry 2 (html 0)
+  [computer-accessories p24] +1 (dup 0, merged 275, total~277)
+    retry 1 (html 0)
+    retry 2 (html 0)
+    retry 3 (html 0)
+  [computer-accessories p25] EMPTY -> stop
+[camera-accessories]
+  [camera-accessories p1] +12 (dup 0, merged 12, total~155)
+  [camera-accessories p2] +12 (dup 0, merged 24, total~155)
+    retry 1 (html 0)
+    retry 2 (html 0)
+    retry 3 (html 0)
+  [camera-accessories p3] EMPTY -> stop
+[home-appliances]
+  [home-appliances p1] +12 (dup 0, merged 12, total~54)
+  [home-appliances p2] +12 (dup 0, merged 24, total~54)
+  [home-appliances p3] +12 (dup 0, merged 36, total~54)
+  [home-appliances p4] +12 (dup 0, merged 48, total~54)
+  [home-appliances p5] +6 (dup 0, merged 54, total~54)
+  [home-appliances p6] 0 products (total~?) -> stop
+[printer-ink]
+  [printer-ink p1] +12 (dup 0, merged 12, total~74)
+  [printer-ink p2] +12 (dup 0, merged 24, total~74)
+  [printer-ink p3] +12 (dup 0, merged 36, total~74)
+  [printer-ink p4] +12 (dup 0, merged 48, total~74)
+  [printer-ink p5] +12 (dup 0, merged 60, total~74)
+  [printer-ink p6] +12 (dup 0, merged 72, total~74)
+  [printer-ink p7] +2 (dup 0, merged 74, total~74)
+  [printer-ink p8] 0 products (total~?) -> stop
+[stationary]
+  [stationary p1] +12 (dup 0, merged 12, total~32)
+  [stationary p2] +8 (dup 0, merged 20, total~32)
+  [stationary p3] +8 (dup 8, merged 20, total~32)
+  [stationary] all-dup page, stop
+[mic subcats] ['mobile-accessories/microphone', 'camera-accessories/microphone-camera-accessories', 'camera-accessories/camera/microphone-camera']
+[mobile-accessories/microphone]
+  [mobile-accessories/microphone p1] +7 (dup 0, merged 7, total~?)
+  [mobile-accessories/microphone p2] 0 products (total~?) -> stop
+[camera-accessories/microphone-camera-accessories]
+  [camera-accessories/microphone-camera-accessories p1] 0 products (total~?) -> stop
+[camera-accessories/camera/microphone-camera]
+  [camera-accessories/camera/microphone-camera p1] +12 (dup 0, merged 12, total~32)
+  [camera-accessories/camera/microphone-camera p2] +8 (dup 0, merged 20, total~32)
+  [camera-accessories/camera/microphone-camera p3] +8 (dup 8, merged 20, total~32)
+  [camera-accessories/camera/microphone-camera] all-dup page, stop
+[done] 652 unique products (27 in mic subcats) -> /home/z/my-project/scripts/t156/sanguni-fresh-catalog.json

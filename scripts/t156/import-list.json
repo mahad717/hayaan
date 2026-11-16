@@ -1,0 +1,427 @@
+[
+ {
+  "sanguniSlug": "microphone-boya-m1",
+  "name": "Microphone Boya M1",
+  "price": 12.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/02/1113-01.jpg",
+  "url": "https://sanguni.so/product/microphone-boya-m1/",
+  "cats": [
+   "mobile-accessories",
+   "mobile-accessories/microphone"
+  ],
+  "imageRepoPath": "images/products/microphone-boya-m1.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-ahuja",
+  "name": "Microphone Ahuja",
+  "price": 13.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/03/ahuja-1-01.jpg",
+  "url": "https://sanguni.so/product/microphone-ahuja/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-ahuja.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "power-extension-omega-5-outlet",
+  "name": "Power Extension Omega 5 Outlet",
+  "price": 14.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/omega-1-02-01.jpg",
+  "url": "https://sanguni.so/product/power-extension-omega-5-outlet/",
+  "cats": [
+   "home-appliances"
+  ],
+  "imageRepoPath": "images/products/power-extension-omega-5-outlet.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "microphone-ahuja-headband",
+  "name": "Microphone Ahuja Headband",
+  "price": 16.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/03/mic1111-01.jpg",
+  "url": "https://sanguni.so/product/microphone-ahuja-headband/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-ahuja-headband.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-wireless-3in1-multi-function",
+  "name": "Microphone Wireless 3in1 Multi-function",
+  "price": 18.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/02/sx31-01.jpg",
+  "url": "https://sanguni.so/product/microphone-wireless-3in1-multi-function/",
+  "cats": [
+   "mobile-accessories",
+   "mobile-accessories/microphone"
+  ],
+  "imageRepoPath": "images/products/microphone-wireless-3in1-multi-function.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-wireless-f11-2",
+  "name": "Microphone Wireless F11-2",
+  "price": 18.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/04/Tx-mic-01.jpg",
+  "url": "https://sanguni.so/product/microphone-wireless-f11-2/",
+  "cats": [
+   "mobile-accessories",
+   "mobile-accessories/microphone"
+  ],
+  "imageRepoPath": "images/products/microphone-wireless-f11-2.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "lens-cleaning-kit-kf-concept",
+  "name": "Lens Cleaning Kit K&F Concept",
+  "price": 18.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/clean-2-01.jpg",
+  "url": "https://sanguni.so/product/lens-cleaning-kit-kf-concept/",
+  "cats": [
+   "home-appliances"
+  ],
+  "imageRepoPath": "images/products/lens-cleaning-kit-kf-concept.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "power-bank-20000mah-green-lion-35w",
+  "name": "Power Bank 20000mAh Green Lion 35W",
+  "price": 22.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/power-Madrid-01.jpg",
+  "url": "https://sanguni.so/product/power-bank-20000mah-green-lion-35w/",
+  "cats": [
+   "mobile-accessories"
+  ],
+  "imageRepoPath": "images/products/power-bank-20000mah-green-lion-35w.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "cable-adapter-lightning-to-ethernet-rj45",
+  "name": "Cable Adapter Lightning to Ethernet RJ45",
+  "price": 25.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/Rj-to-lighting-03-01.jpg",
+  "url": "https://sanguni.so/product/cable-adapter-lightning-to-ethernet-rj45/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/cable-adapter-lightning-to-ethernet-rj45.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "microphone-wireless-jmary",
+  "name": "Microphone Wireless Jmary",
+  "price": 35.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/10/jmry-1-01.jpg",
+  "url": "https://sanguni.so/product/microphone-wireless-jmary/",
+  "cats": [
+   "mobile-accessories",
+   "mobile-accessories/microphone"
+  ],
+  "imageRepoPath": "images/products/microphone-wireless-jmary.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-wireless-mic-lite",
+  "name": "Microphone Wireless Mic Lite",
+  "price": 35.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/04/GREEN-01.jpg",
+  "url": "https://sanguni.so/product/microphone-wireless-mic-lite/",
+  "cats": [
+   "mobile-accessories",
+   "mobile-accessories/microphone"
+  ],
+  "imageRepoPath": "images/products/microphone-wireless-mic-lite.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "dji-mic-mini-mobile-phone-adapter",
+  "name": "DJI Mic Mini Mobile Phone Adapter",
+  "price": 35.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/07/adap1-01.jpg",
+  "url": "https://sanguni.so/product/dji-mic-mini-mobile-phone-adapter/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/dji-mic-mini-mobile-phone-adapter.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "rode-interview-go-handheld-mic-adapter",
+  "name": "Rode Interview GO Handheld Mic Adapter",
+  "price": 35.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/04/MICROPHONE-ADAPTER-GO-2-01.jpg",
+  "url": "https://sanguni.so/product/rode-interview-go-handheld-mic-adapter/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/rode-interview-go-handheld-mic-adapter.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "power-bank-porodo-30000mah-with-integrated-cable",
+  "name": "Power Bank Porodo 30000Mah With Integrated Cable",
+  "price": 35.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/prodo-30-01.jpg",
+  "url": "https://sanguni.so/product/power-bank-porodo-30000mah-with-integrated-cable/",
+  "cats": [
+   "mobile-accessories"
+  ],
+  "imageRepoPath": "images/products/power-bank-porodo-30000mah-with-integrated-cable.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "microphone-usb-jmary",
+  "name": "Microphone USB Jmary",
+  "price": 38.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/03/jmary-1-01.jpg",
+  "url": "https://sanguni.so/product/microphone-usb-jmary/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-usb-jmary.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "ssd-lexar-ns100-512gb-2-5-sata-iii",
+  "name": "SSD Lexar NS100 512GB 2.5″ SATA III",
+  "price": 85.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/10/SSD-512gb-01.jpg",
+  "url": "https://sanguni.so/product/ssd-lexar-ns100-512gb-2-5-sata-iii/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/ssd-lexar-ns100-512gb-2-5-sata-iii.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "mic-air-1-tx-1-rx",
+  "name": "Mic Air (1 TX + 1 RX)",
+  "price": 120.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/05/MIC-AIR-01.jpg",
+  "url": "https://sanguni.so/product/mic-air-1-tx-1-rx/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/mic-air-1-tx-1-rx.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-broadcast-rode-podmic",
+  "name": "Microphone Broadcast RØDE PodMic",
+  "price": 120.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/03/podmic-usb-11-011-01.jpg",
+  "url": "https://sanguni.so/product/microphone-broadcast-rode-podmic/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-broadcast-rode-podmic.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-blueyeti",
+  "name": "Microphone BlueYeti",
+  "price": 185.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/07/blueyeti-2-01.jpg",
+  "url": "https://sanguni.so/product/microphone-blueyeti/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-blueyeti.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "microphone-broadcast-rode-podmic-usb",
+  "name": "Microphone Broadcast RØDE PodMic USB",
+  "price": 200.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/03/podmic-usb-1-01.jpg",
+  "url": "https://sanguni.so/product/microphone-broadcast-rode-podmic-usb/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-broadcast-rode-podmic-usb.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "hp-monitor-series-5-27-inch-with-speakers",
+  "name": "Hp Monitor Series 5 27 inch With Speakers",
+  "price": 220.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/02/lcd-2-01.jpg",
+  "url": "https://sanguni.so/product/hp-monitor-series-5-27-inch-with-speakers/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/hp-monitor-series-5-27-inch-with-speakers.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "rode-videomic-pro",
+  "name": "Rode VideoMic Pro",
+  "price": 245.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2025/08/221-01.jpg",
+  "url": "https://sanguni.so/product/rode-videomic-pro/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/rode-videomic-pro.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "portable-ssd-2tb-sandisk-1000mb-s-2",
+  "name": "Portable SSD 2TB SanDisk 1,000MB/s",
+  "price": 310.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/ssd-2tb-1-01.jpg",
+  "url": "https://sanguni.so/product/portable-ssd-2tb-sandisk-1000mb-s-2/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/portable-ssd-2tb-sandisk-1000mb-s-2.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "microphone-conference-professional-wireless-siltron-st-3600",
+  "name": "Microphone Conference Professional Wireless Siltron ST-3600",
+  "price": 480.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/06/confe1-01.jpg",
+  "url": "https://sanguni.so/product/microphone-conference-professional-wireless-siltron-st-3600/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-conference-professional-wireless-siltron-st-3600.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "hp-printer-color-laserjet-pro-mfp-4303fdw",
+  "name": "HP Printer Color LaserJet Pro MFP 4303fdw",
+  "price": 580.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/4303fdw-01.jpg",
+  "url": "https://sanguni.so/product/hp-printer-color-laserjet-pro-mfp-4303fdw/",
+  "cats": [
+   "printer-ink"
+  ],
+  "imageRepoPath": "images/products/hp-printer-color-laserjet-pro-mfp-4303fdw.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "microphone-conference-professional-wireless-siltron-st-8900",
+  "name": "Microphone Conference Professional Wireless Siltron ST-8900",
+  "price": 960.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/06/conf1-05-01.jpg",
+  "url": "https://sanguni.so/product/microphone-conference-professional-wireless-siltron-st-8900/",
+  "cats": [
+   "camera-accessories/camera/microphone-camera"
+  ],
+  "imageRepoPath": "images/products/microphone-conference-professional-wireless-siltron-st-8900.jpg",
+  "source": "mic"
+ },
+ {
+  "sanguniSlug": "unifi-usw-48poe-network-switch-managed",
+  "name": "Unifi USW 48POE Network Switch Managed",
+  "price": 1240.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/UniFi-USW-48-PoE-01.jpg",
+  "url": "https://sanguni.so/product/unifi-usw-48poe-network-switch-managed/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/unifi-usw-48poe-network-switch-managed.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "msi-cyborg-15-gaming-intel-core-7-240h",
+  "name": "MSI Cyborg 15 Gaming Intel Core 7 240H",
+  "price": 1600.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/msi-01.jpg",
+  "url": "https://sanguni.so/product/msi-cyborg-15-gaming-intel-core-7-240h/",
+  "cats": [
+   "computer-accessories"
+  ],
+  "imageRepoPath": "images/products/msi-cyborg-15-gaming-intel-core-7-240h.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "printer-canon-image-runner-2425i-monochrome-a3-multifunctional",
+  "name": "Printer Canon image Runner 2425i Monochrome A3 Multifunctional",
+  "price": 2100.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/RUNNER-2425i-02-01.jpg",
+  "url": "https://sanguni.so/product/printer-canon-image-runner-2425i-monochrome-a3-multifunctional/",
+  "cats": [
+   "printer-ink"
+  ],
+  "imageRepoPath": "images/products/printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg",
+  "source": "genuinely-new"
+ },
+ {
+  "sanguniSlug": "iphone-duo-256gb-esim",
+  "name": "iPhone Duo 256GB eSim",
+  "price": 2550.0,
+  "was_sale": false,
+  "oos": false,
+  "img": "https://sanguni.so/wp-content/uploads/2026/11/due-1-02-01.jpg",
+  "url": "https://sanguni.so/product/iphone-duo-256gb-esim/",
+  "cats": [
+   "mobile-accessories"
+  ],
+  "imageRepoPath": "images/products/iphone-duo-256gb-esim.jpg",
+  "source": "genuinely-new"
+ }
+]

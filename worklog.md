@@ -3606,3 +3606,16 @@ Work Log:
 - Recorded as the permanent design north star in DESIGN-PRINCIPLES.md (repo root): the five principles + concrete Hayaan mapping — CLOSED palette (forest/market greens, Market Orange #f28c28 as the single accent, apricot, cream, white), whitespace before decoration, muted supporting UI, strong contrast with the single owner-approved exception (white-on-orange CTA debt), precedence: explicit owner instruction > principles > existing tokens.
 - Fits the site's current system: brand already runs 3 hues + neutrals with a 10%-orange accent rule; Tasks 150/153 conflicts are resolved under the precedence rule (owner's explicit color calls win).
 - Committed locally; rides to GitHub with the next deploy push (no token supplied this turn, last token wiped per protocol).
+
+---
+Task ID: 156
+Agent: Super Z (main)
+Task: Owner: "import changes from https://sanguni.so/ also microphones"
+
+Work Log:
+- Fresh sanguni.so catalog crawl (3 passes + gap-filler, WooCommerce Store API query params proven broken through page_reader; HTML category pages with slash-less /page/N pagination — trailing slash crashes the reader): 687 unique products incl. 27 microphone-subcat items, all in stock.
+- Diff vs live catalog (145 rows) with supplierUrl/slug/name/fuzzy matching + ambiguity guards (duplicate sanguni -2/-3 listings; fuzzy pairs >20% delta quarantined): 9 verified price drops (iPhone 18 Pro Max family -50..-200, Galaxy A17 8/256 263->240), 13 genuinely-new since the Nov-1 baseline (iPhone Duo 256GB eSim 2550, MSI Cyborg 15 1600, Unifi USW 48POE 1240, Portable SSD 2TB SanDisk 310, HP Monitor Series 5 27 220, HP LaserJet MFP 4303fdw 580, Canon imageRunner 2425i 2100, Porodo 30000 power bank 35, Green Lion 20000 power bank 22, SSD Lexar NS100 512GB 85, Lightning-to-Ethernet adapter 25, Power Extension Omega 5-outlet 14, Lens Cleaning Kit K&F 18), all in stock.
+- Microphones curated: 17 true mics (Boya M1, Ahuja x2, wireless 3in1/F11-2/Jmary/Mic Lite, USB Jmary, Mic Air, RODE PodMic + PodMic USB + VideoMic Pro, BlueYeti, Siltron ST-360/ST-890 conference, DJI Mic Mini + Rode Interview GO adapters); stands/cables/interfaces/speakers excluded (owner asked for microphones).
+- PHASE A APPLIED LIVE: 9 guarded price PUTs (old-price guards passed) -> admin+public verify 9/9 MATCH, 0 failures (scripts/t156/price-sync-results.json).
+- PHASE B STAGED, deploy-gated: 30 products (17 mics + 13 new), images repo-hosted public/images/products/ 30/30 downloaded+magic-checked, import script t156-import-new.mjs HEAD-checks hayaan.co images before any create. NEEDS: git push + deploy (token), then APPLY=1 node scripts/t156-import-new.mjs. Category mapping: mics -> power-charging-audio (audio family; no category-create API/service key locally), phones->phones-wearables, computer/printer->computers-tv-gaming, misc->home-office.
+- Known gaps: camera-accessories p5+ (96 curated-out camera items) unreadable via reader cache; Store API query params dead; camera carried rows unaffected (name-matched).
