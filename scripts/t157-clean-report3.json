@@ -1,0 +1,276 @@
+{
+ "bboxes": {
+  "cable-adapter-lightning-to-ethernet-rj45.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "dji-mic-mini-mobile-phone-adapter.jpg": [
+   250,
+   238,
+   552,
+   692
+  ],
+  "hp-monitor-series-5-27-inch-with-speakers.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "hp-printer-color-laserjet-pro-mfp-4303fdw.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "iphone-duo-256gb-esim.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "lens-cleaning-kit-kf-concept.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "msi-cyborg-15-gaming-intel-core-7-240h.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "portable-ssd-2tb-sandisk-1000mb-s-2.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "power-bank-20000mah-green-lion-35w.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "power-bank-porodo-30000mah-with-integrated-cable.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "power-extension-omega-5-outlet.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "samsung-galaxy-z-fold8-5g.jpg": [
+   51,
+   64,
+   131,
+   181
+  ],
+  "ssd-lexar-ns100-512gb-2-5-sata-iii.jpg": [
+   195,
+   238,
+   497,
+   692
+  ],
+  "unifi-usw-48poe-network-switch-managed.jpg": [
+   195,
+   238,
+   497,
+   692
+  ]
+ },
+ "report": {
+  "cable-adapter-lightning-to-ethernet-rj45.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "cable-adapter-lightning-to-ethernet-rj45-nb.jpg",
+   "clean": true
+  },
+  "dji-mic-mini-mobile-phone-adapter.jpg": {
+   "bbox": [
+    250,
+    238,
+    552,
+    692
+   ],
+   "maskPixels": 117817,
+   "residual": 0,
+   "out": "dji-mic-mini-mobile-phone-adapter-nb.jpg",
+   "clean": true
+  },
+  "hp-monitor-series-5-27-inch-with-speakers.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "hp-monitor-series-5-27-inch-with-speakers-nb.jpg",
+   "clean": true
+  },
+  "hp-printer-color-laserjet-pro-mfp-4303fdw.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "hp-printer-color-laserjet-pro-mfp-4303fdw-nb.jpg",
+   "clean": true
+  },
+  "iphone-duo-256gb-esim.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117896,
+   "residual": 0,
+   "out": "iphone-duo-256gb-esim-nb.jpg",
+   "clean": true
+  },
+  "lens-cleaning-kit-kf-concept.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "lens-cleaning-kit-kf-concept-nb.jpg",
+   "clean": true
+  },
+  "msi-cyborg-15-gaming-intel-core-7-240h.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "msi-cyborg-15-gaming-intel-core-7-240h-nb.jpg",
+   "clean": true
+  },
+  "portable-ssd-2tb-sandisk-1000mb-s-2.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "portable-ssd-2tb-sandisk-1000mb-s-2-nb.jpg",
+   "clean": true
+  },
+  "power-bank-20000mah-green-lion-35w.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "power-bank-20000mah-green-lion-35w-nb.jpg",
+   "clean": true
+  },
+  "power-bank-porodo-30000mah-with-integrated-cable.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "power-bank-porodo-30000mah-with-integrated-cable-nb.jpg",
+   "clean": true
+  },
+  "power-extension-omega-5-outlet.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "power-extension-omega-5-outlet-nb.jpg",
+   "clean": true
+  },
+  "printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "printer-canon-image-runner-2425i-monochrome-a3-multifunctional-nb.jpg",
+   "clean": true
+  },
+  "samsung-galaxy-z-fold8-5g.jpg": {
+   "bbox": [
+    51,
+    64,
+    131,
+    181
+   ],
+   "maskPixels": 8164,
+   "residual": 0,
+   "out": "samsung-galaxy-z-fold8-5g-nb.jpg",
+   "clean": true
+  },
+  "ssd-lexar-ns100-512gb-2-5-sata-iii.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "ssd-lexar-ns100-512gb-2-5-sata-iii-nb.jpg",
+   "clean": true
+  },
+  "unifi-usw-48poe-network-switch-managed.jpg": {
+   "bbox": [
+    195,
+    238,
+    497,
+    692
+   ],
+   "maskPixels": 117894,
+   "residual": 0,
+   "out": "unifi-usw-48poe-network-switch-managed-nb.jpg",
+   "clean": true
+  }
+ }
+}

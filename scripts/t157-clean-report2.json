@@ -1,0 +1,227 @@
+{
+ "cable-adapter-lightning-to-ethernet-rj45.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "cable-adapter-lightning-to-ethernet-rj45-nb.jpg",
+  "clean": false
+ },
+ "dji-mic-mini-mobile-phone-adapter.jpg": {
+  "bbox": [
+   207,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 52276,
+  "after": [
+   0.00354,
+   0.00584
+  ],
+  "out": "dji-mic-mini-mobile-phone-adapter-nb.jpg",
+  "clean": false
+ },
+ "hp-monitor-series-5-27-inch-with-speakers.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "hp-monitor-series-5-27-inch-with-speakers-nb.jpg",
+  "clean": false
+ },
+ "hp-printer-color-laserjet-pro-mfp-4303fdw.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "hp-printer-color-laserjet-pro-mfp-4303fdw-nb.jpg",
+  "clean": false
+ },
+ "iphone-duo-256gb-esim.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63521,
+  "after": [
+   0.00362,
+   0.00693
+  ],
+  "out": "iphone-duo-256gb-esim-nb.jpg",
+  "clean": false
+ },
+ "lens-cleaning-kit-kf-concept.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "lens-cleaning-kit-kf-concept-nb.jpg",
+  "clean": false
+ },
+ "msi-cyborg-15-gaming-intel-core-7-240h.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "msi-cyborg-15-gaming-intel-core-7-240h-nb.jpg",
+  "clean": false
+ },
+ "portable-ssd-2tb-sandisk-1000mb-s-2.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "portable-ssd-2tb-sandisk-1000mb-s-2-nb.jpg",
+  "clean": false
+ },
+ "power-bank-20000mah-green-lion-35w.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "power-bank-20000mah-green-lion-35w-nb.jpg",
+  "clean": false
+ },
+ "power-bank-porodo-30000mah-with-integrated-cable.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "power-bank-porodo-30000mah-with-integrated-cable-nb.jpg",
+  "clean": false
+ },
+ "power-extension-omega-5-outlet.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "power-extension-omega-5-outlet-nb.jpg",
+  "clean": false
+ },
+ "printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "printer-canon-image-runner-2425i-monochrome-a3-multifunctional-nb.jpg",
+  "clean": false
+ },
+ "samsung-galaxy-z-fold8-5g.jpg": {
+  "bbox": [
+   40,
+   51,
+   132,
+   126
+  ],
+  "maskPixels": 4057,
+  "after": [
+   0.00372,
+   0.00757
+  ],
+  "out": "samsung-galaxy-z-fold8-5g-nb.jpg",
+  "clean": false
+ },
+ "ssd-lexar-ns100-512gb-2-5-sata-iii.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "ssd-lexar-ns100-512gb-2-5-sata-iii-nb.jpg",
+  "clean": false
+ },
+ "unifi-usw-48poe-network-switch-managed.jpg": {
+  "bbox": [
+   152,
+   188,
+   508,
+   482
+  ],
+  "maskPixels": 63523,
+  "after": [
+   0.00362,
+   0.00694
+  ],
+  "out": "unifi-usw-48poe-network-switch-managed-nb.jpg",
+  "clean": false
+ }
+}

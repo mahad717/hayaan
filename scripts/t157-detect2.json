@@ -1,0 +1,362 @@
+{
+ "cable-adapter-lightning-to-ethernet-rj45.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "dji-mic-mini-mobile-phone-adapter.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0746,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "hp-monitor-series-5-27-inch-with-speakers.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "hp-printer-color-laserjet-pro-mfp-4303fdw.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "iphone-duo-256gb-esim.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "1,1",
+  "blue": 0.0,
+  "orange": 0.1625,
+  "flagged": false
+ },
+ "lens-cleaning-kit-kf-concept.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,1",
+  "blue": 0.0,
+  "orange": 0.1106,
+  "flagged": false
+ },
+ "mic-air-1-tx-1-rx.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-ahuja-headband.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-ahuja.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-blueyeti.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-boya-m1.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-broadcast-rode-podmic-usb.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-broadcast-rode-podmic.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-conference-professional-wireless-siltron-st-3600.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-conference-professional-wireless-siltron-st-8900.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-usb-jmary.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-wireless-3in1-multi-function.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-wireless-f11-2.jpg": {
+  "size": [
+   1459,
+   1667
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-wireless-jmary.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "microphone-wireless-mic-lite.jpg": {
+  "size": [
+   1459,
+   1667
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "msi-cyborg-15-gaming-intel-core-7-240h.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "1,0",
+  "blue": 0.0,
+  "orange": 0.0028,
+  "flagged": false
+ },
+ "portable-ssd-2tb-sandisk-1000mb-s-2.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "power-bank-20000mah-green-lion-35w.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "power-bank-porodo-30000mah-with-integrated-cable.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "power-extension-omega-5-outlet.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "printer-canon-image-runner-2425i-monochrome-a3-multifunctional.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "ps5-pro-2tb-1.jpg": {
+  "size": [
+   1400,
+   1400
+  ],
+  "corner": "1,1",
+  "blue": 0.0149,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "ps5-pro-2tb-2.jpg": {
+  "size": [
+   1400,
+   1400
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "ps5-slim-digital-1.jpg": {
+  "size": [
+   1200,
+   1371
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "rode-interview-go-handheld-mic-adapter.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "rode-videomic-pro.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "samsung-galaxy-a17-6gb128gb.jpg": {
+  "size": [
+   768,
+   878
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "samsung-galaxy-a17-8gb256gb.jpg": {
+  "size": [
+   768,
+   878
+  ],
+  "corner": "0,0",
+  "blue": 0.0,
+  "orange": 0.0,
+  "flagged": false
+ },
+ "samsung-galaxy-z-fold8-5g.jpg": {
+  "size": [
+   768,
+   878
+  ],
+  "corner": "0,0",
+  "blue": 0.0762,
+  "orange": 0.0401,
+  "flagged": true
+ },
+ "ssd-lexar-ns100-512gb-2-5-sata-iii.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ },
+ "unifi-usw-48poe-network-switch-managed.jpg": {
+  "size": [
+   2917,
+   3334
+  ],
+  "corner": "0,0",
+  "blue": 0.0747,
+  "orange": 0.0373,
+  "flagged": true
+ }
+}
